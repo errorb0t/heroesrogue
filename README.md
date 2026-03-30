@@ -1,7 +1,10 @@
 # Heroes Rogue
 Rogue-like mod for Heroes of the Storm.
 
+<img width="1919" height="1080" alt="heroesrogue" src="https://github.com/user-attachments/assets/25dcc8fc-9d86-49cf-ac81-ccc224881242" />
+
 **How to Play:**
+
 
 1- Extract the contents of the zip file into your Heroes of the Storm installation path (e.g. C:/Program Files (x86)/Heroes of the Storm). The maps and mods folder should be in the same location as the Heroes of the Storm executable.
 
