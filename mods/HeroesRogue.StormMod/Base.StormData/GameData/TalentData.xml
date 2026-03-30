@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+<CTalent id="WitchDoctorWidowmakers2">
+    <Face value="WitchDoctorWidowmakers2" />
+    <Abil value="WitchDoctorCorpseSpiders" />
+    <RankArray>
+      <BehaviorArray value="WitchDoctorCorpseSpidersWidowmakersTokenCounter" />
+    </RankArray>
+    <QuestData StackBehavior="WitchDoctorCorpseSpidersWidowmakersTokenCounter" TargetCount="100" />
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Behavior" />
+        <Entry value="WitchDoctorCorpseSpidersWidowmakersTalentSlow" />
+        <Field value="Duration" />
+        <Value value="2" />
+      </Modifications>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Behavior" />
+        <Entry value="WitchDoctorCorpseSpidersWidowmakersTalentSlow" />
+        <Field value="Modification.UnifiedMoveSpeedFactor" />
+        <Value value="-0.1" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
+  <CTalent id="WitchDoctorHexedCrawlers2">
+    <Face value="WitchDoctorHexedCrawlers2" />
+    <Abil value="WitchDoctorCorpseSpiders" />
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorCorpseSpidersHexedCrawlersCreateHealer" />
+        <Field value="RechargeVitalFraction" />
+        <Value value="0.01" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
+  <CTalent id="WitchDoctorSpiritofArachyr2">
+    <Face value="WitchDoctorSpiritofArachyr2" />
+    <Abil value="WitchDoctorCorpseSpiders" />
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="NazeeboCorpseSpidersSpawnSpiderSearch" />
+        <Field value="RecycleCount" />
+        <FieldIsInteger value="1" />
+        <Value value="2" />
+      </Modifications>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="NazeeboCorpseSpidersSpawnSpiderSearch" />
+        <Field value="MaxCount" />
+        <FieldIsInteger value="1" />
+        <Value value="2" />
+      </Modifications>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="NazeeboCorpseSpidersSpawnSpiderSearch" />
+        <Field value="AreaArray[0].MaxCount" />
+        <FieldIsInteger value="1" />
+        <Value value="2" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
+  <CTalent id="WitchDoctorSpiderColony2">
+    <Face value="WitchDoctorSpiderColony2" />
+    <Abil value="WitchDoctorCorpseSpiders" />
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Entry value="WitchDoctorCorpseSpiders" />
+        <Field value="Cost.Cooldown.TimeUse" />
+        <Value value="-2" />
+      </Modifications>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Entry value="WitchDoctorCorpseSpiders" />
+        <Field value="Cost.Vital[Energy]" />
+        <Value value="-20" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
+
+</Catalog>

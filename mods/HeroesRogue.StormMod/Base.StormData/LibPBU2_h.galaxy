@@ -1,0 +1,138 @@
+include "TriggerLibs/HeroesLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library: PVE Brawl UI
+//--------------------------------------------------------------------------------------------------
+// Preset Declarations
+const int libPBU2_ge_CurateHeroSelectionRole__None = 0;
+const int libPBU2_ge_CurateHeroSelectionRole_Tank = 1;
+const int libPBU2_ge_CurateHeroSelectionRole_Healer = 2;
+const int libPBU2_ge_CurateHeroSelectionRole_Bruiser = 3;
+const int libPBU2_ge_CurateHeroSelectionRole_MeleeAssassin = 4;
+const int libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1 = 5;
+const int libPBU2_ge_CurateHeroSelectionRole_RangedAssassin2 = 6;
+const int libPBU2_ge_CurateHeroSelectionCellState__None = 0;
+const int libPBU2_ge_CurateHeroSelectionCellState_Empty = 1;
+const int libPBU2_ge_CurateHeroSelectionCellState_Normal = 2;
+const int libPBU2_ge_CurateHeroSelectionCellState_SelectedByMe = 3;
+const int libPBU2_ge_CurateHeroSelectionCellState_SelectedByOther = 4;
+const int libPBU2_ge_CurateHeroSelectionCellState_LockedByMe = 5;
+const int libPBU2_ge_CurateHeroSelectionCellState_LockedByOther = 6;
+
+// Constants
+const fixed libPBU2_gv_curateHeroSelectionUIMaxDuration_C = 9999;
+const int libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C = 6;
+const int libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C = 17;
+
+// Structures
+struct libPBU2_gs_CurateHeroSelectionUI {
+    int lv_dialog;
+    int lv_mainPanel;
+    int lv_countdownLabel;
+    int lv_finalCountdownFrame;
+    int lv_titleLabel;
+    int lv_selectedHeroPanel;
+    int lv_selectedHeroName;
+    int lv_selectedHeroRole;
+    int lv_pickHeroPanel;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtons;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonImages;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBorders;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersEmpty;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersAffixed;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersSelectedByMe1;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersSelectedByMe2;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersSelectedByMe3;
+    bool[libCore_gv_bALMaxEnginePlayerCount + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersSelectedByMeVisible;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersSelectedByAlly1;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersSelectedByAlly2;
+    bool[libCore_gv_bALMaxEnginePlayerCount + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersSelectedByAllyVisible;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersThinking;
+    bool[libCore_gv_bALMaxEnginePlayerCount + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersThinkingVisible;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBackgroundImage;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersLockedByMe1;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersLockedByMe2;
+    bool[libCore_gv_bALMaxEnginePlayerCount + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersLockedByMeVisible;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersLockedByAlly1;
+    int[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersLockedByAlly2;
+    bool[libCore_gv_bALMaxEnginePlayerCount + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] lv_heroButtonBordersLockedByAllyVisible;
+    int lv_teamPanel;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroFrame;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroImage;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroRole;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroRoleBG;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroEmpty;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroBorder;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroLocked;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroLockedAnimation;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroSelectedAlly;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroThinking;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroBackgroundImage;
+    int[libCore_gv_bALMaxEnginePlayerCount + 1][libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamPanelRowPlayer;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroPlayerName;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_teamHeroHeroName;
+    int[libCore_gv_bALMaxPlayersOnATeam + 1] lv_voiceChatFrame;
+    int[libCore_gv_bALMaxPlayers + 1] lv_heroContainerFrame;
+    int[libCore_gv_bALMaxPlayers + 1] lv_heroCutsceneFrame;
+    int lv_abilitiesInfoButton;
+    int lv_talentsInfoButton;
+    int lv_brawlInfoButton;
+    int lv_lockButton;
+    int lv_debugCrazyBtn;
+    int lv_debugRerollBtn;
+};
+
+struct libPBU2_gs_CurateHeroSelectionSetting {
+    timer lv_countdownTimer;
+    bool[libCore_gv_bALMaxPlayers + 1] lv_lockedIn;
+    int[libCore_gv_bALMaxPlayers + 1] lv_selectedHeroRow;
+    int[libCore_gv_bALMaxPlayers + 1] lv_selectedHeroCol;
+    int[libCore_gv_bALMaxPlayers + 1] lv_lockedHeroRow;
+    int[libCore_gv_bALMaxPlayers + 1] lv_lockedHeroCol;
+    bool lv_countDownEndWarning;
+    bool lv_finalCountDownStarted;
+};
+
+// Variable Declarations
+string[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] libPBU2_gv_curateHeroSelections;
+libPBU2_gs_CurateHeroSelectionUI libPBU2_gv_curateHeroSelectionUI;
+libPBU2_gs_CurateHeroSelectionSetting libPBU2_gv_curateHeroSelectionSetting;
+trigger libPBU2_gv_curateHeroSelectionUIHeroListInitCallback;
+
+int libPBU2_Cho;
+int libPBU2_Gall;
+
+// Function Declarations
+void libPBU2_gf_CurateHSUIInitialize ();
+void libPBU2_gf_CurateHSUIUpdateTimerUI ();
+void libPBU2_gf_CurateHSUIUpdateVoiceChatUI ();
+void libPBU2_gf_DisplayCurateHSUI ();
+void libPBU2_gf_CurateHSUIEnableDisableHeroButton (bool lp_enableDisable, int lp_row, int lp_column, playergroup lp_forPlayers, bool lp_desaturated);
+void libPBU2_gf_CurateHSUILockUnlockHeroChoice (int lp_player, bool lp_lockUnlock);
+void libPBU2_gf_CurateHSUILockUI ();
+bool libPBU2_gf_CurateHSUIAllPlayersLockedIn ();
+text libPBU2_gf_CurateHSUIHeroRoleName (int lp_heroRow);
+string libPBU2_gf_CurateHSUIHeroRoleIcon (int lp_heroRow);
+void libPBU2_gf_CurateHSUISelectHeroforPlayer (int lp_player, int lp_heroRow, int lp_heroCol);
+void libPBU2_gf_CurateHSUIUpdateHeroButtons ();
+void libPBU2_gf_CurateHSUIUpdateTeamPanel ();
+bool libPBU2_gf_CurateHSUIGoodToLockIn (int lp_player);
+int libPBU2_gf_CurateHSUIGetCellState (int lp_viewer, int lp_row, int lp_col);
+void libPBU2_gf_CurateHSUIAutoPickHeroForPlayer (int lp_player);
+void libPBU2_gf_CurateHSUIAutoPickHeroOfRoleForPlayer (int lp_player, int lp_role);
+bool libPBU2_gf_CurateHSUIHeroLocked (int lp_row, int lp_column);
+void libPBU2_gf_CurateHSUIShowFinalCountDownHeroCutscene ();
+void libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene (int lp_player, bool lp_showHide);
+int libPBU2_gf_CurateHSUIHeroPickDisplayColumn (int lp_viewerPlayer, int lp_subjectPlayer);
+void libPBU2_gf_CurateHSUISetHeroSkinAndMountForPlayer (int lp_player, bool lp_randomSkin);
+
+// Trigger Declarations
+trigger libPBU2_gt_IncludeMMPvEBrawlModUI;
+trigger libPBU2_gt_CurateHSUIButtonClicked;
+trigger libPBU2_gt_CurateHSUICountdownTimerExpires;
+trigger libPBU2_gt_CurateHSUIForceSelection;
+trigger libPBU2_timerExpired;
+
+// Library Initialization
+void libPBU2_InitVariables ();
+

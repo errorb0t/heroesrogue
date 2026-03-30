@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+<CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveAffixConversionReady">
+  <WhichUnit Value="Caster" />
+  <Value value="0" />
+  <Behavior value="AffixConversionReady" />
+</CValidatorUnitCompareBehaviorCount>
+
+<CValidatorUnitCompareBehaviorCount id="CasterHasAffixPowerRitual">
+  <WhichUnit Value="Caster" />
+  <Value value="1" />
+  <Behavior value="AffixPowerRitual" />
+</CValidatorUnitCompareBehaviorCount>
+
+<CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveAffixBuddyDroneOwner">
+  <WhichUnit Value="Caster" />
+  <Value value="0" />
+  <Behavior value="AffixBuddyDroneOwner" />
+</CValidatorUnitCompareBehaviorCount>
+
+<CValidatorLocationCompareRange id="AffixBuddyDroneGT6RangeOfOwner">
+  <WhichLocation Value="TargetUnit" />
+  <Compare value="GT" />
+  <Range value="6" />
+</CValidatorLocationCompareRange>
+
+<CValidatorCombine id="AffixBuddyHealPeriodicValidator">
+  <Type value="And" />
+  <CombineArray value="CasterNotDeadOrSilencedOrStasisOrStunned" />
+  <CombineArray value="TargetNotDeadOrStasis" />
+  <CombineArray value="AffixBuddyHealTargetInRange" />
+  <CombineArray value="TargetIsNotImmuneToFriendlyAbilities" />
+  <CombineArray value="TargetNotBenignOrIsHealingDummy" />
+  <CombineArray value="TargetIsNotEnemy" />
+  <CombineArray value="AffixBuddyHealTargetIsTracked" />
+</CValidatorCombine>
+<CValidatorCombine id="AffixConversionValidator">
+  <Type value="And" />
+  <CombineArray value="TargetIsNotABossUnitOrMonsterMinorCombine" />
+  <CombineArray value="CasterNotDeadAndTargetNotDead" />
+  <CombineArray value="TargetNotStasis" />
+  <CombineArray value="TargetIsVisible" />
+  <CombineArray value="NotSummonedUnit" />
+  <CombineArray value="TargetMinion" />
+  <CombineArray value="TargetNotMerc" />
+</CValidatorCombine>
+<CValidatorLocationCompareRange id="AffixBuddyHealTargetInRange">
+  <WhichLocation Effect="AffixBuddyHealCreatePersistent" Value="TargetUnit" />
+  <Compare value="LE" />
+  <Range value="7.5" />
+  <Value Value="CasterPoint" />
+</CValidatorLocationCompareRange>
+<CValidatorCompareTrackedUnitsCount id="AffixBuddyHealDoesNotHaveTargetTracked">
+  <BehaviorLink value="AffixBuddyHealUnitTracker" />
+</CValidatorCompareTrackedUnitsCount>
+<CValidatorIsUnitTracked id="AffixBuddyHealTargetIsTracked">
+  <Find value="1" />
+  <BehaviorLink value="AffixBuddyHealUnitTracker" />
+  <TrackedUnit Value="Target" />
+  <TrackedUnit Effect="AffixBuddyHealCreatePersistent" Value="Target" />
+</CValidatorIsUnitTracked>
+
+<CValidatorUnitCompareTokenCount id="AffixKillContractQuestNotComplete">
+  <Compare value="LT" />
+  <Value value="25" />
+  <TokenId value="AffixKillContractQuestToken" />
+</CValidatorUnitCompareTokenCount>
+<CValidatorUnitCompareTokenCount id="AffixStructureQuestNotComplete">
+  <Compare value="LT" />
+  <Value value="24" />
+  <TokenId value="AffixStructureQuestToken" />
+</CValidatorUnitCompareTokenCount>
+
+<CValidatorUnitCompareBehaviorCount id="IsMounted">
+  <WhichUnit Value="Caster" />
+  <Behavior value="Mounted" />
+  <Compare value="GT" />
+</CValidatorUnitCompareBehaviorCount>
+
+<CValidatorUnitCompareVital id="CasterShieldGT0Percent">
+  <WhichUnit Value="Caster" />
+  <Compare value="GT" />
+  <Type value="Fraction" />
+  <Value value="0" />
+  <Vital value="Shields" />
+</CValidatorUnitCompareVital>
+
+<CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveAffixGrenadierReady">
+  <WhichUnit Value="Caster" />
+  <Value value="0" />
+  <Behavior value="AffixGrenadierReady" />
+</CValidatorUnitCompareBehaviorCount>
+
+</Catalog>

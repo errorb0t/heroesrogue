@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+<CMoverMissile id="AffixBuddyDroneMissile">
+  <MotionPhases>
+    <Driver value="Ballistic" />
+    <Acceleration value="3200" />
+    <Speed value="24" />
+    <MaxSpeed value="24" />
+  </MotionPhases>
+</CMoverMissile>
+
+</Catalog>

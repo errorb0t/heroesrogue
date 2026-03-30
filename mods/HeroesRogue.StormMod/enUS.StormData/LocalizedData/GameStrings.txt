@@ -1,0 +1,213 @@
+﻿Param/Expression/lib_PBU2_492997EA=Player ~A~ - Hero: ~B~ - Skin: ~C~
+Param/Value/lib_PBU2_02A18E56=Choose a Hero
+Param/Value/lib_PBU2_03EF5F47=Unknown
+Param/Value/lib_PBU2_29C285B1=Healer
+Param/Value/lib_PBU2_36ED0C64=Melee / Support
+Param/Value/lib_PBU2_40D67FC4=LOCK IN
+Param/Value/lib_PBU2_4C2C612D=Team
+Param/Value/lib_PBU2_5787381C=
+Param/Value/lib_PBU2_59936C48=
+Param/Value/lib_PBU2_6F9FA996=Bruiser
+Param/Value/lib_PBU2_8AC542C1=Tank
+Param/Value/lib_PBU2_A343B9B6=Warrior
+Param/Value/lib_PBU2_ACE45DBB=Unknown
+Param/Value/lib_PBU2_AE1825B7=Ranged
+Param/Value/lib_PBU2_CB24D52E=UNLOCK
+Param/Value/lib_PBU2_E99FE310=Ranged
+Param/Value/lib_PBU2_FF5E7DD7=Warrior
+
+Label/Name/RarityCommon=<c val="ffffff">Common
+Label/Name/RarityUncommon=<c val="1eff00">Uncommon
+Label/Name/RarityRare=<c val="0070dd">Rare
+Label/Name/RarityEpic=<c val="a335ee">Epic
+Label/Name/RarityLegendary=<c val="ff8000">Legendary
+Label/Name/RarityStarter=<c val="e6cc80">Starter
+Label/Name/RarityNegative=<c val="c52020">Negative
+Label/Name/RaritySuffixStackable= - Stackable</c>
+Label/Name/RaritySuffixInfinite= - Infinite</c>
+Label/Name/RaritySuffixNone=</c>
+
+Affix/Quest=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/>
+
+LoadingScreen/Help00=Gain boons at level 1, 10, and 20, and curses every enemy talent tier.
+LoadingScreen/Help01=Completing map objectives replaces a future curse with a boon, once per game.
+LoadingScreen/Help02=Some curses are more powerful than others, choose carefully!
+LoadingScreen/Help03=Certain boons and curses appear only on specific maps or Heroes.
+LoadingScreen/Help04=Boons or curses can stack its effect.
+LoadingScreen/Help05=Heroes with a golden border have unique starter boons which only appear at the start of the run.
+LoadingScreen/Help06=You can reroll boons or curses you don't like. Gain 3 rerolls at the start of the game and 2 every new map.
+
+UI/MapLoadingScreen/LibAffx/Description1=Gain powerful, permanent boons throughout your run to increase your and your team's strength!
+UI/MapLoadingScreen/LibAffx/Description2=The game becomes more difficult over time as you obtain dangerous curses.
+UI/MapLoadingScreen/LibAffx/Description3=Victory is not the end. Continue on to a new map, keeping your boons and curses, and try to get as far as possible!
+UI/MapLoadingScreen/LibAffx/Title1=Boons
+UI/MapLoadingScreen/LibAffx/Title2=Curses
+UI/MapLoadingScreen/LibAffx/Title3=Endless
+
+Button/Name/PickAffix=Pick
+Label/Name/PickAffix=Choose a Boon!
+Label/Name/PickAffixNegative=Choose a Curse!
+Button/Name/ShowAffixes=Boons & Curses
+Label/Name/ShowAffixes=Boons & Curses
+Button/Name/Reroll=Reroll
+Label/Name/Reroll=Rerolls available: 
+Message/CurseToBoon=<c val="FFDE36">The next Curse you obtain will become a Boon!</c>
+Message/CurseSkipped=<c val="FFDE36">Curse skipped.</c>
+Message/GoldenBorder=Golden Heroes have unique starter boons.
+
+Button/Name/WitchDoctorWidowmakers2=Widowmakers II
+Button/SimpleDisplayText/WitchDoctorWidowmakers2=Increases Slow and duration
+Button/Tooltip/WitchDoctorWidowmakers2=Increases Corpse Spiders' Slow from <c val="#TooltipNumbers">25%</c> to <c val="#TooltipNumbers">35%</c> and the Slow duration from <c val="#TooltipNumbers">1</c> second to <c val="#TooltipNumbers">3</c> seconds.
+Button/Name/WitchDoctorHexedCrawlers2=Hexed Crawlers II
+Button/SimpleDisplayText/WitchDoctorHexedCrawlers2=Increases Corpse Spiders' healing
+Button/Tooltip/WitchDoctorHexedCrawlers2=Increases Corpse Spiders' Mana and Health restoration from <c val="#TooltipNumbers">1%</c> to <c val="#TooltipNumbers">2%</c> of maximum Health and Mana.
+Button/Name/WitchDoctorSpiritofArachyr2=Spirit of Arachyr II
+Button/SimpleDisplayText/WitchDoctorSpiritofArachyr2=Increases the amount of Corpse Spiders
+Button/Tooltip/WitchDoctorSpiritofArachyr2=Corpse Spiders summon <c val="#TooltipNumbers">2</c> additional spiders.
+Button/Name/WitchDoctorSpiderColony2=Spider Colony II
+Button/SimpleDisplayText/WitchDoctorSpiderColony2=Increases cooldown reduction
+Button/Tooltip/WitchDoctorSpiderColony2=Reduces Corpse Spiders' cooldown by <c val="#TooltipNumbers">2</c> seconds and Mana cost by <c val="#TooltipNumbers">25</c>.
+
+Button/Name/AffixBuddyHeal=Healing Beam
+Button/SimpleDisplayText/AffixBuddyHeal=Your best friend will keep you alive!
+Button/Tooltip/AffixBuddyHeal=Your best friend will keep you alive!
+
+Label/Name/AffixNone=???
+Affix/Name/AffixNone=???
+Affix/Tooltip/AffixNone=???
+
+Affix/Name/SpiderMastery=Arachnophile
+Affix/Tooltip/SpiderMastery=Gain the benefits of all of your Corpse Spiders talents. Upgraded Corpse Spider talents become available to choose.
+Affix/Name/PowerRitual=Power Ritual
+Affix/Tooltip/PowerRitual=Basic Attacks deal bonus damage equal to your Voodoo Ritual stacks and splash for <c val="#TooltipNumbers"><d ref="Accumulator,AffixPowerRitualSplashAccumulator,Scale*100"precision="1"/>%</c> damage.
+Affix/Name/ZombieHandler=Zombie Handler
+Affix/Tooltip/ZombieHandler=Gain the benefits of all of your Zombie Wall talents. Reduces Zombie Wall's cooldown and Mana cost by <c val="#TooltipNumbers">25%</c> and increases the Zombies' maximum Health by <c val="#TooltipNumbers">50%</c>.<n/><n/>When a nearby enemy Minion dies, it has a <c val="#TooltipNumbers"><d ref="$GalaxyVar:zombieHandlerChance$*100"precision="1"/>%</c> chance to summon a Zombie.
+Affix/Name/StructureHealth=Reinforced Walls
+Affix/Tooltip/StructureHealth=Increases maximum Health of allied Structures by <c val="#TooltipNumbers">15%</c>.
+Affix/Name/Bloodlust=Bloodlust
+Affix/Tooltip/Bloodlust=Increases Attack Speed by <c val="#TooltipNumbers">25%</c> and Movement Speed by <c val="#TooltipNumbers">20%</c><n/><n/>Basic Attacks heal for <c val="#TooltipNumbers">30%</c> of the damage dealt.
+Affix/Name/NanoBoost=Nano Boost
+Affix/Tooltip/NanoBoost=Increases Spell Power by <c val="#TooltipNumbers">15%</c> and recharge Basic Abilities <c val="#TooltipNumbers"><d ref="$GalaxyVar:nanoBoostCDR$*100"precision="1"/>%</c> faster.<n/><n/>Regenerate <c val="#TooltipNumbers">3</c> Mana per second.
+Affix/Name/NanoBoostNoMana=Nano Boost
+Affix/Tooltip/NanoBoostNoMana=Increases Spell Power by <c val="#TooltipNumbers">15%</c> and recharge Basic Abilities <c val="#TooltipNumbers"><d ref="$GalaxyVar:nanoBoostCDR$*100"precision="1"/>%</c> faster.
+Affix/Name/BlessingoftheDragons=Blessing of the Dragons
+Affix/Tooltip/BlessingoftheDragons=Your allied Heroes gain <c val="#TooltipNumbers">500</c> maximum Health and <c val="#TooltipNumbers">20%</c> Movement Speed, and Basic Abilities recharge <c val="#TooltipNumbers"><d ref="$GalaxyVar:blessingoftheDragonsCDR$*100"precision="1"/>%</c> faster.
+Affix/Name/AARange=Nexus Range
+Affix/Tooltip/AARange=Increases Attack Range by <c val="#TooltipNumbers">1.1</c>.
+Affix/Name/AASearing=Searing Attacks
+Affix/Tooltip/AASearing=Increases Attack Damage by <c val="#TooltipNumbers">25%</c>.
+Affix/Name/Buddy=BUDDY
+Affix/Tooltip/Buddy=A friendly Drone follows you around, healing you for <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreateHealer,RechargeVitalRate" player="1" precision="0"/></c> Health every <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreatePersistent,PeriodicPeriodArray[0]"precision="1"/></c> seconds.<n/><n/>BUDDY shoots a missile every <c val="#TooltipNumbers"><d ref="Behavior,AffixBuddyDroneController,Period"precision="1"/></c> seconds at the nearest enemy, dealing <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyDroneMissileDamage,Amount" player="1" precision="0"/></c> damage in the area.
+Affix/Name/BuddyAll=Army of BUDDYs
+Affix/Tooltip/BuddyAll=Your allied Heroes gain their own BUDDYs with <c val="#TooltipNumbers">50%</c> damage and healing.
+Affix/Name/ManyRituals=Many Rituals
+Affix/Tooltip/ManyRituals=Gain <c val="#TooltipNumbers">30</c> Voodoo Ritual stacks now and at the start of every game.
+Affix/Name/NimbleLegs=Nimble Legs
+Affix/Tooltip/NimbleLegs=Increases Movement Speed of Corpse Spiders by <c val="#TooltipNumbers">20%</c>.
+Affix/Name/FastUproot=Fast Uproot
+Affix/Tooltip/FastUproot=Reduces the initial delay and cast time of Zombie Wall by <c val="#TooltipNumbers">50%</c>.
+Affix/Name/JarofFrogs=Jar of Frogs
+Affix/Tooltip/JarofFrogs=Increases maximum charges of Plague of Toads by <c val="#TooltipNumbers">2</c>.
+Affix/Name/RegenerativeCore=Regenerative Core
+Affix/Tooltip/RegenerativeCore=Your Core regenerates <c val="#TooltipNumbers">1%</c> of maximum Health per second while its Shield is active.
+Affix/Name/AllyDamage=Powerful
+Affix/Tooltip/AllyDamage=Increases Spell Power and Attack Damage of all allies by <c val="#TooltipNumbers">5%</c>.
+Affix/Name/AllyHealth=Endurance
+Affix/Tooltip/AllyHealth=Increases maximum Health of all allies by <c val="#TooltipNumbers">7%</c>.
+Affix/Name/AllySpeed=Fast Feet
+Affix/Tooltip/AllySpeed=Increases Movement Speed of all allies by <c val="#TooltipNumbers">6%</c>.
+Affix/Name/MountSpeed=Quick Mount
+Affix/Tooltip/MountSpeed=Increases the Movement Speed bonus of Summon Mount by <c val="#TooltipNumbers">30%</c> and reduces cooldown by <c val="#TooltipNumbers">2</c> seconds for all allies.
+Affix/Name/Experienced=Experienced
+Affix/Tooltip/Experienced=Increases all Experience gain by <c val="#TooltipNumbers">20%</c>.
+Affix/Name/KillContract=Kill Contract
+Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Get <c val="#TooltipNumbers"><d ref="Behavior,AffixKillContractQuestToken,Max"/></c> Hero Takedowns.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> common and <c val="#TooltipNumbers">1</c> uncommon Boon.
+Button/Name/AffixKillContractQuestToken=Kill Contract
+Button/Tooltip/AffixKillContractQuestToken=<c val="#TooltipQuest">Takedowns: <c val="#TooltipNumbers" validator="AffixKillContractQuestNotComplete"><d ref="$BehaviorStackCount:AffixKillContractQuestToken$"/> / <d ref="Behavior,AffixKillContractQuestToken,Max"/></c>
+Affix/Name/StructureQuest=Destruction
+Affix/Tooltip/StructureQuest=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Destroy enemy Forts or Keeps.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">6</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> common Boon.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">12</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> uncommon Boon.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">24</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> rare Boon.</n></n>Quest progress is retained after winning a game.
+Button/Name/AffixStructureQuestToken=Destruction
+Button/Tooltip/AffixStructureQuestToken=<c val="#TooltipQuest">Forts/Keeps destroyed: <c val="#TooltipNumbers" validator="AffixStructureQuestNotComplete"><d ref="$BehaviorStackCount:AffixStructureQuestToken$"/> / <d ref="Behavior,AffixStructureQuestToken,Max"/></c>
+Affix/Name/AASpeed=Nexus Frenzy
+Affix/Tooltip/AASpeed=Increases Attack Speed by <c val="#TooltipNumbers">15%</c>.
+Affix/Name/GladiatorsMedallion=Gladiator's Medallion
+Affix/Tooltip/GladiatorsMedallion=<c val="#TooltipNumbers">Cooldown: 60 seconds</c><n/><n/>Activate to become Unstoppable for <c val="#TooltipNumbers">2</c> seconds.
+Button/Name/AffixMedallion=Gladiator's Medallion
+Button/Tooltip/AffixMedallion=Activate to become Unstoppable for <c val="#TooltipNumbers">2</c> seconds.
+Affix/Name/EmergencyMeasure=Emergency Measure
+Affix/Tooltip/EmergencyMeasure=On fatal damage, your allied Heroes gain a Shield equal to <c val="#TooltipNumbers">50%</c> of Maximum Health for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>This effect has a <c val="#TooltipNumbers">60</c> second cooldown per Hero.
+Affix/Name/CriticalMass=Critical Mass
+Affix/Tooltip/CriticalMass=Getting a Takedown will refresh the cooldown on all of your Abilities.
+Affix/Name/Tantrum=Tantrum
+Affix/Tooltip/Tantrum=Reduces Gargantuan's Stomp's cooldown by <c val="#TooltipNumbers">3</c> seconds and increases its damage by <c val="#TooltipNumbers">25%</c>.
+Affix/Name/QuickScare=Quick Scare
+Affix/Tooltip/QuickScare=Increases Ravenous Spirit's duration by <c val="#TooltipNumbers">2</c> seconds and Movement Speed by <c val="#TooltipNumbers">15%</c>.
+Affix/Name/ResurgenceoftheStorm=Resurgence of the Storm
+Affix/Tooltip/ResurgenceoftheStorm=Upon dying, revive back at your Altar after <c val="#TooltipNumbers">5</c> seconds. This effect has a <c val="#TooltipNumbers">180</c> second cooldown.
+Affix/Name/Bribery=Bribery
+Affix/Tooltip/Bribery=Automatically bribe a neutral Mercenary camp to your side every <c val="#TooltipNumbers">300</c> seconds. Camps taken this way respawn <c val="#TooltipNumbers">50%</c> faster. Does not work on Bosses.</n></n>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">60</c> seconds.
+Affix/Name/PathoftheWizard=Path of the Wizard
+Affix/Tooltip/PathoftheWizard=Increases maximum Mana by <c val="#TooltipNumbers">10</c> and Mana Regeneration by <c val="#TooltipNumbers">0.2</c> per second per level.
+Affix/Name/PathoftheWarrior=Path of the Warrior
+Affix/Tooltip/PathoftheWarrior=Increases maximum Health by <c val="#TooltipNumbers">40</c> per level.
+Affix/Name/PathoftheAssassin=Path of the Assassin
+Affix/Tooltip/PathoftheAssassin=Increases Basic Attack damage by <c val="#TooltipNumbers"><d ref="$GalaxyVar:pathoftheAssassinValue$"precision="0"/></c> per level.
+Affix/Name/ButtonMasher=Button Masher
+Affix/Tooltip/ButtonMasher=Gain the benefits of the following talents: Viking Bribery, Spin To Win!, and Jump!.<n/><n/>Reduces Spin To Win!'s cooldown by <c val="#TooltipNumbers">5</c> seconds and Jump!'s cooldown by <c val="#TooltipNumbers">15</c> seconds.
+Affix/Name/GreatVikingHoard=Great Viking Hoard
+Affix/Tooltip/GreatVikingHoard=Viking Hoard grants <c val="#TooltipNumbers">0.5%</c> Attack Damage, Spell Power, Movement Speed, and maximum Health per Regeneration Globe.
+Affix/Name/SpecializedVikings=Specialized Vikings
+Affix/Tooltip/SpecializedVikings=Olaf gains the benefit of the Large and In Charge talent, <c val="#TooltipNumbers">50</c> permanent Armor, and reduces Olaf's Charge cooldown by <c val="#TooltipNumbers">50%</c>.<n/><n/>Increases Baleog's Attack Speed by <c val="#TooltipNumbers">75%</c>.<n/><n/>Increases Erik's Attack Range by <c val="#TooltipNumbers">6.5</c>.
+
+Affix/Name/Conversion=Possession
+Affix/Tooltip/Conversion=Enemy leader Minions convert a nearby allied Minion to their side every <c val="#TooltipNumbers">30</c> seconds.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">10</c> seconds.
+Affix/Name/MemoryShortage=Memory Shortage
+Affix/Tooltip/MemoryShortage=Reduces AI difficulty level of your allies by <c val="#TooltipNumbers">1</c>.<n/><n/>Additional stacks reduce the difficulty level further, down to Beginner.
+Affix/Name/NoFountain=No Fountains
+Affix/Tooltip/NoFountain=All allied Healing Fountains are destroyed.
+Affix/Name/DeathTimer=Bad Bargain
+Affix/Tooltip/DeathTimer=Increases Death Respawn time of your team by <c val="#TooltipNumbers">50%</c>.
+Affix/Name/FaultyCatapults=Faulty Catapults
+Affix/Tooltip/FaultyCatapults=Reduces Attack Speed of allied Catapults by <c val="#TooltipNumbers">50%</c> and Attack Range by <c val="#TooltipNumbers">3</c>.
+Affix/Name/EnemyDamage=Amplification
+Affix/Tooltip/EnemyDamage=Increases Spell Power and Attack Damage of enemies by <c val="#TooltipNumbers">10%</c>.
+Affix/Name/EnemyHealth=Resilience
+Affix/Tooltip/EnemyHealth=Increases maximum Health of enemies by <c val="#TooltipNumbers">15%</c>.
+Affix/Name/EnemySpeed=Chrono Boost
+Affix/Tooltip/EnemySpeed=Increases Movement Speed of enemies by <c val="#TooltipNumbers">10%</c> and Ability recharge rate by <c val="#TooltipNumbers">25%</c>.
+Affix/Name/BackdoorProtection=Alterac's Legacy
+Affix/Tooltip/BackdoorProtection=Enemy Keeps and Keep Towers have <c val="#TooltipNumbers">20</c> Armor for each intact enemy Fort.
+Affix/Name/RavenLordsFavor=Raven Lord's Favor
+Affix/Tooltip/RavenLordsFavor=Reduces the number of tributes required for a curse for the enemy team by <c val="#TooltipNumbers">1</c>.<n/><n/>Your team is cursed for <c val="#TooltipNumbers">50%</c> longer.
+Affix/Name/UltimatePunishment=Infernal Punishment
+Affix/Tooltip/UltimatePunishment=Reduces the number of Shrine minions required to summon a Punisher for the enemy team by <c val="#TooltipNumbers">20</c>.<n/><n/>Enemy Punisher gains Arcane, Frozen, and Mortar Abilities and deals <c val="#TooltipNumbers">25%</c> increased damage.
+Affix/Name/NeithisWrath=Neithis's Wrath
+Affix/Tooltip/NeithisWrath=Reduces the number of gems required to summon Webweavers for the enemy team by <c val="#TooltipNumbers">20</c> and turn-in cost no longer increases.<n/><n/>Enemy Webweavers cast Abilities <c val="#TooltipNumbers">75%</c> faster and summon <c val="#TooltipNumbers">2</c> additional spiders.
+Affix/Name/RaenaKnight=Raena's Knight
+Affix/Tooltip/RaenaKnight=Shrines under your team's control become neutral after <c val="#TooltipNumbers">45</c> seconds. Neutral Shrines become enemy-controlled after <c val="#TooltipNumbers">45</c> seconds.<n/><n/>Increases enemy Dragon Knight's duration by <c val="#TooltipNumbers">50%</c> and reduces Dragon's Breath's cooldown by <c val="#TooltipNumbers">3</c> seconds.
+Affix/Name/Fortifications=Fortifications
+Affix/Tooltip/Fortifications=Several enemy Towers appear around the map. These Towers reveal everything in range.
+Affix/Name/DoubleUlt=Dual Heroics
+Affix/Tooltip/DoubleUlt=Enemy Heroes gain access to all their Heroic Abilities.
+Affix/Name/AffixCCIncrease=Chained Down
+Affix/Tooltip/AffixCCIncrease=Increases the duration of ALL Stuns, Slows, Roots, and Silences against you and allied Heroes by <c val="#TooltipNumbers">25%</c>.
+Affix/Name/EnemyLevel=Overleveled
+Affix/Tooltip/EnemyLevel=Increases the level of the enemy Team by <c val="#TooltipNumbers">1</c> now and at the start of every game.
+Affix/Name/EfficientGuns=Efficient Guns
+Affix/Tooltip/EfficientGuns=Increases enemy Structures' Attack Speed by <c val="#TooltipNumbers">15%</c> and Attack Range by <c val="#TooltipNumbers">1</c>. Does not affect the Core.
+Affix/Name/EnemyLeech=Life Steal
+Affix/Tooltip/EnemyLeech=Enemy Heroes heal for <c val="#TooltipNumbers">15%</c> of damage dealt.
+Affix/Name/Trapped=Toxic Field
+Affix/Tooltip/Trapped=Spawns <c val="#TooltipNumbers">2</c> Toxic Nests per second at random locations on the map. Toxic Nests last for <c val="#TooltipNumbers">90</c> seconds.<n/><n/>Additional stacks increase the spawn rate of Toxic Nests by <c val="#TooltipNumbers">2</c> per second.
+Affix/Name/ShieldedCore=Overcharged Shields
+Affix/Tooltip/ShieldedCore=Increases the maximum Shields of the enemy's Core by <c val="#TooltipNumbers">50%</c> and the recharge rate by <c val="#TooltipNumbers">15%</c>.
+Affix/Name/ByeBye=Bye Bye!
+Affix/Tooltip/ByeBye=Reduces Hearthstone's cast time of enemy Heroes by <c val="#TooltipNumbers">90%</c>.
+Affix/Name/EnemyAllStats=All-Rounder
+Affix/Tooltip/EnemyAllStats=Increases the Attack Speed, maximum Health, and damage dealt of enemy Heroes by <c val="#TooltipNumbers">25%</c>.<n/><n/><c val="FFDE36">Skips the next Curse.</c>
+Affix/Name/Cloned=Doppelganger
+Affix/Tooltip/Cloned=Spawns a clone of an enemy Hero every <c val="#TooltipNumbers">200</c> seconds. Cooldown recharges <c val="#TooltipNumbers">100%</c> faster if there are no active Clones.<n/><n/>Clones do not respawn after dying and do not scale from levels.
+Affix/Name/StructureAmmo=Ammunition
+Affix/Tooltip/StructureAmmo=Allied Towers, Forts, and Keeps have limited Ammunition, with each attack consuming one ammo. Once a structure runs out of ammo, it will be unable to attack.<n/><n/>Structures replenish <c val="#TooltipNumbers">2</c> ammo every <c val="#TooltipNumbers">30</c> seconds.
+Affix/Name/Grenadier=Grenadier
+Affix/Tooltip/Grenadier=Grants the ability to throw a Frag Grenade, Particle Grenade, or a Biotic Grenade every <c val="#TooltipNumbers">6</c> seconds to a random enemy Hero.</n></n>Additional stacks grant this effect to <c val="#TooltipNumbers">1</c> additional enemy Hero.

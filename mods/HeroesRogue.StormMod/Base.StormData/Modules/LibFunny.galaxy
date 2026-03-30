@@ -1,0 +1,642 @@
+include "TriggerLibs/NativeLib"
+include "TriggerLibs/UILib"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Funny Stuff
+//--------------------------------------------------------------------------------------------------
+// Validating: templates
+
+// Constants
+const int libFUNY_gv_randomEffectLength = 16;
+
+// Structures
+struct libFUNY_gs_Whatishappening {
+    string[libFUNY_gv_randomEffectLength + 1] lv_randomEffectList;
+    bool lv_randomBigger;
+    bool lv_randomSmaller;
+    bool lv_randomStopAnimation;
+};
+
+// Variable Declarations
+bool libFUNY_gv_isGreetingModeEnabled;
+libFUNY_gs_Whatishappening libFUNY_gv_whatishappening;
+bool libFUNY_gv_toggleWhatIsHappening;
+
+// Trigger Declarations
+trigger libFUNY_gt_MapInit;
+trigger libFUNY_gt_GreetingModeOutput;
+trigger libFUNY_gt_ToggleGreetingMode;
+trigger libFUNY_gt_DoABarrelRoll;
+trigger libFUNY_gt_initRandomEffects;
+trigger libFUNY_gt_ToggleWhatisHappening;
+trigger libFUNY_gt_WhatisHappening;
+trigger libFUNY_gt_Imfeelinglucky;
+trigger libFUNY_gt_ImfeelingluckytooActuallyrandomeffects;
+trigger libFUNY_gt_ImreallyfeelingluckyActuallyrandombehavours;
+
+// Library Initialization
+void libFUNY_InitVariables ();
+
+//--------------------------------------------------------------------------------------------------
+// Library: Funny Stuff
+//--------------------------------------------------------------------------------------------------
+// Validating: templates
+
+// External Library Initialization
+void libFUNY_InitLibraries () {
+    libNtve_InitVariables();
+}
+
+// Variable Initialization
+bool libFUNY_InitVariables_completed = false;
+
+void libFUNY_InitVariables () {
+    int init_i1;
+
+    if (libFUNY_InitVariables_completed) {
+        return;
+    }
+
+    libFUNY_InitVariables_completed = true;
+
+    for (init_i1 = 0; init_i1 <= libFUNY_gv_randomEffectLength; init_i1 += 1) {
+        libFUNY_gv_whatishappening.lv_randomEffectList[init_i1] = "";
+    }
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: MapInit
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_gt_MapInit_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    //UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Funny Lib Initialized"));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libFUNY_gt_MapInit_Init () {
+    libFUNY_gt_MapInit = TriggerCreate("libFUNY_gt_MapInit_Func");
+    TriggerAddEventMapInit(libFUNY_gt_MapInit);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: GreetingModeOutput
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_gt_GreetingModeOutput_Func (bool testConds, bool runActions) {
+    int init_i;
+
+    // Variable Declarations
+    text[4] lv_text;
+    string lv_unit;
+    string lv_unitname;
+    string[8] lv_greetings;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_unitname = "";
+    for (init_i = 0; init_i <= 7; init_i += 1) {
+        lv_greetings[init_i] = "";
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_unit = UnitGetType(UnitGroupUnit(UnitGroupSelected(EventPlayer()), 1));
+    lv_unitname = (lv_unit);
+    lv_greetings[0] = "Hello";
+    lv_greetings[1] = "Greetings";
+    lv_greetings[2] = "Hi";
+    lv_greetings[3] = "Hey";
+    lv_greetings[4] = "Howdy";
+    lv_greetings[5] = "Yo";
+    lv_greetings[6] = "Hiya";
+    lv_unitname = StringReplaceWord((lv_unit), "Hero", "", c_stringReplaceAll, c_stringCase);
+    lv_text[0] = StringToText(lv_greetings[RandomInt(0, 6)]);
+    lv_text[1] = StringToText(", ");
+    lv_text[2] = StringToText(lv_unitname);
+    TextTagCreate(((lv_text[0] + lv_text[1]) + lv_text[2]), RandomInt(16, 100), UnitGetPosition(UnitGroupUnit(UnitGroupSelected(EventPlayer()), 1)), 0.0, true, false, PlayerGroupAll());
+    TextTagAttachToUnit(TextTagLastCreated(), UnitGroupUnit(UnitGroupSelected(EventPlayer()), 1), 0.0);
+    TextTagSetColor(TextTagLastCreated(), c_textTagColorText, ColorWithAlpha(RandomFixed(0.0, 100.0), RandomFixed(0.0, 100.0), RandomFixed(0.0, 100.0), RandomFixed(0.0, 100.0)));
+    TextTagSetVelocity(TextTagLastCreated(), RandomFixed(1.0, 6.0), libNtve_gf_RandomAngle());
+    TextTagShow(TextTagLastCreated(), PlayerGroupAll(), true);
+    Wait(RandomFixed(1.0, 5.0), c_timeGame);
+    TextTagDestroy(TextTagLastCreated());
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libFUNY_gt_GreetingModeOutput_Init () {
+    libFUNY_gt_GreetingModeOutput = TriggerCreate("libFUNY_gt_GreetingModeOutput_Func");
+    TriggerEnable(libFUNY_gt_GreetingModeOutput, false);
+    TriggerAddEventMouseClicked(libFUNY_gt_GreetingModeOutput, c_playerAny, c_mouseButtonNone, true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: ToggleGreetingMode
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_gt_ToggleGreetingMode_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libFUNY_gv_isGreetingModeEnabled = !(libFUNY_gv_isGreetingModeEnabled);
+    if ((libFUNY_gv_isGreetingModeEnabled == true)) {
+        TriggerEnable(libFUNY_gt_GreetingModeOutput, true);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Enabled Greetings Mode"));
+    }
+    else {
+        TriggerEnable(libFUNY_gt_GreetingModeOutput, false);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Disabled Greetings Mode"));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libFUNY_gt_ToggleGreetingMode_Init () {
+    libFUNY_gt_ToggleGreetingMode = TriggerCreate("libFUNY_gt_ToggleGreetingMode_Func");
+    TriggerAddEventChatMessage(libFUNY_gt_ToggleGreetingMode, c_playerAny, "greetingmode", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Do A Barrel Roll 
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_gt_DoABarrelRoll_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_i;
+
+    // Automatic Variable Declarations
+    const int auto5C89AC27_ae = 90;
+    const int auto5C89AC27_ai = 1;
+
+    // Variable Initialization
+    lv_i = 1;
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("~~ Barrel Roll, Barrel Roll ~~"));
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("~~ Do The Barrel Barrel Roll ~~"));
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("~~ Do The Barrel Barrel Roll ~~"));
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("~~ Do The Barrel Roll ~~"));
+    lv_i = 1;
+    for ( ; ( (auto5C89AC27_ai >= 0 && lv_i <= auto5C89AC27_ae) || (auto5C89AC27_ai < 0 && lv_i >= auto5C89AC27_ae) ) ; lv_i += auto5C89AC27_ai ) {
+        CameraSetValue(EventPlayer(), c_cameraValueRoll, (lv_i * 4.0), 0.0625, -1, 100.0);
+        Wait(0.0001, c_timeReal);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libFUNY_gt_DoABarrelRoll_Init () {
+    libFUNY_gt_DoABarrelRoll = TriggerCreate("libFUNY_gt_DoABarrelRoll_Func");
+    TriggerAddEventChatMessage(libFUNY_gt_DoABarrelRoll, c_playerAny, "do a barrel roll", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: initRandomEffects
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_gt_initRandomEffects_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libFUNY_gv_whatishappening.lv_randomEffectList[0] = "DiabloHellgateApocalypseCreatePersistent";
+    libFUNY_gv_whatishappening.lv_randomEffectList[1] = "StrafeInitialSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[2] = "UtherDivineIntervention";
+    libFUNY_gv_whatishappening.lv_randomEffectList[3] = "AnduinLightBombInitialSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[4] = "ThrallSunderingInitialSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[5] = "DeckardHealingPotionCreateSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[6] = "KelThuzadShadowFissureInitialSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[7] = "MeiOWBlizzardInitialSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[8] = "MephistoLightningNovaCastSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[9] = "NexusHunterUnrelentingStrikesInitialSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[10] = "ValeeraSmokeBombInitialSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[11] = "JainaRingOfFrostInitialPersistent";
+    libFUNY_gv_whatishappening.lv_randomEffectList[12] = "YrelArdentDefenderInitialSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[13] = "DeckardScrollOfSealingInitialSet";
+    libFUNY_gv_whatishappening.lv_randomEffectList[14] = "VarianBannerOfDalaranCreateUnit";
+    libFUNY_gv_whatishappening.lv_randomEffectList[15] = "AlexstraszaAbundanceCreatePersistent";
+    libFUNY_gv_whatishappening.lv_randomEffectList[16] = "GuldanHorrifyAbilityStartCreatePersistent";
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libFUNY_gt_initRandomEffects_Init () {
+    libFUNY_gt_initRandomEffects = TriggerCreate("libFUNY_gt_initRandomEffects_Func");
+    TriggerEnable(libFUNY_gt_initRandomEffects, false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Toggle What is Happening
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_gt_ToggleWhatisHappening_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libFUNY_gv_toggleWhatIsHappening = !(libFUNY_gv_toggleWhatIsHappening);
+    if ((libFUNY_gv_toggleWhatIsHappening == true)) {
+        TriggerExecute(libFUNY_gt_initRandomEffects, false, true);
+        UIClearMessages(PlayerGroupAll(), c_messageAreaAll);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("What is Happening?"));
+        TriggerEnable(libFUNY_gt_WhatisHappening, true);
+    }
+    else {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("No use. Just restart the game"));
+        TriggerEnable(libFUNY_gt_WhatisHappening, false);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libFUNY_gt_ToggleWhatisHappening_Init () {
+    libFUNY_gt_ToggleWhatisHappening = TriggerCreate("libFUNY_gt_ToggleWhatisHappening_Func");
+    TriggerAddEventChatMessage(libFUNY_gt_ToggleWhatisHappening, c_playerAny, "What is happening", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: What is Happening
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_gt_WhatisHappening_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_random;
+    string lv_m;
+    unit lv_unit;
+
+    // Automatic Variable Declarations
+    unitgroup auto3A47B911_g;
+    int auto3A47B911_u;
+
+    // Variable Initialization
+    lv_m = "";
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_random = RandomInt(0, 50);
+    lv_m = "SetTintColor " + IntToString(RandomInt(0, 255)) + "," + IntToString(RandomInt(0, 255)) + "," + IntToString(RandomInt(0, 255)) + " 0.25 OneShot Active";
+    if ((lv_random == 1)) {
+        libFUNY_gv_whatishappening.lv_randomStopAnimation = !(libFUNY_gv_whatishappening.lv_randomStopAnimation);
+    }
+
+    if ((lv_random == 2)) {
+        libFUNY_gv_whatishappening.lv_randomBigger = !(libFUNY_gv_whatishappening.lv_randomBigger);
+    }
+
+    if ((lv_random == 4)) {
+        libFUNY_gv_whatishappening.lv_randomSmaller = !(libFUNY_gv_whatishappening.lv_randomSmaller);
+    }
+
+    auto3A47B911_g = UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
+    auto3A47B911_u = UnitGroupCount(auto3A47B911_g, c_unitCountAll);
+    for (;; auto3A47B911_u -= 1) {
+        lv_unit = UnitGroupUnitFromEnd(auto3A47B911_g, auto3A47B911_u);
+        if (lv_unit == null) { break; }
+        // Also need to import include "TriggerLibs/UILib" in the script
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_buffBar, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_buffDebuffPanel, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_debuffBar, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_gameUICommandCardPanelFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_gameUIOnFire, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_gameUIPortrait, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsBlinkingEnergyStatFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsBreathStatFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsBrewStatFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsEnergyStatFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsFuryStatFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsHealthBar, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsManaBar, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsNoEnergyNoShieldStatFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsNoEnergyStatFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsRageStatFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_heroStatsUnitStatusFrame, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIHeroConsole.lv_mainPanel, PlayerGroupAll(), false);
+        
+        DialogControlSetVisible(libUIUI_gv_uIGameUIHandles.lv_mapMechanicButton, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIGameUIHandles.lv_minimapPanel, PlayerGroupAll(), false);
+        DialogControlSetVisible(libUIUI_gv_uIGameUIHandles.lv_targetInfoPanel, PlayerGroupAll(), false);
+        
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_coreHealthLabel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_coreHealthPercentLabels, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_coreHealthUnitStatusFrames, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_gameTimerLabel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_heroXPContributionLabel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_levelLabel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_levelUpLabel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_mainPanel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_mercenaryXPContributionLabel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_minionXPContributionLabel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_passiveXPContributionLabel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_structureXPContributionLabel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_totalXPContributionLabel, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPBackgroundBlue, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPBackgroundRed, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPContributionPopup[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPContributionPopup[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPUnitStatusFrame[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPUnitStatusFrame[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPVeterancyBar, PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPBackgroundBlue[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPBackgroundBlue[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPBackgroundRed[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPBackgroundRed[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPUnitStatusFrame[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPUnitStatusFrame[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPVeterancyBar[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPVeterancyBar[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_levelLabel[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_levelLabel[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_levelUpLabel[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_levelUpLabel[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_coreHealthUnitStatusFrames[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_coreHealthUnitStatusFrames[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_coreHealthPercentLabels[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_coreHealthPercentLabels[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPContributionPopup[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPContributionPopup[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_heroXPContributionLabel[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_heroXPContributionLabel[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_mercenaryXPContributionLabel[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_mercenaryXPContributionLabel[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_minionXPContributionLabel[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_minionXPContributionLabel[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_passiveXPContributionLabel[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_passiveXPContributionLabel[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_structureXPContributionLabel[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_structureXPContributionLabel[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_totalXPContributionLabel[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_totalXPContributionLabel[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPBackgroundBlue[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPBackgroundBlue[2], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPBackgroundRed[1], PlayerGroupAll(), false);
+        // DialogControlSetVisible(libUIUI_gv_topBarPanel.lv_xPBackgroundRed[2], PlayerGroupAll(), false);
+        libNtve_gf_SendActorMessageToUnit(lv_unit, "SetShowStatusBar 0");
+        libNtve_gf_SendActorMessageToUnit(lv_unit, "SetOpacity 0.75 1.0000 Opacity");
+        libNtve_gf_SendActorMessageToUnit(lv_unit, lv_m);
+        UnitBehaviorAdd(lv_unit, ("Perma-75Armor"), EventUnit(), 1);
+        if ((libFUNY_gv_whatishappening.lv_randomStopAnimation == true)) {
+            libNtve_gf_SendActorMessageToUnit(lv_unit, "AnimSetPausedAll");
+        }
+        else {
+            libNtve_gf_SendActorMessageToUnit(lv_unit, "AnimSetPausedAll 0");
+        }
+        if ((libFUNY_gv_whatishappening.lv_randomBigger == true)) {
+            UnitSetScale(lv_unit, 200.0, 200.0, 200.0);
+        }
+        else {
+            if ((libFUNY_gv_whatishappening.lv_randomSmaller == true)) {
+                UnitSetScale(lv_unit, 35.0, 35.0, 35.0);
+            }
+            else {
+                UnitSetScale(lv_unit, 100.0, 100.0, 100.0);
+            }
+        }
+        if ((lv_random == 3)) {
+            UnitCreateEffectUnit(UnitGroupUnit(UnitGroupAlliance(UnitGetOwner(lv_unit), c_unitAllianceEnemy, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 1), 1), (libFUNY_gv_whatishappening.lv_randomEffectList[RandomInt(0, libFUNY_gv_randomEffectLength)]), lv_unit);
+        }
+
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libFUNY_gt_WhatisHappening_Init () {
+    libFUNY_gt_WhatisHappening = TriggerCreate("libFUNY_gt_WhatisHappening_Func");
+    TriggerEnable(libFUNY_gt_WhatisHappening, false);
+    TriggerAddEventTimePeriodic(libFUNY_gt_WhatisHappening, 0.25, c_timeReal);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Im feeling lucky
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_gt_Imfeelinglucky_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unit lv_unit;
+
+    // Automatic Variable Declarations
+    unitgroup autoB228314B_g;
+    int autoB228314B_u;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerExecute(libFUNY_gt_initRandomEffects, false, true);
+    autoB228314B_g = UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter(0, 0, 0, (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
+    autoB228314B_u = UnitGroupCount(autoB228314B_g, c_unitCountAll);
+    for (;; autoB228314B_u -= 1) {
+        lv_unit = UnitGroupUnitFromEnd(autoB228314B_g, autoB228314B_u);
+        if (lv_unit == null) { break; }
+        UnitCreateEffectUnit(UnitGroupUnit(UnitGroupAlliance(UnitGetOwner(lv_unit), c_unitAllianceEnemy, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 1), 1), (libFUNY_gv_whatishappening.lv_randomEffectList[RandomInt(0, libFUNY_gv_randomEffectLength)]), lv_unit);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libFUNY_gt_Imfeelinglucky_Init () {
+    libFUNY_gt_Imfeelinglucky = TriggerCreate("libFUNY_gt_Imfeelinglucky_Func");
+    TriggerAddEventChatMessage(libFUNY_gt_Imfeelinglucky, c_playerAny, "Im feeling lucky", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Im feeling lucky too (Actually random effects)
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_gt_ImfeelingluckytooActuallyrandomeffects_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv__eachUnitInListIdx;
+    unit[1001] lv_unitList;
+    string[1001] lv__randomEffects;
+    int lv__i;
+    int lv__effectCounter;
+    int[1001] lv__randomEffectIdx;
+    int lv_totalEffectCount;
+    string lv_random;
+    unit lv_unit;
+
+    // Automatic Variable Declarations
+    int auto24AE23FC_catalog;
+    int auto24AE23FC_i;
+    unitgroup auto3407F4A0_g;
+    int auto3407F4A0_u;
+    int autoB75E1AFF_catalog;
+    int autoB75E1AFF_i;
+    const int autoFBB36FF0_ae = 1000;
+    const int autoFBB36FF0_ai = 1;
+    const int auto039C0677_ae = 1000;
+    const int auto039C0677_ai = 1;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto24AE23FC_catalog = c_gameCatalogEffect;
+    auto24AE23FC_i = 1;
+    for ( ; auto24AE23FC_i <= CatalogEntryCount(c_gameCatalogEffect) ; auto24AE23FC_i += 1 ) {
+        lv_random = CatalogEntryGet(auto24AE23FC_catalog, auto24AE23FC_i);
+        lv_totalEffectCount = (lv_totalEffectCount + 1);
+    }
+    auto3407F4A0_g = UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
+    auto3407F4A0_u = UnitGroupCount(auto3407F4A0_g, c_unitCountAll);
+    for (;; auto3407F4A0_u -= 1) {
+        lv_unit = UnitGroupUnitFromEnd(auto3407F4A0_g, auto3407F4A0_u);
+        if (lv_unit == null) { break; }
+        lv_unitList[lv__i] = lv_unit;
+        lv__randomEffectIdx[lv__i] = RandomInt(0, lv_totalEffectCount);
+        lv__i = (lv__i + 1);
+    }
+    autoB75E1AFF_catalog = c_gameCatalogEffect;
+    autoB75E1AFF_i = 1;
+    for ( ; autoB75E1AFF_i <= CatalogEntryCount(c_gameCatalogEffect) ; autoB75E1AFF_i += 1 ) {
+        lv_random = CatalogEntryGet(autoB75E1AFF_catalog, autoB75E1AFF_i);
+        lv__eachUnitInListIdx = 0;
+        for ( ; ( (autoFBB36FF0_ai >= 0 && lv__eachUnitInListIdx <= autoFBB36FF0_ae) || (autoFBB36FF0_ai < 0 && lv__eachUnitInListIdx >= autoFBB36FF0_ae) ) ; lv__eachUnitInListIdx += autoFBB36FF0_ai ) {
+            if ((lv__randomEffectIdx[lv__eachUnitInListIdx] == lv__effectCounter)) {
+                lv__randomEffects[lv__eachUnitInListIdx] = lv_random;
+            }
+
+        }
+        lv__effectCounter = (lv__effectCounter + 1);
+    }
+    lv__eachUnitInListIdx = 0;
+    for ( ; ( (auto039C0677_ai >= 0 && lv__eachUnitInListIdx <= auto039C0677_ae) || (auto039C0677_ai < 0 && lv__eachUnitInListIdx >= auto039C0677_ae) ) ; lv__eachUnitInListIdx += auto039C0677_ai ) {
+        UnitCreateEffectUnit(UnitGroupUnit(UnitGroupAlliance(UnitGetOwner(lv_unitList[lv__eachUnitInListIdx]), c_unitAllianceEnemy, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 1), 1), lv__randomEffects[lv__eachUnitInListIdx], lv_unitList[lv__eachUnitInListIdx]);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libFUNY_gt_ImfeelingluckytooActuallyrandomeffects_Init () {
+    libFUNY_gt_ImfeelingluckytooActuallyrandomeffects = TriggerCreate("libFUNY_gt_ImfeelingluckytooActuallyrandomeffects_Func");
+    TriggerAddEventChatMessage(libFUNY_gt_ImfeelingluckytooActuallyrandomeffects, c_playerAny, "Im feeling lucky too", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Im really feeling lucky (Actually random behavours)
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_gt_ImreallyfeelingluckyActuallyrandombehavours_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv__eachUnitInListIdx;
+    unit[1001] lv_unitList;
+    string[1001] lv__randomBehaviours;
+    int lv__i;
+    int lv__effectCounter;
+    int[1001] lv__randomBehavourIdx;
+    int lv_totalBehaviourCount;
+    string lv_random;
+    unit lv_unit;
+
+    // Automatic Variable Declarations
+    int autoAFB1B6A3_catalog;
+    int autoAFB1B6A3_i;
+    unitgroup auto273D059F_g;
+    int auto273D059F_u;
+    int auto62FABA49_catalog;
+    int auto62FABA49_i;
+    const int autoF0C07545_ae = 1000;
+    const int autoF0C07545_ai = 1;
+    const int auto56744631_ae = 1000;
+    const int auto56744631_ai = 1;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    autoAFB1B6A3_catalog = c_gameCatalogBehavior;
+    autoAFB1B6A3_i = 1;
+    for ( ; autoAFB1B6A3_i <= CatalogEntryCount(c_gameCatalogBehavior) ; autoAFB1B6A3_i += 1 ) {
+        lv_random = CatalogEntryGet(autoAFB1B6A3_catalog, autoAFB1B6A3_i);
+        lv_totalBehaviourCount = (lv_totalBehaviourCount + 1);
+    }
+    auto273D059F_g = UnitGroup(null, c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
+    auto273D059F_u = UnitGroupCount(auto273D059F_g, c_unitCountAll);
+    for (;; auto273D059F_u -= 1) {
+        lv_unit = UnitGroupUnitFromEnd(auto273D059F_g, auto273D059F_u);
+        if (lv_unit == null) { break; }
+        lv_unitList[lv__i] = lv_unit;
+        lv__randomBehavourIdx[lv__i] = RandomInt(0, lv_totalBehaviourCount);
+        lv__i = (lv__i + 1);
+    }
+    auto62FABA49_catalog = c_gameCatalogBehavior;
+    auto62FABA49_i = 1;
+    for ( ; auto62FABA49_i <= CatalogEntryCount(c_gameCatalogBehavior) ; auto62FABA49_i += 1 ) {
+        lv_random = CatalogEntryGet(auto62FABA49_catalog, auto62FABA49_i);
+        lv__eachUnitInListIdx = 0;
+        for ( ; ( (autoF0C07545_ai >= 0 && lv__eachUnitInListIdx <= autoF0C07545_ae) || (autoF0C07545_ai < 0 && lv__eachUnitInListIdx >= autoF0C07545_ae) ) ; lv__eachUnitInListIdx += autoF0C07545_ai ) {
+            if ((lv__randomBehavourIdx[lv__eachUnitInListIdx] == lv__effectCounter)) {
+                lv__randomBehaviours[lv__eachUnitInListIdx] = lv_random;
+            }
+
+        }
+        lv__effectCounter = (lv__effectCounter + 1);
+    }
+    lv__eachUnitInListIdx = 0;
+    for ( ; ( (auto56744631_ai >= 0 && lv__eachUnitInListIdx <= auto56744631_ae) || (auto56744631_ai < 0 && lv__eachUnitInListIdx >= auto56744631_ae) ) ; lv__eachUnitInListIdx += auto56744631_ai ) {
+        UnitBehaviorAdd(lv_unitList[lv__eachUnitInListIdx], lv__randomBehaviours[lv__eachUnitInListIdx], UnitGroupUnit(UnitGroupAlliance(UnitGetOwner(lv_unitList[lv__eachUnitInListIdx]), c_unitAllianceEnemy, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 1), 1), 1);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libFUNY_gt_ImreallyfeelingluckyActuallyrandombehavours_Init () {
+    libFUNY_gt_ImreallyfeelingluckyActuallyrandombehavours = TriggerCreate("libFUNY_gt_ImreallyfeelingluckyActuallyrandombehavours_Func");
+    TriggerAddEventChatMessage(libFUNY_gt_ImreallyfeelingluckyActuallyrandombehavours, c_playerAny, "Im really feeling lucky", true);
+}
+
+void libFUNY_InitTriggers () {
+    libFUNY_gt_MapInit_Init();
+    libFUNY_gt_GreetingModeOutput_Init();
+    libFUNY_gt_ToggleGreetingMode_Init();
+    libFUNY_gt_DoABarrelRoll_Init();
+    libFUNY_gt_initRandomEffects_Init();
+    libFUNY_gt_ToggleWhatisHappening_Init();
+    libFUNY_gt_WhatisHappening_Init();
+    libFUNY_gt_Imfeelinglucky_Init();
+    libFUNY_gt_ImfeelingluckytooActuallyrandomeffects_Init();
+    libFUNY_gt_ImreallyfeelingluckyActuallyrandombehavours_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool libFUNY_InitLib_completed = false;
+
+void libFUNY_InitLib () {
+    if (libFUNY_InitLib_completed) {
+        return;
+    }
+
+    libFUNY_InitLib_completed = true;
+
+    libFUNY_InitLibraries();
+    libFUNY_InitVariables();
+    libFUNY_InitTriggers();
+}
+

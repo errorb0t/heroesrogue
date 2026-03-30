@@ -1,0 +1,1549 @@
+include "TriggerLibs/NativeLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Utilities
+//--------------------------------------------------------------------------------------------------
+// Validating: templates
+
+// Constants
+const int libUTIL_gv_markerlength = 20;
+const int libUTIL_gv_randomMovementTextTagsLength = 360;
+
+// Variable Declarations
+bool libUTIL_gv_isUIEnabled;
+revealer libUTIL_gv_revealer;
+bool libUTIL_gv_isFOWEnabled;
+bool libUTIL_gv_isMassCDREnabled;
+int libUTIL_gv_massCDRPlayer;
+bool libUTIL_gv_terrainIndicatorEnabled;
+bool libUTIL_gv_isACTSEnabled;
+int libUTIL_gv_crosshair_marker;
+bool libUTIL_gv_isCrosshairEnabled;
+int[libUTIL_gv_markerlength + 1] libUTIL_gv_markers_tag;
+color[libUTIL_gv_markerlength + 1] libUTIL_gv_markers_color;
+point[libUTIL_gv_markerlength + 1] libUTIL_gv_markers_location;
+int[libUTIL_gv_randomMovementTextTagsLength + 1] libUTIL_gv_radomMovementTextTags;
+int libUTIL_gv_radomMovementCenterMessageTextTag;
+unitgroup libUTIL_gv_randomMovementUnits;
+region libUTIL_gv_randomMovementRegion;
+bool libUTIL_gv_isRunningRandomMovement;
+
+// Function Declarations
+void libUTIL_gf_ShowMarker (int lp_markerid, point lp_location);
+void libUTIL_gf_RemoveMarker (int lp_markerid);
+
+// Trigger Declarations
+trigger libUTIL_gt_MapInit;
+trigger libUTIL_gt_ClearTextMessage;
+trigger libUTIL_gt_ToggleUI;
+trigger libUTIL_gt_ToggleFOW;
+trigger libUTIL_gt_ToggleMassCDR;
+trigger libUTIL_gt_RunMassCDR;
+trigger libUTIL_gt_ToggleDebugMode;
+trigger libUTIL_gt_ToggleTerrainIndicator;
+trigger libUTIL_gt_WinGame;
+trigger libUTIL_gt_StartGame;
+trigger libUTIL_gt_EndGame;
+trigger libUTIL_gt_RestartGame;
+trigger libUTIL_gt_LoadMap;
+trigger libUTIL_gt_SetCameraObject;
+trigger libUTIL_gt_ResetCameraObject;
+trigger libUTIL_gt_ForceRunTrigger;
+trigger libUTIL_gt_ToggleACTS;
+trigger libUTIL_gt_MinionWaveInterval;
+trigger libUTIL_gt_FloatingCombatText;
+trigger libUTIL_gt_DisplayString;
+trigger libUTIL_gt_RunCrossHair;
+trigger libUTIL_gt_ToggleCrosshair;
+trigger libUTIL_gt_AddMarkerUnit;
+trigger libUTIL_gt_AddMarkerCamera;
+trigger libUTIL_gt_GetMarkerPosition;
+trigger libUTIL_gt_ChangeMarkerColor;
+trigger libUTIL_gt_RemoveMarker;
+trigger libUTIL_gt_ClearMarkers;
+trigger libUTIL_gt_RunRandomMovement;
+trigger libUTIL_gt_ToggleRandomMovement;
+trigger libUTIL_gt_PlayCutscene;
+trigger libUTIL_gt_SetGameSpeed;
+trigger libUTIL_gt_ResetGameSpeed;
+
+// Library Initialization
+void libUTIL_InitVariables ();
+
+//--------------------------------------------------------------------------------------------------
+// Library: Utilities
+//--------------------------------------------------------------------------------------------------
+// Validating: templates
+
+// External Library Initialization
+void libUTIL_InitLibraries () {
+    libNtve_InitVariables();
+}
+
+// Variable Initialization
+bool libUTIL_InitVariables_completed = false;
+
+void libUTIL_InitVariables () {
+    int init_i;
+
+    if (libUTIL_InitVariables_completed) {
+        return;
+    }
+
+    libUTIL_InitVariables_completed = true;
+
+    libUTIL_gv_isUIEnabled = true;
+    libUTIL_gv_isFOWEnabled = true;
+    libUTIL_gv_crosshair_marker = c_textTagNone;
+    for (init_i = 0; init_i <= libUTIL_gv_markerlength; init_i += 1) {
+        libUTIL_gv_markers_tag[init_i] = c_textTagNone;
+    }
+    for (init_i = 0; init_i <= libUTIL_gv_markerlength; init_i += 1) {
+        libUTIL_gv_markers_color[init_i] = Color(RandomFixed(0.0, 255.0), RandomFixed(0.0, 255.0), RandomFixed(0.0, 255.0));
+    }
+    for (init_i = 0; init_i <= libUTIL_gv_randomMovementTextTagsLength; init_i += 1) {
+        libUTIL_gv_radomMovementTextTags[init_i] = c_textTagNone;
+    }
+    libUTIL_gv_radomMovementCenterMessageTextTag = c_textTagNone;
+    libUTIL_gv_randomMovementUnits = UnitGroupEmpty();
+}
+
+// Functions
+void libUTIL_gf_ShowMarker (int lp_markerid, point lp_location) {
+    // Automatic Variable Declarations
+    // Implementation
+    TextTagDestroy(libUTIL_gv_markers_tag[lp_markerid]);
+    TextTagCreate(StringToText("X"), 24, lp_location, 0.0, true, false, PlayerGroupAll());
+    TextTagSetColor(TextTagLastCreated(), c_textTagColorText, libUTIL_gv_markers_color[lp_markerid]);
+    libUTIL_gv_markers_tag[lp_markerid] = TextTagLastCreated();
+    libUTIL_gv_markers_location[lp_markerid] = lp_location;
+}
+
+void libUTIL_gf_RemoveMarker (int lp_markerid) {
+    // Automatic Variable Declarations
+    // Implementation
+    TextTagDestroy(libUTIL_gv_markers_tag[lp_markerid]);
+    libUTIL_gv_markers_tag[lp_markerid] = c_textTagNone;
+    libUTIL_gv_markers_location[lp_markerid] = null;
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: MapInit
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_MapInit_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    //UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Utilities Lib Initialized"));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_MapInit_Init () {
+    libUTIL_gt_MapInit = TriggerCreate("libUTIL_gt_MapInit_Func");
+    TriggerAddEventMapInit(libUTIL_gt_MapInit);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: ClearTextMessage
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ClearTextMessage_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "cls") || (StringWord(EventChatMessage(false), 1) == "clear")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) != null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("All Messages will be cleared after " + (StringWord(EventChatMessage(false), 2) + " seconds."))));
+        Wait(StringToFixed(StringWord(EventChatMessage(false), 2)), c_timeGame);
+    }
+
+    UIClearMessages(PlayerGroupAll(), c_messageAreaAll);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ClearTextMessage_Init () {
+    libUTIL_gt_ClearTextMessage = TriggerCreate("libUTIL_gt_ClearTextMessage_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ClearTextMessage, c_playerAny, "cls", false);
+    TriggerAddEventChatMessage(libUTIL_gt_ClearTextMessage, c_playerAny, "clear", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: ToggleUI
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ToggleUI_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libUTIL_gv_isUIEnabled = !(libUTIL_gv_isUIEnabled);
+    if ((libUTIL_gv_isUIEnabled == true)) {
+        libNtve_gf_HideGameUI(true, PlayerGroupAll());
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Turned on UI: All abilities will be enabled"));
+    }
+    else {
+        libNtve_gf_HideGameUI(false, PlayerGroupAll());
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Turned off UI: All abilities will be disabled"));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ToggleUI_Init () {
+    libUTIL_gt_ToggleUI = TriggerCreate("libUTIL_gt_ToggleUI_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleUI, c_playerAny, "tui", true);
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleUI, c_playerAny, "toggleui", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: ToggleFOW
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ToggleFOW_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libUTIL_gv_isFOWEnabled = !(libUTIL_gv_isFOWEnabled);
+    if ((libUTIL_gv_isFOWEnabled == true)) {
+        VisRevealerDestroy(libUTIL_gv_revealer);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Enabled Fog Of War"));
+    }
+    else {
+        VisRevealerCreate(EventPlayer(), RegionEntireMap());
+        libUTIL_gv_revealer = VisRevealerLastCreated();
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Disabled Fog Of War"));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ToggleFOW_Init () {
+    libUTIL_gt_ToggleFOW = TriggerCreate("libUTIL_gt_ToggleFOW_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleFOW, c_playerAny, "tfow", true);
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleFOW, c_playerAny, "togglefogofwar", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: ToggleMassCDR
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ToggleMassCDR_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libUTIL_gv_isMassCDREnabled = !(libUTIL_gv_isMassCDREnabled);
+    if ((libUTIL_gv_isMassCDREnabled == true)) {
+        libUTIL_gv_massCDRPlayer = EventPlayer();
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Mass CDR Enabled"));
+    }
+    else {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Mass CDR Disabled"));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ToggleMassCDR_Init () {
+    libUTIL_gt_ToggleMassCDR = TriggerCreate("libUTIL_gt_ToggleMassCDR_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleMassCDR, c_playerAny, "tcdr", true);
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleMassCDR, c_playerAny, "togglecdr", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: RunMassCDR
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_RunMassCDR_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unit lv_unit;
+    int lv_i;
+
+    // Automatic Variable Declarations
+    int autoF588521D_ae;
+    const int autoF588521D_ai = 1;
+
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((libUTIL_gv_isMassCDREnabled == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    autoF588521D_ae = UnitGroupCount(UnitGroupSelected(libUTIL_gv_massCDRPlayer), c_unitCountAlive);
+    lv_i = 1;
+    for ( ; ( (autoF588521D_ai >= 0 && lv_i <= autoF588521D_ae) || (autoF588521D_ai < 0 && lv_i >= autoF588521D_ae) ) ; lv_i += autoF588521D_ai ) {
+        lv_unit = UnitGroupUnit(UnitGroupSelected(libUTIL_gv_massCDRPlayer), lv_i);
+        UnitSetPropertyFixed(lv_unit, c_unitPropEnergyPercent, 100.0);
+        libSprt_gf_DEBUGRefreshCooldownsforUnit(libUTIL_gv_massCDRPlayer, lv_unit);
+    }
+    libGame_gf_HeroRefreshCooldowns(libUTIL_gv_massCDRPlayer, false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_RunMassCDR_Init () {
+    libUTIL_gt_RunMassCDR = TriggerCreate("libUTIL_gt_RunMassCDR_Func");
+    TriggerAddEventTimePeriodic(libUTIL_gt_RunMassCDR, 0.0625, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: ToggleDebugMode
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ToggleDebugMode_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    bool lv_debugModeProxyVariable;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libCore_gv_dEBUGDebuggingEnabled = !(libCore_gv_dEBUGDebuggingEnabled);
+    lv_debugModeProxyVariable = libCore_gv_dEBUGDebuggingEnabled;
+    if ((lv_debugModeProxyVariable == true)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Debug Mode Enabled"));
+    }
+    else {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Debug Mode Disabled"));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ToggleDebugMode_Init () {
+    libUTIL_gt_ToggleDebugMode = TriggerCreate("libUTIL_gt_ToggleDebugMode_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleDebugMode, c_playerAny, "tdb", true);
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleDebugMode, c_playerAny, "toggledebugmode", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Toggle Terrain Indicator
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ToggleTerrainIndicator_Func (bool testConds, bool runActions) {
+    int init_i;
+
+    // Variable Declarations
+    unit lv_unit;
+    string[8] lv_collisionEdges;
+    string[8] lv_unitsWithCollisionEdges;
+    int lv_i;
+
+    // Automatic Variable Declarations
+    const int auto675D3D77_ae = 6;
+    const int auto675D3D77_ai = 1;
+
+    // Variable Initialization
+    lv_unit = UnitGroupUnit(UnitGroupSelected(EventPlayer()), 1);
+    for (init_i = 0; init_i <= 7; init_i += 1) {
+        lv_collisionEdges[init_i] = "";
+    }
+    for (init_i = 0; init_i <= 7; init_i += 1) {
+        lv_unitsWithCollisionEdges[init_i] = "";
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_collisionEdges[0] = "AurielShowCollisionEdges";
+    lv_collisionEdges[1] = "HanzoShowCollisionEdges";
+    lv_collisionEdges[2] = "HoggerShowCollisionEdges";
+    lv_collisionEdges[3] = "JunkratShowCollisionEdges";
+    lv_collisionEdges[4] = "LucioShowCollisionEdges";
+    lv_collisionEdges[5] = "NexusHunterShowCollisionEdges";
+    lv_collisionEdges[6] = "DiabloShowCollisionEdges";
+    lv_unitsWithCollisionEdges[0] = "HeroAuriel";
+    lv_unitsWithCollisionEdges[1] = "HeroHanzo";
+    lv_unitsWithCollisionEdges[2] = "HeroHogger";
+    lv_unitsWithCollisionEdges[3] = "HeroJunkrat";
+    lv_unitsWithCollisionEdges[4] = "HeroLucio";
+    lv_unitsWithCollisionEdges[5] = "HeroNexusHunter";
+    lv_unitsWithCollisionEdges[6] = "HeroDiablo";
+    lv_i = 0;
+    for ( ; ( (auto675D3D77_ai >= 0 && lv_i <= auto675D3D77_ae) || (auto675D3D77_ai < 0 && lv_i >= auto675D3D77_ae) ) ; lv_i += auto675D3D77_ai ) {
+        if (((UnitGetType(lv_unit) == (lv_unitsWithCollisionEdges[lv_i])))) {
+            ActorSendTo(libNtve_gf_MainActorofUnit(lv_unit), lv_collisionEdges[lv_i], "Destroy Immediate");
+        }
+
+    }
+    libUTIL_gv_terrainIndicatorEnabled = !(libUTIL_gv_terrainIndicatorEnabled);
+    if ((libUTIL_gv_terrainIndicatorEnabled == true)) {
+        libNtve_gf_SendActorMessageToUnit(lv_unit, ("Create HanzoShowCollisionEdges"));
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Terrain Indicator Enabled"));
+    }
+    else {
+        ActorSendTo(libNtve_gf_MainActorofUnit(lv_unit), "HanzoShowCollisionEdges", "Destroy Immediate");
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Terrain Indicator Disabled"));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ToggleTerrainIndicator_Init () {
+    libUTIL_gt_ToggleTerrainIndicator = TriggerCreate("libUTIL_gt_ToggleTerrainIndicator_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleTerrainIndicator, c_playerAny, "tti", true);
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleTerrainIndicator, c_playerAny, "toggleterrainindicator", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: WinGame
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_WinGame_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_team;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "wg") || (StringWord(EventChatMessage(false), 1) == "wingame")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <wg|wingame> <TeamID>"));
+    }
+    else {
+        lv_team = StringToInt(StringWord(EventChatMessage(false), 2));
+        libGame_gf_GameOver(lv_team);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_WinGame_Init () {
+    libUTIL_gt_WinGame = TriggerCreate("libUTIL_gt_WinGame_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_WinGame, c_playerAny, "wg", false);
+    TriggerAddEventChatMessage(libUTIL_gt_WinGame, c_playerAny, "wingame", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: StartGame
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_StartGame_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Starting Game ..."));
+    libSprt_gf_DEBUGStartGame();
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_StartGame_Init () {
+    libUTIL_gt_StartGame = TriggerCreate("libUTIL_gt_StartGame_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_StartGame, c_playerAny, "sg", true);
+    TriggerAddEventChatMessage(libUTIL_gt_StartGame, c_playerAny, "startgame", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: EndGame
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_EndGame_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Kicking All Players ..."));
+    KickFromGame(PlayerGroupAll());
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_EndGame_Init () {
+    libUTIL_gt_EndGame = TriggerCreate("libUTIL_gt_EndGame_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_EndGame, c_playerAny, "eg", true);
+    TriggerAddEventChatMessage(libUTIL_gt_EndGame, c_playerAny, "endgame", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: RestartGame
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_RestartGame_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Attempting to restart......."));
+    RestartGame(PlayerGroupAll());
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_RestartGame_Init () {
+    libUTIL_gt_RestartGame = TriggerCreate("libUTIL_gt_RestartGame_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_RestartGame, c_playerAny, "re", true);
+    TriggerAddEventChatMessage(libUTIL_gt_RestartGame, c_playerAny, "restartgame", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: LoadMap
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_LoadMap_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    string lv_map;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_map = "CURRENT";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "lm") || (StringWord(EventChatMessage(false), 1) == "loadmap")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <lm|loadmap> <MapPath>"));
+    }
+    else {
+        lv_map = StringWord(EventChatMessage(false), 2);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Loading Map: " + lv_map)));
+        GameSetNextMap(lv_map);
+        KickFromGame(PlayerGroupAll());
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_LoadMap_Init () {
+    libUTIL_gt_LoadMap = TriggerCreate("libUTIL_gt_LoadMap_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_LoadMap, c_playerAny, "lm", false);
+    TriggerAddEventChatMessage(libUTIL_gt_LoadMap, c_playerAny, "loadmap", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Set Camera Object
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_SetCameraObject_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    camerainfo lv_camera;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "sco") || (StringWord(EventChatMessage(false), 1) == "setcameraobject")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) != null)) {
+        CameraSetData(PlayerGroupSingle(EventPlayer()), (StringWord(EventChatMessage(false), 2)));
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Set Camera Data to " + StringWord(EventChatMessage(false), 2))));
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_SetCameraObject_Init () {
+    libUTIL_gt_SetCameraObject = TriggerCreate("libUTIL_gt_SetCameraObject_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_SetCameraObject, c_playerAny, "sco", false);
+    TriggerAddEventChatMessage(libUTIL_gt_SetCameraObject, c_playerAny, "setcameraobject", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Reset Camera Object
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ResetCameraObject_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    const string lv_defaultCamera = "BlizzardAllStars";
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    CameraSetData(PlayerGroupSingle(EventPlayer()), (lv_defaultCamera));
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Reset Camera Data to " + lv_defaultCamera)));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ResetCameraObject_Init () {
+    libUTIL_gt_ResetCameraObject = TriggerCreate("libUTIL_gt_ResetCameraObject_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ResetCameraObject, c_playerAny, "rco", true);
+    TriggerAddEventChatMessage(libUTIL_gt_ResetCameraObject, c_playerAny, "resetcameraobject", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Force Run Trigger
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ForceRunTrigger_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    string lv_triggerName;
+    trigger lv_trigger;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_triggerName = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "frt") || (StringWord(EventChatMessage(false), 1) == "forceruntrigger")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <frt|forceruntrigger> <TriggerID>"));
+    }
+    else {
+        lv_triggerName = StringWord(EventChatMessage(false), 2);
+        lv_trigger = TriggerCreate(lv_triggerName);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Started Trigger: " + StringWord(EventChatMessage(false), 2))));
+        TriggerExecute(lv_trigger, false, true);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Stopped Trigger: " + StringWord(EventChatMessage(false), 2))));
+        TriggerDestroy(lv_trigger);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ForceRunTrigger_Init () {
+    libUTIL_gt_ForceRunTrigger = TriggerCreate("libUTIL_gt_ForceRunTrigger_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ForceRunTrigger, c_playerAny, "frt", false);
+    TriggerAddEventChatMessage(libUTIL_gt_ForceRunTrigger, c_playerAny, "forceruntrigger", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Toggle ACTS
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ToggleACTS_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    bool lv_isTSEnabled;
+    int lv_i;
+
+    // Automatic Variable Declarations
+    const int auto742BDE96_ae = 15;
+    const int auto742BDE96_ai = 1;
+    const int autoDCF572B4_ae = 15;
+    const int autoDCF572B4_ai = 1;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libUTIL_gv_isACTSEnabled = !(libUTIL_gv_isACTSEnabled);
+    lv_isTSEnabled = libSprt_gv_dEBUGSelectionEnabled;
+    if ((libUTIL_gv_isACTSEnabled == true)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Turned ON Alliance Control and Team Selection (/ac, ts)"));
+        lv_i = 1;
+        for ( ; ( (autoDCF572B4_ai >= 0 && lv_i <= autoDCF572B4_ae) || (autoDCF572B4_ai < 0 && lv_i >= autoDCF572B4_ae) ) ; lv_i += autoDCF572B4_ai ) {
+            PlayerSetAlliance(lv_i, c_allianceIdControl, EventPlayer(), true);
+        }
+        if ((lv_isTSEnabled != true)) {
+            libSprt_gf_DEBUGToggleSelection();
+        }
+
+    }
+    else {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Turned OFF Alliance Control and Team Selection (/ac, ts)"));
+        lv_i = 1;
+        for ( ; ( (auto742BDE96_ai >= 0 && lv_i <= auto742BDE96_ae) || (auto742BDE96_ai < 0 && lv_i >= auto742BDE96_ae) ) ; lv_i += auto742BDE96_ai ) {
+            PlayerSetAlliance(lv_i, c_allianceIdControl, EventPlayer(), true);
+        }
+        if ((lv_isTSEnabled != false)) {
+            libSprt_gf_DEBUGToggleSelection();
+        }
+
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ToggleACTS_Init () {
+    libUTIL_gt_ToggleACTS = TriggerCreate("libUTIL_gt_ToggleACTS_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleACTS, c_playerAny, "acts", true);
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleACTS, c_playerAny, "alliancecontrolteamselection", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Minion Wave Interval
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_MinionWaveInterval_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    trigger lv_minionSpawnTrigger;
+    fixed lv_seconds;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_seconds = 30.0;
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "mwi") || (StringWord(EventChatMessage(false), 1) == "minonwaveinterval")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        lv_seconds = libCore_gv_bALMinionWaveInterval;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Minion Wave Interval is: " + FixedToString(lv_seconds, c_fixedPrecisionAny))));
+    }
+    else {
+        lv_seconds = StringToFixed(StringWord(EventChatMessage(false), 2));
+        if ((lv_seconds > 0.0)) {
+            libCore_gv_bALMinionWaveInterval = lv_seconds;
+            libGame_gf_MinionStartStopMinionSpawnCycle(false);
+            libGame_gf_MinionStartStopMinionSpawnCycle(true);
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Minion Wave Interval set to: " + FixedToString(lv_seconds, c_fixedPrecisionAny))));
+        }
+        else {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Invalid Interval Value: " + StringWord(EventChatMessage(false), 2))));
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_MinionWaveInterval_Init () {
+    libUTIL_gt_MinionWaveInterval = TriggerCreate("libUTIL_gt_MinionWaveInterval_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_MinionWaveInterval, c_playerAny, "mwi", false);
+    TriggerAddEventChatMessage(libUTIL_gt_MinionWaveInterval, c_playerAny, "minionwaveinterval", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Floating Combat Text
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_FloatingCombatText_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    const string lv_type_prefix = "FloatingCombatElements/FloatingCombat";
+    const string lv_type_default = "NormalAmountGiven";
+    const string lv_state_default = "Basic";
+    const string lv_state_suffix = "State";
+    text lv_message;
+    string lv_type;
+    string lv_state;
+    unit lv_unit;
+
+    // Automatic Variable Declarations
+    unitgroup autoF3A382EE_g;
+    int autoF3A382EE_u;
+
+    // Variable Initialization
+    lv_type = (("" + lv_type_prefix) + lv_type_default);
+    lv_state = (("" + lv_state_default) + lv_state_suffix);
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "fct") || (StringWord(EventChatMessage(false), 1) == "floatingcombattext")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <fct|floatingcombattext> <message> [state] [type]"));
+    }
+    else {
+        lv_message = StringToText(StringWord(EventChatMessage(false), 2));
+        if ((StringWord(EventChatMessage(false), 3) != null)) {
+            lv_state = (StringWord(EventChatMessage(false), 3) + lv_state_suffix);
+        }
+
+        if ((StringWord(EventChatMessage(false), 4) != null)) {
+            lv_type = (lv_type_prefix + StringWord(EventChatMessage(false), 4));
+        }
+
+        if (((lv_type == (lv_type_prefix + "LesserAmountReceived")) || (lv_type == (lv_type_prefix + "LesserAmountGiven")) || (lv_type == (lv_type_prefix + "NormalAmountReceived")) || (lv_type == (lv_type_prefix + "NormalAmountGiven")) || (lv_type == (lv_type_prefix + "MediumAmountReceived")) || (lv_type == (lv_type_prefix + "MediumAmountGiven")) || (lv_type == (lv_type_prefix + "GreaterAmountReceived")) || (lv_type == (lv_type_prefix + "GreaterAmountGiven")) || (lv_type == (lv_type_prefix + "CritAmountReceived")) || (lv_type == (lv_type_prefix + "CritAmountGiven")) || (lv_type == (lv_type_prefix + "AmountReadable")) || (lv_type == (lv_type_prefix + "CritAmountReadable")) || (lv_type == (lv_type_prefix + "SelfAmountReceived")) || (lv_type == (lv_type_prefix + "HealPrevented")) || (lv_type == (lv_type_prefix + "QuestProgress")))) {
+            autoF3A382EE_g = UnitGroupSelected(EventPlayer());
+            autoF3A382EE_u = UnitGroupCount(autoF3A382EE_g, c_unitCountAll);
+            for (;; autoF3A382EE_u -= 1) {
+                lv_unit = UnitGroupUnitFromEnd(autoF3A382EE_g, autoF3A382EE_u);
+                if (lv_unit == null) { break; }
+                FloatingCombatElementCreateTextAtUnit(PlayerGroupAll(), lv_type, lv_state, lv_unit, lv_message, libNtve_gv_FloatingCombatTextAutoRandomSeed);
+            }
+        }
+        else {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Invalid Floating Combat Text Type. Please see doc for acceptable types."));
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_FloatingCombatText_Init () {
+    libUTIL_gt_FloatingCombatText = TriggerCreate("libUTIL_gt_FloatingCombatText_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_FloatingCombatText, c_playerAny, "fct", false);
+    TriggerAddEventChatMessage(libUTIL_gt_FloatingCombatText, c_playerAny, "floatingcombattext", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Display String
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_DisplayString_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    string lv_mode;
+    string lv_value;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_mode = "";
+    lv_value = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "str") || (StringWord(EventChatMessage(false), 1) == "string")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if (((StringWord(EventChatMessage(false), 2) == null) && (StringWord(EventChatMessage(false), 3) == null))) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <str|string> <TextExpressionAssemble|StringExternal> <value>"));
+    }
+    else {
+        lv_mode = StringWord(EventChatMessage(false), 2);
+        lv_value = StringWord(EventChatMessage(false), 3);
+        if ((lv_mode == "TextExpressionAssemble")) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, TextExpressionAssemble(lv_value));
+            return true;
+        }
+
+        if ((lv_mode == "StringExternal")) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringExternal(lv_value));
+            return true;
+        }
+
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_DisplayString_Init () {
+    libUTIL_gt_DisplayString = TriggerCreate("libUTIL_gt_DisplayString_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_DisplayString, c_playerAny, "str", false);
+    TriggerAddEventChatMessage(libUTIL_gt_DisplayString, c_playerAny, "string", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: RunCrossHair
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_RunCrossHair_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    const string lv_crosshair = "+";
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((libUTIL_gv_isCrosshairEnabled == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TextTagDestroy(libUTIL_gv_crosshair_marker);
+    TextTagCreate(StringToText(lv_crosshair), 24, CameraGetTarget(1), 0.0, true, false, PlayerGroupSingle(1));
+    libUTIL_gv_crosshair_marker = TextTagLastCreated();
+    TextTagShow(libUTIL_gv_crosshair_marker, PlayerGroupSingle(1), true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_RunCrossHair_Init () {
+    libUTIL_gt_RunCrossHair = TriggerCreate("libUTIL_gt_RunCrossHair_Func");
+    TriggerEnable(libUTIL_gt_RunCrossHair, false);
+    TriggerAddEventCameraMove(libUTIL_gt_RunCrossHair, 1, c_cameraMoveReasonAny);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Toggle Crosshair
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ToggleCrosshair_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libUTIL_gv_isCrosshairEnabled = !(libUTIL_gv_isCrosshairEnabled);
+    TextTagDestroy(libUTIL_gv_crosshair_marker);
+    if ((libUTIL_gv_isCrosshairEnabled == true)) {
+        TriggerEnable(libUTIL_gt_RunCrossHair, true);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Turned on Crosshair"));
+    }
+    else {
+        TriggerEnable(libUTIL_gt_RunCrossHair, false);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Turned off Crosshair"));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ToggleCrosshair_Init () {
+    libUTIL_gt_ToggleCrosshair = TriggerCreate("libUTIL_gt_ToggleCrosshair_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleCrosshair, c_playerAny, "tch", true);
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleCrosshair, c_playerAny, "togglecrosshair", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Add Marker (Unit)
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_AddMarkerUnit_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_markerId;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "marker") || (StringWord(EventChatMessage(false), 1) == "addmarker")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <marker|addmarker> <MarkerId>"));
+    }
+    else {
+        lv_markerId = StringToInt(StringWord(EventChatMessage(false), 2));
+        if (((lv_markerId > libUTIL_gv_markerlength) || (lv_markerId < 1))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Error: Marker ID must between 1 - " + IntToString(libUTIL_gv_markerlength))));
+            return false;
+        }
+
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Added Marker " + IntToString(lv_markerId)) + (" at unit location: " + libNtve_gf_ConvertPointToString(UnitGetPosition(UnitGroupUnit(UnitGroupSelected(EventPlayer()), 1)))))));
+        lv_markerId = (lv_markerId - 1);
+        libUTIL_gf_ShowMarker(lv_markerId, UnitGetPosition(UnitGroupUnit(UnitGroupSelected(EventPlayer()), 1)));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_AddMarkerUnit_Init () {
+    libUTIL_gt_AddMarkerUnit = TriggerCreate("libUTIL_gt_AddMarkerUnit_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_AddMarkerUnit, c_playerAny, "marker", false);
+    TriggerAddEventChatMessage(libUTIL_gt_AddMarkerUnit, c_playerAny, "addmarker", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Add Marker (Camera)
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_AddMarkerCamera_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_markerId;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "markerc") || (StringWord(EventChatMessage(false), 1) == "addmarkercamera")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <markerc|addmarkercamera> <MarkerId>"));
+    }
+    else {
+        lv_markerId = StringToInt(StringWord(EventChatMessage(false), 2));
+        if (((lv_markerId > libUTIL_gv_markerlength) || (lv_markerId < 1))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Error: Marker ID must between 1 - " + IntToString(libUTIL_gv_markerlength))));
+            return false;
+        }
+
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Added Marker " + IntToString(lv_markerId)) + (" at camera location: " + libNtve_gf_ConvertPointToString(CameraGetTarget(EventPlayer()))))));
+        lv_markerId = (lv_markerId - 1);
+        libUTIL_gf_ShowMarker(lv_markerId, CameraGetTarget(EventPlayer()));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_AddMarkerCamera_Init () {
+    libUTIL_gt_AddMarkerCamera = TriggerCreate("libUTIL_gt_AddMarkerCamera_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_AddMarkerCamera, c_playerAny, "markerc", false);
+    TriggerAddEventChatMessage(libUTIL_gt_AddMarkerCamera, c_playerAny, "addmarkercamera", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Get Marker Position
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_GetMarkerPosition_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_markerId;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "gmarker") || (StringWord(EventChatMessage(false), 1) == "getmarker")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <gmarker|getmarker> <MarkerId>"));
+    }
+    else {
+        lv_markerId = StringToInt(StringWord(EventChatMessage(false), 2));
+        if (((lv_markerId > libUTIL_gv_markerlength) || (lv_markerId < 1))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Error: Marker ID must between 1 - " + IntToString(libUTIL_gv_markerlength))));
+            return false;
+        }
+
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringToText((("Marker " + IntToString(lv_markerId)) + (" location: " + libNtve_gf_ConvertPointToString(libUTIL_gv_markers_location[(lv_markerId - 1)])))));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_GetMarkerPosition_Init () {
+    libUTIL_gt_GetMarkerPosition = TriggerCreate("libUTIL_gt_GetMarkerPosition_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_GetMarkerPosition, c_playerAny, "gmarker", false);
+    TriggerAddEventChatMessage(libUTIL_gt_GetMarkerPosition, c_playerAny, "getmarker", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Change Marker Color
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ChangeMarkerColor_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_markerId;
+    int lv_red;
+    int lv_green;
+    int lv_blue;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "colmarker") || (StringWord(EventChatMessage(false), 1) == "colormarker")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if (((StringWord(EventChatMessage(false), 2) == null) || (StringWord(EventChatMessage(false), 3) == null) || (StringWord(EventChatMessage(false), 4) == null) || (StringWord(EventChatMessage(false), 5) == null))) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <colmarker|colormarker> <MarkerId> <Red> <Green> <Blue>"));
+    }
+    else {
+        lv_markerId = StringToInt(StringWord(EventChatMessage(false), 2));
+        if (((lv_markerId > libUTIL_gv_markerlength) || (lv_markerId < 1))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Error: Marker ID must between 1 - " + IntToString(libUTIL_gv_markerlength))));
+            return false;
+        }
+
+        lv_red = StringToInt(StringWord(EventChatMessage(false), 3));
+        lv_green = StringToInt(StringWord(EventChatMessage(false), 4));
+        lv_blue = StringToInt(StringWord(EventChatMessage(false), 5));
+        if ((((lv_red > 255) || (lv_red < 0)) || ((lv_green > 255) || (lv_green < 0)) || ((lv_blue > 255) || (lv_blue < 0)))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Error: Red, Green and Blue value must between 0 - 255"));
+            return false;
+        }
+
+        libUTIL_gv_markers_color[(lv_markerId - 1)] = Color(lv_red, lv_green, lv_blue);
+        TextTagSetColor(libUTIL_gv_markers_tag[(lv_markerId - 1)], c_textTagColorText, libUTIL_gv_markers_color[(lv_markerId - 1)]);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Changed Marker " + IntToString(lv_markerId)) + (" color to: " + libNtve_gf_ConvertColorToString(Color(lv_red, lv_green, lv_blue))))));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ChangeMarkerColor_Init () {
+    libUTIL_gt_ChangeMarkerColor = TriggerCreate("libUTIL_gt_ChangeMarkerColor_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ChangeMarkerColor, c_playerAny, "colmarker", false);
+    TriggerAddEventChatMessage(libUTIL_gt_ChangeMarkerColor, c_playerAny, "colormarker", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Remove Marker
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_RemoveMarker_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_markerId;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "rmmarker") || (StringWord(EventChatMessage(false), 1) == "removemarker")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <rmmarker|removemarker> <MarkerId>"));
+    }
+    else {
+        lv_markerId = StringToInt(StringWord(EventChatMessage(false), 2));
+        if (((lv_markerId > libUTIL_gv_markerlength) || (lv_markerId < 1))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Error: Marker ID must between 1 - " + IntToString(libUTIL_gv_markerlength))));
+            return false;
+        }
+
+    }
+    libUTIL_gf_RemoveMarker((lv_markerId - 1));
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Removed Marker " + IntToString(lv_markerId))));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_RemoveMarker_Init () {
+    libUTIL_gt_RemoveMarker = TriggerCreate("libUTIL_gt_RemoveMarker_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_RemoveMarker, c_playerAny, "rmmarker", false);
+    TriggerAddEventChatMessage(libUTIL_gt_RemoveMarker, c_playerAny, "removemarker", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Clear Markers
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ClearMarkers_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_i;
+
+    // Automatic Variable Declarations
+    const int autoA86BF384_ae = libUTIL_gv_markerlength;
+    const int autoA86BF384_ai = 1;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_i = 0;
+    for ( ; ( (autoA86BF384_ai >= 0 && lv_i <= autoA86BF384_ae) || (autoA86BF384_ai < 0 && lv_i >= autoA86BF384_ae) ) ; lv_i += autoA86BF384_ai ) {
+        libUTIL_gf_RemoveMarker(lv_i);
+    }
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Removed All Markers"));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ClearMarkers_Init () {
+    libUTIL_gt_ClearMarkers = TriggerCreate("libUTIL_gt_ClearMarkers_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ClearMarkers, c_playerAny, "clmarker", true);
+    TriggerAddEventChatMessage(libUTIL_gt_ClearMarkers, c_playerAny, "clearmarker", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Run Random Movement
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_RunRandomMovement_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    point lv_randompoint;
+    unit lv_currentUnit;
+    string lv_unittype;
+
+    // Automatic Variable Declarations
+    unitgroup autoBF288A2B_g;
+    int autoBF288A2B_u;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    autoBF288A2B_g = libUTIL_gv_randomMovementUnits;
+    autoBF288A2B_u = UnitGroupCount(autoBF288A2B_g, c_unitCountAll);
+    for (;; autoBF288A2B_u -= 1) {
+        lv_currentUnit = UnitGroupUnitFromEnd(autoBF288A2B_g, autoBF288A2B_u);
+        if (lv_currentUnit == null) { break; }
+        lv_randompoint = RegionRandomPoint(libUTIL_gv_randomMovementRegion);
+        lv_unittype = UnitGetType(lv_currentUnit);
+        if ((UnitOrderCount(lv_currentUnit) == 0)) {
+            UnitIssueOrder(lv_currentUnit, OrderTargetingPoint(AbilityCommand("move", 0), lv_randompoint), c_orderQueueAddToEnd);
+        }
+
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_RunRandomMovement_Init () {
+    libUTIL_gt_RunRandomMovement = TriggerCreate("libUTIL_gt_RunRandomMovement_Func");
+    TriggerEnable(libUTIL_gt_RunRandomMovement, false);
+    TriggerAddEventTimePeriodic(libUTIL_gt_RunRandomMovement, 0.0625, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Toggle Random Movement
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ToggleRandomMovement_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    fixed lv_radius;
+    const int lv_texttagInterval = 1;
+    fixed lv_circle_x;
+    fixed lv_circle_y;
+    int lv_i;
+
+    // Automatic Variable Declarations
+    const int auto04AA997A_ae = libUTIL_gv_randomMovementTextTagsLength;
+    const int auto04AA997A_ai = 1;
+    const int auto67597715_ae = 360;
+    const int auto67597715_ai = lv_texttagInterval;
+
+    // Variable Initialization
+    lv_radius = 7.0;
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "trm") || (StringWord(EventChatMessage(false), 1) == "togglerandommovement")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libUTIL_gv_isRunningRandomMovement = !(libUTIL_gv_isRunningRandomMovement);
+    if ((libUTIL_gv_isRunningRandomMovement == true)) {
+        if (((StringWord(EventChatMessage(false), 2) != null) && (StringToInt(StringWord(EventChatMessage(false), 2)) > 0))) {
+            lv_radius = StringToFixed(StringWord(EventChatMessage(false), 2));
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Random Movment Radius Set to: " + FixedToString(lv_radius, c_fixedPrecisionAny))));
+        }
+        else {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Random Movment Radius Set to: " + FixedToString(lv_radius, c_fixedPrecisionAny))));
+        }
+    }
+
+    if ((libUTIL_gv_isRunningRandomMovement == true)) {
+        libUTIL_gv_randomMovementRegion = RegionCircle(CameraGetTarget(EventPlayer()), lv_radius);
+        libUTIL_gv_randomMovementUnits = UnitGroupSelected(EventPlayer());
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Toggle Random Movement Enabled"));
+        lv_i = 0;
+        for ( ; ( (auto67597715_ai >= 0 && lv_i <= auto67597715_ae) || (auto67597715_ai < 0 && lv_i >= auto67597715_ae) ) ; lv_i += auto67597715_ai ) {
+            lv_circle_x = (PointGetX(CameraGetTarget(EventPlayer())) + (lv_radius * Cos(IntToFixed(lv_i))));
+            lv_circle_y = (PointGetY(CameraGetTarget(EventPlayer())) + (lv_radius * Sin(IntToFixed(lv_i))));
+            TextTagCreate(StringToText("."), 12, Point(lv_circle_x, lv_circle_y), 0.0, true, false, PlayerGroupAll());
+            libUTIL_gv_radomMovementTextTags[lv_i] = TextTagLastCreated();
+        }
+        TextTagCreate(StringToText(("Random Movement Area: Radius=" + FixedToString(lv_radius, c_fixedPrecisionAny))), 12, CameraGetTarget(EventPlayer()), 0.0, true, false, PlayerGroupAll());
+        TextTagSetColor(TextTagLastCreated(), c_textTagColorText, Color(28*100/255,167*100/255,234*100/255));
+        libUTIL_gv_radomMovementCenterMessageTextTag = TextTagLastCreated();
+        TriggerEnable(libUTIL_gt_RunRandomMovement, true);
+    }
+    else {
+        libUTIL_gv_randomMovementRegion = null;
+        libUTIL_gv_randomMovementUnits = null;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Toggle Random Movement Disabled"));
+        lv_i = 0;
+        for ( ; ( (auto04AA997A_ai >= 0 && lv_i <= auto04AA997A_ae) || (auto04AA997A_ai < 0 && lv_i >= auto04AA997A_ae) ) ; lv_i += auto04AA997A_ai ) {
+            TextTagDestroy(libUTIL_gv_radomMovementTextTags[lv_i]);
+            libUTIL_gv_radomMovementTextTags[lv_i] = c_textTagNone;
+        }
+        TextTagDestroy(libUTIL_gv_radomMovementCenterMessageTextTag);
+        libUTIL_gv_radomMovementCenterMessageTextTag = c_textTagNone;
+        TriggerEnable(libUTIL_gt_RunRandomMovement, false);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ToggleRandomMovement_Init () {
+    libUTIL_gt_ToggleRandomMovement = TriggerCreate("libUTIL_gt_ToggleRandomMovement_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleRandomMovement, c_playerAny, "trm", false);
+    TriggerAddEventChatMessage(libUTIL_gt_ToggleRandomMovement, c_playerAny, "togglerandommovement", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Play Cutscene
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_PlayCutscene_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    string lv_cutscenePath;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+    lv_cutscenePath = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "pcs") || (StringWord(EventChatMessage(false), 1) == "playcutscene")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <pcs|playcutscene> <CutscenePath>"));
+    }
+    else {
+        lv_cutscenePath = StringWord(EventChatMessage(false), 2);
+        libMapM_gf_PlayMapMechanicIntroForPlayer(lv_player, lv_cutscenePath, "");
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_PlayCutscene_Init () {
+    libUTIL_gt_PlayCutscene = TriggerCreate("libUTIL_gt_PlayCutscene_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_PlayCutscene, c_playerAny, "pcs", false);
+    TriggerAddEventChatMessage(libUTIL_gt_PlayCutscene, c_playerAny, "playcutscene", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Set Game Speed
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_SetGameSpeed_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    string lv_speedString;
+    int lv_speed;
+
+    // Automatic Variable Declarations
+    int auto287D5FEB_val;
+
+    // Variable Initialization
+    lv_speedString = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "sgs") || (StringWord(EventChatMessage(false), 1) == "setgamespeed")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <sgs|setgamespeed> <speedValue>"));
+    }
+    else {
+        lv_speed = StringToInt(StringWord(EventChatMessage(false), 2));
+        if ((!(((lv_speed >= 0) && (lv_speed <= 4))))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Error: Game speed must between 0 to 4."));
+            return false;
+        }
+
+        GameSetSpeedLocked(false);
+        GameSetSpeedValue(lv_speed);
+        auto287D5FEB_val = lv_speed;
+        if (auto287D5FEB_val == 0) {
+            lv_speedString = "Slower";
+        }
+        else if (auto287D5FEB_val == 1) {
+            lv_speedString = "Slow";
+        }
+        else if (auto287D5FEB_val == 2) {
+            lv_speedString = "Normal";
+        }
+        else if (auto287D5FEB_val == 3) {
+            lv_speedString = "Fast";
+        }
+        else if (auto287D5FEB_val == 4) {
+            lv_speedString = "Faster";
+        }
+        else {
+            lv_speedString = IntToString(lv_speed);
+        }
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Game Speed is set to: " + lv_speedString)));
+        GameSetSpeedLocked(true);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_SetGameSpeed_Init () {
+    libUTIL_gt_SetGameSpeed = TriggerCreate("libUTIL_gt_SetGameSpeed_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_SetGameSpeed, c_playerAny, "sgs", false);
+    TriggerAddEventChatMessage(libUTIL_gt_SetGameSpeed, c_playerAny, "setgamespeed", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Reset Game Speed
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_gt_ResetGameSpeed_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    GameSetSpeedLocked(false);
+    GameSetSpeedValue(c_gameSpeedNormal);
+    GameSetSpeedLocked(true);
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Game Speed is reset to: Normal"));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libUTIL_gt_ResetGameSpeed_Init () {
+    libUTIL_gt_ResetGameSpeed = TriggerCreate("libUTIL_gt_ResetGameSpeed_Func");
+    TriggerAddEventChatMessage(libUTIL_gt_ResetGameSpeed, c_playerAny, "rgs", true);
+    TriggerAddEventChatMessage(libUTIL_gt_ResetGameSpeed, c_playerAny, "resetgamespeed", true);
+}
+
+void libUTIL_InitTriggers () {
+    libUTIL_gt_MapInit_Init();
+    libUTIL_gt_ClearTextMessage_Init();
+    libUTIL_gt_ToggleUI_Init();
+    libUTIL_gt_ToggleFOW_Init();
+    libUTIL_gt_ToggleMassCDR_Init();
+    libUTIL_gt_RunMassCDR_Init();
+    libUTIL_gt_ToggleDebugMode_Init();
+    libUTIL_gt_ToggleTerrainIndicator_Init();
+    libUTIL_gt_WinGame_Init();
+    libUTIL_gt_StartGame_Init();
+    libUTIL_gt_EndGame_Init();
+    libUTIL_gt_RestartGame_Init();
+    libUTIL_gt_LoadMap_Init();
+    libUTIL_gt_SetCameraObject_Init();
+    libUTIL_gt_ResetCameraObject_Init();
+    libUTIL_gt_ForceRunTrigger_Init();
+    libUTIL_gt_ToggleACTS_Init();
+    libUTIL_gt_MinionWaveInterval_Init();
+    libUTIL_gt_FloatingCombatText_Init();
+    libUTIL_gt_DisplayString_Init();
+    libUTIL_gt_RunCrossHair_Init();
+    libUTIL_gt_ToggleCrosshair_Init();
+    libUTIL_gt_AddMarkerUnit_Init();
+    libUTIL_gt_AddMarkerCamera_Init();
+    libUTIL_gt_GetMarkerPosition_Init();
+    libUTIL_gt_ChangeMarkerColor_Init();
+    libUTIL_gt_RemoveMarker_Init();
+    libUTIL_gt_ClearMarkers_Init();
+    libUTIL_gt_RunRandomMovement_Init();
+    libUTIL_gt_ToggleRandomMovement_Init();
+    libUTIL_gt_PlayCutscene_Init();
+    libUTIL_gt_SetGameSpeed_Init();
+    libUTIL_gt_ResetGameSpeed_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool libUTIL_InitLib_completed = false;
+
+void libUTIL_InitLib () {
+    if (libUTIL_InitLib_completed) {
+        return;
+    }
+
+    libUTIL_InitLib_completed = true;
+
+    libUTIL_InitLibraries();
+    libUTIL_InitVariables();
+    libUTIL_InitTriggers();
+}
+

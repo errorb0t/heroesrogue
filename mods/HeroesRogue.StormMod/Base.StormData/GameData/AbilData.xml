@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+<CAbilEffectTarget id="AffixBuddyHeal">
+  <Effect value="AffixBuddyHealCastSet" />
+  <Flags index="RequireTargetVision" value="0" />
+  <Flags index="RangeUseCasterRadius" value="0" />
+  <Cost>
+    <Cooldown TimeUse="0.5" />
+  </Cost>
+  <TargetFilters value="-;Self,Neutral,Enemy,Structure,ImmuneToFriendlyAbilities,Missile,Stasis,Dead,Hidden" />
+  <Range value="7.5" />
+  <ShowProgressArray index="Cast" value="1" />
+  <ShowProgressArray index="Channel" value="1" />
+  <UninterruptibleArray index="Cast" value="1" />
+  <UninterruptibleArray index="Channel" value="1" />
+  <UninterruptibleArray index="Finish" value="1" />
+  <CmdButtonArray index="Execute" DefaultButtonFace="AffixBuddyHeal" UseValidator="AffixBuddyHealDoesNotHaveTargetTracked" >
+    <Flags index="AllowSelfCast" value="0" />
+  </CmdButtonArray>
+  <Arc value="360" />
+</CAbilEffectTarget>
+
+<CAbilEffectInstant id="AffixMedallion">
+  <PrepEffect value="DismountDecloakCasterSet" />
+  <Effect value="AffixMedallionApplyCleanse" />
+  <Flags index="Transient" value="1" />
+  <Cost>
+    <Cooldown TimeUse="60" />
+  </Cost>
+  <CmdButtonArray index="Execute" DefaultButtonFace="AffixMedallion">
+    <Flags index="AllowMinimap" value="0" />
+    <Flags index="Continuous" value="0" />
+  </CmdButtonArray>
+</CAbilEffectInstant>
+
+<CAbilEffectInstant id="LostVikingsNorseForceAffix">
+  <PrepEffect value="LostVikingsAbilityUseDismountDecloakSet" />
+  <Effect value="LostVikingsNorseForceVikingSearch" />
+  <Cost>
+    <Cooldown Location="Player" TimeUse="15" />
+  </Cost>
+  <CmdButtonArray index="Execute" DefaultButtonFace="LostVikingsNorseForce" />
+</CAbilEffectInstant>
+
+</Catalog>

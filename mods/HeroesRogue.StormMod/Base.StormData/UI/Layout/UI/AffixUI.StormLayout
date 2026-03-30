@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+  <Frame type="UnitStatusFrame" name="TowerUnitStatusFrameTemplateRealAmmo">
+    <Height val="12" />
+    <Width val="164" />
+    <Frame type="Frame" name="AttachPointFrame">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="60" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="75" />
+      <Height val="0" />
+      <Width val="0" />
+    </Frame>
+    <Frame type="UnitStatusBuffDebuffElement" name="UnitStatusBuffDebuffDisplay" template="UnitStatus/InvulnerableUnitStatusBuffDisplayTemplate">
+      <Anchor side="Bottom" relative="$parent/AttachPointFrame" pos="Min" offset="-30" />
+      <Anchor side="Left" relative="$parent/AttachPointFrame" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent/AttachPointFrame" pos="Mid" offset="0" />
+      <CollapseLayout val="true" />
+      <VisibleToOwner val="true" />
+      <VisibleToAlly val="true" />
+      <VisibleToEnemy val="true" />
+      <Width val="193" />
+      <Height val="64" />
+    </Frame>
+    <Frame type="UnitStatusShieldedHealthBar" name="HealthBar" template="UnitStatus/UnitStatusShieldedHealthBarTemplate">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="5" />
+      <Anchor side="Left" relative="$parent" pos="min" offset="5" />
+      <Height val="12" />
+      <Width val="164" />
+      <ReductionShown val="false" />
+      <DecreaseDuration val="#DecreaseDuration_NoReduction" />
+      <BackgroundColor val="165, 0, 0, 0" />
+      <BarInsetRect top="1" left="1" bottom="1" right="1" />
+      <BackgroundInsetRect top="1" left="1" bottom="1" right="1" />
+      <BorderWidth val="1" />
+      <SnapToDevicePixels val="True" />
+    </Frame>
+    <Frame type="UnitStatusUnitArmor" name="UnitArmorStatusDisplay" template="UnitStatus/UnitArmorStatusDisplayTemplate">
+      <Anchor side="Top" relative="$parent/HealthBar" pos="Mid" offset="-30" />
+      <Anchor side="Left" relative="$parent/HealthBar" pos="Max" offset="0" />
+    </Frame>
+    <Frame type="UnitStatusAmmo" name="TowerAmmoCount" template="UnitStatus/UnitStatusAmmoTemplate">
+      <Anchor side="Top" relative="$parent/HealthBar" pos="Min" offset="13" />
+      <Anchor side="Left" relative="$parent/HealthBar" pos="Min" offset="2" />
+    </Frame>
+  </Frame>
+  <Frame type="UnitStatusFrame" name="TowerUnitStatusFrameTemplate40RealAmmo">
+    <Height val="12" />
+    <Width val="164" />
+    <Frame type="Frame" name="AttachPointFrame">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="60" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="75" />
+      <Height val="0" />
+      <Width val="0" />
+    </Frame>
+    <Frame type="UnitStatusBuffDebuffElement" name="UnitStatusBuffDebuffDisplay" template="UnitStatus/InvulnerableUnitStatusBuffDisplayTemplate">
+      <Anchor side="Bottom" relative="$parent/AttachPointFrame" pos="Min" offset="-30" />
+      <Anchor side="Left" relative="$parent/AttachPointFrame" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent/AttachPointFrame" pos="Mid" offset="0" />
+      <CollapseLayout val="true" />
+      <VisibleToOwner val="true" />
+      <VisibleToAlly val="true" />
+      <VisibleToEnemy val="true" />
+      <Width val="193" />
+      <Height val="64" />
+    </Frame>
+    <Frame type="UnitStatusUnitArmor" name="UnitArmorStatusDisplay" template="UnitStatus/UnitArmorStatusDisplayTemplate">
+      <Anchor side="Top" relative="$parent/HealthBar" pos="Mid" offset="-30" />
+      <Anchor side="Left" relative="$parent/HealthBar" pos="Max" offset="0" />
+    </Frame>
+    <Frame type="UnitStatusShieldedHealthBar" name="HealthBar" template="UnitStatus/UnitStatusShieldedHealthBarTemplate">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="5" />
+      <Anchor side="Left" relative="$parent" pos="min" offset="5" />
+      <Height val="12" />
+      <Width val="164" />
+      <ReductionShown val="false" />
+      <DecreaseDuration val="#DecreaseDuration_NoReduction" />
+      <BackgroundColor val="165, 0, 0, 0" />
+      <BarInsetRect top="1" left="1" bottom="1" right="1" />
+      <BackgroundInsetRect top="1" left="1" bottom="1" right="1" />
+      <BorderWidth val="1" />
+      <SnapToDevicePixels val="True" />
+    </Frame>
+    <Frame type="UnitStatusAmmo" name="TowerAmmoCount" template="UnitStatus/UnitStatusAmmoTemplate40">
+      <Anchor side="Top" relative="$parent/HealthBar" pos="Min" offset="13" />
+      <Anchor side="Left" relative="$parent/HealthBar" pos="Min" offset="2" />
+    </Frame>
+  </Frame>
+</Desc>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+<CButton id="WitchDoctorWidowmakers2" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_Nazeebo_CorpseSpider.dds" />
+</CButton>
+<CButton id="WitchDoctorHexedCrawlers2" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_Nazeebo_CorpseSpider.dds" />
+</CButton>
+<CButton id="WitchDoctorSpiritofArachyr2" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_Nazeebo_CorpseSpider.dds" />
+</CButton>
+<CButton id="WitchDoctorSpiderColony2" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_Nazeebo_CorpseSpider.dds" />
+</CButton>
+<CButton id="AffixBuddyHeal" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_talent_scoutingdrone.dds" />
+</CButton>
+<CButton id="AffixKillContractQuestToken" parent="StormButtonParent">
+  <Icon value="Assets\Textures\affix_icon_kill_contract.dds" />
+</CButton>
+<CButton id="AffixStructureQuestToken" parent="StormButtonParent">
+  <Icon value="Assets\Textures\affix_icon_structure_quest.dds" />
+</CButton>
+
+<CButton id="AffixMedallion" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_trinket_medallion.dds" />
+</CButton>
+
+</Catalog>

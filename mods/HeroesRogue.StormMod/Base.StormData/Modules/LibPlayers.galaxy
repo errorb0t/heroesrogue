@@ -1,0 +1,1751 @@
+include "TriggerLibs/NativeLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Players
+//--------------------------------------------------------------------------------------------------
+// Validating: templates
+
+// Constants
+const int libPLYR_gv_playerRunningQuestSize = 16;
+
+// Structures
+struct libPLYR_gs_playerRunningQuestStat {
+    bool lv_isRunning;
+    int lv_stacks;
+};
+
+// Variable Declarations
+int libPLYR_gv_defaultStacksNumber;
+libPLYR_gs_playerRunningQuestStat[libPLYR_gv_playerRunningQuestSize + 1] libPLYR_gv_playersRunningQuestStat;
+bool libPLYR_gv_isRunningMassQuest;
+bool libPLYR_gv_isPauseGameWhenShowingTalentPanel;
+bool libPLYR_gv_isEnableTalentTree;
+bool libPLYR_gv_haveUsedSetMasteryRingTrigger;
+
+// Trigger Declarations
+trigger libPLYR_gt_MapInit;
+trigger libPLYR_gt_AddQuestStacks;
+trigger libPLYR_gt_RemoveQuestStacks;
+trigger libPLYR_gt_RunMassQuest;
+trigger libPLYR_gt_ToggleRunMassQuest;
+trigger libPLYR_gt_TogglePause;
+trigger libPLYR_gt_ToggleTalentTree;
+trigger libPLYR_gt_AddTalent;
+trigger libPLYR_gt_AddAllTalents;
+trigger libPLYR_gt_SelectAllTalents;
+trigger libPLYR_gt_RemoveTalent;
+trigger libPLYR_gt_RemoveAllTalents;
+trigger libPLYR_gt_EnableTalent;
+trigger libPLYR_gt_DisableTalent;
+trigger libPLYR_gt_OverrideRespawnPoint;
+trigger libPLYR_gt_OverrideScoreBoard;
+trigger libPLYR_gt_SetMasteryRing;
+trigger libPLYR_gt_OverrideRespawnTime;
+trigger libPLYR_gt_SetOverlay;
+trigger libPLYR_gt_ResetOverlay;
+trigger libPLYR_gt_GetCatalogReference;
+trigger libPLYR_gt_ModifyCatalogReference;
+trigger libPLYR_gt_ModifyCatalogValue;
+trigger libPLYR_gt_GrantXPtoPlayer;
+trigger libPLYR_gt_ToggleAI;
+trigger libPLYR_gt_EnableAI;
+trigger libPLYR_gt_DisableAI;
+trigger libPLYR_gt_DisableAIAll;
+trigger libPLYR_gt_GetSetAIDiffiiculty;
+
+// Library Initialization
+void libPLYR_InitVariables ();
+
+//--------------------------------------------------------------------------------------------------
+// Library: Players
+//--------------------------------------------------------------------------------------------------
+// Validating: templates
+
+// External Library Initialization
+void libPLYR_InitLibraries () {
+    libNtve_InitVariables();
+}
+
+// Variable Initialization
+bool libPLYR_InitVariables_completed = false;
+
+void libPLYR_InitVariables () {
+    int init_i;
+
+    if (libPLYR_InitVariables_completed) {
+        return;
+    }
+
+    libPLYR_InitVariables_completed = true;
+
+    libPLYR_gv_defaultStacksNumber = 1;
+    for (init_i = 0; init_i <= libPLYR_gv_playerRunningQuestSize; init_i += 1) {
+        libPLYR_gv_playersRunningQuestStat[init_i].lv_stacks = libPLYR_gv_defaultStacksNumber;
+    }
+    libPLYR_gv_isEnableTalentTree = true;
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: MapInit
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_MapInit_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    //UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Player Lib Initialized"));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_MapInit_Init () {
+    libPLYR_gt_MapInit = TriggerCreate("libPLYR_gt_MapInit_Func");
+    TriggerAddEventMapInit(libPLYR_gt_MapInit);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Add Quest Stacks
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_AddQuestStacks_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_stacks;
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "aqs") || (StringWord(EventChatMessage(false), 1) == "addqueststack")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <aqs|addqueststack> <QuestStacks> [Player=EventPlayer]"));
+    }
+    else {
+        lv_stacks = StringToInt(StringWord(EventChatMessage(false), 2));
+        if ((lv_stacks <= 0)) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Stack number \"" + StringWord(EventChatMessage(false), 2)) + "\" is not valid.")));
+            return false;
+        }
+
+        if ((StringWord(EventChatMessage(false), 3) != null)) {
+            lv_player = StringToInt(StringWord(EventChatMessage(false), 3));
+        }
+
+        libSprt_gf_DEBUGIncrementAllQuests(lv_player, lv_stacks);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Added \"" + StringWord(EventChatMessage(false), 2)) + ("\" quest stacks for Player " + IntToString(lv_player)))));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_AddQuestStacks_Init () {
+    libPLYR_gt_AddQuestStacks = TriggerCreate("libPLYR_gt_AddQuestStacks_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_AddQuestStacks, c_playerAny, "aqs", false);
+    TriggerAddEventChatMessage(libPLYR_gt_AddQuestStacks, c_playerAny, "addqueststack", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Remove Quest Stacks
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_RemoveQuestStacks_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_stacks;
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "rqs") || (StringWord(EventChatMessage(false), 1) == "removequeststack")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <aqs|addqueststack> <QuestStacks> [Player=EventPlayer]"));
+    }
+    else {
+        lv_stacks = StringToInt(StringWord(EventChatMessage(false), 2));
+        if ((lv_stacks <= 0)) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Stack number \"" + StringWord(EventChatMessage(false), 2)) + "\" is not valid.")));
+            return false;
+        }
+
+        if ((StringWord(EventChatMessage(false), 3) != null)) {
+            lv_player = StringToInt(StringWord(EventChatMessage(false), 3));
+        }
+
+        libSprt_gf_DEBUGIncrementAllQuests(lv_player, (lv_stacks * -1));
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Removed \"" + StringWord(EventChatMessage(false), 2)) + ("\" quest stacks for Player " + IntToString(lv_player)))));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_RemoveQuestStacks_Init () {
+    libPLYR_gt_RemoveQuestStacks = TriggerCreate("libPLYR_gt_RemoveQuestStacks_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_RemoveQuestStacks, c_playerAny, "rqs", false);
+    TriggerAddEventChatMessage(libPLYR_gt_RemoveQuestStacks, c_playerAny, "removequeststack", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Run Mass Quest
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_RunMassQuest_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    int lv_stacks;
+
+    // Automatic Variable Declarations
+    const int autoBC5B5D52_ae = libPLYR_gv_playerRunningQuestSize;
+    const int autoBC5B5D52_ai = 1;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_player = 0;
+    for ( ; ( (autoBC5B5D52_ai >= 0 && lv_player <= autoBC5B5D52_ae) || (autoBC5B5D52_ai < 0 && lv_player >= autoBC5B5D52_ae) ) ; lv_player += autoBC5B5D52_ai ) {
+        if ((libPLYR_gv_playersRunningQuestStat[lv_player].lv_isRunning == true)) {
+            lv_stacks = libPLYR_gv_playersRunningQuestStat[lv_player].lv_stacks;
+            libSprt_gf_DEBUGIncrementAllQuests(lv_player, lv_stacks);
+        }
+
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_RunMassQuest_Init () {
+    libPLYR_gt_RunMassQuest = TriggerCreate("libPLYR_gt_RunMassQuest_Func");
+    TriggerAddEventTimePeriodic(libPLYR_gt_RunMassQuest, 0.0625, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Toggle Run Mass Quest
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_ToggleRunMassQuest_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_stacks;
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "tmq") || (StringWord(EventChatMessage(false), 1) == "togglemassquest")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 3) != null)) {
+        lv_player = StringToInt(StringWord(EventChatMessage(false), 3));
+        if (((lv_player >= libPLYR_gv_playerRunningQuestSize) || (lv_player <= 0))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Error: Player ID must between 1 - 15."));
+            return false;
+        }
+
+    }
+
+    libPLYR_gv_playersRunningQuestStat[EventPlayer()].lv_isRunning = !(libPLYR_gv_playersRunningQuestStat[EventPlayer()].lv_isRunning);
+    lv_stacks = StringToInt(StringWord(EventChatMessage(false), 2));
+    if (((libPLYR_gv_playersRunningQuestStat[EventPlayer()].lv_isRunning == true) && (lv_stacks <= 0))) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Unable to set quest stacks for Player " + (IntToString(EventPlayer()) + ". Using default: ")) + IntToString(libPLYR_gv_defaultStacksNumber))));
+        libPLYR_gv_playersRunningQuestStat[EventPlayer()].lv_stacks = libPLYR_gv_defaultStacksNumber;
+    }
+    else {
+        libPLYR_gv_playersRunningQuestStat[EventPlayer()].lv_stacks = lv_stacks;
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_ToggleRunMassQuest_Init () {
+    libPLYR_gt_ToggleRunMassQuest = TriggerCreate("libPLYR_gt_ToggleRunMassQuest_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_ToggleRunMassQuest, c_playerAny, "tmq", false);
+    TriggerAddEventChatMessage(libPLYR_gt_ToggleRunMassQuest, c_playerAny, "togglemassquest", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Toggle Pause Game When Show Talent
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_TogglePause_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libPLYR_gv_isPauseGameWhenShowingTalentPanel = !(libPLYR_gv_isPauseGameWhenShowingTalentPanel);
+    if ((libPLYR_gv_isPauseGameWhenShowingTalentPanel == true)) {
+        SetTalentTreePauseGameWhenSelectionPanelShown(true);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Enabled pause game when showing talent panel."));
+    }
+    else {
+        SetTalentTreePauseGameWhenSelectionPanelShown(false);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Disabled pause game when showing talent panel."));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_TogglePause_Init () {
+    libPLYR_gt_TogglePause = TriggerCreate("libPLYR_gt_TogglePause_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_TogglePause, c_playerAny, "tpgt", true);
+    TriggerAddEventChatMessage(libPLYR_gt_TogglePause, c_playerAny, "togglepausegametalent", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Toggle Talent Tree
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_ToggleTalentTree_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libPLYR_gv_isEnableTalentTree = !(libPLYR_gv_isEnableTalentTree);
+    if ((libPLYR_gv_isEnableTalentTree == true)) {
+        SetTalentsEnabled(true);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Enabled Talent Tree"));
+    }
+    else {
+        SetTalentsEnabled(false);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Disabled Talent Tree"));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_ToggleTalentTree_Init () {
+    libPLYR_gt_ToggleTalentTree = TriggerCreate("libPLYR_gt_ToggleTalentTree_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_ToggleTalentTree, c_playerAny, "ttt", true);
+    TriggerAddEventChatMessage(libPLYR_gt_ToggleTalentTree, c_playerAny, "toggletalenttree", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Add Talent
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_AddTalent_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "adt") || (StringWord(EventChatMessage(false), 1) == "addtalent")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <adt|addtalent> <TalentName> [Player=EventPlayer]"));
+    }
+    else {
+        if ((CatalogEntryIsValid(c_gameCatalogTalent, (StringWord(EventChatMessage(false), 2))) == false)) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Talent \"" + StringWord(EventChatMessage(false), 2)) + "\" does not exist.")));
+            return true;
+        }
+
+        if ((StringWord(EventChatMessage(false), 3) != null)) {
+            lv_player = StringToInt(StringWord(EventChatMessage(false), 3));
+        }
+
+        PlayerAddTalent(lv_player, (StringWord(EventChatMessage(false), 2)));
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Added Talent \"" + StringWord(EventChatMessage(false), 2)) + ("\" to Player " + IntToString(lv_player)))));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_AddTalent_Init () {
+    libPLYR_gt_AddTalent = TriggerCreate("libPLYR_gt_AddTalent_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_AddTalent, c_playerAny, "adt", false);
+    TriggerAddEventChatMessage(libPLYR_gt_AddTalent, c_playerAny, "addtalent", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Add All Talents
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_AddAllTalents_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    string lv_alltalent;
+    int lv_talentArrayIndex;
+    string lv_talent;
+    int lv_player;
+
+    // Automatic Variable Declarations
+    int auto2FA5D79C_catalog;
+    int auto2FA5D79C_i;
+    int auto52BD2C3F_catalog;
+    string auto52BD2C3F_entry;
+    string auto52BD2C3F_fieldPath;
+    int auto52BD2C3F_player;
+    int auto52BD2C3F_i;
+
+    // Variable Initialization
+    lv_talent = "";
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "aat") || (StringWord(EventChatMessage(false), 1) == "addalltalent")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <aat|addalltalent> <HeroId|ALL> [Player=EventPlayer]"));
+    }
+    else {
+        if ((StringWord(EventChatMessage(false), 3) != null)) {
+            lv_player = StringToInt(StringWord(EventChatMessage(false), 3));
+        }
+
+        if ((StringWord(EventChatMessage(false), 2) == "ALL")) {
+            auto2FA5D79C_catalog = c_gameCatalogTalent;
+            auto2FA5D79C_i = 1;
+            for ( ; auto2FA5D79C_i <= CatalogEntryCount(c_gameCatalogTalent) ; auto2FA5D79C_i += 1 ) {
+                lv_alltalent = CatalogEntryGet(auto2FA5D79C_catalog, auto2FA5D79C_i);
+                lv_talent = (lv_alltalent);
+                PlayerAddTalent(lv_player, (lv_talent));
+                lv_talentArrayIndex = (lv_talentArrayIndex + 1);
+            }
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Added a total of " + IntToString(lv_talentArrayIndex)) + (" talent(s) to Player " + IntToString(lv_player)))));
+        }
+        else {
+            if ((CatalogEntryIsValid(c_gameCatalogHero, (StringWord(EventChatMessage(false), 2))) == false)) {
+                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Hero \"" + StringWord(EventChatMessage(false), 2)) + "\" does not exist.")));
+                return true;
+            }
+
+            auto52BD2C3F_catalog = c_gameCatalogHero;
+            auto52BD2C3F_entry = StringWord(EventChatMessage(false), 2);
+            auto52BD2C3F_fieldPath = "TalentTreeArray";
+            auto52BD2C3F_player = lv_player;
+            auto52BD2C3F_i = 0;
+            for ( ; auto52BD2C3F_i <= CatalogFieldValueCount(c_gameCatalogHero,auto52BD2C3F_entry,auto52BD2C3F_fieldPath,auto52BD2C3F_player)-1 ; auto52BD2C3F_i += 1 ) {
+                lv_talent = CatalogFieldValueGet(c_gameCatalogHero,auto52BD2C3F_entry,auto52BD2C3F_fieldPath+"["+IntToString(auto52BD2C3F_i)+"]",auto52BD2C3F_player);
+                lv_talent = CatalogFieldValueGet(c_gameCatalogHero, StringWord(EventChatMessage(false), 2), "TalentTreeArray[" + IntToString(lv_talentArrayIndex) + "].Talent", lv_player);
+                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Added Talent \"" + lv_talent) + ("\" to Player " + IntToString(lv_player)))));
+                PlayerAddTalent(lv_player, (lv_talent));
+                lv_talentArrayIndex = (lv_talentArrayIndex + 1);
+            }
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Added a total of " + IntToString(lv_talentArrayIndex)) + (" talent(s) to Player " + IntToString(lv_player)))));
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_AddAllTalents_Init () {
+    libPLYR_gt_AddAllTalents = TriggerCreate("libPLYR_gt_AddAllTalents_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_AddAllTalents, c_playerAny, "aat", false);
+    TriggerAddEventChatMessage(libPLYR_gt_AddAllTalents, c_playerAny, "addalltalent", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Select All Talents
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_SelectAllTalents_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_currentCol;
+    int lv_currentTier;
+    const int lv_mAX_TIER = 7;
+    const int lv_mAX_COL = 5;
+    int lv_player;
+
+    // Automatic Variable Declarations
+    const int autoD01B3D7B_ae = lv_mAX_TIER;
+    const int autoD01B3D7B_ai = 1;
+    const int autoA247B982_ae = lv_mAX_COL;
+    const int autoA247B982_ai = 1;
+
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "sat") || (StringWord(EventChatMessage(false), 1) == "selectalltalent")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) != null)) {
+        lv_player = StringToInt(StringWord(EventChatMessage(false), 2));
+    }
+
+    lv_currentTier = 1;
+    for ( ; ( (autoD01B3D7B_ai >= 0 && lv_currentTier <= autoD01B3D7B_ae) || (autoD01B3D7B_ai < 0 && lv_currentTier >= autoD01B3D7B_ae) ) ; lv_currentTier += autoD01B3D7B_ai ) {
+        lv_currentCol = 1;
+        for ( ; ( (autoA247B982_ai >= 0 && lv_currentCol <= autoA247B982_ae) || (autoA247B982_ai < 0 && lv_currentCol >= autoA247B982_ae) ) ; lv_currentCol += autoA247B982_ai ) {
+            libGame_gf_TalentsChooseTalentForPlayer(lv_currentTier, lv_currentCol, lv_player);
+        }
+    }
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Selected all talents for Player " + IntToString(lv_player))));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_SelectAllTalents_Init () {
+    libPLYR_gt_SelectAllTalents = TriggerCreate("libPLYR_gt_SelectAllTalents_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_SelectAllTalents, c_playerAny, "sat", false);
+    TriggerAddEventChatMessage(libPLYR_gt_SelectAllTalents, c_playerAny, "selectalltalent", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Remove Talent
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_RemoveTalent_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "rmt") || (StringWord(EventChatMessage(false), 1) == "removetalent")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <rmt|removetalent> <TalentName> [Player=EventPlayer]"));
+    }
+    else {
+        if ((CatalogEntryIsValid(c_gameCatalogTalent, (StringWord(EventChatMessage(false), 2))) == false)) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Talent \"" + StringWord(EventChatMessage(false), 2)) + "\" does not exist.")));
+            return true;
+        }
+
+        if ((StringWord(EventChatMessage(false), 3) != null)) {
+            lv_player = StringToInt(StringWord(EventChatMessage(false), 3));
+        }
+
+        PlayerRemoveTalent(lv_player, (StringWord(EventChatMessage(false), 2)));
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Removed Talent \"" + StringWord(EventChatMessage(false), 2)) + ("\" from Player " + IntToString(lv_player)))));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_RemoveTalent_Init () {
+    libPLYR_gt_RemoveTalent = TriggerCreate("libPLYR_gt_RemoveTalent_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_RemoveTalent, c_playerAny, "rmt", false);
+    TriggerAddEventChatMessage(libPLYR_gt_RemoveTalent, c_playerAny, "removetalent", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Remove All Talents
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_RemoveAllTalents_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    string lv_alltalent;
+    int lv_talentArrayIndex;
+    string lv_talent;
+    int lv_player;
+
+    // Automatic Variable Declarations
+    int auto76DA21D2_catalog;
+    int auto76DA21D2_i;
+    int autoEFCB7159_catalog;
+    string autoEFCB7159_entry;
+    string autoEFCB7159_fieldPath;
+    int autoEFCB7159_player;
+    int autoEFCB7159_i;
+
+    // Variable Initialization
+    lv_talent = "";
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "rmat") || (StringWord(EventChatMessage(false), 1) == "removealltalent")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <rmat|removealltalent> <HeroId|ALL> [Player=EventPlayer]"));
+    }
+    else {
+        if ((StringWord(EventChatMessage(false), 3) != null)) {
+            lv_player = StringToInt(StringWord(EventChatMessage(false), 3));
+        }
+
+        if ((StringWord(EventChatMessage(false), 2) == "ALL")) {
+            auto76DA21D2_catalog = c_gameCatalogTalent;
+            auto76DA21D2_i = 1;
+            for ( ; auto76DA21D2_i <= CatalogEntryCount(c_gameCatalogTalent) ; auto76DA21D2_i += 1 ) {
+                lv_alltalent = CatalogEntryGet(auto76DA21D2_catalog, auto76DA21D2_i);
+                lv_talent = (lv_alltalent);
+                PlayerRemoveTalent(lv_player, (lv_talent));
+                lv_talentArrayIndex = (lv_talentArrayIndex + 1);
+            }
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Removed a total of " + IntToString(lv_talentArrayIndex)) + (" talent(s) from Player " + IntToString(lv_player)))));
+        }
+        else {
+            if ((CatalogEntryIsValid(c_gameCatalogHero, (StringWord(EventChatMessage(false), 2))) == false)) {
+                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Hero \"" + StringWord(EventChatMessage(false), 2)) + "\" does not exist.")));
+                return true;
+            }
+
+            autoEFCB7159_catalog = c_gameCatalogHero;
+            autoEFCB7159_entry = StringWord(EventChatMessage(false), 2);
+            autoEFCB7159_fieldPath = "TalentTreeArray";
+            autoEFCB7159_player = lv_player;
+            autoEFCB7159_i = 0;
+            for ( ; autoEFCB7159_i <= CatalogFieldValueCount(c_gameCatalogHero,autoEFCB7159_entry,autoEFCB7159_fieldPath,autoEFCB7159_player)-1 ; autoEFCB7159_i += 1 ) {
+                lv_talent = CatalogFieldValueGet(c_gameCatalogHero,autoEFCB7159_entry,autoEFCB7159_fieldPath+"["+IntToString(autoEFCB7159_i)+"]",autoEFCB7159_player);
+                lv_talent = CatalogFieldValueGet(c_gameCatalogHero, StringWord(EventChatMessage(false), 2), "TalentTreeArray[" + IntToString(lv_talentArrayIndex) + "].Talent", lv_player);
+                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Removed Talent \"" + lv_talent) + ("\" from Player " + IntToString(lv_player)))));
+                PlayerRemoveTalent(lv_player, (lv_talent));
+                lv_talentArrayIndex = (lv_talentArrayIndex + 1);
+            }
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Removed a total of " + IntToString(lv_talentArrayIndex)) + (" talent(s) from Player " + IntToString(lv_player)))));
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_RemoveAllTalents_Init () {
+    libPLYR_gt_RemoveAllTalents = TriggerCreate("libPLYR_gt_RemoveAllTalents_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_RemoveAllTalents, c_playerAny, "rmat", false);
+    TriggerAddEventChatMessage(libPLYR_gt_RemoveAllTalents, c_playerAny, "removealltalent", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Enable Talent
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_EnableTalent_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    string lv_talentName;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_talentName = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "dist") || (StringWord(EventChatMessage(false), 1) == "disabletalent")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <dist|disabletalent> <TalentName>"));
+    }
+    else {
+        if ((CatalogEntryIsValid(c_gameCatalogTalent, (StringWord(EventChatMessage(false), 2))) == false)) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Talent \"" + StringWord(EventChatMessage(false), 2)) + "\" does not exist.")));
+            return true;
+        }
+
+        lv_talentName = StringWord(EventChatMessage(false), 2);
+        SetTalentEnabled((lv_talentName), false);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Disabled Talent \"" + StringWord(EventChatMessage(false), 2)) + "")));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_EnableTalent_Init () {
+    libPLYR_gt_EnableTalent = TriggerCreate("libPLYR_gt_EnableTalent_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_EnableTalent, c_playerAny, "dist", false);
+    TriggerAddEventChatMessage(libPLYR_gt_EnableTalent, c_playerAny, "disabletalent", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Disable Talent
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_DisableTalent_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    string lv_talentName;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_talentName = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "ent") || (StringWord(EventChatMessage(false), 1) == "enabletalent")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <ent|enabletalent> <TalentName>"));
+    }
+    else {
+        if ((CatalogEntryIsValid(c_gameCatalogTalent, (StringWord(EventChatMessage(false), 2))) == false)) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Talent \"" + StringWord(EventChatMessage(false), 2)) + "\" does not exist.")));
+            return true;
+        }
+
+        lv_talentName = StringWord(EventChatMessage(false), 2);
+        SetTalentEnabled((lv_talentName), true);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Enabled Talent \"" + StringWord(EventChatMessage(false), 2)) + "")));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_DisableTalent_Init () {
+    libPLYR_gt_DisableTalent = TriggerCreate("libPLYR_gt_DisableTalent_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_DisableTalent, c_playerAny, "ent", false);
+    TriggerAddEventChatMessage(libPLYR_gt_DisableTalent, c_playerAny, "enabletalent", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Override Respawn Point
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_OverrideRespawnPoint_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    point lv_cameralocation;
+    int lv_player;
+    string lv_action;
+
+    // Automatic Variable Declarations
+    playergroup auto61B0F10C_g;
+    playergroup auto9EDB3770_g;
+
+    // Variable Initialization
+    lv_action = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "respawnpoint") || (StringWord(EventChatMessage(false), 1) == "rsp")))) {
+            return false;
+        }
+
+        if (!((!((StringWord(EventChatMessage(false), 2) == null))))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_action = StringWord(EventChatMessage(false), 2);
+    lv_cameralocation = CameraGetTarget(EventPlayer());
+    if ((!(((StringWord(EventChatMessage(false), 2) == "set") || (StringWord(EventChatMessage(false), 2) == "reset"))))) {
+        return false;
+    }
+
+    if ((lv_action == "set")) {
+        if ((StringWord(EventChatMessage(false), 3) == "all")) {
+            auto61B0F10C_g = PlayerGroupAll();
+            lv_player = -1;
+            while (true) {
+                lv_player = PlayerGroupNextPlayer(auto61B0F10C_g, lv_player);
+                if (lv_player < 0) { break; }
+                libGame_gv_players[lv_player].lv_spawnPoint = lv_cameralocation;
+            }
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Set All Players Respawn point to Camera Location: " + libNtve_gf_ConvertPointToString(lv_cameralocation))));
+            return true;
+        }
+        else {
+            if ((StringToInt(StringWord(EventChatMessage(false), 3)) == 0)) {
+                lv_player = EventPlayer();
+                libGame_gv_players[lv_player].lv_spawnPoint = lv_cameralocation;
+                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Set Player " + IntToString(lv_player)) + ("'s Respawn Point to Camera Location: " + libNtve_gf_ConvertPointToString(lv_cameralocation)))));
+                return true;
+            }
+            else {
+                lv_player = StringToInt(StringWord(EventChatMessage(false), 3));
+                libGame_gv_players[lv_player].lv_spawnPoint = lv_cameralocation;
+                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Set Player " + IntToString(lv_player)) + ("'s Respawn Point to Camera Location: " + libNtve_gf_ConvertPointToString(lv_cameralocation)))));
+                return true;
+            }
+        }
+        return true;
+    }
+
+    if ((lv_action == "reset")) {
+        if ((StringWord(EventChatMessage(false), 3) == "all")) {
+            auto9EDB3770_g = PlayerGroupAll();
+            lv_player = -1;
+            while (true) {
+                lv_player = PlayerGroupNextPlayer(auto9EDB3770_g, lv_player);
+                if (lv_player < 0) { break; }
+                libGame_gv_players[lv_player].lv_spawnPoint = PlayerStartLocation(lv_player);
+            }
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Reset all Players Respawn Point to their default spawn point."));
+            return true;
+        }
+        else {
+            if ((StringToInt(StringWord(EventChatMessage(false), 3)) == 0)) {
+                lv_player = EventPlayer();
+                libGame_gv_players[lv_player].lv_spawnPoint = PlayerStartLocation(lv_player);
+                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Reset Player " + (IntToString(lv_player) + "'s Spawn Point to its default location."))));
+                return true;
+            }
+            else {
+                lv_player = StringToInt(StringWord(EventChatMessage(false), 3));
+                libGame_gv_players[lv_player].lv_spawnPoint = PlayerStartLocation(lv_player);
+                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Reset Player " + (IntToString(lv_player) + "'s Spawn Point to its default location."))));
+                return true;
+            }
+        }
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_OverrideRespawnPoint_Init () {
+    libPLYR_gt_OverrideRespawnPoint = TriggerCreate("libPLYR_gt_OverrideRespawnPoint_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_OverrideRespawnPoint, c_playerAny, "respawnpoint", false);
+    TriggerAddEventChatMessage(libPLYR_gt_OverrideRespawnPoint, c_playerAny, "rsp", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Override Score Board
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_OverrideScoreBoard_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    int lv_value;
+    string lv_field;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_field = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "setscore") || (StringWord(EventChatMessage(false), 1) == "score")))) {
+            return false;
+        }
+
+        if (!((!(((StringWord(EventChatMessage(false), 2) == null) && (StringWord(EventChatMessage(false), 3) == null)))))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((CatalogEntryIsValid(c_gameCatalogScoreValue, (StringWord(EventChatMessage(false), 2))) == false)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Score Entry \"" + StringWord(EventChatMessage(false), 2)) + "\" does not exist.")));
+        return true;
+    }
+
+    lv_field = StringWord(EventChatMessage(false), 2);
+    lv_value = StringToInt(StringWord(EventChatMessage(false), 3));
+    if ((StringWord(EventChatMessage(false), 4) == null)) {
+        lv_player = EventPlayer();
+    }
+    else {
+        lv_player = StringToInt(StringWord(EventChatMessage(false), 4));
+    }
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Tried to modify Player " + (IntToString(lv_player) + "'s ")) + (lv_field + (" to " + IntToString(lv_value))))));
+    PlayerScoreValueSetFromInt(lv_player, (lv_field), lv_value);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_OverrideScoreBoard_Init () {
+    libPLYR_gt_OverrideScoreBoard = TriggerCreate("libPLYR_gt_OverrideScoreBoard_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_OverrideScoreBoard, c_playerAny, "setscore", false);
+    TriggerAddEventChatMessage(libPLYR_gt_OverrideScoreBoard, c_playerAny, "score", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Set Mastery Ring
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_SetMasteryRing_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unit lv_currentUnit;
+    int lv_level;
+
+    // Automatic Variable Declarations
+    unitgroup auto7BC3CC12_g;
+    int auto7BC3CC12_u;
+
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "smr") || (StringWord(EventChatMessage(false), 1) == "setmasteryring")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <mw|masteryring> <level:Int>"));
+    }
+    else {
+        lv_level = StringToInt(StringWord(EventChatMessage(false), 2));
+        libNtve_gf_SetUpgradeLevelForPlayer(EventPlayer(), ("HeroRingMasteryUpgrade"), lv_level);
+        auto7BC3CC12_g = UnitGroupSelected(EventPlayer());
+        auto7BC3CC12_u = UnitGroupCount(auto7BC3CC12_g, c_unitCountAll);
+        for (;; auto7BC3CC12_u -= 1) {
+            lv_currentUnit = UnitGroupUnitFromEnd(auto7BC3CC12_g, auto7BC3CC12_u);
+            if (lv_currentUnit == null) { break; }
+            libNtve_gf_SendActorMessageToUnit(lv_currentUnit, ("Signal MasteryRingCreation"));
+        }
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Set Hero Mastery Ring to Level " + IntToString(lv_level))));
+        if ((libPLYR_gv_haveUsedSetMasteryRingTrigger == true)) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Notice: Reapply Mastery Ring modification may requires unit to respawn for UI to take effect."));
+        }
+        else {
+            libPLYR_gv_haveUsedSetMasteryRingTrigger = true;
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_SetMasteryRing_Init () {
+    libPLYR_gt_SetMasteryRing = TriggerCreate("libPLYR_gt_SetMasteryRing_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_SetMasteryRing, c_playerAny, "smr", false);
+    TriggerAddEventChatMessage(libPLYR_gt_SetMasteryRing, c_playerAny, "setmasteryring", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Override Respawn Time
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_OverrideRespawnTime_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    fixed lv_respawntime;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "respawntime") || (StringWord(EventChatMessage(false), 1) == "rst")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_respawntime = StringToFixed(StringWord(EventChatMessage(false), 2));
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Invalid Respawn Time"));
+        return false;
+    }
+
+    if ((lv_respawntime < 0.0625)) {
+        lv_respawntime = 0.0625;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Warning: Respawn time cannot be set lower than 0.0625."));
+    }
+
+    libCore_gv_bALDeathTimeOverride = lv_respawntime;
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Override Respawn Timer to " + FixedToString(lv_respawntime, c_fixedPrecisionAny))));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_OverrideRespawnTime_Init () {
+    libPLYR_gt_OverrideRespawnTime = TriggerCreate("libPLYR_gt_OverrideRespawnTime_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_OverrideRespawnTime, c_playerAny, "respawntime", false);
+    TriggerAddEventChatMessage(libPLYR_gt_OverrideRespawnTime, c_playerAny, "rst", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Set Overlay
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_SetOverlay_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    string lv_overlayPath;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+    lv_overlayPath = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "sol") || (StringWord(EventChatMessage(false), 1) == "setoverlay")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <sol|setoverlay> <OverlayPath>"));
+    }
+    else {
+        lv_overlayPath = StringWord(EventChatMessage(false), 2);
+        libUIUI_gf_FullscreenOverlayPlayCutscene(lv_player, lv_overlayPath);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_SetOverlay_Init () {
+    libPLYR_gt_SetOverlay = TriggerCreate("libPLYR_gt_SetOverlay_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_SetOverlay, c_playerAny, "sol", false);
+    TriggerAddEventChatMessage(libPLYR_gt_SetOverlay, c_playerAny, "setoverlay", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Reset Overlay
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_ResetOverlay_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libUIUI_gf_FullscreenOverlayPlayCutscene(lv_player, libUIUI_gv_fullscreenOverlayQueue[lv_player].lv_cutscene[1]);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_ResetOverlay_Init () {
+    libPLYR_gt_ResetOverlay = TriggerCreate("libPLYR_gt_ResetOverlay_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_ResetOverlay, c_playerAny, "rol", true);
+    TriggerAddEventChatMessage(libPLYR_gt_ResetOverlay, c_playerAny, "resetoverlay", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Get Catalog Reference
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_GetCatalogReference_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    string lv_value;
+    string lv_catalogentry;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+    lv_value = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "gcl") || (StringWord(EventChatMessage(false), 1) == "getcatalog")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <gcl|getcatalog> <CatalogReference> [PlayerID]"));
+    }
+    else {
+        if (((StringWord(EventChatMessage(false), 3) != null) && (StringToInt(StringWord(EventChatMessage(false), 3)) > 0))) {
+            lv_player = StringToInt(StringWord(EventChatMessage(false), 4));
+        }
+
+        lv_value = StringWord(EventChatMessage(false), 3);
+        lv_catalogentry = (StringWord(EventChatMessage(false), 2));
+        lv_value = CatalogReferenceGet(lv_catalogentry, lv_player);
+        if ((lv_value == "")) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Catalog Reference \"" + (lv_catalogentry)) + "\" do not exist.")));
+        }
+        else {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Catalog value for Player " + (IntToString(lv_player) + (": " + ((lv_catalogentry) + (" = " + lv_value)))))));
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_GetCatalogReference_Init () {
+    libPLYR_gt_GetCatalogReference = TriggerCreate("libPLYR_gt_GetCatalogReference_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_GetCatalogReference, c_playerAny, "gcl", false);
+    TriggerAddEventChatMessage(libPLYR_gt_GetCatalogReference, c_playerAny, "getcatalog", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Modify Catalog Reference
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_ModifyCatalogReference_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    string lv_originalValue;
+    string lv_newValue;
+    string lv_inputValue;
+    string lv_catalogentry;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+    lv_originalValue = "";
+    lv_newValue = "";
+    lv_inputValue = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "mcl") || (StringWord(EventChatMessage(false), 1) == "modifycatalog")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if (((StringWord(EventChatMessage(false), 2) == null) || (StringWord(EventChatMessage(false), 3) == null))) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <mcl|modifycatalog> <CatalogReference> <Value> [PlayerID]"));
+    }
+    else {
+        if (((StringWord(EventChatMessage(false), 4) != null) && (StringToInt(StringWord(EventChatMessage(false), 4)) > 0))) {
+            lv_player = StringToInt(StringWord(EventChatMessage(false), 4));
+        }
+
+        lv_inputValue = StringWord(EventChatMessage(false), 3);
+        lv_catalogentry = (StringWord(EventChatMessage(false), 2));
+        lv_originalValue = CatalogReferenceGet(lv_catalogentry, lv_player);
+        CatalogReferenceModify((lv_catalogentry), lv_player, lv_inputValue, c_upgradeOperationSet);
+        lv_newValue = CatalogReferenceGet(lv_catalogentry, lv_player);
+        if ((lv_newValue == "")) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Catalog Reference \"" + (lv_catalogentry)) + "\" do not exist.")));
+        }
+        else {
+            if ((lv_newValue != lv_inputValue)) {
+                if ((lv_originalValue == lv_newValue)) {
+                    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Error: Catalog Reference \"" + (lv_catalogentry)) + "\" is READ-ONLY.")));
+                }
+                else {
+                    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Warning: Modified Catalog " + (lv_catalogentry)) + (" to " + (lv_newValue + (" instead, for Player " + IntToString(lv_player)))))));
+                }
+            }
+            else {
+                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("Modified Catalog " + (lv_catalogentry)) + (" to " + (lv_newValue + (" for Player " + IntToString(lv_player)))))));
+            }
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_ModifyCatalogReference_Init () {
+    libPLYR_gt_ModifyCatalogReference = TriggerCreate("libPLYR_gt_ModifyCatalogReference_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_ModifyCatalogReference, c_playerAny, "mcl", false);
+    TriggerAddEventChatMessage(libPLYR_gt_ModifyCatalogReference, c_playerAny, "modifycatalog", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Modify Catalog Value
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_ModifyCatalogValue_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    int lv_catalogType;
+    string lv_catalogField;
+    string lv_catalogEntry;
+    string lv_value;
+    string lv__catalogTypeLower;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+    lv_catalogType = c_gameCatalogAbil;
+    lv_value = "";
+    lv__catalogTypeLower = "";
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "mcv") || (StringWord(EventChatMessage(false), 1) == "modifycatalogvalue")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if (((StringWord(EventChatMessage(false), 2) == null) || (StringWord(EventChatMessage(false), 3) == null) || (StringWord(EventChatMessage(false), 4) == null) || (StringWord(EventChatMessage(false), 5) == null))) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <mcv|modifycatalogvalue> <CatalogType> <CatalogEntry> <CatalogField> <Value> [PlayerID]"));
+        return true;
+    }
+
+    if (((StringWord(EventChatMessage(false), 6) != null) && (StringToInt(StringWord(EventChatMessage(false), 6)) > 0))) {
+        lv_player = StringToInt(StringWord(EventChatMessage(false), 4));
+    }
+
+    lv__catalogTypeLower = StringCase(StringWord(EventChatMessage(false), 2), false);
+    lv_catalogEntry = StringWord(EventChatMessage(false), 3);
+    lv_catalogField = StringWord(EventChatMessage(false), 4);
+    lv_value = StringWord(EventChatMessage(false), 5);
+    // Mass generated from mods/core.stormmod/base.stormdata/GameData. Its a bit different from SC2.
+    if (lv__catalogTypeLower == "abil") { lv_catalogType = c_gameCatalogAbil; }
+    else if (lv__catalogTypeLower == "accumulator") { lv_catalogType = c_gameCatalogAccumulator; }
+    else if (lv__catalogTypeLower == "achievement") { lv_catalogType = c_gameCatalogAchievement; }
+    else if (lv__catalogTypeLower == "achievementterm") { lv_catalogType = c_gameCatalogAchievementTerm; }
+    else if (lv__catalogTypeLower == "actor") { lv_catalogType = c_gameCatalogActor; }
+    else if (lv__catalogTypeLower == "actorsupport") { lv_catalogType = c_gameCatalogActorSupport; }
+    else if (lv__catalogTypeLower == "alert") { lv_catalogType = c_gameCatalogAlert; }
+    else if (lv__catalogTypeLower == "announcement") { lv_catalogType = c_gameCatalogAnnouncement; }
+    else if (lv__catalogTypeLower == "announcerpack") { lv_catalogType = c_gameCatalogAnnouncerPack; }
+    else if (lv__catalogTypeLower == "armor") { lv_catalogType = c_gameCatalogArmor; }
+    else if (lv__catalogTypeLower == "attachmethod") { lv_catalogType = c_gameCatalogAttachMethod; }
+    else if (lv__catalogTypeLower == "banner") { lv_catalogType = c_gameCatalogBanner; }
+    else if (lv__catalogTypeLower == "beam") { lv_catalogType = c_gameCatalogBeam; }
+    else if (lv__catalogTypeLower == "behavior") { lv_catalogType = c_gameCatalogBehavior; }
+    else if (lv__catalogTypeLower == "boost") { lv_catalogType = c_gameCatalogBoost; }
+    else if (lv__catalogTypeLower == "bundle") { lv_catalogType = c_gameCatalogBundle; }
+    else if (lv__catalogTypeLower == "button") { lv_catalogType = c_gameCatalogButton; }
+    else if (lv__catalogTypeLower == "camera") { lv_catalogType = c_gameCatalogCamera; }
+    else if (lv__catalogTypeLower == "character") { lv_catalogType = c_gameCatalogCharacter; }
+    else if (lv__catalogTypeLower == "cliff") { lv_catalogType = c_gameCatalogCliff; }
+    else if (lv__catalogTypeLower == "cliffmesh") { lv_catalogType = c_gameCatalogCliffMesh; }
+    else if (lv__catalogTypeLower == "collectioncategory") { lv_catalogType = c_gameCatalogCollectionCategory; }
+    else if (lv__catalogTypeLower == "colorspec") { lv_catalogType = c_gameCatalogColorSpec; }
+    else if (lv__catalogTypeLower == "colorstyle") { lv_catalogType = c_gameCatalogColorStyle; }
+    else if (lv__catalogTypeLower == "config") { lv_catalogType = c_gameCatalogConfig; }
+    else if (lv__catalogTypeLower == "conversation") { lv_catalogType = c_gameCatalogConversation; }
+    else if (lv__catalogTypeLower == "conversationstate") { lv_catalogType = c_gameCatalogConversationState; }
+    else if (lv__catalogTypeLower == "cursor") { lv_catalogType = c_gameCatalogCursor; }
+    else if (lv__catalogTypeLower == "dsp") { lv_catalogType = c_gameCatalogDSP; }
+    else if (lv__catalogTypeLower == "effect") { lv_catalogType = c_gameCatalogEffect; }
+    else if (lv__catalogTypeLower == "emoticon") { lv_catalogType = c_gameCatalogEmoticon; }
+    else if (lv__catalogTypeLower == "emoticonpack") { lv_catalogType = c_gameCatalogEmoticonPack; }
+    else if (lv__catalogTypeLower == "error") { lv_catalogType = c_gameCatalogError; }
+    else if (lv__catalogTypeLower == "footprint") { lv_catalogType = c_gameCatalogFootprint; }
+    else if (lv__catalogTypeLower == "fow") { lv_catalogType = c_gameCatalogFoW; }
+    else if (lv__catalogTypeLower == "game") { lv_catalogType = c_gameCatalogGame; }
+    else if (lv__catalogTypeLower == "gamequestui") { lv_catalogType = c_gameCatalogGameQuestUI; }
+    else if (lv__catalogTypeLower == "gameui") { lv_catalogType = c_gameCatalogGameUI; }
+    else if (lv__catalogTypeLower == "gempack") { lv_catalogType = c_gameCatalogGemPack; }
+    else if (lv__catalogTypeLower == "goal") { lv_catalogType = c_gameCatalogGoal; }
+    else if (lv__catalogTypeLower == "hero") { lv_catalogType = c_gameCatalogHero; }
+    else if (lv__catalogTypeLower == "heromastery") { lv_catalogType = c_gameCatalogHeroMastery; }
+    else if (lv__catalogTypeLower == "herorole") { lv_catalogType = c_gameCatalogHeroRole; }
+    // else if (lv__catalogTypeLower == "itemclass") { lv_catalogType = c_gameCatalogItemClass; } // TODO: Why crash??
+    // else if (lv__catalogTypeLower == "itemcontainer") { lv_catalogType = c_gameCatalogItemContainer; } // TODO: Why crash??
+    else if (lv__catalogTypeLower == "kinetic") { lv_catalogType = c_gameCatalogKinetic; }
+    else if (lv__catalogTypeLower == "lensflareset") { lv_catalogType = c_gameCatalogLensFlareSet; }
+    else if (lv__catalogTypeLower == "light") { lv_catalogType = c_gameCatalogLight; }
+    else if (lv__catalogTypeLower == "lootchest") { lv_catalogType = c_gameCatalogLootChest; }
+    else if (lv__catalogTypeLower == "map") { lv_catalogType = c_gameCatalogMap; }
+    else if (lv__catalogTypeLower == "model") { lv_catalogType = c_gameCatalogModel; }
+    else if (lv__catalogTypeLower == "mount") { lv_catalogType = c_gameCatalogMount; }
+    else if (lv__catalogTypeLower == "mover") { lv_catalogType = c_gameCatalogMover; }
+    else if (lv__catalogTypeLower == "physicsmaterial") { lv_catalogType = c_gameCatalogPhysicsMaterial; }
+    else if (lv__catalogTypeLower == "ping") { lv_catalogType = c_gameCatalogPing; }
+    else if (lv__catalogTypeLower == "portraitpack") { lv_catalogType = c_gameCatalogPortraitPack; }
+    else if (lv__catalogTypeLower == "preload") { lv_catalogType = c_gameCatalogPreload; }
+    else if (lv__catalogTypeLower == "productset") { lv_catalogType = c_gameCatalogProductSet; }
+    else if (lv__catalogTypeLower == "race") { lv_catalogType = c_gameCatalogRace; }
+    else if (lv__catalogTypeLower == "requirement") { lv_catalogType = c_gameCatalogRequirement; }
+    else if (lv__catalogTypeLower == "requirementnode") { lv_catalogType = c_gameCatalogRequirementNode; }
+    else if (lv__catalogTypeLower == "reverb") { lv_catalogType = c_gameCatalogReverb; }
+    else if (lv__catalogTypeLower == "reward") { lv_catalogType = c_gameCatalogReward; }
+    else if (lv__catalogTypeLower == "scoreresult") { lv_catalogType = c_gameCatalogScoreResult; }
+    else if (lv__catalogTypeLower == "scorevalue") { lv_catalogType = c_gameCatalogScoreValue; }
+    else if (lv__catalogTypeLower == "shape") { lv_catalogType = c_gameCatalogShape; }
+    else if (lv__catalogTypeLower == "skin") { lv_catalogType = c_gameCatalogSkin; }
+    else if (lv__catalogTypeLower == "sound") { lv_catalogType = c_gameCatalogSound; }
+    else if (lv__catalogTypeLower == "soundexclusivity") { lv_catalogType = c_gameCatalogSoundExclusivity; }
+    else if (lv__catalogTypeLower == "soundmixsnapshot") { lv_catalogType = c_gameCatalogSoundMixSnapshot; }
+    else if (lv__catalogTypeLower == "soundtrack") { lv_catalogType = c_gameCatalogSoundtrack; }
+    else if (lv__catalogTypeLower == "spray") { lv_catalogType = c_gameCatalogSpray; }
+    else if (lv__catalogTypeLower == "stat") { lv_catalogType = c_gameCatalogStat; }
+    else if (lv__catalogTypeLower == "talent") { lv_catalogType = c_gameCatalogTalent; }
+    else if (lv__catalogTypeLower == "talentprofile") { lv_catalogType = c_gameCatalogTalentProfile; }
+    else if (lv__catalogTypeLower == "targetsort") { lv_catalogType = c_gameCatalogTargetSort; }
+    else if (lv__catalogTypeLower == "terrain") { lv_catalogType = c_gameCatalogTerrain; }
+    else if (lv__catalogTypeLower == "terrainobject") { lv_catalogType = c_gameCatalogTerrainObject; }
+    else if (lv__catalogTypeLower == "terraintex") { lv_catalogType = c_gameCatalogTerrainTex; }
+    else if (lv__catalogTypeLower == "texture") { lv_catalogType = c_gameCatalogTexture; }
+    else if (lv__catalogTypeLower == "texturesheet") { lv_catalogType = c_gameCatalogTextureSheet; }
+    else if (lv__catalogTypeLower == "tile") { lv_catalogType = c_gameCatalogTile; }
+    else if (lv__catalogTypeLower == "trophy") { lv_catalogType = c_gameCatalogTrophy; }
+    else if (lv__catalogTypeLower == "turret") { lv_catalogType = c_gameCatalogTurret; }
+    else if (lv__catalogTypeLower == "typedescription") { lv_catalogType = c_gameCatalogTypeDescription; }
+    else if (lv__catalogTypeLower == "unit") { lv_catalogType = c_gameCatalogUnit; }
+    else if (lv__catalogTypeLower == "upgrade") { lv_catalogType = c_gameCatalogUpgrade; }
+    else if (lv__catalogTypeLower == "user") { lv_catalogType = c_gameCatalogUser; }
+    else if (lv__catalogTypeLower == "validator") { lv_catalogType = c_gameCatalogValidator; }
+    else if (lv__catalogTypeLower == "vodefinition") { lv_catalogType = c_gameCatalogVODefinition; }
+    else if (lv__catalogTypeLower == "voiceline") { lv_catalogType = c_gameCatalogVoiceLine; }
+    else if (lv__catalogTypeLower == "voiceover") { lv_catalogType = c_gameCatalogVoiceOver; }
+    else if (lv__catalogTypeLower == "water") { lv_catalogType = c_gameCatalogWater; }
+    else if (lv__catalogTypeLower == "weapon") { lv_catalogType = c_gameCatalogWeapon; }
+    else {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Invalid Catalog Type"));
+        return true;
+    }
+    CatalogFieldValueSet(lv_catalogType, lv_catalogEntry, lv_catalogField, EventPlayer(), lv_value);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_ModifyCatalogValue_Init () {
+    libPLYR_gt_ModifyCatalogValue = TriggerCreate("libPLYR_gt_ModifyCatalogValue_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_ModifyCatalogValue, c_playerAny, "mcv", false);
+    TriggerAddEventChatMessage(libPLYR_gt_ModifyCatalogValue, c_playerAny, "modifycatalogvalue", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Grant XP to Player
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_GrantXPtoPlayer_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unit lv_unit;
+    int lv_xPAmount;
+    int lv_player;
+    int lv_source;
+    const int lv_floatmax = 524287;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_unit = UnitGroupUnit(UnitGroupSelected(EventPlayer()), 1);
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "xp") || (StringWord(EventChatMessage(false), 1) == "experience")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) == null)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Usage: <xp|experience> <Amount> [PlayerId] [SourceId]"));
+    }
+    else {
+        lv_xPAmount = StringToInt(StringWord(EventChatMessage(false), 2));
+        if ((StringWord(EventChatMessage(false), 3) != null)) {
+            lv_unit = UnitGroupUnit(UnitGroupSelected(lv_player), 1);
+            lv_player = StringToInt(StringWord(EventChatMessage(false), 3));
+        }
+
+        if ((StringWord(EventChatMessage(false), 4) != null)) {
+            lv_source = StringToInt(StringWord(EventChatMessage(false), 4));
+        }
+
+        if ((lv_xPAmount >= lv_floatmax)) {
+            do {
+                libGame_gf_GrantXPToPlayer(lv_floatmax, lv_player, lv_source);
+                libGame_gf_ScoreValuesRecordXPContributionForPlayer(lv_player, lv_floatmax, true);
+                libUIUI_gf_UIFloatingCombatTextH16MidXP(lv_player, lv_unit, libCore_ge_FloatingTextType_XPSelf, FixedToInt(lv_floatmax));
+                lv_xPAmount = (lv_xPAmount - lv_floatmax);
+            }while ((lv_xPAmount >= lv_floatmax));
+        }
+
+        libGame_gf_GrantXPToPlayer(lv_xPAmount, lv_player, lv_source);
+        libGame_gf_ScoreValuesRecordXPContributionForPlayer(lv_player, lv_xPAmount, true);
+        libUIUI_gf_UIFloatingCombatTextH16MidXP(lv_player, lv_unit, libCore_ge_FloatingTextType_XPSelf, FixedToInt(lv_xPAmount));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_GrantXPtoPlayer_Init () {
+    libPLYR_gt_GrantXPtoPlayer = TriggerCreate("libPLYR_gt_GrantXPtoPlayer_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_GrantXPtoPlayer, c_playerAny, "xp", false);
+    TriggerAddEventChatMessage(libPLYR_gt_GrantXPtoPlayer, c_playerAny, "experience", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Toggle AI
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_ToggleAI_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    bool lv_isAIEnabled;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "togai") || (StringWord(EventChatMessage(false), 1) == "toggleai")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) != "")) {
+        lv_player = StringToInt(StringWord(EventChatMessage(false), 2));
+        if (((lv_player > 15) || (lv_player <= 0))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Error: Player ID must between 1 - 15."));
+            return false;
+        }
+
+    }
+
+    lv_isAIEnabled = libAIAI_gf_HeroAIIsAIEnabledForPlayer(lv_player);
+    if ((lv_isAIEnabled == true)) {
+        libAIAI_gf_HeroAIDisableAIForPlayer(lv_player);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Disabled AI for Player " + IntToString(lv_player))));
+    }
+    else {
+        libAIAI_gf_HeroAIEnableAIForPlayer(lv_player);
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Enabled AI for Player " + IntToString(lv_player))));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_ToggleAI_Init () {
+    libPLYR_gt_ToggleAI = TriggerCreate("libPLYR_gt_ToggleAI_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_ToggleAI, c_playerAny, "togai", false);
+    TriggerAddEventChatMessage(libPLYR_gt_ToggleAI, c_playerAny, "toggleai", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Enable AI
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_EnableAI_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "enai") || (StringWord(EventChatMessage(false), 1) == "enableai")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) != "")) {
+        lv_player = StringToInt(StringWord(EventChatMessage(false), 2));
+        if (((lv_player > 15) || (lv_player <= 0))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Error: Player ID must between 1 - 15."));
+            return false;
+        }
+
+    }
+
+    libAIAI_gf_HeroAIEnableAIForPlayer(lv_player);
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Enabled AI for Player " + IntToString(lv_player))));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_EnableAI_Init () {
+    libPLYR_gt_EnableAI = TriggerCreate("libPLYR_gt_EnableAI_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_EnableAI, c_playerAny, "enai", false);
+    TriggerAddEventChatMessage(libPLYR_gt_EnableAI, c_playerAny, "enableai", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Disable AI
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_DisableAI_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "disai") || (StringWord(EventChatMessage(false), 1) == "disableai")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) != "")) {
+        lv_player = StringToInt(StringWord(EventChatMessage(false), 2));
+        if (((lv_player > 15) || (lv_player <= 0))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Error: Player ID must between 1 - 15."));
+            return false;
+        }
+
+    }
+
+    libAIAI_gf_HeroAIDisableAIForPlayer(lv_player);
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Disabled AI for Player " + IntToString(lv_player))));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Disable All AI
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_DisableAIAll_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player1;
+    int lv_player2;
+    int lv_player3;
+    int lv_player4;
+    int lv_player5;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "disall") || (StringWord(EventChatMessage(false), 1) == "disaiall") || (StringWord(EventChatMessage(false), 1) == "disableaiall")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+
+    libAIAI_gf_HeroAIDisableAIForPlayer(1);
+    libAIAI_gf_HeroAIDisableAIForPlayer(2);
+    libAIAI_gf_HeroAIDisableAIForPlayer(3);
+    libAIAI_gf_HeroAIDisableAIForPlayer(4);
+    libAIAI_gf_HeroAIDisableAIForPlayer(5);
+    libAIAI_gf_HeroAIDisableAIForPlayer(6);
+    libAIAI_gf_HeroAIDisableAIForPlayer(7);
+    libAIAI_gf_HeroAIDisableAIForPlayer(8);
+    libAIAI_gf_HeroAIDisableAIForPlayer(9);
+    libAIAI_gf_HeroAIDisableAIForPlayer(10);
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Disabled AI for all players")));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_DisableAI_Init () {
+    libPLYR_gt_DisableAI = TriggerCreate("libPLYR_gt_DisableAI_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_DisableAI, c_playerAny, "disai", false);
+    TriggerAddEventChatMessage(libPLYR_gt_DisableAI, c_playerAny, "disableai", false);
+    libPLYR_gt_DisableAIAll = TriggerCreate("libPLYR_gt_DisableAIAll_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_DisableAIAll, c_playerAny, "disaiall", false);
+    TriggerAddEventChatMessage(libPLYR_gt_DisableAIAll, c_playerAny, "disableaiall", false);
+    TriggerAddEventChatMessage(libPLYR_gt_DisableAIAll, c_playerAny, "disall", false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Get/Set AI Diffiiculty
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_gt_GetSetAIDiffiiculty_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_player;
+    bool lv_isAIEnabled;
+    int lv_difficulty;
+    string lv_difficultyString;
+    bool lv_isValidDifficulty;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_player = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!(((StringWord(EventChatMessage(false), 1) == "diffai") || (StringWord(EventChatMessage(false), 1) == "difficultyai")))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((StringWord(EventChatMessage(false), 2) != "")) {
+        lv_player = StringToInt(StringWord(EventChatMessage(false), 2));
+        if (((lv_player > 15) || (lv_player <= 0))) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Error: Player ID must between 1 - 15."));
+            return false;
+        }
+
+    }
+
+    lv_isAIEnabled = libAIAI_gf_HeroAIIsAIEnabledForPlayer(lv_player);
+    if ((lv_isAIEnabled == true)) {
+        if ((StringWord(EventChatMessage(false), 3) != "")) {
+            lv_difficulty = StringToInt(StringWord(EventChatMessage(false), 3));
+            lv_difficultyString = libAIAI_ge_HeroAIDifficulty_Ident(lv_difficulty);
+            if ((lv_difficultyString == null)) {
+                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText("Error: Invalid AI Difficulty Setting."));
+                return false;
+            }
+
+            libAIAI_gf_HeroAISetAIDifficultyLevel(lv_player, lv_difficulty);
+            libAIAI_gf_HeroAIDisableAIForPlayer(lv_player);
+            libAIAI_gf_HeroAIEnableAIForPlayer(lv_player);
+            libAIAI_gf_HeroAISetAIDifficultyLevel(lv_player, lv_difficulty);
+            lv_difficulty = libAIAI_gv_aIHeroes[lv_player].lv_difficulty;
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Changed Player " + (IntToString(lv_player) + (" AI Difficulty to: " + (lv_difficultyString + (" (" + (IntToString(lv_difficulty) + ")"))))))));
+            return true;
+        }
+        else {
+            lv_difficultyString = libAIAI_ge_HeroAIDifficulty_Ident(libAIAI_gv_aIHeroes[lv_player].lv_difficulty);
+            lv_difficulty = libAIAI_gv_aIHeroes[lv_player].lv_difficulty;
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText((("AI Difficulty for Player " + IntToString(lv_player)) + (" is: " + (lv_difficultyString + (" (" + (IntToString(lv_difficulty) + ")")))))));
+            return true;
+        }
+    }
+    else {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDebug, StringToText(("Error: AI is not enabled for Player " + IntToString(lv_player))));
+        return false;
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPLYR_gt_GetSetAIDiffiiculty_Init () {
+    libPLYR_gt_GetSetAIDiffiiculty = TriggerCreate("libPLYR_gt_GetSetAIDiffiiculty_Func");
+    TriggerAddEventChatMessage(libPLYR_gt_GetSetAIDiffiiculty, c_playerAny, "diffai", false);
+    TriggerAddEventChatMessage(libPLYR_gt_GetSetAIDiffiiculty, c_playerAny, "difficultyai", false);
+}
+
+void libPLYR_InitTriggers () {
+    libPLYR_gt_MapInit_Init();
+    libPLYR_gt_AddQuestStacks_Init();
+    libPLYR_gt_RemoveQuestStacks_Init();
+    libPLYR_gt_RunMassQuest_Init();
+    libPLYR_gt_ToggleRunMassQuest_Init();
+    libPLYR_gt_TogglePause_Init();
+    libPLYR_gt_ToggleTalentTree_Init();
+    libPLYR_gt_AddTalent_Init();
+    libPLYR_gt_AddAllTalents_Init();
+    libPLYR_gt_SelectAllTalents_Init();
+    libPLYR_gt_RemoveTalent_Init();
+    libPLYR_gt_RemoveAllTalents_Init();
+    libPLYR_gt_EnableTalent_Init();
+    libPLYR_gt_DisableTalent_Init();
+    libPLYR_gt_OverrideRespawnPoint_Init();
+    libPLYR_gt_OverrideScoreBoard_Init();
+    libPLYR_gt_SetMasteryRing_Init();
+    libPLYR_gt_OverrideRespawnTime_Init();
+    libPLYR_gt_SetOverlay_Init();
+    libPLYR_gt_ResetOverlay_Init();
+    libPLYR_gt_GetCatalogReference_Init();
+    libPLYR_gt_ModifyCatalogReference_Init();
+    libPLYR_gt_ModifyCatalogValue_Init();
+    libPLYR_gt_GrantXPtoPlayer_Init();
+    libPLYR_gt_ToggleAI_Init();
+    libPLYR_gt_EnableAI_Init();
+    libPLYR_gt_DisableAI_Init();
+    libPLYR_gt_GetSetAIDiffiiculty_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool libPLYR_InitLib_completed = false;
+
+void libPLYR_InitLib () {
+    if (libPLYR_InitLib_completed) {
+        return;
+    }
+
+    libPLYR_InitLib_completed = true;
+
+    libPLYR_InitLibraries();
+    libPLYR_InitVariables();
+    libPLYR_InitTriggers();
+}
+

@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+<CHero id="WitchDoctor" parent="LegacyVOHero">
+    <AttributeId value="Witc" />
+    <Flags index="GoodForModeA" value="1" />
+    <Flags index="GoodForModeB" value="1" />
+    <Role value="Specialist" />
+    <ExpandedRole value="RangedAssassin" />
+    <RolesMultiClass value="Specialist" />
+    <SelectScreenButtonImage value="Assets\Textures\storm_ui_ingame_heroselect_btn_witchdoctor.dds" />
+    <ImageFacing value="Left" />
+    <IntroCutsceneSize value="Medium" />
+    <HeroAbilArray Abil="WitchDoctorCorpseSpiders" Button="WitchDoctorCorpseSpiders">
+      <Flags index="ShowInHeroSelect" value="1" />
+      <Flags index="AffectedByCooldownReduction" value="1" />
+    </HeroAbilArray>
+    <HeroAbilArray Abil="WitchDoctorZombieWall" Button="WitchDoctorZombieWall">
+      <Flags index="ShowInHeroSelect" value="1" />
+      <Flags index="AffectedByCooldownReduction" value="1" />
+    </HeroAbilArray>
+    <HeroAbilArray Abil="WitchDoctorPlagueofToads" Button="WitchDoctorPlagueOfToads">
+      <Flags index="ShowInHeroSelect" value="1" />
+      <Flags index="UsesCharges" value="1" />
+      <Flags index="AffectedByCooldownReduction" value="1" />
+    </HeroAbilArray>
+    <HeroAbilArray Abil="WitchDoctorGargantuan" Button="WitchDoctorGargantuan">
+      <Flags index="ShowInHeroSelect" value="1" />
+      <Flags index="AffectedByCooldownReduction" value="1" />
+      <Flags index="Heroic" value="1" />
+    </HeroAbilArray>
+    <HeroAbilArray Abil="WitchDoctorRavenousSpirit" Button="WitchDoctorRavenousSpirit">
+      <Flags index="ShowInHeroSelect" value="1" />
+      <Flags index="AffectedByCooldownReduction" value="1" />
+      <Flags index="Heroic" value="1" />
+    </HeroAbilArray>
+    <HeroAbilArray Button="WitchDoctorVoodooRitualTrait">
+      <Flags index="ShowInHeroSelect" value="1" />
+      <Flags index="Trait" value="1" />
+    </HeroAbilArray>
+    <HeroAbilArray Abil="WitchDoctorGargantuanStompCommand" Button="WitchDoctorGargantuanStomp">
+      <Flags index="AffectedByCooldownReduction" value="1" />
+      <Flags index="Heroic" value="1" />
+    </HeroAbilArray>
+    <HeroAbilArray Abil="WitchDoctorGargantuanStomp">
+      <Flags index="AffectedByCooldownReduction" value="1" />
+    </HeroAbilArray>
+    <SkinArray value="MasterNazeebo" />
+    <SkinArray value="WitchDoctorGrimskull" />
+    <SkinArray value="WitchDoctorHarlequin" />
+    <SkinArray value="WitchDoctorWinter" />
+    <SkinArray value="WitchDoctorMadAxe18" />
+    <VoiceLineArray value="WitchDoctorBase_VoiceLine01" />
+    <VoiceLineArray value="WitchDoctorBase_VoiceLine02" />
+    <VoiceLineArray value="WitchDoctorBase_VoiceLine03" />
+    <VoiceLineArray value="WitchDoctorBase_VoiceLine04" />
+    <VoiceLineArray value="WitchDoctorBase_VoiceLine05" />
+    <DefaultMount value="HorseCommon" />
+    <VOArray index="Cheer" value="WitchDoctor_VOX_Cheer" />
+    <VOArray index="GetHit" value="WitchDoctor_VOX_GetHitSmall" />
+    <VOArray index="MatchEnd" value="WitchDoctor_MatchEnd" />
+    <VOArray index="PingCapture" value="WitchDoctor_Ping_Capture" />
+    <VOArray index="PingCollect" value="WitchDoctor_Ping_Collect" />
+    <VOArray index="PingDefendStructure" value="WitchDoctor_Ping_DefendStructure" />
+    <VOArray index="PingDefendThing" value="WitchDoctor_Ping_DefendThing" />
+    <VOArray index="PingDestroyStructure" value="WitchDoctor_Ping_DestroyStructure" />
+    <VOArray index="PingDestroyThing" value="WitchDoctor_Ping_DestroyThing" />
+    <VOArray index="PingTransport" value="WitchDoctor_Ping_Transport" />
+    <VOArray index="PingTurnIn" value="WitchDoctor_Ping_TurnIn" />
+    <VOArray index="VOPing_AssistMe" value="WitchDoctor_VOPing_AssistMe" />
+    <VOArray index="VOPing_Danger" value="WitchDoctor_VOPing_Danger" />
+    <VOArray index="VOPing_Defend" value="WitchDoctor_VOPing_Defend" />
+    <VOArray index="VOPing_EnemyMissing" value="WitchDoctor_VOPing_EnemyMissing" />
+    <VOArray index="VOPing_OnMyWay" value="WitchDoctor_VOPing_OnMyWay" />
+    <VOArray index="VOPing_Retreat" value="WitchDoctor_VOPing_Retreat" />
+    <TalentTreeArray Talent="WitchDoctorWidowmakers" Tier="1" Column="1" />
+    <TalentTreeArray Talent="WitchDoctorPandemic" Tier="1" Column="2" />
+    <TalentTreeArray Talent="WitchDoctorThingOfTheDeep" Tier="1" Column="3" />
+    <TalentTreeArray Talent="WitchDoctorWidowmakers2" Tier="1" Column="4" />
+    <TalentTreeArray Talent="WitchDoctorHexedCrawlers" Tier="2" Column="1" />
+    <TalentTreeArray Talent="WitchDoctorBigVoodoo" Tier="2" Column="2" />
+    <TalentTreeArray Talent="WitchDoctorBloodRitual" Tier="2" Column="3" />
+    <TalentTreeArray Talent="WitchDoctorHexedCrawlers2" Tier="2" Column="4" />
+    <TalentTreeArray Talent="WitchDoctorSpiritofArachyr" Tier="3" Column="1" />
+    <TalentTreeArray Talent="WitchDoctorDeadRush" Tier="3" Column="2" />
+    <TalentTreeArray Talent="WitchDoctorToadsofHugeness" Tier="3" Column="3" />
+    <TalentTreeArray Talent="WitchDoctorSpiritofArachyr2" Tier="3" Column="4" />
+    <TalentTreeArray Talent="WitchDoctorHeroicAbilityGargantuan" Tier="4" Column="1" />
+    <TalentTreeArray Talent="WitchDoctorHeroicAbilityRavenousSpirits" Tier="4" Column="2" />
+    <TalentTreeArray Talent="WitchDoctorGuardianToads" Tier="5" Column="1" />
+    <TalentTreeArray Talent="WitchDoctorSuperstition" Tier="5" Column="2" />
+    <TalentTreeArray Talent="GenericTalentIceBlock" Tier="5" Column="3" />
+    <TalentTreeArray Talent="WitchDoctorSpiderColony" Tier="6" Column="1" />
+    <TalentTreeArray Talent="WitchDoctorRingOfPoison" Tier="6" Column="2" />
+    <TalentTreeArray Talent="WitchDoctorSoulHarvest" Tier="6" Column="3" />
+    <TalentTreeArray Talent="WitchDoctorSpiderColony2" Tier="6" Column="4" />
+    <TalentTreeArray Talent="WitchDoctorHumongoid" Tier="7" Column="1">
+      <PrerequisiteTalentArray value="WitchDoctorHeroicAbilityGargantuan" />
+    </TalentTreeArray>
+    <TalentTreeArray Talent="WitchDoctorAnnihilatingSpirits" Tier="7" Column="2">
+      <PrerequisiteTalentArray value="WitchDoctorHeroicAbilityRavenousSpirits" />
+    </TalentTreeArray>
+    <TalentTreeArray Talent="WitchDoctorVileInfection" Tier="7" Column="3" />
+    <TalentTreeArray Talent="WitchDoctorBadMedicine" Tier="7" Column="4" />
+    <VariationIcon value="Assets\Textures\UI_Glues_Swatch_Purple.dds" />
+    <Difficulty value="Medium" />
+    <AIComplexityTier value="Mid" />
+    <HeroTierAchievementId value="5216701565557861772" />
+    <Universe value="Diablo" />
+    <UniverseIcon value="Assets\Textures\UI_Glues_Store_GameIcon_D3.dds" />
+    <ProductId value="10128" />
+    <LevelScalingArray>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorVoodooRitualDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorVoodooRitualDeathRitualTalentDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+    </LevelScalingArray>
+    <LevelScalingArray Ability="WitchDoctorCorpseSpiders">
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorCorpseSpidersWeaponDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorCorpseSpidersJarDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Validator" />
+        <Entry value="WitchDoctorSpiderColonyHealthValidator" />
+        <Field value="Value" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+    </LevelScalingArray>
+    <LevelScalingArray Ability="WitchDoctorPlagueofToads">
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorPlagueofToadsDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorPlagueofToadsToadsOfHugenessTalentDamage1" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorPlagueofToadsToadsOfHugenessTalentDamage2" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorPlagueofToadsToadsOfHugenessTalentDamage3" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorPlagueofToadsToadsOfHugenessTalentDamage4" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+    </LevelScalingArray>
+    <LevelScalingArray Ability="WitchDoctorZombieWall">
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorZombieWallWeaponDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Unit" />
+        <Entry value="WitchDoctorZombieWallUnit" />
+        <Field value="LifeMax" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Unit" />
+        <Entry value="WitchDoctorZombieWallUnit" />
+        <Field value="LifeStart" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Unit" />
+        <Entry value="WitchDoctorZombieWallDeadRushTalentUnit" />
+        <Field value="LifeMax" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Unit" />
+        <Entry value="WitchDoctorZombieWallDeadRushTalentUnit" />
+        <Field value="LifeStart" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorZombieWallPoisonZombieTalentDamage1" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorZombieWallPoisonZombieTalentDamage2" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorZombieWallPoisonZombieTalentDamage3" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorZombieWallPoisonZombieTalentDamage4" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorZombieWallPoisonZombieTalentDamage5" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+    </LevelScalingArray>
+    <LevelScalingArray Ability="WitchDoctorRavenousSpirit">
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorRavenousSpiritDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+    </LevelScalingArray>
+    <LevelScalingArray Ability="WitchDoctorGargantuan">
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorGargantuanDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Unit" />
+        <Entry value="WitchDoctorGargantuan" />
+        <Field value="LifeMax" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Unit" />
+        <Entry value="WitchDoctorGargantuan" />
+        <Field value="LifeStart" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorGargantuanStompDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorGargantuanInitialImpactDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByAbilityPower value="1" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+    </LevelScalingArray>
+    <LevelScalingArray>
+      <Modifications>
+        <Catalog value="Unit" />
+        <Entry value="HeroWitchDoctor" />
+        <Field value="LifeMax" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Unit" />
+        <Entry value="HeroWitchDoctor" />
+        <Field value="LifeStart" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Unit" />
+        <Entry value="HeroWitchDoctor" />
+        <Field value="LifeRegenRate" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorHeroWeaponDamage" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+      <Modifications>
+        <Catalog value="Effect" />
+        <Entry value="WitchDoctorHeroWeaponDamageSplash" />
+        <Field value="Amount" />
+        <Value value="0.040000" />
+        <AffectedByOverdrive value="1" />
+      </Modifications>
+    </LevelScalingArray>
+    <VariationArray value="WitchDoctorBlood" />
+    <VariationArray value="WitchDoctorToxic" />
+    <VariationArray value="WitchDoctorVar3" />
+    <VariationArray value="WitchDoctorVar4" />
+    <VariationArray value="WitchDoctorVar5" />
+    <VariationArray value="WitchDoctorVar6" />
+    <ReleaseDate Month="3" Day="13" />
+    <HyperlinkId value="Nazeebo" />
+    <AllowedMountCategoryArray value="Ride" />
+    <AllowedMountCategoryArray value="Ridebeast" />
+    <AllowedMountCategoryArray value="Ridebike" />
+    <AllowedMountCategoryArray value="Ridesurf" />
+    <Ratings>
+      <Damage value="8" />
+      <Utility value="4" />
+      <Survivability value="3" />
+      <Complexity value="6" />
+    </Ratings>
+    <TalentAIBuildsArray ChanceToPick="16">
+      <TalentsArray value="WitchDoctorPandemic" />
+      <TalentsArray value="WitchDoctorBloodRitual" />
+      <TalentsArray value="WitchDoctorToadsofHugeness" />
+      <TalentsArray value="WitchDoctorHeroicAbilityRavenousSpirits" />
+      <TalentsArray value="GenericTalentIceBlock" />
+      <TalentsArray value="WitchDoctorRingOfPoison" />
+      <TalentsArray value="WitchDoctorAnnihilatingSpirits" />
+    </TalentAIBuildsArray>
+    <TalentAIBuildsArray ChanceToPick="16">
+      <TalentsArray value="WitchDoctorWidowmakers" />
+      <TalentsArray value="WitchDoctorHexedCrawlers" />
+      <TalentsArray value="WitchDoctorSpiritofArachyr" />
+      <TalentsArray value="WitchDoctorHeroicAbilityGargantuan" />
+      <TalentsArray value="GenericTalentIceBlock" />
+      <TalentsArray value="WitchDoctorSpiderColony" />
+      <TalentsArray value="WitchDoctorHumongoid" />
+    </TalentAIBuildsArray>
+    <TalentAIBuildsArray ChanceToPick="16">
+      <TalentsArray value="WitchDoctorThingOfTheDeep" />
+      <TalentsArray value="WitchDoctorBigVoodoo" />
+      <TalentsArray value="WitchDoctorSpiritofArachyr" />
+      <TalentsArray value="WitchDoctorHeroicAbilityGargantuan" />
+      <TalentsArray value="GenericTalentIceBlock" />
+      <TalentsArray value="WitchDoctorSpiderColony" />
+      <TalentsArray value="WitchDoctorVileInfection" />
+    </TalentAIBuildsArray>
+    <TalentAIBuildsArray ChanceToPick="16">
+      <TalentsArray value="WitchDoctorPandemic" />
+      <TalentsArray value="WitchDoctorBigVoodoo" />
+      <TalentsArray value="WitchDoctorToadsofHugeness" />
+      <TalentsArray value="WitchDoctorHeroicAbilityGargantuan" />
+      <TalentsArray value="WitchDoctorGuardianToads" />
+      <TalentsArray value="WitchDoctorRingOfPoison" />
+      <TalentsArray value="WitchDoctorVileInfection" />
+    </TalentAIBuildsArray>
+    <TalentAIBuildsArray AIOnly="1" ChanceToPick="16">
+      <TalentsArray value="WitchDoctorWidowmakers" />
+      <TalentsArray value="WitchDoctorHexedCrawlers" />
+      <TalentsArray value="WitchDoctorDeadRush" />
+      <TalentsArray value="WitchDoctorHeroicAbilityRavenousSpirits" />
+      <TalentsArray value="WitchDoctorSuperstition" />
+      <TalentsArray value="WitchDoctorSoulHarvest" />
+      <TalentsArray value="WitchDoctorAnnihilatingSpirits" />
+    </TalentAIBuildsArray>
+    <TalentAIBuildsArray AIOnly="1" ChanceToPick="16">
+      <TalentsArray value="WitchDoctorThingOfTheDeep" />
+      <TalentsArray value="WitchDoctorBigVoodoo" />
+      <TalentsArray value="WitchDoctorDeadRush" />
+      <TalentsArray value="WitchDoctorHeroicAbilityRavenousSpirits" />
+      <TalentsArray value="WitchDoctorGuardianToads" />
+      <TalentsArray value="WitchDoctorRingOfPoison" />
+      <TalentsArray value="WitchDoctorAnnihilatingSpirits" />
+    </TalentAIBuildsArray>
+    <HeroSpecificUIArray Location="Status" DescName="Nazeebo/NazeeboFrame" />
+    <Rarity value="Epic" />
+  </CHero>
+</Catalog>

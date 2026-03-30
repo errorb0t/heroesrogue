@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+<CBehaviorBuff id="CheatReveal">
+  <Period value="0.25" />
+  <PeriodicEffect value="CheatRevealerSearch" />
+  <DisplayDuration index="Ally" value="0" />
+  <DisplayDuration index="Enemy" value="0" />
+</CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixConversionBuff" parent="CarryBehaviorParent">
+    <Period value="40" />
+    <PeriodicEffect value="AffixConversionApplyReady" />
+    <DisableValidatorArray value="CasterDoesNotHaveAffixConversionReady" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixConversionReady" parent="CarryBehaviorParent">
+    <Period value="0.25" />
+    <PeriodicEffect value="AffixConversionSearch" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixStructureHealthBuff" parent="CarryBehaviorParent">
+    <Modification>
+      <VitalMaxFractionArray index="Life" value="0.1" />
+      <VitalRegenMultiplier index="Life" value="0.1" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixOutdatedCatapultsDebuff" parent="CarryBehaviorParent">
+    <Modification>
+      <AdditiveAttackSpeedFactor value="-0.5" />
+      <WeaponRange value="-3" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixEnemyDamageBuff" parent="CarryBehaviorParent">
+    <Modification>
+      <HealDealtAdditiveMultiplier index="Life" value="0.1" />
+      <HealDealtAdditiveMultiplier index="Shields" value="0.1" />
+      <DamageDealtFraction index="Ability" value="0.1" />
+      <DamageDealtFraction index="Basic" value="0.1" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixEnemyHealthBuff" parent="CarryBehaviorParent">
+    <Modification>
+      <VitalMaxFractionArray index="Life" value="0.15" />
+      <VitalMaxFractionArray index="Shields" value="0.15" />
+      <VitalRegenMultiplier index="Life" value="0.15" />
+      <VitalRegenMultiplier index="Shields" value="0.15" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixEnemySpeedBuff" parent="CarryBehaviorParent">
+    <Modification>
+      <UnifiedMoveSpeedFactor value="0.10" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixPowerRitual" parent="CarryBehaviorParent">
+    <Modification>
+      <!--<AdditiveAttackSpeedFactor value="0.25" />-->
+    </Modification>
+  </CBehaviorBuff>
+
+  
+  <CBehaviorBuff id="AffixAllyDamageBuff" parent="CarryBehaviorParent">
+    <Modification>
+      <HealDealtAdditiveMultiplier index="Life" value="0.05" />
+      <HealDealtAdditiveMultiplier index="Shields" value="0.05" />
+      <DamageDealtFraction index="Ability" value="0.05" />
+      <DamageDealtFraction index="Basic" value="0.05" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixAllyHealthBuff" parent="CarryBehaviorParent">
+    <Modification>
+      <VitalMaxFractionArray index="Life" value="0.07" />
+      <VitalMaxFractionArray index="Shields" value="0.07" />
+      <VitalRegenMultiplier index="Life" value="0.07" />
+      <VitalRegenMultiplier index="Shields" value="0.07" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixAllySpeedBuff" parent="CarryBehaviorParent">
+    <Modification>
+      <UnifiedMoveSpeedFactor value="0.06" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="WitchDoctorZombieWallTimedLifeZombieHandler">
+    <Duration value="0.0625" />
+    <FinalEffect value="WitchDoctorZombieWallTimedLifeFinishZombieHandler" />
+  </CBehaviorBuff>  
+  <CBehaviorBuff id="AffixBloodlust" parent="CarryBehaviorParent">
+    <Modification>
+      <UnifiedMoveSpeedFactor value="0.2" />
+      <AdditiveAttackSpeedFactor value="0.25" />
+      <VitalDamageLeechArray index="Life">
+        <KindArray index="Basic" value="0.3" />
+      </VitalDamageLeechArray>
+      <VitalDamageLeechScoreArray Value="Healing" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixNanoBoost" parent="CarryBehaviorParent">
+    <Modification>
+      <HealDealtAdditiveMultiplier index="Life" value="0.15" />
+      <HealDealtAdditiveMultiplier index="Shields" value="0.15" />
+      <DamageDealtFraction index="Ability" value="0.15" />
+      <VitalRegenArray index="Energy" value="3" />
+      <VitalDamageLeechScoreArray Value="Healing" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixNanoBoostNoMana" parent="CarryBehaviorParent">
+    <Modification>
+      <HealDealtAdditiveMultiplier index="Life" value="0.15" />
+      <HealDealtAdditiveMultiplier index="Shields" value="0.15" />
+      <DamageDealtFraction index="Ability" value="0.15" />
+      <VitalDamageLeechScoreArray Value="Healing" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixAARange" parent="CarryBehaviorParent">
+    <Modification>
+      <WeaponRange value="1.1" />
+      <WeaponScanBonus value="1.1" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixBlessingoftheDragons" parent="CarryBehaviorParent">
+    <Modification>
+      <UnifiedMoveSpeedFactor value="0.2" />
+      <VitalMaxArray index="Life" value="500" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixBuddyDroneController" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="CasterNotStasis" />
+    <DisableValidatorArray value="CasterNotDead" />
+    <PeriodicEffect value="AffixBuddyDroneControllerSearchEnemy" />
+    <Period value="4" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixBuddyDroneSpawnBehavior" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="CasterNotStasis" />
+    <DisableValidatorArray value="CasterNotDead" />
+    <DisableValidatorArray value="LeoricDoesNotHaveUndying" />
+    <DisableValidatorArray value="CasterDoesNotHaveAffixBuddyDroneOwner" />
+    <Period value="0.0625" />
+    <PeriodicEffect value="AffixBuddyDroneSpawnBehaviorSet" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixBuddyDroneOwner">
+    <RemoveValidatorArray value="TargetNotSpecialDeathState" />
+  </CBehaviorBuff>
+
+  <CBehaviorUnitTracker id="AffixBuddyHealUnitTracker">
+    <MaxTrackedUnits value="1" />
+    <UnitAddedAtMaxRule value="ReplaceOldest" />
+    <BehaviorFlags index="Permanent" value="1" />
+    <BehaviorFlags index="EnabledWhileDead" value="1" />
+  </CBehaviorUnitTracker>
+  
+  <CBehaviorBuff id="AffixRegenerativeCore" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="CasterShieldGT0Percent" />
+    <Period value="0.25" />
+    <PeriodicEffect value="AffixRegenerativeCoreCreateHealer" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixBackdoorProtection" parent="StormArmorPermanent">
+    <Alignment value="Positive" />
+    <MaxStackCount value="3" />
+    <ArmorModification AllArmorBonus="20" StackCount="3" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixUltimatePunishment" parent="CarryBehaviorParent">
+    <Modification>
+      <HealDealtAdditiveMultiplier index="Life" value="0.25" />
+      <HealDealtAdditiveMultiplier index="Shields" value="0.25" />
+      <DamageDealtFraction index="Ability" value="0.25" />
+      <DamageDealtFraction index="Basic" value="0.25" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorTokenCounter id="AffixKillContractQuestToken" parent="StormQuestToken">
+    <Max value="25" />
+    <AtMaxEvents index="0" EventId="QuestComplete" Effect="AffixKillContractQuestComplete" />
+    <SortIndex value="20" />
+  </CBehaviorTokenCounter>
+  <CBehaviorTokenCounter id="AffixStructureQuestToken" parent="StormQuestToken">
+    <Max value="24" />
+    <ConditionalEvents Compare="GE" CompareValue="6">
+      <Event EventId="QuestMilestone" Effect="AffixStructureQuest6" />
+    </ConditionalEvents>
+    <ConditionalEvents Compare="GE" CompareValue="12">
+      <Event EventId="QuestMilestone" Effect="AffixStructureQuest12" />
+    </ConditionalEvents>
+    <AtMaxEvents index="0" EventId="QuestComplete" Effect="AffixStructureQuestComplete" />
+    <IncreaseEvents EventId="QuestIncrease" />
+    <AtMinEvents EventId="QuestReset" />
+    <SortIndex value="20" />
+  </CBehaviorTokenCounter>
+  <CBehaviorBuff id="AffixFortificationsTowerReveal">
+    <Period value="0.25" />
+    <PeriodicEffect value="ScoutingDroneRevealerSearch" />
+    <DisplayDuration index="Ally" value="0" />
+    <DisplayDuration index="Enemy" value="0" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixAASpeed" parent="CarryBehaviorParent">
+    <Modification>
+      <AdditiveAttackSpeedFactor value="0.15" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixMount" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="IsMounted" />
+    <Modification>
+      <UnifiedMoveSpeedFactor value="0.6" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorAbility id="AffixMedallion">
+    <Buttons Face="AffixMedallion" Type="AbilCmd" AbilCmd="AffixMedallion,Execute" />
+  </CBehaviorAbility>
+  <CBehaviorBuff id="AffixCCIncrease" parent="CarryBehaviorParent">
+    <MaxStackCount value="3" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixEfficientGuns" parent="CarryBehaviorParent">
+    <Modification>
+      <AdditiveAttackSpeedFactor value="0.15" />
+      <WeaponRange value="1" />
+      <WeaponScanBonus value="1" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixEnemyLeech" parent="CarryBehaviorParent">
+    <Modification>
+      <VitalDamageLeechArray index="Life">
+        <KindArray index="Basic" value="0.15" />
+        <KindArray index="Ability" value="0.15" />
+      </VitalDamageLeechArray>
+      <VitalDamageLeechScoreArray Value="Healing" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixEmergencyMeasure" parent="CarryBehaviorParent">
+    <DamageResponse>
+      <Chance value="1" />
+      <Handled value="AffixEmergencyMeasureSet" />
+      <Priority value="18" />
+      <Fatal value="1" />
+      <RecordBehaviorShieldDamage value="1" />
+      <ModifyFraction value="0" />
+      <ProvideCategories index="Shield" value="1" />
+      <PreventCategories index="Shield" value="1" />
+    </DamageResponse>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixEmergencyMeasureCooldown">
+    <Duration value="60" />
+    <Modification>
+      <BehaviorLinkDisableArray value="AffixEmergencyMeasure" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixEmergencyMeasureShield" parent="StormShield">
+    <Duration value="4" />
+    <DamageResponse>
+      <ModifyLimitVitalMaxFractionArray index="Life" value="0.5" />
+      <ModifyScoreArray index="0" Value="Healing" />
+    </DamageResponse>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixTimeTrapAutoDetonate">
+    <Modification>
+      <StateFlags index="Bury" value="1" />
+      <StateFlags index="Cloak" value="1" />
+      <StateFlags index="Passive" value="1" />
+      <StateFlags index="SuppressCollision" value="1" />
+      <StateFlags index="Unselectable" value="1" />
+    </Modification>
+    <Period value="0.0625" />
+    <PeriodicEffect value="AffixTimeTrapAutoDetonateSearch" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ChromieTimeTrapArmingBehaviorNoTracking">
+    <DisplayDuration index="Self" value="1" />
+    <DisplayDuration index="Ally" value="1" />
+    <DisplayDuration index="Enemy" value="1" />
+    <Duration value="$ChromieTimeTrapArmingDuration" />
+    <InitialEffect value="ChromieTimeTrapArmingBehaviorInitialSet" />
+    <ExpireEffect value="ChromieTimeTrapDetonateApplyAutoDetonate" />
+    <Modification>
+      <StateFlags index="SuppressCollision" value="1" />
+    </Modification>
+    <DamageResponse Chance="1" Handled="ChromieTimeTrapApplyCooldownSwitch" Fatal="1" />
+  </CBehaviorBuff>
+  
+  <CBehaviorBuff id="AffixAASearing" parent="CarryBehaviorParent">
+    <Modification>
+      <DamageDealtFraction index="Basic" value="0.25" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixPathoftheWizard" parent="CarryBehaviorParent">
+      <Modification>
+        <VitalMaxArray index="Energy" value="10" />
+        <VitalRegenArray index="Energy" value="0.2" />
+      </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixPathoftheWarrior" parent="CarryBehaviorParent">
+      <Modification>
+        <VitalMaxArray index="Life" value="40" />
+      </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixPathoftheAssassin" parent="CarryBehaviorParent">
+    <Modification>
+      <DamageDealtScaled index="Basic" value="5" />
+    </Modification>
+  </CBehaviorBuff>
+  
+  <CBehaviorBuff id="AffixShieldedCore" parent="CarryBehaviorParent">
+    <Modification>
+      <VitalMaxFractionArray index="Shields" value="0.5" />
+      <VitalRegenMultiplier index="Shields" value="0.15" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixEnemyAllStats" parent="CarryBehaviorParent">
+    <Modification>
+      <AdditiveAttackSpeedFactor value="0.25" />
+      <DamageDealtFraction index="Basic" value="0.25" />
+      <DamageDealtFraction index="Ability" value="0.25" />
+      <VitalMaxFractionArray index="Life" value="0.25" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixGrenadier" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="CasterNotStasis" />
+    <DisableValidatorArray value="CasterNotDead" />
+    <DisableValidatorArray value="CasterDoesNotHaveAffixGrenadierReady" />
+    <PeriodicEffect value="AffixGrenadierApplyReady" />
+    <Period value="6" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixGrenadierReady" parent="CarryBehaviorParent">
+    <Period value="0.0625" />
+    <PeriodicEffect value="AffixGrenadierSearch" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixClone" parent="CarryBehaviorParent">
+    <Modification>
+      <StateFlags index="Hallucination" value="1" />
+      <AbilLinkDisableArray value="MurkyRespawnEgg" />
+      <BehaviorLinkDisableArray value="LeoricUndyingDontDie" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="GreatVikingHoard" parent="CarryBehaviorParent">
+    <Modification>
+      <HealDealtAdditiveMultiplier index="Life" value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </HealDealtAdditiveMultiplier>
+      <HealDealtAdditiveMultiplier index="Shields" value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </HealDealtAdditiveMultiplier>
+      <UnifiedMoveSpeedFactor value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </UnifiedMoveSpeedFactor>
+      <DamageDealtFraction index="Ability" value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </DamageDealtFraction>
+      <DamageDealtFraction index="Basic" value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </DamageDealtFraction>
+      <VitalMaxFractionArray index="Life" value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </VitalMaxFractionArray>
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixOlaf" parent="StormArmorPermanent">
+    <ArmorModification>
+      <AllArmorBonus value="50" />
+    </ArmorModification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixBaleog" parent="CarryBehaviorParent">
+    <Modification>
+      <AdditiveAttackSpeedFactor value="0.75" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixErik" parent="CarryBehaviorParent">
+    <Modification>
+      <WeaponRange value="6.5" />
+      <WeaponScanBonus value="6.5" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixButtonMasher" parent="CarryBehaviorParent" />
+  
+</Catalog>

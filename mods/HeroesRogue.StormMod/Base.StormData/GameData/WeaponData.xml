@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+<CWeaponLegacy id="GuardTowerL2Weapon" parent="StormTowerWeapon">
+    <DisplayEffect value="CannonTowerL2Damage" />
+    <Range value="7.75" />
+    <Effect value="GuardTowerL2WeaponLaunchSetAffix" />
+  </CWeaponLegacy>
+  <CWeaponLegacy id="GuardTowerL3Weapon" parent="StormTowerWeapon">
+    <DisplayEffect value="CannonTowerL3Damage" />
+    <Range value="7.75" />
+    <Effect value="GuardTowerL3WeaponLaunchSetAffix" />
+  </CWeaponLegacy>
+  <CWeaponLegacy id="TownHallL2Weapon" parent="StormTowerWeapon">
+    <DisplayEffect value="TownHallL2WeaponDamage" />
+    <Range value="8" />
+    <Effect value="TownHallL2WeaponLaunchSetAffix" />
+  </CWeaponLegacy>
+  <CWeaponLegacy id="TownHallL3Weapon" parent="StormTowerWeapon">
+    <DisplayEffect value="TownHallL3WeaponDamage" />
+    <Range value="8" />
+    <Effect value="TownHallL3WeaponLaunchSetAffix" />
+  </CWeaponLegacy>
+
+</Catalog>

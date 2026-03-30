@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Include path="UI/Layout/PVEBrawlCurateHeroSelection.StormLayout"/>
+    <Include path="UI/Layout/PVEBrawl.StormLayout"/>
+    <Include path="UI/Layout/LoadingScreens/CursedHollow_Loading.StormLayout" />
+    <Include path="UI/Layout/LoadingScreens/Loading_InfernalShrines.StormLayout" />
+    <Include path="UI/Layout/LoadingScreens/TomboftheSpiderQueen_Loading.StormLayout" />
+    <Include path="UI/Layout/UI/AffixUI.StormLayout" />
+</Desc>

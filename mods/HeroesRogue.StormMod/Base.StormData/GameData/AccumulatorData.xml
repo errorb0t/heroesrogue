@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+
+  <CAccumulatorToken id="AffixPowerRitualAccumulator" parent="BaseAccumulator">
+    <MaxAccumulation value="390000" />
+    <ApplicationRule value="Add" />
+    <TokenId value="WitchDoctorVoodooRitual" />
+    <Scale value="1" />
+  </CAccumulatorToken>
+  <CAccumulatorToken id="AffixPowerRitualSplashAccumulator" parent="BaseAccumulator">
+    <MaxAccumulation value="390000" />
+    <ApplicationRule value="Add" />
+    <TokenId value="WitchDoctorVoodooRitual" />
+    <Scale value="0.4" />
+  </CAccumulatorToken>
+  <CAccumulatorToken id="LostVikingsGreatVikingHoardAccumulator" parent="BaseTokenAccumulator">
+    <ApplicationRule value="Add" />
+    <TokenId value="LostVikingsVikingHoardTokenCounter" />
+    <Scale value="0.005" />
+    <UnitSource Value="Source" />
+  </CAccumulatorToken>
+
+</Catalog>

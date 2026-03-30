@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+
+  <CActorModel id="WitchDoctorHeroWeaponDamageSplashFX" parent="StormModelAnimationStyleOneShotUnit">
+    <On Terms="Effect.WitchDoctorHeroWeaponDamage; At Target; ValidateEffect CasterHasAffixPowerRitual" Send="Create" />
+    <On Terms="ActorCreation" Send="SetOpacity 0.250000" />
+    <HostSiteOps Ops="SOpAttachCenter" />
+    <Model value="WitchDoctorHeroWeaponDamageSplashFXModel" />
+  </CActorModel>
+
+  <CModel id="WitchDoctorHeroWeaponDamageSplashFXModel" parent="ImpactFX">
+    <Model value="Assets\Effects\Storm_FX_Dryad_Base_FullBloom_Impact\Storm_FX_Dryad_Base_FullBloom_Impact.m3" />
+    <RadiusLoose value="0.5" />
+    <ScaleMax X="1.10000" Y="1.10000" Z="1.25000" />
+    <ScaleMin X="1.10000" Y="1.10000" Z="1.25000" />
+    <AnimSpeed value="6"/>
+  </CModel>
+  <CActorModel id="WitchDoctorZombieWallWarningModelZombieHandler" parent="StormModelNoAnims">
+    <Flags index="VisionTestCenterOnly" value="1" />
+    <Inherits index="TeamColor" value="1" />
+    <Inherits index="WarpGroup" value="1" />
+    <On Terms="ActorCreation" Send="AnimPlay Spell Stand,Burrow PlayForever 0.000000 0.000000" />
+    <On Terms="ActorCreation" Send="SetOpacity 0.500000" />
+    <On Terms="Effect.WitchDoctorZombieWallDelayPersistentZombieHandler.Start" Send="Create" />
+    <On Terms="Effect.WitchDoctorZombieWallDelayPersistentZombieHandler.Stop" Send="Destroy" />
+    <HostSiteOps Ops="SOpTargetPointStationary SOpForwardVectorPoint SOpWading" />
+    <Model value="WitchDoctorZombieWallUnit" />
+  </CActorModel>
+  <CActorSound id="WitchDoctorZombieWallWarningSoundZombieHandler" parent="SoundOneShot">
+    <On Terms="Effect.WitchDoctorZombieWallDelayPersistentZombieHandler.Start; At Effect" Send="Create" />
+    <Sound value="WitchDoctor_Zombie_Warning" />
+  </CActorSound>
+
+  <CActorUnit id="AffixBuddyDrone" parent="StormUnitBase" unitName="AffixBuddyDrone">
+    <On Terms="UnitBirth" Send="Create TalentScoutingDroneLaunch" />
+    <On Terms="UnitBirth" Send="Create TalentScoutingDroneLoop" />
+    <On Terms="UnitDeath" Target="TalentScoutingDroneLoop" Send="Destroy" />
+    <Inherits index="TeamColor" value="1" />
+    <StatusBarFlags index="Shields" value="0" />
+    <StatusBarFlags index="Life" value="0" />
+    <StatusBarFlags index="Energy" value="0" />
+    <StatusBarFlags index="Cargo" value="0" />
+    <StatusBarFlags index="Duration" value="0" />
+    <StatusBarFlags index="Magazine" value="0" />
+    <DeathArray index="Normal" SoundLink="Talent_Scouting_Drone_Death" />
+    <DeathArray index="Timeout" SoundLink="Talent_Scouting_Drone_Death" />
+    <BarOffset value="5" />
+    <GroupIcon>
+      <Image value="Assets\Textures\Storm_UI_InGame_TargetInfoPanel_Unit_Generic_ScoutingDrone.dds" />
+    </GroupIcon>
+  </CActorUnit>
+  <CModel id="AffixBuddyDrone" parent="Unit">
+    <Model value="Assets\Effects\Storm_Effect_Placeholder_DefenseDrone\Storm_Effect_Placeholder_DefenseDrone.m3" />
+    <SelectionRadius value="0.250000" />
+  </CModel>
+
+  <CActorBeamSimple id="AffixBuddyHealBeam" parent="BeamSimpleAnimationStyleContinuous">
+    <Flags index="VisionTestCenterOnly" value="1" />
+    <Filter index="Enemy" value="1" />
+    <On Terms="Effect.AffixBuddyHealCreatePersistent.Start; At Target" Send="Create" />
+    <On Terms="Effect.AffixBuddyHealCreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+    <On Terms="Effect.AffixBuddyHealCreatePersistent.CancelByTeleport; FromEffectTreeDescendant" Send="Destroy Immediate" />
+    <Model value="MedicHealingBeamBeam" />
+    <ModelFlags index="AutomateGlobalLoops" value="1" />
+    <HostLaunch Subject="_Unit" Scope="Caster" Actor="Find" />
+    <HostLaunchSiteOps Ops="SOpAttachHardPoint" />
+    <HostImpact Subject="_Unit" Scope="Target" Actor="Find" />
+    <HostImpactSiteOps Ops="SOpAttachCenter" />
+    <Inherits index="Visibility" value="1" />
+  </CActorBeamSimple>
+  <CActorSound id="AffixBuddyHealBeamLoopSound" parent="SoundContinuous">
+    <On Terms="Effect.AffixBuddyHealCreatePersistent.Start; At Target" Send="Create" />
+    <On Terms="Effect.AffixBuddyHealCreatePersistent.Stop" Send="Destroy" />
+    <Sound value="Medic_HealingBeam_Loop" />
+  </CActorSound>
+
+  <CActorMissile id="AffixBuddyDroneMissile" parent="StormMissileWithDeath" unitName="AffixBuddyDroneMissile">
+    <On Terms="ActorCreation" Send="Create Tank_Napalm_Missile" />
+  </CActorMissile>
+  <CActorAction id="AffixBuddyDroneMissileAttack" parent="GenericAttackPointStorm" effectImpact="AffixBuddyDroneImpactSearch" effectLaunch="AffixBuddyDroneLaunchMissile">
+    <LaunchAttachQuery Methods="AMFilterWeapon00FullMatch" />
+    <LaunchModel value="AffixBuddyDroneMissileLaunchModel" />
+    <ImpactMap index="None" Sound="Tank_Napalm_Impact" />
+    <ImpactModel value="" />
+  </CActorAction>
+  <CActorModel id="AffixBuddyDroneMissileLaunchModel" parent="StormModelAnimationStyleOneShot">
+    <Model value="SgtHammerNapalmStrikeLaunch" />
+  </CActorModel>
+  <CActorModel id="AffixBuddyDroneMissileImpact" parent="StormModelAnimationStyleOneShot">
+    <Model value="SgtHammerSiegeAttackImpact" />
+    <On Terms="Effect.AffixBuddyDroneImpactSearch.Start" Send="Create" />
+    <HostSiteOps Ops="SOpTargetPointStationary" />
+  </CActorModel>
+  <CActorSound id="AffixBuddyDroneMissileLaunch" parent="SoundOneShot">
+    <On Terms="Effect.AffixBuddyDroneLaunchMissile.Start; At Caster" Send="Create" />
+    <Sound value="Tank_Napalm_Launch" />
+  </CActorSound>
+  <CModel id="AffixBuddyDroneMissileLaunch" parent="ImpactFX">
+      <Model value="Assets\Effects\Storm_Effect_SgtHammer_Base_NapalmStrike_Launch\Storm_Effect_SgtHammer_Base_NapalmStrike_Launch.m3"/>
+  </CModel>
+  <CModel id="AffixBuddyDroneMissile" parent="MissileFX">
+      <Model value="Assets\Effects\Storm_Effect_Warfield_Base_IncendiaryRound_Missile\Storm_Effect_Warfield_Base_IncendiaryRound_Missile.m3"/>
+  </CModel>
+
+  
+  <CActorSound id="TalentCleanseSound">
+    <On Terms="Effect.AffixMedallionApplyCleanse.Start" Send="Create" />
+  </CActorSound>
+  <CActorModel id="TalentCleanseImpactModel">
+    <On Terms="Effect.AffixMedallionApplyCleanse.Start" Send="Create" />
+  </CActorModel>
+
+  <CActorAction id="ZaryaParticleGrenadeAttackAffix" parent="GenericAttackPointStorm" effectImpact="ZaryaParticleGrenadeTargetSearchAffix" effectLaunch="ZaryaParticleGrenadeLaunchMissileAffix">
+    <LaunchAttachQuery Methods="Weapon 0" />
+    <LaunchAssets Model="ZaryaParticleGrenadeLaunch" />
+    <LaunchModel value="ZaryaParticleGrenadeLaunchAction" />
+    <Missile value="ZaryaParticleGrenadeMissile" />
+  </CActorAction>
+  <CActorSound id="ZaryaParticleGrenadeMissileSound">
+    <On Terms="Effect.ZaryaParticleGrenadeLaunchMissileAffix" Send="Create" />
+    <On Terms="Effect.ZaryaParticleGrenadeTargetSearchAffix.Start" Send="Destroy" />
+  </CActorSound>
+  <CActorModel id="ZaryaParticleGrenadeExplosion">
+    <On Terms="Effect.ZaryaParticleGrenadeTargetSearchAffix.Start" Send="Create" />
+  </CActorModel>
+  <CActorModel id="ZaryaParticleGrenadePinpointAccuracyExplosion">
+    <On Terms="Effect.ZaryaParticleGrenadeTargetSearchAffix.Start; ValidateEffect ZaryaHasParticleGrenadePinpointAccuracy" Send="Create" />
+  </CActorModel>
+  <CActorForceSphere id="ZaryaParticleGrenadeForceAffix">
+    <Magnitude value="60.000000" />
+    <Radius value="3.000000" />
+    <Duration value="0.150000" />
+    <On Terms="Effect.ZaryaParticleGrenadeTargetSearchAffix.Start; At Effect" Send="Create" />
+    <ForceFlags index="FallOff" value="0" />
+  </CActorForceSphere>
+  <CActorSound id="ZaryaParticleGrenadeImpactSound">
+    <On Terms="Effect.ZaryaParticleGrenadeTargetSearchAffix.Start" Send="Create" />
+  </CActorSound>
+  <CActorModel id="ZaryaParticleGrenadeDamageImpact">
+    <On Terms="Effect.ZaryaParticleGrenadeDamageAffix.Start; At Target" Send="Create" />
+  </CActorModel>
+
+</Catalog>

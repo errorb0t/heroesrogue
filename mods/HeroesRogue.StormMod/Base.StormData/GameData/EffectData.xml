@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+<CEffectEnumArea id="CheatRevealerSearch">
+  <SearchFilters value="-;Player,Ally,ImmuneToAOE,Structure,Item,Stasis,Dead" />
+  <AreaArray Effect="ScoutingDroneImpactSet">
+    <Radius value="500" />
+  </AreaArray>
+  <RevealerParams Duration="0.25" ShapeExpansion="0.5">
+    <RevealFlags index="Unfog" value="1" />
+  </RevealerParams>
+  <SearchFlags index="ExtendByUnitRadius" value="1" />
+</CEffectEnumArea>
+
+  <CEffectEnumArea id="AffixConversionSearch">
+    <ValidatorArray value="AffixConversionValidator" />
+    <SearchFilters value="-;Player,Self,Ally,Neutral,Creep,ImmuneToAOE,MapCreature,ImmuneToSkillshots,Structure,ImmuneToFriendlyAbilities,Heroic,Worker,Missile,Item,Stasis,Dead,Hidden,Summoned" />
+    <AreaArray MaxCount="1" Effect="AffixConversionSet">
+      <Radius value="8" />
+    </AreaArray>
+    <SearchFlags index="ExtendByUnitRadius" value="1" />
+  </CEffectEnumArea>
+  <CEffectSet id="AffixConversionSet">
+    <ValidatorArray value="AffixConversionValidator" />
+    <EffectArray value="AffixConversionApplySupressRegenGlobeCreation" />
+    <EffectArray value="AffixConversionFullHeal" />
+    <EffectArray value="AffixConversionRemoveReady" />
+    <EffectArray value="SylvanasPossessionApplyTargetBehavior" />
+  </CEffectSet>
+  <CEffectModifyUnit id="AffixConversionFullHeal">
+    <VitalArray index="Life">
+      <ChangeFraction value="1" />
+    </VitalArray>
+  </CEffectModifyUnit>
+  <CEffectApplyBehavior id="AffixConversionApplySupressRegenGlobeCreation">
+    <Behavior value="SuppressRegenGlobeCreation" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="AffixConversionApplyReady">
+    <WhichUnit Value="Caster" />
+    <Behavior value="AffixConversionReady" />
+  </CEffectApplyBehavior>
+  <CEffectRemoveBehavior id="AffixConversionRemoveReady">
+    <WhichUnit Value="Caster" />
+    <BehaviorLink value="AffixConversionReady" />
+  </CEffectRemoveBehavior>
+
+  <CEffectEnumArea id="AffixPowerRitualSplashSearch">
+    <ValidatorArray value="TargetNotEvading" />
+    <ExcludeArray Effect="WitchDoctorHeroWeaponImpactSet" Value="Target" />
+    <SearchFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="AffixPowerRitualSplashSet">
+      <Radius value="2" />
+    </AreaArray>
+    <RevealerParams Duration="0.75" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+  <CEffectSet id="WitchDoctorHeroWeaponImpactSet">
+    <EffectArray value="AffixPowerRitualSplashSearch" />
+  </CEffectSet>
+  <CEffectSet id="AffixPowerRitualSplashSet">
+    <Chance value="0" />
+    <EffectArray value="UniversalWeaponImpact" />
+    <EffectArray value="WitchDoctorVoodooRitualApplyDoTSwitchHeroWeapon" />
+    <EffectArray value="WitchDoctorWeaponPreImpactSet" />
+    <EffectArray value="WitchDoctorHeroWeaponDamageSplash" />
+    <EffectArray value="WitchDoctorWeaponPostImpactSet" />
+    <EffectArray value="UniversalWeaponPostImpactSet" />
+  </CEffectSet>
+  <CEffectDamage id="WitchDoctorHeroWeaponDamage" parent="StormWeapon">
+    <FlatModifierArray index="AffixPowerRitual" Validator="CasterHasAffixPowerRitual" Accumulator="AffixPowerRitualAccumulator" />
+    <Amount value="88" />
+  </CEffectDamage>
+  <CEffectDamage id="WitchDoctorHeroWeaponDamageSplash" parent="StormWeapon">
+    <FlatModifierArray index="AffixPowerRitual" Validator="CasterHasAffixPowerRitual" Accumulator="AffixPowerRitualSplashAccumulator" />
+    <Amount value="35.2" />
+  </CEffectDamage>
+  <CEffectCreatePersistent id="AffixZombieHandlerCreationPersistent">
+    <InitialEffect value="WitchDoctorZombieWallPersistentInitialSet" />
+    <ExpireEffect value="AffixZombieHandlerEndPreparationSet" />
+    <ExpireDelay value="0.5" />
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="WitchDoctorZombieWallDelayPersistentZombieHandler" />
+    <PeriodicPeriodArray value="0" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="WitchDoctorZombieWallDelayPersistentZombieHandler">
+    <OffsetFacingFallback Value="TargetPoint" />
+    <InitialDelay value="0.25" />
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="WitchDoctorZombieWallCreateUnitZombieHandler" />
+    <RevealRadius value="0.5" />
+    <RevealFlags index="Unfog" value="1" />
+  </CEffectCreatePersistent> 
+  <CEffectCreateUnit id="WitchDoctorZombieWallCreateUnitZombieHandler">
+    <WhichLocation Value="TargetPoint" />
+    <CreateFlags index="Placement" value="0" />
+    <CreateFlags index="PlacementIgnoreBlockers" value="1" />
+    <CreateFlags index="PlacementIgnoreCliffTest" value="1" />
+    <SpawnEffect value="WitchDoctorZombieWallSpawnSetZombieHandler" />
+    <SpawnUnit value="WitchDoctorZombieWallUnit" />
+    <SpawnRange value="0.5" />
+  </CEffectCreateUnit> 
+  <CEffectSet id="WitchDoctorZombieWallSpawnSetZombieHandler">
+    <EffectArray value="WitchDoctorZombieWallApplyTimedLifeBehaviorZombieHandler" />
+    <EffectArray value="WitchDoctorZombieWallDeadRushApplyBuffBehavior" />
+    <EffectArray value="WitchDoctorSoulHarvestApplyCarry" />
+    <EffectArray value="WitchDoctorVoodooRitualApplyDeathRitualTalentSummonCarry" />
+    <EffectArray value="WitchDoctorZombieWallSetFacing" />
+    <EffectArray value="WitchDoctorZombieWallAddAbilityController" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="WitchDoctorZombieWallApplyTimedLifeBehaviorZombieHandler">
+    <Behavior value="WitchDoctorZombieWallTimedLifeZombieHandler" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="AffixZombieHandlerEndPreparationSet">
+    <EffectArray value="WitchDoctorZombieWallDeathSoundSearch" />
+  </CEffectSet>  
+  <CEffectSet id="WitchDoctorZombieWallTimedLifeFinishZombieHandler">
+    <EffectArray value="WitchDoctorZombieWallIssueMorphOrderZombieHandler" />
+  </CEffectSet>  
+  <CEffectIssueOrder id="WitchDoctorZombieWallIssueMorphOrderZombieHandler">
+    <WhichUnit Value="Source" />
+    <Abil value="WitchDoctorZombieWallMorph" />
+    <CmdFlags index="Preempt" value="1" />
+  </CEffectIssueOrder>
+
+  <CEffectEnumArea id="AffixBuddyDroneControllerSearchEnemy">
+    <SearchFilters value="Visible;Self,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="AffixBuddyDroneLaunchMissile">
+      <Radius value="15.5" />
+    </AreaArray>
+    <TargetSorts>
+      <SortArray value="TSHeroic" />
+      <SortArray value="TSMerc" />
+      <SortArray value="TSMinion" />
+      <SortArray value="TSDistance" />
+    </TargetSorts>
+  </CEffectEnumArea>
+  <CEffectLaunchMissile id="AffixBuddyDroneLaunchMissile">
+    <ValidatorArray index="0" value="TargetNotDead" />
+    <ImpactEffect value="AffixBuddyDroneImpactSearch" />
+    <AmmoUnit value="AffixBuddyDroneMissile" />
+    <ImpactLocation Value="TargetPoint" />
+    <Movers Link="AffixBuddyDroneMissile" />
+    <LaunchOffset value="0,0,-6"/>
+  </CEffectLaunchMissile>  
+  <CEffectEnumArea id="AffixBuddyDroneImpactSearch">
+    <SearchFilters value="Visible;Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,User1,Stasis,Invulnerable" />
+    <AreaArray Effect="AffixBuddyDroneMissileDamage">
+      <Radius value="1.75" />
+    </AreaArray>
+    <ImpactLocation Value="TargetPoint" />
+  </CEffectEnumArea>
+  <CEffectDamage id="AffixBuddyDroneMissileDamage" parent="StormWeapon">
+    <Amount value="177" />
+    <Kind value="Ability" />
+  </CEffectDamage>
+
+  <CEffectSet id="AffixBuddyDroneSpawnBehaviorSet">
+    <EffectArray value="AffixBuddyDroneApplyOwner" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="AffixBuddyDroneApplyOwner">
+    <Behavior value="AffixBuddyDroneOwner" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="AffixBuddyDroneApplyController">
+    <Behavior value="AffixBuddyDroneController" />
+  </CEffectApplyBehavior>
+  
+  <CEffectSet id="AffixBuddyHealCastSet">
+    <EffectArray value="AffixBuddyHealClearTracking" />
+    <EffectArray value="AffixBuddyHealCreatePersistent" />
+  </CEffectSet>
+
+  <CEffectCreatePersistent id="AffixBuddyHealCreatePersistent">
+    <InitialEffect value="AffixBuddyHealInitialSet" />
+    <FinalEffect value="AffixBuddyHealFinalSet" />
+    <Flags index="PersistUntilDestroyed" value="1" />
+    <PeriodicPeriodArray value="3" />
+    <PeriodicEffectArray value="AffixBuddyHealHealingSet" />
+    <PeriodicValidator value="AffixBuddyHealPeriodicValidator" />
+    <WhichLocation Value="TargetUnit" />
+    <TeleportTrack index="Source" value="1" />
+    <TeleportTrack index="Target" value="1" />
+    <TeleportValidator value="GenericTeleportRangeValidator" />
+    <TimeScaleSource Value="Caster" />
+  </CEffectCreatePersistent>
+  <CEffectSet id="AffixBuddyHealHealingSet">
+    <EffectArray value="AffixBuddyHealCreateHealer" />
+  </CEffectSet>
+  <CEffectCreateHealer id="AffixBuddyHealCreateHealer" parent="StormHealingSpell">
+    <RechargeVitalRate value="154" />
+    <SourceButtonFace value="AffixBuddyHeal" />
+  </CEffectCreateHealer>
+  <CEffectSet id="AffixBuddyHealInitialSet">
+    <EffectArray value="AffixBuddyHealAddUnitToTracker" />
+  </CEffectSet>
+  <CEffectSet id="AffixBuddyHealFinalSet">
+    <EffectArray value="AffixBuddyHealRemoveTrackedUnit" />
+  </CEffectSet>
+  <CEffectAddTrackedUnit id="AffixBuddyHealAddUnitToTracker">
+    <BehaviorLink value="AffixBuddyHealUnitTracker" />
+    <TrackedUnit Value="Target" />
+  </CEffectAddTrackedUnit>
+  <CEffectRemoveTrackedUnit id="AffixBuddyHealRemoveTrackedUnit">
+    <BehaviorLink value="AffixBuddyHealUnitTracker" />
+    <TrackedUnit Value="Target" />
+  </CEffectRemoveTrackedUnit>
+  <CEffectClearTrackedUnits id="AffixBuddyHealClearTracking">
+    <BehaviorLink value="AffixBuddyHealUnitTracker" />
+  </CEffectClearTrackedUnits>
+  
+  <CEffectCreateHealer id="AffixRegenerativeCoreCreateHealer" parent="StormSelfOnlyHealingSpell">
+    <RechargeVitalFraction value="0.0025" />
+    <SourceButtonFace value="AffixRegenerativeCore" />
+  </CEffectCreateHealer>
+  
+  <CEffectCreatePersistent id="SoulEaterSpawnMinionsPersistent">
+    <OffsetVectorStartLocation Value="SourcePoint" />
+    <PeriodCount value="2" />
+    <PeriodicEffectArray value="SoulEaterSpawnMinionsLaunchSet" />
+    <PeriodicOffsetArray X="-2" Y="-2" />
+    <PeriodicOffsetArray X="2" Y="-2" />
+    <PeriodicOffsetArray X="-4" Y="-2" />
+    <PeriodicOffsetArray X="4" Y="-2" />
+    <PeriodicPeriodArray value="0" />
+    <PeriodicValidator value="CasterNotDead" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="SoulEaterSpawnMinionsLaunchPersistent">
+    <OffsetVectorStartLocation Value="SourcePoint" />
+    <PeriodCount value="2" />
+    <PeriodicEffectArray value="SoulEaterSpawnMinionsLaunchSet" />
+    <PeriodicOffsetArray X="-2" Y="-2" />
+    <PeriodicOffsetArray X="2" Y="-2" />
+    <PeriodicOffsetArray X="-4" Y="-2" />
+    <PeriodicOffsetArray X="4" Y="-2" />
+    <PeriodicPeriodArray value="0" />
+  </CEffectCreatePersistent>
+
+  <CEffectModifyTokenCount id="AffixKillContractIncrementToken" parent="BaseEffectModifyTokenCount">
+    <TokenId value="AffixKillContractQuestToken" />
+    <EffectCategory index="Quest" value="1" />
+  </CEffectModifyTokenCount>
+  <CEffectSet id="AffixKillContractQuestComplete" />
+  <CEffectModifyTokenCount id="AffixStructureQuestIncrementToken" parent="BaseEffectModifyTokenCount">
+    <TokenId value="AffixStructureQuestToken" />
+    <EffectCategory index="Quest" value="1" />
+  </CEffectModifyTokenCount>
+  <CEffectSet id="AffixStructureQuest6" />
+  <CEffectSet id="AffixStructureQuest12" />
+  <CEffectSet id="AffixStructureQuestComplete" />
+
+  <CEffectApplyBehavior id="AffixMedallionApplyCleanse">
+    <WhichUnit Value="Caster" />
+    <Behavior value="TalentCleanseBuff" />
+    <Duration value="2" />
+    <Flags index="UseDuration" value="1" />
+  </CEffectApplyBehavior>
+  
+  <CEffectSet id="AffixEmergencyMeasureSet">
+    <EffectArray value="AffixEmergencyMeasureApplyShield" />
+    <EffectArray value="AffixEmergencyMeasureApplyCooldown" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="AffixEmergencyMeasureApplyCooldown">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixEmergencyMeasureCooldown" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="AffixEmergencyMeasureApplyShield">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixEmergencyMeasureShield" />
+  </CEffectApplyBehavior>
+  
+  <CEffectSet id="BribeSetAffix">
+    <ValidatorArray value="TargetisBribable" />
+    <ValidatorArray value="MurkyNotInSafetyBubble" />
+    <EffectArray value="TalentBribeRemove20Token" />
+    <EffectArray value="BribeKillEffect" />
+  </CEffectSet>
+  <CEffectModifyUnit id="StructureAmmoConsumeAmmo">
+    <ImpactUnit Value="Caster" />
+    <VitalArray index="Energy">
+      <Change value="-1" />
+    </VitalArray>
+  </CEffectModifyUnit>
+  <CEffectSet id="StructureAmmoConsumeAmmoSet">
+    <Chance value="0" />
+    <EffectArray value="StructureAmmoConsumeAmmo" />
+  </CEffectSet>
+
+  <CEffectSet id="GuardTowerL2WeaponLaunchSetAffix">
+    <EffectArray value="StructureAmmoConsumeAmmoSet" />
+    <EffectArray value="GuardTowerL2LaunchMissile" />
+  </CEffectSet>
+  <CEffectSet id="GuardTowerL3WeaponLaunchSetAffix">
+    <EffectArray value="StructureAmmoConsumeAmmoSet" />
+    <EffectArray value="GuardTowerL3LaunchMissile" />
+  </CEffectSet>
+  <CEffectSet id="TownHallL2WeaponLaunchSetAffix">
+    <EffectArray value="StructureAmmoConsumeAmmoSet" />
+    <EffectArray value="TownHallL2WeaponLaunchMissile" />
+  </CEffectSet>
+  <CEffectSet id="TownHallL3WeaponLaunchSetAffix">
+    <EffectArray value="StructureAmmoConsumeAmmoSet" />
+    <EffectArray value="TownHallL3WeaponLaunchMissile" />
+  </CEffectSet>
+  
+  <CEffectApplyBehavior id="AffixGrenadierApplyReady">
+    <WhichUnit Value="Caster" />
+    <Behavior value="AffixGrenadierReady" />
+  </CEffectApplyBehavior>
+  <CEffectRemoveBehavior id="AffixGrenadierRemoveReady">
+    <WhichUnit Value="Caster" />
+    <BehaviorLink value="AffixGrenadierReady" />
+  </CEffectRemoveBehavior>
+  
+  <CEffectEnumArea id="AffixGrenadierSearch">
+    <SearchFilters value="Visible;Self,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="AffixGrenadierSearchSet">
+      <Radius value="10" />
+    </AreaArray>
+    <TargetSorts>
+      <SortArray value="TSHeroic" />
+      <SortArray value="TSDistance" />
+    </TargetSorts>
+  </CEffectEnumArea>
+  <CEffectSet id="AffixGrenadierSearchSet">
+    <EffectArray value="AffixGrenadierRemoveReady" />
+    <EffectArray value="AffixGrenadierGrenadeEffect" />
+  </CEffectSet>
+  <CEffectSet id="AffixGrenadierGrenadeEffect" />
+
+  <CEffectLaunchMissile id="ZaryaParticleGrenadeLaunchMissileAffix">
+    <ImpactLocation Value="TargetPoint" />
+    <ImpactEffect value="ZaryaParticleGrenadeImpactCreatePersistentAffix" />
+    <AmmoUnit value="ZaryaParticleGrenadeMissile" />
+    <ImpactRange value="0.4" />
+    <Movers Link="ZaryaParticleGrenadeMissileNear" IfRangeLTE="6" />
+    <Movers Link="ZaryaParticleGrenadeMissile" />
+    <LaunchEffect value="ZaryaParticleGrenadeMissileLandingSoonApplyBehavior" />
+  </CEffectLaunchMissile>
+  <CEffectCreatePersistent id="ZaryaParticleGrenadeImpactCreatePersistentAffix">
+    <ExpireDelay value="0.5" />
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="ZaryaParticleGrenadeTargetSearchAffix" />
+    <RevealRadius value="2.25" />
+    <RevealFlags index="Unfog" value="1" />
+    <AINotifySettings AreaEffect="ZaryaParticleGrenadeTargetSearchAffix">
+      <Flags index="Disabled" value="1" />
+    </AINotifySettings>
+  </CEffectCreatePersistent>  
+  <CEffectEnumArea id="ZaryaParticleGrenadeTargetSearchAffix">
+    <ImpactLocation Value="TargetPoint" />
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Stasis,Dead,Hidden,Invulnerable" />
+    <SearchFlags index="DoActorSearch" value="1" />
+    <AreaArray Effect="ZaryaParticleGrenadeExplosionSetAffix">
+      <Radius value="2.25" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectSet id="ZaryaParticleGrenadeExplosionSetAffix">
+    <EffectArray value="ZaryaParticleGrenadeDamageAffix" />
+    <EffectArray value="ZaryaParticleGrenadeDemolitionsExpertAddToken" />
+    <EffectArray value="ZaryaParticleGrenadePinpointAccuracySlowApply" />
+    <EffectArray value="ApplyAbilityImpactReveal" />
+    <EffectArray value="ZaryaParticleGrenadeDeepBurnTalentApplyMarker" />
+    <EffectArray value="StormSuicide" />
+  </CEffectSet>
+  <CEffectDamage id="ZaryaParticleGrenadeDamageAffix" parent="StormSpell">
+    <Amount value="80" />
+    <AttributeFactor index="Structure" value="-0.5" />
+  </CEffectDamage>
+
+</Catalog>

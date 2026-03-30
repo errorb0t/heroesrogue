@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+
+<CRequirement id="LostVikingsAffixButtonMasher">
+  <NodeArray index="Use" Link="EqCountBehaviorDeadCompleteOnlyAtUnit0" />
+  <NodeArray index="Show" Link="EqCountBehaviorLostVikingsAffixButtonMasherCompleteOnlyAtUnit1" />
+</CRequirement>
+<CRequirementEq id="EqCountBehaviorLostVikingsAffixButtonMasherCompleteOnlyAtUnit1">
+  <Tooltip value="" />
+  <OperandArray index="0" value="CountBehaviorLostVikingsAffixButtonMasherCompleteOnlyAtUnit" />
+  <OperandArray index="1" value="1" />
+</CRequirementEq>
+<CRequirementCountBehavior id="CountBehaviorLostVikingsAffixButtonMasherCompleteOnlyAtUnit">
+  <Flags index="TechTreeCheat" value="0" />
+  <Tooltip value="" />
+  <Count Link="AffixButtonMasher" State="CompleteOnlyAtUnit" />
+</CRequirementCountBehavior>
+
+</Catalog>

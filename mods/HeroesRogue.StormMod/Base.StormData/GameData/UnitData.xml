@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+
+  <CUnit id="AffixBuddyDrone" parent="StormSummonActive">
+    <FlagArray index="Untargetable" value="1" />
+    <FlagArray index="Invulnerable" value="1" />
+    <Attributes index="ImmuneToAOE" value="1" />
+    <Attributes index="ImmuneToSkillshots" value="1" />
+    <Attributes index="ImmuneToFriendlyAbilities" value="1" />
+    <PlaneArray index="Air" value="1" />
+    <Mover value="Fly" />
+    <Acceleration value="100" />
+    <Deceleration value="100" />
+    <StationaryTurningRate value="1440" />
+    <TurningRate value="1440" />
+    <Sight value="10.25" />
+    <Height value="3" />
+    <VisionHeight value="4" />
+    <AbilArray Link="stop" />
+    <AbilArray Link="move" />
+    <AbilArray Link="AffixBuddyHeal" />
+    <Speed value="8" />
+    <BehaviorArray Link="HallOfStormsKnockbackImmunity" />
+    <BehaviorArray Link="AffixBuddyHealUnitTracker" />
+    <BehaviorArray Link="AffixBuddyDroneController" />
+    <Collide index="Ground" value="0" />
+    <Collide index="ForceField" value="0" />
+    <CardLayouts>
+      <LayoutButtons Face="MoveHoldPosition" Type="AbilCmd" AbilCmd="move,HoldPos" Slot="Hold" />
+      <LayoutButtons Face="MovePatrol" Type="AbilCmd" AbilCmd="move,Patrol" Slot="Hearth" />
+      <LayoutButtons Face="Move" Type="AbilCmd" AbilCmd="move,Move" Slot="Attack" />
+      <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Slot="Stop" />
+      <LayoutButtons Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Slot="Cancel" />
+      <LayoutButtons Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Slot="Cancel" />
+      <LayoutButtons Face="AffixBuddyHeal" Type="AbilCmd" AbilCmd="AffixBuddyHeal,Execute" Slot="Ability1" />
+    </CardLayouts>
+  </CUnit>
+  <CUnit id="AffixBuddyDroneMissile" parent="MISSILE_INVULNERABLE">
+    <Sight value="1" />
+  </CUnit>
+  
+  <CUnit id="HeroErik" parent="StormHeroMountedCustom">
+    <Response value="Acquire" />
+    <LifeStart value="804" />
+    <LifeMax value="804" />
+    <LifeRegenRate value="1.6757" />
+    <EnergyStart value="0" />
+    <EnergyMax value="0" />
+    <EnergyRegenRate value="0" />
+    <Sight value="13" />
+    <AbilArray Link="LostVikingsPlayAgain" />
+    <AbilArray Link="LostVikingsGoGoGo" />
+    <AbilArray Link="LostVikingsLongboatRaid" />
+    <AbilArray Link="LostVikingsPressA" />
+    <AbilArray Link="LostVikingsSpinToWin" />
+    <AbilArray Link="LostVikingsNordicAttackSquad" />
+    <AbilArray Link="LostVikingsLongboatRaidNewer" />
+    <AbilArray Link="LostVikingsLongboatRaidMortar" />
+    <AbilArray Link="LostVikingsNorseForce" />
+    <AbilArray Link="LostVikingsErikRally" />
+    <AbilArray Link="LostVikingsVikingBribery" />
+    <BehaviorArray Link="AbnormalDeath" />
+    <BehaviorArray Link="NotManaUserDummy" />
+    <BehaviorArray Link="OneQuarterValueHero" />
+    <BehaviorArray Link="AbnormalExperienceGain" />
+    <BehaviorArray Link="LostVikingsHardheadedRedheadCarry" />
+    <BehaviorArray Link="LostVikingsLostAndFoundCarry" />
+    <BehaviorArray Link="SpyGamesMonitor" />
+    <BehaviorArray Link="LostVikingsCheckpointReachedCarry" />
+    <BehaviorArray Link="LostVikings1VikingAlive" />
+    <BehaviorArray Link="LostVikings2VikingAlive" />
+    <BehaviorArray Link="LostVikings3VikingAlive" />
+    <BehaviorArray Link="LostVikingsLongboatRaidAvailabilityController" />
+    <BehaviorArray Link="LowIntensityLight" />
+    <BehaviorArray Link="LostVikingsErikTheSwift" />
+    <BehaviorArray Link="LostVikingsUnderAttackDamageResponse" />
+    <BehaviorArray Link="LostVikingsAttackedPingResponse" />
+    <BehaviorArray Link="LostVikingsVikingHoardTokenCounter" />
+    <BehaviorArray Link="LostVikingsVikingHoard" />
+    <BehaviorArray Link="HeroGenericIgnoreFullscreenOverlay" />
+    <BehaviorArray Link="LostVikingsStasisController" />
+    <BehaviorArray Link="LostVikingsBaleogTheFierceAndNordicAttackSquadVikingsRangeCarryBehaviorErik" />
+    <BehaviorArray Link="LostVikingsNordicAttackSquadDamageBuffErik" />
+    <BehaviorArray Link="LostVikingsErikMovespeedModifierCarry" />
+    <WeaponArray Link="LostVikingsErikHardheadedWeapon" />
+    <WeaponArray Link="HeroErikSlingshot" />
+    <CardLayouts index="0">
+      <LayoutButtons index="1" Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Slot="Attack" />
+      <LayoutButtons index="2" Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Slot="Attack" />
+      <LayoutButtons index="3" Face="Stop" Type="AbilCmd" AbilCmd="HoldFire,Stop" Slot="Stop" />
+      <LayoutButtons index="4" Face="MoveHoldPosition" Type="AbilCmd" AbilCmd="HoldFire,HoldFire" Slot="Hold" />
+      <LayoutButtons index="5" Face="Cancel" Type="CancelTargetMode" AbilCmd="" Slot="Cancel" />
+      <LayoutButtons index="6" Face="MoonwellDrink" Type="AbilCmd" AbilCmd="FountainDrink,Execute" Slot="Interact" />
+      <LayoutButtons index="7" Face="MoonwellDrink" Type="AbilCmd" AbilCmd="FountainDrinkOnCooldown,Execute" Slot="Interact" />
+      <LayoutButtons index="8" Face="CaptureMacGuffin" Type="AbilCmd" AbilCmd="CaptureMacGuffin,Execute" Slot="Interact" />
+      <LayoutButtons index="9" Face="SmartCommandUnitInteraction" Type="AbilCmd" AbilCmd="SmartCommandUnitInteraction,Execute" Slot="Interact" />
+      <LayoutButtons index="10" Face="Move" Type="AbilCmd" AbilCmd="move,Move" Slot="Cancel" />
+      <LayoutButtons index="11" Face="LostVikingsPlayAgain" Type="AbilCmd" AbilCmd="LostVikingsPlayAgain,Execute" Slot="Heroic" />
+      <LayoutButtons Face="LostVikingsLongboatRaid" Type="AbilCmd" AbilCmd="LostVikingsLongboatRaidNewer,Execute" Slot="Heroic" />
+      <LayoutButtons Face="HearthstoneNoMana" Type="AbilCmd" AbilCmd="Hearthstone,Execute" Slot="Hearth" />
+      <LayoutButtons Face="LostVikingsMortar" Type="AbilCmd" AbilCmd="LostVikingsLongboatRaidMortar,Execute" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsLockedAbilityQ" Type="Passive" Requirements="LostVikingsQAbilitiesNotEnabled" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsSpinToWin" Type="AbilCmd" AbilCmd="LostVikingsSpinToWin,Execute" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsNorseForce" Type="AbilCmd" AbilCmd="LostVikingsNorseForce,Execute" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsNorseForce" Requirements="LostVikingsAffixButtonMasher" Type="AbilCmd" AbilCmd="LostVikingsNorseForce,Execute" Slot="Trait" />
+      <LayoutButtons Face="LostVikingsGoGoGo" Type="AbilCmd" AbilCmd="LostVikingsGoGoGo,Execute" Slot="Mount" />
+      <LayoutButtons Face="LostVikingsVikingHoardTalent" Type="Passive" Slot="Trait" />
+      <LayoutButtons Face="LostVikingsLockedAbilityW" Type="Passive" Requirements="LostVikingsWAbilitiesNotEnabled" Slot="Ability2" />
+      <LayoutButtons Face="LostVikingsJump" Type="AbilCmd" AbilCmd="LostVikingsPressA,Execute" Slot="Ability2" />
+      <LayoutButtons Face="LostVikingsNordicAttackSquad" Type="AbilCmd" AbilCmd="LostVikingsNordicAttackSquad,Execute" Slot="Ability2" />
+      <LayoutButtons Face="LostVikingsLockedAbilityE" Type="Passive" Requirements="LostVikingsVikingBriberyNotEnabled" Slot="Ability3" />
+      <LayoutButtons Face="LostVikingsVikingBribery" Type="AbilCmd" AbilCmd="LostVikingsVikingBribery,Execute" Slot="Ability3" />
+      <DisabledSlots index="Dynamic1" value="1" />
+      <DisabledSlots index="Dynamic2" value="1" />
+      <DisabledSlots index="Dynamic3" value="1" />
+      <DisabledSlots index="Dynamic4" value="1" />
+    </CardLayouts>
+    <InnerRadius value="0.5" />
+    <AIThinkTree value="AI/TLVErik.aitree" />
+    <SelectAlias value="HeroOlaf" />
+    <SubgroupAlias value="HeroOlaf" />
+    <AcquireMovementLimit value="7" />
+    <AcquireLeashRadius value="7" />
+    <AcquireLeashResetRadius value="5" />
+    <AIUtility value="0.25" />
+    <AIBaseThreat value="0.2" />
+    <HeroPlaystyleFlags index="Escaper" value="1" />
+    <HeroPlaystyleFlags index="Helper" value="1" />
+    <HeroPlaystyleFlags index="RoleAutoAttacker" value="1" />
+    <EffectArray index="Birth" value="LostVikingsEnumControllerUnit" />
+  </CUnit>
+  <CUnit id="HeroBaleog" parent="StormHeroMountedCustom">
+    <LifeStart value="1130" />
+    <LifeMax value="1130" />
+    <LifeRegenRate value="2.3554" />
+    <EnergyStart value="0" />
+    <EnergyMax value="0" />
+    <EnergyRegenRate value="0" />
+    <AbilArray Link="LostVikingsPlayAgain" />
+    <AbilArray Link="LostVikingsGoGoGo" />
+    <AbilArray Link="LostVikingsLongboatRaid" />
+    <AbilArray Link="LostVikingsPressA" />
+    <AbilArray Link="LostVikingsSpinToWin" />
+    <AbilArray Link="LostVikingsNordicAttackSquad" />
+    <AbilArray Link="LostVikingsLongboatRaidNewer" />
+    <AbilArray Link="LostVikingsLongboatRaidMortar" />
+    <AbilArray Link="LostVikingsNorseForce" />
+    <AbilArray Link="LostVikingsBaleogRally" />
+    <AbilArray Link="LostVikingsVikingBribery" />
+    <BehaviorArray Link="AbnormalDeath" />
+    <BehaviorArray Link="NotManaUserDummy" />
+    <BehaviorArray Link="OneQuarterValueHero" />
+    <BehaviorArray Link="AbnormalExperienceGain" />
+    <BehaviorArray Link="LostVikingsBaleogTheSlayerController" />
+    <BehaviorArray Link="LostVikingsCheckpointReachedCarry" />
+    <BehaviorArray Link="LostVikings1VikingAlive" />
+    <BehaviorArray Link="LostVikings2VikingAlive" />
+    <BehaviorArray Link="LostVikings3VikingAlive" />
+    <BehaviorArray Link="LostVikingsLongboatRaidAvailabilityController" />
+    <BehaviorArray Link="LowIntensityLight" />
+    <BehaviorArray Link="LostVikingsUnderAttackDamageResponse" />
+    <BehaviorArray Link="LostVikingsAttackedPingResponse" />
+    <BehaviorArray Link="LostVikingsVikingHoardTokenCounter" />
+    <BehaviorArray Link="LostVikingsVikingHoard" />
+    <BehaviorArray Link="HeroGenericIgnoreFullscreenOverlay" />
+    <BehaviorArray Link="LostVikingsStasisController" />
+    <BehaviorArray Link="LostVikingsBaleogTheFierceAndNordicAttackSquadVikingsRangeCarryBehaviorBaleog" />
+    <BehaviorArray Link="LostVikingsBaleogtheFierceBonusAttackSpeed" />
+    <BehaviorArray Link="LostVikingsNordicAttackSquadDamageBuffBaleog" />
+    <WeaponArray Link="HeroBaleogSword" />
+    <WeaponArray Link="HeroBaleogBow" />
+    <CardLayouts index="0">
+      <LayoutButtons index="1" Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Slot="Attack" />
+      <LayoutButtons index="2" Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Slot="Attack" />
+      <LayoutButtons index="3" Face="Stop" Type="AbilCmd" AbilCmd="HoldFire,Stop" Slot="Stop" />
+      <LayoutButtons index="4" Face="MoveHoldPosition" Type="AbilCmd" AbilCmd="HoldFire,HoldFire" Slot="Hold" />
+      <LayoutButtons index="5" Face="Cancel" Type="CancelTargetMode" AbilCmd="" Slot="Cancel" />
+      <LayoutButtons index="6" Face="MoonwellDrink" Type="AbilCmd" AbilCmd="FountainDrink,Execute" Slot="Interact" />
+      <LayoutButtons index="7" Face="MoonwellDrink" Type="AbilCmd" AbilCmd="FountainDrinkOnCooldown,Execute" Slot="Interact" />
+      <LayoutButtons index="8" Face="CaptureMacGuffin" Type="AbilCmd" AbilCmd="CaptureMacGuffin,Execute" Slot="Interact" />
+      <LayoutButtons index="9" Face="SmartCommandUnitInteraction" Type="AbilCmd" AbilCmd="SmartCommandUnitInteraction,Execute" Slot="Interact" />
+      <LayoutButtons index="10" Face="Move" Type="AbilCmd" AbilCmd="move,Move" Slot="Cancel" />
+      <LayoutButtons index="11" Face="LostVikingsPlayAgain" Type="AbilCmd" AbilCmd="LostVikingsPlayAgain,Execute" Slot="Heroic" />
+      <LayoutButtons Face="LostVikingsLongboatRaid" Type="AbilCmd" AbilCmd="LostVikingsLongboatRaidNewer,Execute" Slot="Heroic" />
+      <LayoutButtons Face="HearthstoneNoMana" Type="AbilCmd" AbilCmd="Hearthstone,Execute" Slot="Hearth" />
+      <LayoutButtons Face="LostVikingsMortar" Type="AbilCmd" AbilCmd="LostVikingsLongboatRaidMortar,Execute" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsLockedAbilityQ" Type="Passive" Requirements="LostVikingsQAbilitiesNotEnabled" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsSpinToWin" Type="AbilCmd" AbilCmd="LostVikingsSpinToWin,Execute" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsNorseForce" Type="AbilCmd" AbilCmd="LostVikingsNorseForce,Execute" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsNorseForce" Requirements="LostVikingsAffixButtonMasher" Type="AbilCmd" AbilCmd="LostVikingsNorseForce,Execute" Slot="Trait" />
+      <LayoutButtons Face="LostVikingsGoGoGo" Type="AbilCmd" AbilCmd="LostVikingsGoGoGo,Execute" Slot="Mount" />
+      <LayoutButtons Face="LostVikingsVikingHoardTalent" Type="Passive" Slot="Trait" />
+      <LayoutButtons Face="LostVikingsLockedAbilityW" Type="Passive" Requirements="LostVikingsWAbilitiesNotEnabled" Slot="Ability2" />
+      <LayoutButtons Face="LostVikingsJump" Type="AbilCmd" AbilCmd="LostVikingsPressA,Execute" Slot="Ability2" />
+      <LayoutButtons Face="LostVikingsNordicAttackSquad" Type="AbilCmd" AbilCmd="LostVikingsNordicAttackSquad,Execute" Slot="Ability2" />
+      <LayoutButtons Face="LostVikingsLockedAbilityE" Type="Passive" Requirements="LostVikingsVikingBriberyNotEnabled" Slot="Ability3" />
+      <LayoutButtons Face="LostVikingsVikingBribery" Type="AbilCmd" AbilCmd="LostVikingsVikingBribery,Execute" Slot="Ability3" />
+      <DisabledSlots index="Dynamic1" value="1" />
+      <DisabledSlots index="Dynamic2" value="1" />
+      <DisabledSlots index="Dynamic3" value="1" />
+      <DisabledSlots index="Dynamic4" value="1" />
+    </CardLayouts>
+    <CardLayouts CardId="0004">
+      <LayoutButtons Face="Move" Type="AbilCmd" AbilCmd="move,Move" Slot="Cancel" />
+    </CardLayouts>
+    <InnerRadius value="0.5625" />
+    <AIThinkTree value="AI/TLVBaleog.aitree" />
+    <Response value="Acquire" />
+    <AcquireMovementLimit value="7" />
+    <AcquireLeashRadius value="7" />
+    <AcquireLeashResetRadius value="5" />
+    <SelectAlias value="HeroOlaf" />
+    <SubgroupAlias value="HeroOlaf" />
+    <AIUtility value="0.35" />
+    <AIBaseThreat value="0.3" />
+    <Radius value="0.5625" />
+    <HeroPlaystyleFlags index="Helper" value="1" />
+    <HeroPlaystyleFlags index="RoleAutoAttacker" value="1" />
+    <HeroPlaystyleFlags index="WaveClearer" value="1" />
+    <EffectArray index="Birth" value="LostVikingsEnumControllerUnit" />
+  </CUnit>
+  <CUnit id="HeroOlaf" parent="StormHeroMountedCustom">
+    <LifeStart value="1482" />
+    <LifeMax value="1482" />
+    <LifeRegenRate value="3.086" />
+    <EnergyStart value="0" />
+    <EnergyMax value="0" />
+    <EnergyRegenRate value="0" />
+    <AbilArray Link="LostVikingsPlayAgain" />
+    <AbilArray Link="LostVikingsGoGoGo" />
+    <AbilArray Link="LostVikingsLongboatRaid" />
+    <AbilArray Link="LostVikingsPressA" />
+    <AbilArray Link="LostVikingsSpinToWin" />
+    <AbilArray Link="LostVikingsNordicAttackSquad" />
+    <AbilArray Link="LostVikingsLargeAndInChargeCharge" />
+    <AbilArray Link="LostVikingsLongboatRaidNewer" />
+    <AbilArray Link="LostVikingsLongboatRaidMortar" />
+    <AbilArray Link="LostVikingsNorseForce" />
+    <AbilArray Link="LostVikingsOlafRally" />
+    <AbilArray Link="LostVikingsVikingBribery" />
+    <BehaviorArray Link="AbnormalDeath" />
+    <BehaviorArray Link="NotManaUserDummy" />
+    <BehaviorArray Link="OneQuarterValueHero" />
+    <BehaviorArray Link="AbnormalExperienceGain" />
+    <BehaviorArray Link="LostVikingsLargeAndInChargeCarry" />
+    <BehaviorArray Link="LostVikingsOlafStoutness" />
+    <BehaviorArray Link="LostVikingsHunkaBurningOlaf" />
+    <BehaviorArray Link="LostVikingsCheckpointReachedCarry" />
+    <BehaviorArray Link="LostVikings1VikingAlive" />
+    <BehaviorArray Link="LostVikings2VikingAlive" />
+    <BehaviorArray Link="LostVikings3VikingAlive" />
+    <BehaviorArray Link="LostVikingsLongboatRaidAvailabilityController" />
+    <BehaviorArray Link="LowIntensityLight" />
+    <BehaviorArray Link="LostVikingsUnderAttackDamageResponse" />
+    <BehaviorArray Link="LostVikingsAttackedPingResponse" />
+    <BehaviorArray Link="LostVikingsVikingHoardTokenCounter" />
+    <BehaviorArray Link="LostVikingsVikingHoard" />
+    <BehaviorArray Link="HeroGenericIgnoreFullscreenOverlay" />
+    <BehaviorArray Link="LostVikingsStasisController" />
+    <BehaviorArray Link="LostVikingsOlafTheStoutBonusHealthBehavior" />
+    <BehaviorArray Link="LostVikingsBaleogTheFierceAndNordicAttackSquadVikingsRangeCarryBehaviorOlaf" />
+    <BehaviorArray Link="LostVikingsNordicAttackSquadDamageBuffOlaf" />
+    <WeaponArray Link="HeroOlaf" />
+    <CardLayouts index="0">
+      <LayoutButtons index="1" Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Slot="Attack" />
+      <LayoutButtons index="2" Face="AcquireMove" Type="AbilCmd" AbilCmd="move,AcquireMove" Slot="Attack" />
+      <LayoutButtons index="3" Face="Stop" Type="AbilCmd" AbilCmd="HoldFire,Stop" Slot="Stop" />
+      <LayoutButtons index="4" Face="MoveHoldPosition" Type="AbilCmd" AbilCmd="HoldFire,HoldFire" Slot="Hold" />
+      <LayoutButtons index="5" Face="Cancel" Type="CancelTargetMode" AbilCmd="" Slot="Cancel" />
+      <LayoutButtons index="6" Face="MoonwellDrink" Type="AbilCmd" AbilCmd="FountainDrink,Execute" Slot="Interact" />
+      <LayoutButtons index="7" Face="MoonwellDrink" Type="AbilCmd" AbilCmd="FountainDrinkOnCooldown,Execute" Slot="Interact" />
+      <LayoutButtons index="8" Face="CaptureMacGuffin" Type="AbilCmd" AbilCmd="CaptureMacGuffin,Execute" Slot="Interact" />
+      <LayoutButtons index="9" Face="SmartCommandUnitInteraction" Type="AbilCmd" AbilCmd="SmartCommandUnitInteraction,Execute" Slot="Interact" />
+      <LayoutButtons index="10" Face="Move" Type="AbilCmd" AbilCmd="move,Move" Slot="Cancel" />
+      <LayoutButtons index="11" Face="LostVikingsPlayAgain" Type="AbilCmd" AbilCmd="LostVikingsPlayAgain,Execute" Slot="Heroic" />
+      <LayoutButtons Face="LostVikingsLongboatRaid" Type="AbilCmd" AbilCmd="LostVikingsLongboatRaidNewer,Execute" Slot="Heroic" />
+      <LayoutButtons Face="HearthstoneNoMana" Type="AbilCmd" AbilCmd="Hearthstone,Execute" Slot="Hearth" />
+      <LayoutButtons Face="LostVikingsMortar" Type="AbilCmd" AbilCmd="LostVikingsLongboatRaidMortar,Execute" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsLockedAbilityQ" Type="Passive" Requirements="LostVikingsQAbilitiesNotEnabled" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsSpinToWin" Type="AbilCmd" AbilCmd="LostVikingsSpinToWin,Execute" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsNorseForce" Type="AbilCmd" AbilCmd="LostVikingsNorseForce,Execute" Slot="Ability1" />
+      <LayoutButtons Face="LostVikingsNorseForce" Requirements="LostVikingsAffixButtonMasher" Type="AbilCmd" AbilCmd="LostVikingsNorseForce,Execute" Slot="Trait" />
+      <LayoutButtons Face="LostVikingsGoGoGo" Type="AbilCmd" AbilCmd="LostVikingsGoGoGo,Execute" Slot="Mount" />
+      <LayoutButtons Face="LostVikingsVikingHoardTalent" Type="Passive" Slot="Trait" />
+      <LayoutButtons Face="LostVikingsLockedAbilityW" Type="Passive" Requirements="LostVikingsWAbilitiesNotEnabled" Slot="Ability2" />
+      <LayoutButtons Face="LostVikingsJump" Type="AbilCmd" AbilCmd="LostVikingsPressA,Execute" Slot="Ability2" />
+      <LayoutButtons Face="LostVikingsNordicAttackSquad" Type="AbilCmd" AbilCmd="LostVikingsNordicAttackSquad,Execute" Slot="Ability2" />
+      <LayoutButtons Face="LostVikingsLockedAbilityE" Type="Passive" Requirements="LostVikingsVikingBriberyNotEnabled" Slot="Ability3" />
+      <LayoutButtons Face="LostVikingsVikingBribery" Type="AbilCmd" AbilCmd="LostVikingsVikingBribery,Execute" Slot="Ability3" />
+      <DisabledSlots index="Dynamic1" value="1" />
+      <DisabledSlots index="Dynamic2" value="1" />
+      <DisabledSlots index="Dynamic3" value="1" />
+      <DisabledSlots index="Dynamic4" value="1" />
+    </CardLayouts>
+    <Radius value="0.875" />
+    <InnerRadius value="0.875" />
+    <AIThinkTree value="AI/TLVOlaf.aitree" />
+    <Response value="Acquire" />
+    <AcquireMovementLimit value="7" />
+    <AcquireLeashRadius value="7" />
+    <AcquireLeashResetRadius value="5" />
+    <AIUtility value="0.4" />
+    <AIEvalFactor value="0.9" />
+    <AIBaseThreat value="0.5" />
+    <HeroPlaystyleFlags index="Helper" value="1" />
+    <HeroPlaystyleFlags index="Overconfident" value="1" />
+    <HeroPlaystyleFlags index="RoleTank" value="1" />
+    <EffectArray index="Birth" value="LostVikingsEnumControllerUnit" />
+  </CUnit>
+
+</Catalog>

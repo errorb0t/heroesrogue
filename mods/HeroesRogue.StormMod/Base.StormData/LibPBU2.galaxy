@@ -1,0 +1,1731 @@
+include "TriggerLibs/NativeLib"
+include "TriggerLibs/HeroesLib"
+include "TriggerLibs/GameLib"
+include "TriggerLibs/UILib"
+include "TriggerLibs/SoundLib"
+
+include "LibPBU2_h"
+
+//--------------------------------------------------------------------------------------------------
+// Library: PVE Brawl UI
+//--------------------------------------------------------------------------------------------------
+// External Library Initialization
+void libPBU2_InitLibraries () {
+    libNtve_InitVariables();
+    libCore_InitVariables();
+    libGame_InitVariables();
+    libUIUI_InitVariables();
+    libSond_InitVariables();
+}
+
+// Variable Initialization
+bool libPBU2_InitVariables_completed = false;
+
+void libPBU2_InitVariables () {
+    int init_i1;
+    int init_j1;
+
+    if (libPBU2_InitVariables_completed) {
+        return;
+    }
+
+    libPBU2_InitVariables_completed = true;
+
+    libPBU2_gv_curateHeroSelectionUI.lv_dialog = c_invalidDialogId;
+    libPBU2_gv_curateHeroSelectionUI.lv_mainPanel = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_countdownLabel = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_finalCountdownFrame = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_titleLabel = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_selectedHeroPanel = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_selectedHeroName = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_selectedHeroRole = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_pickHeroPanel = c_invalidDialogControlId;
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtons[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonImages[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBorders[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersEmpty[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersAffixed[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe1[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe2[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe3[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAlly1[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAlly2[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersThinking[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBackgroundImage[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMe1[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMe2[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAlly1[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    for (init_i1 = 0; init_i1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C; init_i1 += 1) {
+        for (init_j1 = 0; init_j1 <= libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C; init_j1 += 1) {
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAlly2[init_i1][init_j1] = c_invalidDialogControlId;
+        }
+    }
+    libPBU2_gv_curateHeroSelectionUI.lv_teamPanel = c_invalidDialogControlId;
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroFrame[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroImage[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroRole[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroRoleBG[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroEmpty[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroBorder[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroLocked[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroLockedAnimation[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroSelectedAlly[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroThinking[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroBackgroundImage[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroPlayerName[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroHeroName[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayersOnATeam; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_voiceChatFrame[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayers; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_heroContainerFrame[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxPlayers; init_i1 += 1) {
+        libPBU2_gv_curateHeroSelectionUI.lv_heroCutsceneFrame[init_i1] = c_invalidDialogControlId;
+    }
+    libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_lockButton = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_debugCrazyBtn = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionUI.lv_debugRerollBtn = c_invalidDialogControlId;
+    libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer = TimerCreate();
+}
+
+// Presets
+// Functions
+void libPBU2_gf_CurateHSUIInitialize () {
+    int init_i;
+
+    // Variable Declarations
+    int[11] lv_panels;
+    int lv_currentPanelLayer;
+    int lv_itPlayerSlot;
+    int lv_itPlayer;
+    int lv_itHero;
+    int lv_itRound;
+    int lv_itTeam;
+    int lv_itHeroRow;
+    int lv_itHeroCol;
+    int lv_itViewer;
+    playergroup lv_viewerGroup;
+    int lv_playerCount;
+
+    // Automatic Variable Declarations
+    playergroup auto7B139AE8_g;
+    playergroup autoE33C6573_g;
+    const int auto191B1ACA_ae = libCore_gv_bALMaxPlayersOnATeam;
+    const int auto191B1ACA_ai = 1;
+    playergroup autoD9551571_g;
+    playergroup auto429381E4_g;
+    const int autoE6CE5E06_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C;
+    const int autoE6CE5E06_ai = 1;
+    const int autoD75C823C_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C;
+    const int autoD75C823C_ai = 1;
+
+    // Variable Initialization
+    for (init_i = 0; init_i <= 10; init_i += 1) {
+        lv_panels[init_i] = c_invalidDialogControlId;
+    }
+    lv_viewerGroup = PlayerGroupEmpty();
+
+    // Implementation
+    if ((libPBU2_gv_curateHeroSelectionUI.lv_dialog != c_invalidDialogId)) {
+        return ;
+    }
+
+    if ((libPBU2_gv_curateHeroSelectionUIHeroListInitCallback != null)) {
+        TriggerExecute(libPBU2_gv_curateHeroSelectionUIHeroListInitCallback, true, false);
+    }
+
+    lv_playerCount = 0;
+    auto7B139AE8_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer = -1;
+    while (true) {
+        	lv_itPlayer = PlayerGroupNextPlayer(auto7B139AE8_g, lv_itPlayer);
+        	if (lv_itPlayer<0) { break; }
+        	if ((PlayerStatus(lv_itPlayer) != c_playerStatusUnused)) {
+            lv_playerCount += 1;
+        }
+
+    }
+    DialogCreate(500, 400, c_anchorCenter, 0, 0, true);
+    libPBU2_gv_curateHeroSelectionUI.lv_dialog = DialogLastCreated();
+    DialogSetImageVisible(DialogLastCreated(), false);
+    DialogSetFullscreen(DialogLastCreated(), true);
+    DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypePanel, "PVEBrawlCurateHeroSelection/CurateHeroSelectionPanelTemplate");
+    libPBU2_gv_curateHeroSelectionUI.lv_mainPanel = DialogControlLastCreated();
+    lv_currentPanelLayer += 1;
+    lv_panels[lv_currentPanelLayer] = DialogControlLastCreated();
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, "MapNameLabel");
+    libPBU2_gv_curateHeroSelectionUI.lv_titleLabel = DialogControlLastCreated();
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypePanel, "SelectedHeroInfo");
+    libPBU2_gv_curateHeroSelectionUI.lv_selectedHeroPanel = DialogControlLastCreated();
+    DialogControlSetVisible(DialogControlLastCreated(), libCore_gv_playerGroupFromPlayer[libCore_gv_oBSERVER_ObserverUIPlayer], false);
+    lv_currentPanelLayer += 1;
+    lv_panels[lv_currentPanelLayer] = DialogControlLastCreated();
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, "SelectedHeroName");
+    libPBU2_gv_curateHeroSelectionUI.lv_selectedHeroName = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemText(DialogControlLastCreated(), StringExternal("Param/Value/lib_PBU2_02A18E56"), PlayerGroupAll());
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, "SelectedHeroRole");
+    libPBU2_gv_curateHeroSelectionUI.lv_selectedHeroRole = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemText(DialogControlLastCreated(), StringToText(""), PlayerGroupAll());
+    lv_currentPanelLayer -= 1;
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, "CountdownLabel");
+    libPBU2_gv_curateHeroSelectionUI.lv_countdownLabel = DialogControlLastCreated();
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypePanel, "RoundStartCountdownFrame");
+    libPBU2_gv_curateHeroSelectionUI.lv_finalCountdownFrame = DialogControlLastCreated();
+    DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), false);
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeButton, "AbilitiesButton");
+    libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton = DialogControlLastCreated();
+    DialogControlSetEnabled(DialogControlLastCreated(), PlayerGroupAll(), false);
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeButton, "TalentsButton");
+    libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton = DialogControlLastCreated(); 
+    DialogControlSetEnabled(DialogControlLastCreated(), PlayerGroupAll(), false);
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeButton, "InfoButton");
+    libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton = DialogControlLastCreated();
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeButton, "ReadyButton");
+    libPBU2_gv_curateHeroSelectionUI.lv_lockButton = DialogControlLastCreated();
+    DialogControlSetEnabled(DialogControlLastCreated(), PlayerGroupAll(), false);
+    autoE33C6573_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer = -1;
+    while (true) {
+        	lv_itPlayer = PlayerGroupNextPlayer(autoE33C6573_g, lv_itPlayer);
+        	if (lv_itPlayer<0) { break; }
+        	DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeHeroCutscene, libNtve_gf_ConvertStringToUILayoutFrameName(("HeroCutsceneFrame" + IntToString((lv_itPlayer - 1)))));
+        libPBU2_gv_curateHeroSelectionUI.lv_heroCutsceneFrame[lv_itPlayer] = DialogControlLastCreated();
+        DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), false);
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeHeroContainer, libNtve_gf_ConvertStringToUILayoutFrameName(("SelectedHero" + IntToString((lv_itPlayer - 1)))));
+        libPBU2_gv_curateHeroSelectionUI.lv_heroContainerFrame[lv_itPlayer] = DialogControlLastCreated();
+    }
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypePanel, "TeamPanel");
+    libPBU2_gv_curateHeroSelectionUI.lv_pickHeroPanel = DialogControlLastCreated();
+    lv_currentPanelLayer += 1;
+    lv_panels[lv_currentPanelLayer] = DialogControlLastCreated();
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, "Title");
+    libNtve_gf_SetDialogItemText(DialogControlLastCreated(), StringExternal("Param/Value/lib_PBU2_4C2C612D"), PlayerGroupAll());
+    lv_itPlayerSlot = 1;
+    for ( ; ( (auto191B1ACA_ai >= 0 && lv_itPlayerSlot <= auto191B1ACA_ae) || (auto191B1ACA_ai < 0 && lv_itPlayerSlot >= auto191B1ACA_ae) ) ; lv_itPlayerSlot += auto191B1ACA_ai ) {
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, libNtve_gf_ConvertStringToUILayoutFrameName(("TeamPlayerName" + IntToString(lv_itPlayerSlot))));
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroPlayerName[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, libNtve_gf_ConvertStringToUILayoutFrameName(("TeamHeroName" + IntToString(lv_itPlayerSlot))));
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroHeroName[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypePanel, libNtve_gf_ConvertStringToUILayoutFrameName(("TeamPlayerHero" + IntToString(lv_itPlayerSlot))));
+        if ((lv_itPlayerSlot > lv_playerCount)) {
+            DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), false);
+            continue;
+        }
+
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroFrame[lv_itPlayerSlot] = DialogControlLastCreated();
+        lv_currentPanelLayer += 1;
+        lv_panels[lv_currentPanelLayer] = DialogControlLastCreated();
+        libNtve_gf_SetDialogItemText(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroHeroName[lv_itPlayerSlot], StringToText(""), PlayerGroupAll());
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "EmptyImage");
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroEmpty[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), true);
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "HeroImage");
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroImage[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), false);
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "NormalImage");
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroBorder[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), false);
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "LockedImage");
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroLocked[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), false);
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "LockedImageAnimation");
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroLockedAnimation[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "HeroRole");
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroRole[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), false);
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "HeroRoleBG");
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroRoleBG[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), false);
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "SelectedImageAlly");
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroSelectedAlly[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypePanel, "ThinkingContainer");
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroThinking[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypePanel, "BackgroundImage");
+        libPBU2_gv_curateHeroSelectionUI.lv_teamHeroBackgroundImage[lv_itPlayerSlot] = DialogControlLastCreated();
+        DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), false);
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeBattleUserFrame, "PVEBrawlVoiceChatFrame");
+        libPBU2_gv_curateHeroSelectionUI.lv_voiceChatFrame[lv_itPlayerSlot] = DialogControlLastCreated();
+        lv_currentPanelLayer -= 1;
+    }
+    lv_viewerGroup = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    PlayerGroupAdd(lv_viewerGroup, libCore_gv_oBSERVER_ObserverUIPlayer);
+    autoD9551571_g = lv_viewerGroup;
+    lv_itViewer = -1;
+    while (true) {
+        	lv_itViewer = PlayerGroupNextPlayer(autoD9551571_g, lv_itViewer);
+        	if (lv_itViewer<0) { break; }
+        	lv_itPlayerSlot = 0;
+        if ((PlayerGroupHasPlayer(libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false), lv_itViewer) == true)) {
+            lv_itPlayerSlot += 1;
+            libPBU2_gv_curateHeroSelectionUI.lv_teamPanelRowPlayer[lv_itViewer][lv_itPlayerSlot] = lv_itViewer;
+            libNtve_gf_SetDialogItemText(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroPlayerName[lv_itPlayerSlot], PlayerName(lv_itViewer), libCore_gv_playerGroupFromPlayer[lv_itViewer]);
+            DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroBorder[lv_itPlayerSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+            DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroPlayerName[lv_itPlayerSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+            DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroHeroName[lv_itPlayerSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+        }
+
+        auto429381E4_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+        lv_itPlayer = -1;
+        while (true) {
+            	lv_itPlayer = PlayerGroupNextPlayer(auto429381E4_g, lv_itPlayer);
+            	if (lv_itPlayer<0) { break; }
+            	if ((lv_itPlayer != lv_itViewer) && (PlayerStatus(lv_itPlayer) != c_playerStatusUnused)) {
+                lv_itPlayerSlot += 1;
+                libPBU2_gv_curateHeroSelectionUI.lv_teamPanelRowPlayer[lv_itViewer][lv_itPlayerSlot] = lv_itPlayer;
+                libNtve_gf_SetDialogItemText(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroPlayerName[lv_itPlayerSlot], PlayerName(lv_itPlayer), libCore_gv_playerGroupFromPlayer[lv_itViewer]);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroBorder[lv_itPlayerSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroPlayerName[lv_itPlayerSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroHeroName[lv_itPlayerSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+            }
+
+        }
+    }
+    lv_currentPanelLayer -= 1;
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypePanel, "PickHeroFrame");
+    libPBU2_gv_curateHeroSelectionUI.lv_pickHeroPanel = DialogControlLastCreated();
+    lv_currentPanelLayer += 1;
+    lv_panels[lv_currentPanelLayer] = DialogControlLastCreated();
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, "Role1Label");
+    libNtve_gf_SetDialogItemText(DialogControlLastCreated(), libPBU2_gf_CurateHSUIHeroRoleName(1), PlayerGroupAll());
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, "Role2Label");
+    libNtve_gf_SetDialogItemText(DialogControlLastCreated(), libPBU2_gf_CurateHSUIHeroRoleName(2), PlayerGroupAll());
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, "Role3Label");
+    libNtve_gf_SetDialogItemText(DialogControlLastCreated(), libPBU2_gf_CurateHSUIHeroRoleName(3), PlayerGroupAll());
+    DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeLabel, "Role4Label");
+    libNtve_gf_SetDialogItemText(DialogControlLastCreated(), libPBU2_gf_CurateHSUIHeroRoleName(4), PlayerGroupAll());
+    lv_itHeroRow = 1;
+    for ( ; ( (autoE6CE5E06_ai >= 0 && lv_itHeroRow <= autoE6CE5E06_ae) || (autoE6CE5E06_ai < 0 && lv_itHeroRow >= autoE6CE5E06_ae) ) ; lv_itHeroRow += autoE6CE5E06_ai ) {
+        DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypePanel, libNtve_gf_ConvertStringToUILayoutFrameName(("RoleHeroSelectionPanel" + IntToString(lv_itHeroRow))));
+        lv_currentPanelLayer += 1;
+        lv_panels[lv_currentPanelLayer] = DialogControlLastCreated();
+        lv_itHeroCol = 1;
+        for ( ; ( (autoD75C823C_ai >= 0 && lv_itHeroCol <= autoD75C823C_ae) || (autoD75C823C_ai < 0 && lv_itHeroCol >= autoD75C823C_ae) ) ; lv_itHeroCol += autoD75C823C_ai ) {
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeButton, libNtve_gf_ConvertStringToUILayoutFrameName(("RoleHero" + IntToString(lv_itHeroCol))));
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtons[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            lv_currentPanelLayer += 1;
+            lv_panels[lv_currentPanelLayer] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "HeroImage");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonImages[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "NormalImage");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBorders[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "EmptyImage");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersEmpty[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "AffixedHeroImage");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersAffixed[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "SelectedImage1");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe1[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "SelectedImage2");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe2[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "SelectedImage3");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe3[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "SelectedImageAlly1");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAlly1[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "SelectedImageAlly2");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAlly2[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "LockedImage1");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMe1[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "LockedImage2");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMe2[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "LockedImageAlly1");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAlly1[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypeImage, "LockedImageAlly2");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAlly2[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypePanel, "ThinkingContainer");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersThinking[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            DialogControlHookup(lv_panels[lv_currentPanelLayer], c_triggerControlTypePanel, "BackgroundImage");
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBackgroundImage[lv_itHeroRow][lv_itHeroCol] = DialogControlLastCreated();
+            if ((libPBU2_gv_curateHeroSelections[lv_itHeroRow][lv_itHeroCol] != null)) {
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersEmpty[lv_itHeroRow][lv_itHeroCol], PlayerGroupAll(), false);
+                libNtve_gf_SetDialogItemImage(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonImages[lv_itHeroRow][lv_itHeroCol], (CatalogFieldValueGet(c_gameCatalogHero, libPBU2_gv_curateHeroSelections[lv_itHeroRow][lv_itHeroCol], "SelectScreenButtonImage", c_playerAny)), PlayerGroupAll());
+                if (((libPBU2_gv_curateHeroSelections[lv_itHeroRow][lv_itHeroCol] != "Deckard") || (libPBU2_gv_curateHeroSelections[lv_itHeroRow][lv_itHeroCol] != "Maiev") || (libPBU2_gv_curateHeroSelections[lv_itHeroRow][lv_itHeroCol] != "MalGanis") || (libPBU2_gv_curateHeroSelections[lv_itHeroRow][lv_itHeroCol] != "Mephisto") || (libPBU2_gv_curateHeroSelections[lv_itHeroRow][lv_itHeroCol] != "NexusHunter") || (libPBU2_gv_curateHeroSelections[lv_itHeroRow][lv_itHeroCol] != "Whitemane") || (libPBU2_gv_curateHeroSelections[lv_itHeroRow][lv_itHeroCol] != "Yrel"))) {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBackgroundImage[lv_itHeroRow][lv_itHeroCol], PlayerGroupAll(), true);
+                }
+
+            }
+            else {
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBorders[lv_itHeroRow][lv_itHeroCol], PlayerGroupAll(), false);
+                DialogControlFadeTransparency(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBorders[lv_itHeroRow][lv_itHeroCol], PlayerGroupAll(), 0.0, 100.0);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonImages[lv_itHeroRow][lv_itHeroCol], PlayerGroupAll(), false);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBackgroundImage[lv_itHeroRow][lv_itHeroCol], PlayerGroupAll(), false);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersEmpty[lv_itHeroRow][lv_itHeroCol], PlayerGroupAll(), true);
+                libPBU2_gf_CurateHSUIEnableDisableHeroButton(false, lv_itHeroRow, lv_itHeroCol, PlayerGroupAll(), false);
+            }
+            lv_currentPanelLayer -= 1;
+        }
+        lv_currentPanelLayer -= 1;
+    }
+    lv_currentPanelLayer -= 1;
+}
+
+trigger auto_libPBU2_gf_CurateHSUIUpdateTimerUI_Trigger = null;
+
+void libPBU2_gf_CurateHSUIUpdateTimerUI () {
+    if (auto_libPBU2_gf_CurateHSUIUpdateTimerUI_Trigger == null) {
+        auto_libPBU2_gf_CurateHSUIUpdateTimerUI_Trigger = TriggerCreate("auto_libPBU2_gf_CurateHSUIUpdateTimerUI_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libPBU2_gf_CurateHSUIUpdateTimerUI_Trigger, false, false);
+}
+
+bool auto_libPBU2_gf_CurateHSUIUpdateTimerUI_TriggerFunc (bool testConds, bool runActions) {
+    // Variable Declarations
+    fixed lv_remaingTime;
+    bool lv__10SecondReminderPlayed;
+    bool lv__5SecondReminderPlayed;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Implementation
+    while (true) {
+        lv_remaingTime = TimerGetRemaining(libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer);
+        libNtve_gf_SetDialogItemText(libPBU2_gv_curateHeroSelectionUI.lv_countdownLabel, TextTimeFormat(StringToText("<sectotal/>"), FixedToInt(TimerGetRemaining(libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer))), PlayerGroupAll());
+        if ((lv_remaingTime < 11.0) && (TimerIsPaused(libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer) == false) && (lv__10SecondReminderPlayed == false)) {
+            lv__10SecondReminderPlayed = true;
+            SoundPlayForPlayer(SoundLink("UI_BNet_Draft_Countdown_10Sec", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
+        }
+
+        if ((lv_remaingTime < 6.0) && (TimerIsPaused(libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer) == false) && (lv__5SecondReminderPlayed == false)) {
+            lv__5SecondReminderPlayed = true;
+            libNtve_gf_SetDialogItemStyle(libPBU2_gv_curateHeroSelectionUI.lv_countdownLabel, "CurateHeroSelection_CountdownLabelWarning", PlayerGroupAll());
+        }
+
+        if ((lv_remaingTime <= 0.0)) {
+            return true;
+        }
+
+        Wait(0.5, c_timeGame);
+    }
+    return true;
+}
+
+void libPBU2_gf_CurateHSUIUpdateVoiceChatUI () {
+    // Variable Declarations
+    playergroup lv_viewerGroup;
+    int lv_itViewer;
+    int lv_player;
+    int lv_itSlot;
+
+    // Automatic Variable Declarations
+    playergroup auto5F8DC806_g;
+    const int auto9C07BA13_ae = libCore_gv_bALMaxPlayersOnATeam;
+    const int auto9C07BA13_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    lv_viewerGroup = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    auto5F8DC806_g = lv_viewerGroup;
+    lv_itViewer = -1;
+    while (true) {
+        	lv_itViewer = PlayerGroupNextPlayer(auto5F8DC806_g, lv_itViewer);
+        	if (lv_itViewer<0) { break; }
+        	lv_itSlot = 1;
+        for ( ; ( (auto9C07BA13_ai >= 0 && lv_itSlot <= auto9C07BA13_ae) || (auto9C07BA13_ai < 0 && lv_itSlot >= auto9C07BA13_ae) ) ; lv_itSlot += auto9C07BA13_ai ) {
+            lv_player = libPBU2_gv_curateHeroSelectionUI.lv_teamPanelRowPlayer[lv_itViewer][lv_itSlot];
+            if ((lv_player <= 0)) {
+                continue;
+            }
+
+            libNtve_gf_SetDialogItemPlayerId(libPBU2_gv_curateHeroSelectionUI.lv_voiceChatFrame[lv_itSlot], libCore_gf_GetPlayerIDfromTeamSlot(lv_player, libGame_gf_TeamNumberOfPlayer(lv_player)), libCore_gv_playerGroupFromPlayer[lv_itViewer]);
+        }
+    }
+}
+
+void libPBU2_gf_DisplayCurateHSUI () {
+    // Variable Declarations
+    int lv_itPlayer2;
+    bool lv_ready;
+    int lv_itCount;
+    sound lv_crowdSound;
+    int lv_team;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Implementation
+    libGame_gv_heroPickDone = false;
+    SetHeroLeaderPanelEnabled(false);
+    DialogControlSetVisible(libUIUI_gv_uIObserverUI.lv_mainPanel, PlayerGroupAll(), false);
+    DialogControlFadeTransparency(libUIUI_gv_uIObserverUI.lv_mainPanel, PlayerGroupAll(), 0.0, 100.0);
+    CinematicFade(false, 0.0, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, false);
+    UISetWorldVisible(PlayerGroupAll(), false);
+    libSond_gf_SoundtrackApplyNewDefaultSoundtrackForPlayerGroup("MX_Brawl_LockIn", PlayerGroupAll());
+    libPBU2_gf_CurateHSUIInitialize();
+    libPBU2_gf_CurateHSUIUpdateVoiceChatUI();
+    libPBU2_gf_CurateHSUIUpdateHeroButtons();
+    DialogSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_dialog, PlayerGroupAll(), true);
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_pickHeroPanel, PlayerGroupAll(), true);
+    libNtve_gf_SetDialogItemText(libPBU2_gv_curateHeroSelectionUI.lv_titleLabel, GameMapName(), PlayerGroupAll());
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_countdownLabel, PlayerGroupAll(), true);
+    libNtve_gf_SetDialogItemStyle(libPBU2_gv_curateHeroSelectionUI.lv_countdownLabel, "CurateHeroSelection_CountdownLabel", PlayerGroupAll());
+    SoundtrackStopCurrent(PlayerGroupAll(), c_soundtrackCategoryAmbience, true);
+    SoundtrackPlay(PlayerGroupAll(), c_soundtrackCategoryAmbience, "Storm_Ambience_Tutorial_Nexus_Platform", c_soundtrackCueAny, c_soundtrackIndexAny, false);
+    SoundPlayForPlayer(SoundLink("UI_BNet_Draft_Countdown_Start", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
+    TriggerEnable(libPBU2_gt_CurateHSUIButtonClicked, true);
+    TriggerEnable(libPBU2_gt_CurateHSUICountdownTimerExpires, true);
+    TriggerEnable(libPBU2_gt_CurateHSUIForceSelection, true);
+    TimerStart(libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer, libPBU2_gv_curateHeroSelectionUIMaxDuration_C, false, c_timeGame);
+    libPBU2_gf_CurateHSUIUpdateTimerUI();
+}
+
+void libPBU2_gf_CurateHSUIEnableDisableHeroButton (bool lp_enableDisable, int lp_row, int lp_column, playergroup lp_forPlayers, bool lp_desaturated) {
+    // Automatic Variable Declarations
+    // Implementation
+    DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_heroButtons[lp_row][lp_column], lp_forPlayers, lp_enableDisable);
+    if ((lp_enableDisable == true)) {
+        libNtve_gf_SetDialogItemDesaturated(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonImages[lp_row][lp_column], false, lp_forPlayers);
+    }
+    else {
+        if ((lp_desaturated == true)) {
+            libNtve_gf_SetDialogItemDesaturated(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonImages[lp_row][lp_column], true, lp_forPlayers);
+            libNtve_gf_SetDialogItemDesaturationColor(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonImages[lp_row][lp_column], Color(78.43, 78.43, 78.43), lp_forPlayers);
+        }
+        else {
+            libNtve_gf_SetDialogItemDesaturated(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonImages[lp_row][lp_column], false, lp_forPlayers);
+        }
+    }
+}
+
+void libPBU2_gf_CurateHSUILockUnlockHeroChoice (int lp_player, bool lp_lockUnlock) {
+    // Variable Declarations
+    playergroup lv_teamMembers;
+    int lv_itPlayer;
+    int lv_itRow;
+    int lv_itCol;
+    int lv_pick;
+    int lv_displayColumn;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_teamMembers = libGame_gf_PlayersOnTeamHeroes(libGame_gf_TeamNumberOfPlayer(lp_player), false);
+
+    // Implementation
+    if ((libPBU2_gv_curateHeroSelectionSetting.lv_finalCountDownStarted == true)) {
+        return ;
+    }
+
+    if ((lp_lockUnlock == true) && (libPBU2_gf_CurateHSUIGoodToLockIn(lp_player) == false)) {
+        return ;
+    }
+
+    libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lp_player] = lp_lockUnlock;
+    if ((lp_lockUnlock == true)) {
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] = libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lp_player];
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player] = libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lp_player];
+    }
+
+    libPBU2_gf_CurateHSUIUpdateHeroButtons();
+    if ((lp_lockUnlock == true)) {
+        libNtve_gf_SetDialogItemText(libPBU2_gv_curateHeroSelectionUI.lv_lockButton, StringExternal("Param/Value/lib_PBU2_CB24D52E"), libCore_gv_playerGroupFromPlayer[lp_player]);
+    }
+    else {
+        libNtve_gf_SetDialogItemText(libPBU2_gv_curateHeroSelectionUI.lv_lockButton, StringExternal("Param/Value/lib_PBU2_40D67FC4"), libCore_gv_playerGroupFromPlayer[lp_player]);
+    }
+    if ((lp_lockUnlock == true) && (libPBU2_gf_CurateHSUIAllPlayersLockedIn() == true)) {
+        TriggerExecute(libPBU2_gt_CurateHSUICountdownTimerExpires, true, false);
+        return ;
+    }
+
+}
+
+void libPBU2_gf_CurateHSUILockUI () {
+    // Variable Declarations
+    int lv_itRow;
+    int lv_itCol;
+
+    // Automatic Variable Declarations
+    const int auto6295DEA9_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C;
+    const int auto6295DEA9_ai = 1;
+    const int auto21F5F149_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C;
+    const int auto21F5F149_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    lv_itRow = 1;
+    for ( ; ( (auto6295DEA9_ai >= 0 && lv_itRow <= auto6295DEA9_ae) || (auto6295DEA9_ai < 0 && lv_itRow >= auto6295DEA9_ae) ) ; lv_itRow += auto6295DEA9_ai ) {
+        lv_itCol = 1;
+        for ( ; ( (auto21F5F149_ai >= 0 && lv_itCol <= auto21F5F149_ae) || (auto21F5F149_ai < 0 && lv_itCol >= auto21F5F149_ae) ) ; lv_itCol += auto21F5F149_ai ) {
+            DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_heroButtons[lv_itRow][lv_itCol], PlayerGroupAll(), false);
+        }
+    }
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_lockButton, PlayerGroupAll(), false);
+}
+
+bool libPBU2_gf_CurateHSUIAllPlayersLockedIn () {
+    // Variable Declarations
+    int lv_itPlayer;
+
+    // Automatic Variable Declarations
+    const int auto9EECDD60_ae = libCore_gv_bALMaxPlayers;
+    const int auto9EECDD60_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    lv_itPlayer = 1;
+    for ( ; ( (auto9EECDD60_ai >= 0 && lv_itPlayer <= auto9EECDD60_ae) || (auto9EECDD60_ai < 0 && lv_itPlayer >= auto9EECDD60_ae) ) ; lv_itPlayer += auto9EECDD60_ai ) {
+        if ((PlayerStatus(lv_itPlayer) != c_playerStatusUnused) && (PlayerType(lv_itPlayer) == c_playerTypeUser) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == false)) {
+            return false;
+        }
+
+    }
+    return true;
+}
+
+text libPBU2_gf_CurateHSUIHeroRoleName (int lp_heroRow) {
+    // Automatic Variable Declarations
+    int auto89E9A1AD_val;
+
+    // Implementation
+    auto89E9A1AD_val = lp_heroRow;
+    if (auto89E9A1AD_val == (libPBU2_ge_CurateHeroSelectionRole_Tank)) {
+        return StringExternal("Param/Value/lib_PBU2_8AC542C1");
+    }
+    else if (auto89E9A1AD_val == (libPBU2_ge_CurateHeroSelectionRole_Healer)) {
+        return StringExternal("Param/Value/lib_PBU2_29C285B1");
+    }
+    else if (auto89E9A1AD_val == (libPBU2_ge_CurateHeroSelectionRole_Bruiser)) {
+        return StringExternal("Param/Value/lib_PBU2_6F9FA996");
+    }
+    else if (auto89E9A1AD_val == (libPBU2_ge_CurateHeroSelectionRole_MeleeAssassin)) {
+        return StringExternal("Param/Value/lib_PBU2_36ED0C64");
+    }
+    else if (auto89E9A1AD_val == (libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1)) {
+        return StringExternal("Param/Value/lib_PBU2_AE1825B7");
+    }
+    else if (auto89E9A1AD_val == (libPBU2_ge_CurateHeroSelectionRole_RangedAssassin2)) {
+        return StringExternal("Param/Value/lib_PBU2_E99FE310");
+    }
+    else {
+    }
+    return StringExternal("Param/Value/lib_PBU2_ACE45DBB");
+}
+
+string libPBU2_gf_CurateHSUIHeroRoleIcon (int lp_heroRow) {
+    // Automatic Variable Declarations
+    int auto7C927627_val;
+
+    // Implementation
+    auto7C927627_val = lp_heroRow;
+    if (auto7C927627_val == (libPBU2_ge_CurateHeroSelectionRole_Tank)) {
+        return "Assets\\Textures\\storm_ui_play_randomhero_button_icon_active_tank.dds";
+    }
+    else if (auto7C927627_val == (libPBU2_ge_CurateHeroSelectionRole_Healer)) {
+        return "Assets\\Textures\\storm_ui_play_randomhero_button_icon_active_healer.dds";
+    }
+    else if (auto7C927627_val == (libPBU2_ge_CurateHeroSelectionRole_Bruiser)) {
+        return "Assets\\Textures\\storm_ui_play_randomhero_button_icon_active_bruiser.dds";
+    }
+    else if (auto7C927627_val == (libPBU2_ge_CurateHeroSelectionRole_MeleeAssassin)) {
+        return "Assets\\Textures\\meleesupport.dds";
+    }
+    else if (auto7C927627_val == (libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1)) {
+        return "Assets\\Textures\\storm_ui_play_randomhero_button_icon_active_ranged.dds";
+    }
+    else if (auto7C927627_val == (libPBU2_ge_CurateHeroSelectionRole_RangedAssassin2)) {
+        return "Assets\\Textures\\storm_ui_play_randomhero_button_icon_active_ranged.dds";
+    }
+    else {
+    }
+    return null;
+}
+
+void libPBU2_gf_CurateHSUISelectHeroforPlayer (int lp_player, int lp_heroRow, int lp_heroCol) {
+    // Variable Declarations
+    string lv_selectedHero;
+    playergroup lv_teamMembers;
+    int lv_itViewer;
+    int lv_itPlayer;
+    int lv_itRow;
+    int lv_itCol;
+    int lv_pick;
+    int lv_displayColumn;
+
+    // Automatic Variable Declarations
+    playergroup autoBFDDEA2E_g;
+
+    // Variable Initialization
+
+    // Implementation
+    if ((((lp_player >= 1) && (lp_player <= libCore_gv_bALMaxPlayers)) == false)) {
+        return ;
+    }
+
+    if ((lp_heroCol == libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lp_player]) && (lp_heroRow == libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lp_player])) {
+        return ;
+    }
+
+    lv_selectedHero = libPBU2_gv_curateHeroSelections[lp_heroRow][lp_heroCol];
+    if ((lv_selectedHero == null)) {
+        return ;
+    }
+
+    autoBFDDEA2E_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer = -1;
+    while (true) {
+        	lv_itPlayer = PlayerGroupNextPlayer(autoBFDDEA2E_g, lv_itPlayer);
+        	if (lv_itPlayer<0) { break; }
+        	if ((lv_itPlayer != lp_player) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer] == lp_heroRow) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer] == lp_heroCol)) {
+            return ;
+        }
+
+    }
+    if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lp_player] == true)) {
+        return ;
+    }
+
+    SoundPlayForPlayer(SoundLink("UI_BNet_HeroChoose", -1), c_maxPlayers, libCore_gv_playerGroupFromPlayer[lp_player], 100.0, 0.0);
+    libGame_gv_players[lp_player].lv_heroIndex = libCore_gf_GetIndexFromHero(lv_selectedHero);
+    libCore_gf_DataClearHeroDataAtIndex(lp_player);
+    libCore_gf_DataLoadHeroDataIntoIndex(lv_selectedHero, lp_player);
+    lv_teamMembers = libGame_gf_PlayersOnTeamHeroes(libGame_gf_TeamNumberOfPlayer(lp_player), false);
+    PlayerGroupAdd(lv_teamMembers, libCore_gv_oBSERVER_ObserverUIPlayer);
+    libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lp_player] = lp_heroRow;
+    libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lp_player] = lp_heroCol;
+    libPBU2_gf_CurateHSUIUpdateHeroButtons();
+    libNtve_gf_SetDialogItemText(libPBU2_gv_curateHeroSelectionUI.lv_selectedHeroName, StringExternal(CatalogFieldValueGet(c_gameCatalogHero, lv_selectedHero, "Name", c_playerAny)), libCore_gv_playerGroupFromPlayer[lp_player]);
+    libNtve_gf_SetDialogItemText(libPBU2_gv_curateHeroSelectionUI.lv_selectedHeroRole, libPBU2_gf_CurateHSUIHeroRoleName(lp_heroRow), libCore_gv_playerGroupFromPlayer[lp_player]);
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_selectedHeroPanel, libCore_gv_playerGroupFromPlayer[lp_player], true);
+    if ((lp_heroRow > 0) && (lp_heroCol > 0)) {
+        libNtve_gf_SetDialogItemHeroLink(libPBU2_gv_curateHeroSelectionUI.lv_heroContainerFrame[1], lv_selectedHero, libCore_gv_playerGroupFromPlayer[lp_player]);
+        DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton, libCore_gv_playerGroupFromPlayer[lp_player], true);
+        DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton, libCore_gv_playerGroupFromPlayer[lp_player], true);
+    }
+
+    if ((libPBU2_gf_CurateHSUIGoodToLockIn(lp_player) == true)) {
+        DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_lockButton, libCore_gv_playerGroupFromPlayer[lp_player], true);
+    }
+    else {
+        DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_lockButton, libCore_gv_playerGroupFromPlayer[lp_player], false);
+    }
+}
+
+void libPBU2_gf_CurateHSUIUpdateHeroButtons () {
+    // Variable Declarations
+    playergroup lv_teamMembers;
+    int lv_itViewer;
+    int lv_itPlayer;
+    int lv_itRow;
+    int lv_itCol;
+    int lv_cellState;
+
+    // Automatic Variable Declarations
+    playergroup autoD069F294_g;
+    const int autoA3134274_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C;
+    const int autoA3134274_ai = 1;
+    const int autoD4B4443C_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C;
+    const int autoD4B4443C_ai = 1;
+    playergroup autoE1E9EEDF_g;
+    playergroup autoB0290E6A_g;
+    const int autoDAB5DD84_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C;
+    const int autoDAB5DD84_ai = 1;
+    const int autoD32E085D_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C;
+    const int autoD32E085D_ai = 1;
+    int autoA7CF61D5_val;
+
+    // Variable Initialization
+
+
+    // Implementation
+    lv_teamMembers = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    PlayerGroupAdd(lv_teamMembers, libCore_gv_oBSERVER_ObserverUIPlayer);
+    autoD069F294_g = lv_teamMembers;
+    lv_itViewer = -1;
+    while (true) {
+        	lv_itViewer = PlayerGroupNextPlayer(autoD069F294_g, lv_itViewer);
+        	if (lv_itViewer<0) { break; }
+        	lv_itRow = 1;
+        for ( ; ( (autoA3134274_ai >= 0 && lv_itRow <= autoA3134274_ae) || (autoA3134274_ai < 0 && lv_itRow >= autoA3134274_ae) ) ; lv_itRow += autoA3134274_ai ) {
+            lv_itCol = 1;
+            for ( ; ( (autoD4B4443C_ai >= 0 && lv_itCol <= autoD4B4443C_ae) || (autoD4B4443C_ai < 0 && lv_itCol >= autoD4B4443C_ae) ) ; lv_itCol += autoD4B4443C_ai ) {
+                if ((libPBU2_gv_curateHeroSelections[lv_itRow][lv_itCol] == null)) {
+                    continue;
+                }
+                if ((libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAllyVisible[lv_itViewer][lv_itRow][lv_itCol] == true)) {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAlly1[lv_itRow][lv_itCol], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAlly2[lv_itRow][lv_itCol], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAllyVisible[lv_itViewer][lv_itRow][lv_itCol] = false;
+                }
+
+                if ((libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMeVisible[lv_itViewer][lv_itRow][lv_itCol] == true)) {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMe1[lv_itRow][lv_itCol], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMe2[lv_itRow][lv_itCol], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMeVisible[lv_itViewer][lv_itRow][lv_itCol] = false;
+                }
+
+                if ((libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAllyVisible[lv_itViewer][lv_itRow][lv_itCol] == true)) {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAlly1[lv_itRow][lv_itCol], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAlly2[lv_itRow][lv_itCol], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAllyVisible[lv_itViewer][lv_itRow][lv_itCol] = false;
+                }
+
+                if ((libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMeVisible[lv_itViewer][lv_itRow][lv_itCol] == true)) {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe1[lv_itRow][lv_itCol], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe2[lv_itRow][lv_itCol], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe3[lv_itRow][lv_itCol], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMeVisible[lv_itViewer][lv_itRow][lv_itCol] = false;
+                }
+
+                if ((libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersThinkingVisible[lv_itViewer][lv_itRow][lv_itCol] == true)) {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersThinking[lv_itRow][lv_itCol], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersThinkingVisible[lv_itViewer][lv_itRow][lv_itCol] = false;
+                }
+
+            }
+        }
+        autoE1E9EEDF_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+        lv_itPlayer = -1;
+        while (true) {
+            	lv_itPlayer = PlayerGroupNextPlayer(autoE1E9EEDF_g, lv_itPlayer);
+            	if (lv_itPlayer<0) { break; }
+            	if (((lv_itPlayer == lv_itViewer))) {
+                continue;
+            }
+
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer] > 0) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer] > 0)) {
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAlly1[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAlly2[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByAllyVisible[lv_itViewer][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]] = true;
+                if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == false)) {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersThinking[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                    libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersThinkingVisible[lv_itViewer][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]] = true;
+                }
+
+            }
+
+        }
+        autoB0290E6A_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+        lv_itPlayer = -1;
+        while (true) {
+            	lv_itPlayer = PlayerGroupNextPlayer(autoB0290E6A_g, lv_itPlayer);
+            	if (lv_itPlayer<0) { break; }
+            	if (((lv_itPlayer == lv_itViewer) || (libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == false))) {
+                continue;
+            }
+
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itPlayer] > 0) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itPlayer] > 0)) {
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAlly1[libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itPlayer]], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAlly2[libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itPlayer]], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByAllyVisible[lv_itViewer][libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itPlayer]] = true;
+            }
+
+        }
+        if ((PlayerGroupHasPlayer(libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false), lv_itViewer) == true) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itViewer] > 0) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itViewer] > 0)) {
+            DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe1[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itViewer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itViewer]], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+            DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe2[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itViewer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itViewer]], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+            DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMe3[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itViewer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itViewer]], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersSelectedByMeVisible[lv_itViewer][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itViewer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itViewer]] = true;
+        }
+
+        if ((PlayerGroupHasPlayer(libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false), lv_itViewer) == true) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itViewer] == true) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itViewer] > 0) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itViewer] > 0)) {
+            DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMe1[libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itViewer]][libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itViewer]], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+            DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMe2[libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itViewer]][libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itViewer]], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+            libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersLockedByMeVisible[lv_itViewer][libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itViewer]][libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itViewer]] = true;
+        }
+
+        lv_itRow = 1;
+        for ( ; ( (autoDAB5DD84_ai >= 0 && lv_itRow <= autoDAB5DD84_ae) || (autoDAB5DD84_ai < 0 && lv_itRow >= autoDAB5DD84_ae) ) ; lv_itRow += autoDAB5DD84_ai ) {
+            lv_itCol = 1;
+            for ( ; ( (autoD32E085D_ai >= 0 && lv_itCol <= autoD32E085D_ae) || (autoD32E085D_ai < 0 && lv_itCol >= autoD32E085D_ae) ) ; lv_itCol += autoD32E085D_ai ) {
+                if ((libPBU2_gv_curateHeroSelections[lv_itRow][lv_itCol] == null)) {
+                    continue;
+                }
+
+                lv_cellState = libPBU2_gf_CurateHSUIGetCellState(lv_itViewer, lv_itRow, lv_itCol);
+                autoA7CF61D5_val = lv_cellState;
+                if (autoA7CF61D5_val == libPBU2_ge_CurateHeroSelectionCellState_LockedByMe) {
+                    libPBU2_gf_CurateHSUIEnableDisableHeroButton(true, lv_itRow, lv_itCol, libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                }
+                else if (autoA7CF61D5_val == libPBU2_ge_CurateHeroSelectionCellState_LockedByOther) {
+                    libPBU2_gf_CurateHSUIEnableDisableHeroButton(false, lv_itRow, lv_itCol, libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                }
+                else if (autoA7CF61D5_val == libPBU2_ge_CurateHeroSelectionCellState_SelectedByMe) {
+                    libPBU2_gf_CurateHSUIEnableDisableHeroButton(true, lv_itRow, lv_itCol, libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                }
+                else if (autoA7CF61D5_val == libPBU2_ge_CurateHeroSelectionCellState_SelectedByOther) {
+                    libPBU2_gf_CurateHSUIEnableDisableHeroButton(false, lv_itRow, lv_itCol, libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                }
+                else if (autoA7CF61D5_val == libPBU2_ge_CurateHeroSelectionCellState_Normal) {
+                    if ((PlayerGroupHasPlayer(libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false), lv_itViewer) == true) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itViewer] == true)) {
+                        libPBU2_gf_CurateHSUIEnableDisableHeroButton(false, lv_itRow, lv_itCol, libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                    }
+                    else {
+                        libPBU2_gf_CurateHSUIEnableDisableHeroButton(true, lv_itRow, lv_itCol, libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                    }
+                }
+                else {
+                }
+            }
+        }
+    }
+    libPBU2_gf_CurateHSUIUpdateTeamPanel();
+}
+
+void libPBU2_gf_CurateHSUIUpdateTeamPanel () {
+    // Variable Declarations
+    playergroup lv_viewerGroup;
+    int lv_itViewer;
+    int lv_itPlayer;
+    int lv_itSlot;
+    int lv_itCol;
+
+    // Automatic Variable Declarations
+    playergroup auto8E23905E_g;
+    const int auto1FA594C6_ae = libCore_gv_bALMaxPlayersOnATeam;
+    const int auto1FA594C6_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    lv_viewerGroup = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    PlayerGroupAdd(lv_viewerGroup, libCore_gv_oBSERVER_ObserverUIPlayer);
+    auto8E23905E_g = lv_viewerGroup;
+    lv_itViewer = -1;
+    while (true) {
+        	lv_itViewer = PlayerGroupNextPlayer(auto8E23905E_g, lv_itViewer);
+        	if (lv_itViewer<0) { break; }
+        	lv_itSlot = 1;
+        for ( ; ( (auto1FA594C6_ai >= 0 && lv_itSlot <= auto1FA594C6_ae) || (auto1FA594C6_ai < 0 && lv_itSlot >= auto1FA594C6_ae) ) ; lv_itSlot += auto1FA594C6_ai ) {
+            lv_itPlayer = libPBU2_gv_curateHeroSelectionUI.lv_teamPanelRowPlayer[lv_itViewer][lv_itSlot];
+            if ((lv_itPlayer <= 0)) {
+                continue;
+            }
+
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer] > 0) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer] > 0)) {
+                libNtve_gf_SetDialogItemImage(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroImage[lv_itSlot], (CatalogFieldValueGet(c_gameCatalogHero, libPBU2_gv_curateHeroSelections[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]], "SelectScreenButtonImage", c_playerAny)), libCore_gv_playerGroupFromPlayer[lv_itViewer]);
+                libNtve_gf_SetDialogItemText(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroHeroName[lv_itSlot], StringExternal(CatalogFieldValueGet(c_gameCatalogHero, libPBU2_gv_curateHeroSelections[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]], "Name", c_playerAny)), libCore_gv_playerGroupFromPlayer[lv_itViewer]);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroHeroName[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroEmpty[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroImage[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroBorder[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == false)) {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroThinking[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                }
+                else {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroThinking[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                }
+                if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == false) && (lv_itViewer != lv_itPlayer)) {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroSelectedAlly[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                }
+                else {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroSelectedAlly[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                }
+                libNtve_gf_SetDialogItemImage(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroRole[lv_itSlot], libPBU2_gf_CurateHSUIHeroRoleIcon(libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]), libCore_gv_playerGroupFromPlayer[lv_itViewer]);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroRole[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroRoleBG[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                if (((libPBU2_gv_curateHeroSelections[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]] == "Deckard") || (libPBU2_gv_curateHeroSelections[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]] == "MalGanis") || (libPBU2_gv_curateHeroSelections[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]] == "Mephisto") || (libPBU2_gv_curateHeroSelections[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]] == "NexusHunter") || (libPBU2_gv_curateHeroSelections[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]] == "Whitemane") || (libPBU2_gv_curateHeroSelections[libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer]][libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer]] == "Yrel"))) {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroBackgroundImage[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                }
+                else {
+                    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroBackgroundImage[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                }
+            }
+
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == true)) {
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroLocked[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroLockedAnimation[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+            }
+            else {
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroLocked[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_teamHeroLockedAnimation[lv_itSlot], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+            }
+        }
+    }
+}
+
+bool libPBU2_gf_CurateHSUIGoodToLockIn (int lp_player) {
+    // Variable Declarations
+    int lv_itOtherPlayer;
+
+    // Automatic Variable Declarations
+    playergroup autoC9470531_g;
+
+    // Variable Initialization
+
+    // Implementation
+    if ((PlayerGroupHasPlayer(libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false), lp_player) == false)) {
+        return false;
+    }
+
+    if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lp_player] == true)) {
+        return false;
+    }
+
+    if (((libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lp_player] <= 0) || (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lp_player] <= 0))) {
+        return false;
+    }
+
+    autoC9470531_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itOtherPlayer = -1;
+    while (true) {
+        	lv_itOtherPlayer = PlayerGroupNextPlayer(autoC9470531_g, lv_itOtherPlayer);
+        	if (lv_itOtherPlayer<0) { break; }
+        	if (((lv_itOtherPlayer == lp_player) || (libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itOtherPlayer] == false))) {
+            continue;
+        }
+
+        if ((libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lp_player] == libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itOtherPlayer]) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lp_player] == libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itOtherPlayer])) {
+            return false;
+        }
+
+    }
+    return true;
+}
+
+int libPBU2_gf_CurateHSUIGetCellState (int lp_viewer, int lp_row, int lp_col) {
+    // Variable Declarations
+    int lv_itPlayer;
+
+    // Automatic Variable Declarations
+    playergroup auto2A4510CC_g;
+
+    // Variable Initialization
+
+    // Implementation
+    if ((libPBU2_gv_curateHeroSelections[lp_row][lp_col] == null)) {
+        return libPBU2_ge_CurateHeroSelectionCellState_Empty;
+    }
+
+    auto2A4510CC_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer = -1;
+    while (true) {
+        	lv_itPlayer = PlayerGroupNextPlayer(auto2A4510CC_g, lv_itPlayer);
+        	if (lv_itPlayer<0) { break; }
+        	if ((lv_itPlayer == lp_viewer)) {
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == true) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itPlayer] == lp_row) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itPlayer] == lp_col)) {
+                return libPBU2_ge_CurateHeroSelectionCellState_LockedByMe;
+            }
+
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == false) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer] == lp_row) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer] == lp_col)) {
+                return libPBU2_ge_CurateHeroSelectionCellState_SelectedByMe;
+            }
+
+        }
+        else {
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == true) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itPlayer] == lp_row) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itPlayer] == lp_col)) {
+                return libPBU2_ge_CurateHeroSelectionCellState_LockedByOther;
+            }
+
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == false) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer] == lp_row) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer] == lp_col)) {
+                return libPBU2_ge_CurateHeroSelectionCellState_SelectedByOther;
+            }
+
+        }
+    }
+    return libPBU2_ge_CurateHeroSelectionCellState_Normal;
+}
+
+void libPBU2_gf_CurateHSUIAutoPickHeroForPlayer (int lp_player) {
+    // Variable Declarations
+    bool lv_haveTank;
+    bool lv_haveHealer;
+    bool lv_haveBruiser;
+    int lv_itPlayer;
+
+    // Automatic Variable Declarations
+    playergroup autoD90D53CB_g;
+    playergroup auto435AF429_g;
+    playergroup auto50DE9B41_g;
+
+    // Variable Initialization
+
+    // Implementation
+    lv_haveTank = false;
+    autoD90D53CB_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer = -1;
+    while (true) {
+        	lv_itPlayer = PlayerGroupNextPlayer(autoD90D53CB_g, lv_itPlayer);
+        	if (lv_itPlayer<0) { break; }
+        	if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == true) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itPlayer] == (libPBU2_ge_CurateHeroSelectionRole_Tank))) {
+            lv_haveTank = true;
+            break;
+        }
+
+    }
+    if ((lv_haveTank == false)) {
+        libPBU2_gf_CurateHSUIAutoPickHeroOfRoleForPlayer(lp_player, libPBU2_ge_CurateHeroSelectionRole_Tank);
+        return ;
+    }
+
+    lv_haveHealer = false;
+    auto435AF429_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer = -1;
+    while (true) {
+        	lv_itPlayer = PlayerGroupNextPlayer(auto435AF429_g, lv_itPlayer);
+        	if (lv_itPlayer<0) { break; }
+        	}
+    auto50DE9B41_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer = -1;
+    while (true) {
+        	lv_itPlayer = PlayerGroupNextPlayer(auto50DE9B41_g, lv_itPlayer);
+        	if (lv_itPlayer<0) { break; }
+        	if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == true) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itPlayer] == (libPBU2_ge_CurateHeroSelectionRole_Healer))) {
+            lv_haveHealer = true;
+            break;
+        }
+
+    }
+    if ((lv_haveHealer == false)) {
+        libPBU2_gf_CurateHSUIAutoPickHeroOfRoleForPlayer(lp_player, libPBU2_ge_CurateHeroSelectionRole_Healer);
+        return ;
+    }
+
+    libPBU2_gf_CurateHSUIAutoPickHeroOfRoleForPlayer(lp_player, libPBU2_ge_CurateHeroSelectionRole_Bruiser);
+}
+
+void libPBU2_gf_CurateHSUIAutoPickHeroOfRoleForPlayer (int lp_player, int lp_role) {
+    // Variable Declarations
+    int[91] lv_roleHeroRow;
+    int[91] lv_roleHeroCol;
+    int lv_roleHeroCount;
+    int lv_itPlayer;
+    int lv_rowStart;
+    int lv_rowEnd;
+    int lv_itRow;
+    int lv_itCol;
+    bool lv_used;
+    int lv_roleHeroRandomIndex;
+    bool haveCho;
+    bool haveGall;
+
+    // Automatic Variable Declarations
+    int lv_itRowEnd;
+    const int auto854D400C_ai = 1;
+    const int auto68D32456_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C;
+    const int auto68D32456_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    lv_rowStart = (lp_role);
+    if ((lp_role == libPBU2_ge_CurateHeroSelectionRole_Bruiser)) {
+        lv_rowEnd = (libPBU2_ge_CurateHeroSelectionRole_RangedAssassin2);
+    }
+    else {
+        lv_rowEnd = lv_rowStart;
+    }
+    lv_roleHeroCount = 0;
+    lv_itRowEnd = lv_rowEnd;
+    lv_itRow = lv_rowStart;
+    for ( ; ( (auto854D400C_ai >= 0 && lv_itRow <= lv_itRowEnd) || (auto854D400C_ai < 0 && lv_itRow >= lv_itRowEnd) ) ; lv_itRow += auto854D400C_ai ) {
+        lv_itCol = 1;
+        for ( ; ( (auto68D32456_ai >= 0 && lv_itCol <= auto68D32456_ae) || (auto68D32456_ai < 0 && lv_itCol >= auto68D32456_ae) ) ; lv_itCol += auto68D32456_ai ) {
+            if ((libPBU2_gv_curateHeroSelections[lv_itRow][lv_itCol] == null)) {
+                continue;
+            }
+
+            if ((libPBU2_gf_CurateHSUIHeroLocked(lv_itRow, lv_itCol) == true)) {
+                continue;
+            }
+            // Avoid Cho'Gall
+            if ((lv_itRow == libPBU2_ge_CurateHeroSelectionRole_Tank && lv_itCol == libPBU2_Cho) || lv_itRow == libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1 && lv_itCol == libPBU2_Gall) {
+                continue;
+            }
+
+            lv_roleHeroCount += 1;
+            lv_roleHeroRow[lv_roleHeroCount] = lv_itRow;
+            lv_roleHeroCol[lv_roleHeroCount] = lv_itCol;
+        }
+    }
+    if ((lv_roleHeroCount == 0)) {
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] = 0;
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player] = 0;
+        return ;
+    }
+
+    lv_roleHeroRandomIndex = RandomInt(1, lv_roleHeroCount);
+
+    if (libPBU2_gf_CurateHSUIHeroLocked(libPBU2_ge_CurateHeroSelectionRole_Tank, libPBU2_Cho) && !libPBU2_gf_CurateHSUIHeroLocked(libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1, libPBU2_Gall)) {
+        libPBU2_gf_CurateHSUISelectHeroforPlayer(lp_player, libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1, libPBU2_Gall);
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] = libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1;
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player] = libPBU2_Gall;
+    } else if (libPBU2_gf_CurateHSUIHeroLocked(libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1, libPBU2_Gall) && !libPBU2_gf_CurateHSUIHeroLocked(libPBU2_ge_CurateHeroSelectionRole_Tank, libPBU2_Cho)) {
+        libPBU2_gf_CurateHSUISelectHeroforPlayer(lp_player, libPBU2_ge_CurateHeroSelectionRole_Tank, libPBU2_Cho);
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] = libPBU2_ge_CurateHeroSelectionRole_Tank;
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player] = libPBU2_Cho;
+    } else {
+        libPBU2_gf_CurateHSUISelectHeroforPlayer(lp_player, lv_roleHeroRow[lv_roleHeroRandomIndex], lv_roleHeroCol[lv_roleHeroRandomIndex]);
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] = lv_roleHeroRow[lv_roleHeroRandomIndex];
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player] = lv_roleHeroCol[lv_roleHeroRandomIndex];
+    }
+    libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lp_player] = true;
+}
+
+bool libPBU2_gf_CurateHSUIHeroLocked (int lp_row, int lp_column) {
+    // Variable Declarations
+    int lv_itPlayer;
+
+    // Automatic Variable Declarations
+    playergroup auto0E401EA8_g;
+
+    // Variable Initialization
+
+    // Implementation
+    if ((lp_row <= 0) && (lp_column <= 0)) {
+        return false;
+    }
+
+    auto0E401EA8_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer = -1;
+    while (true) {
+        	lv_itPlayer = PlayerGroupNextPlayer(auto0E401EA8_g, lv_itPlayer);
+        	if (lv_itPlayer<0) { break; }
+        	if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == true) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lv_itPlayer] == lp_row) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lv_itPlayer] == lp_column)) {
+            return true;
+        }
+
+    }
+    return false;
+}
+
+void libPBU2_gf_CurateHSUIShowFinalCountDownHeroCutscene () {
+    // Variable Declarations
+    int lv_itPlayer;
+
+    // Automatic Variable Declarations
+    playergroup autoEDEF42E9_g;
+
+    // Variable Initialization
+
+    // Implementation
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_pickHeroPanel, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_selectedHeroPanel, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton, PlayerGroupAll(), false);
+    autoEDEF42E9_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer = -1;
+    while (true) {
+        	lv_itPlayer = PlayerGroupNextPlayer(autoEDEF42E9_g, lv_itPlayer);
+        	if (lv_itPlayer<0) { break; }
+        	libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene(lv_itPlayer, true);
+    }
+}
+
+trigger auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_Trigger = null;
+int auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_lp_player;
+bool auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_lp_showHide;
+
+void libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene (int lp_player, bool lp_showHide) {
+    auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_lp_player = lp_player;
+    auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_lp_showHide = lp_showHide;
+
+    if (auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_Trigger == null) {
+        auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_Trigger = TriggerCreate("auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_Trigger, false, false);
+}
+
+bool auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_TriggerFunc (bool testConds, bool runActions) {
+    int lp_player = auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_lp_player;
+    bool lp_showHide = auto_libPBU2_gf_CurateHSUIShowHidePlayersHeroCutscene_lp_showHide;
+
+    // Variable Declarations
+    playergroup lv_teamMembers;
+    int lv_itViewer;
+    int lv_displayColumn;
+
+    // Automatic Variable Declarations
+    playergroup auto73650EAB_g;
+
+    // Variable Initialization
+
+    // Implementation
+    lv_teamMembers = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    if ((PlayerStatus(libCore_gv_oBSERVER_ObserverUIPlayer) != c_playerStatusUnused)) {
+        PlayerGroupAdd(lv_teamMembers, libCore_gv_oBSERVER_ObserverUIPlayer);
+    }
+
+    auto73650EAB_g = lv_teamMembers;
+    lv_itViewer = -1;
+    while (true) {
+        	lv_itViewer = PlayerGroupNextPlayer(auto73650EAB_g, lv_itViewer);
+        	if (lv_itViewer<0) { break; }
+        	lv_displayColumn = libPBU2_gf_CurateHSUIHeroPickDisplayColumn(lv_itViewer, lp_player);
+        if ((lp_showHide == true)) {
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lp_player] == true) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] > 0) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player] > 0)) {
+                libNtve_gf_SetDialogItemHeroLink(libPBU2_gv_curateHeroSelectionUI.lv_heroContainerFrame[lv_displayColumn], libPBU2_gv_curateHeroSelections[libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player]][libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player]], libCore_gv_playerGroupFromPlayer[lv_itViewer]);
+                libNtve_gf_SetDialogItemSkinLink(libPBU2_gv_curateHeroSelectionUI.lv_heroContainerFrame[lv_displayColumn], PlayerSkin(lp_player), libCore_gv_playerGroupFromPlayer[lv_itViewer]);
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroCutsceneFrame[lv_displayColumn], libCore_gv_playerGroupFromPlayer[lv_itViewer], true);
+            }
+            else {
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroCutsceneFrame[lv_displayColumn], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+            }
+        }
+        else {
+            DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroCutsceneFrame[lv_displayColumn], libCore_gv_playerGroupFromPlayer[lv_itViewer], false);
+        }
+    }
+    return true;
+}
+
+int libPBU2_gf_CurateHSUIHeroPickDisplayColumn (int lp_viewerPlayer, int lp_subjectPlayer) {
+    // Variable Declarations
+    int lv_viewerSlot;
+    int lv_subjectSlot;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_viewerSlot = (ModI((libGame_gv_players[lp_viewerPlayer].lv_rosterSlot - 1), 5) + 1);
+    lv_subjectSlot = (ModI((libGame_gv_players[lp_subjectPlayer].lv_rosterSlot - 1), 5) + 1);
+
+    // Implementation
+    if (((lp_viewerPlayer == libCore_gv_oBSERVER_ObserverUIPlayer) || (lv_viewerSlot < lv_subjectSlot))) {
+        return lv_subjectSlot;
+    }
+
+    if ((lv_viewerSlot > lv_subjectSlot)) {
+        return (lv_subjectSlot + 1);
+    }
+
+    return 1;
+}
+
+void libPBU2_gf_CurateHSUISetHeroSkinAndMountForPlayer (int lp_player, bool lp_randomSkin) {
+    // Variable Declarations
+    string lv_skinLink;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Implementation
+    libCore_gf_DataClearHeroDataAtIndex(lp_player);
+    libCore_gf_DataLoadHeroDataIntoIndex(libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex), lp_player);
+    if ((lp_randomSkin == true)) {
+        libGame_gf_HeroSelectionRandomlyPickSkin(lp_player);
+        libGame_gf_HeroSelectionRandomlyPickMount(lp_player);
+    }
+
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: #Include MM PvE Brawl Mod (UI)
+//--------------------------------------------------------------------------------------------------
+bool libPBU2_gt_IncludeMMPvEBrawlModUI_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPBU2_gt_IncludeMMPvEBrawlModUI_Init () {
+    libPBU2_gt_IncludeMMPvEBrawlModUI = TriggerCreate("libPBU2_gt_IncludeMMPvEBrawlModUI_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Curate HS UI Button Clicked
+//--------------------------------------------------------------------------------------------------
+bool libPBU2_gt_CurateHSUIButtonClicked_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_itPlayer;
+    int lv_buttonClicked;
+    int lv_itPick;
+    int lv_itHeroRow;
+    int lv_itHeroCol;
+
+    // Automatic Variable Declarations
+    int auto637F4114_val;
+    const int autoFD241FB3_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C;
+    const int autoFD241FB3_ai = 1;
+    const int auto24FF6750_ae = libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C;
+    const int auto24FF6750_ai = 1;
+
+    // Variable Initialization
+    lv_itPlayer = EventPlayer();
+    lv_buttonClicked = EventDialogControl();
+
+    // Conditions
+    if (testConds) {
+        if (!(((EventPlayer() >= 1) && (EventPlayer() <= libCore_gv_bALMaxPlayers)))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto637F4114_val = lv_buttonClicked;
+    if (auto637F4114_val == libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton) {
+        libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton, false, libCore_gv_playerGroupFromPlayer[EventPlayer()]);
+        libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton, false, libCore_gv_playerGroupFromPlayer[EventPlayer()]);
+        return true;
+    }
+    else if (auto637F4114_val == libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton) {
+        libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton, false, libCore_gv_playerGroupFromPlayer[EventPlayer()]);
+        libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton, false, libCore_gv_playerGroupFromPlayer[EventPlayer()]);
+        return true;
+    }
+    else if (auto637F4114_val == libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton) {
+        libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton, false, libCore_gv_playerGroupFromPlayer[EventPlayer()]);
+        libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton, false, libCore_gv_playerGroupFromPlayer[EventPlayer()]);
+        return true;
+    }
+    else {
+    }
+    if ((lv_buttonClicked == libPBU2_gv_curateHeroSelectionUI.lv_lockButton)) {
+        if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == false)) {
+            libPBU2_gf_CurateHSUILockUnlockHeroChoice(lv_itPlayer, true);
+            SoundPlayForPlayer(SoundLink("UI_BNet_Draft_HeroConfirm", -1), c_maxPlayers, libCore_gv_playerGroupFromPlayer[lv_itPlayer], 100.0, 0.0);
+        }
+        else {
+            libPBU2_gf_CurateHSUILockUnlockHeroChoice(lv_itPlayer, false);
+            SoundPlayForPlayer(SoundLink("UI_BNet_Customize", -1), c_maxPlayers, libCore_gv_playerGroupFromPlayer[lv_itPlayer], 100.0, 0.0);
+        }
+        return true;
+    }
+
+    lv_itHeroRow = 1;
+    for ( ; ( (autoFD241FB3_ai >= 0 && lv_itHeroRow <= autoFD241FB3_ae) || (autoFD241FB3_ai < 0 && lv_itHeroRow >= autoFD241FB3_ae) ) ; lv_itHeroRow += autoFD241FB3_ai ) {
+        lv_itHeroCol = 1;
+        for ( ; ( (auto24FF6750_ai >= 0 && lv_itHeroCol <= auto24FF6750_ae) || (auto24FF6750_ai < 0 && lv_itHeroCol >= auto24FF6750_ae) ) ; lv_itHeroCol += auto24FF6750_ai ) {
+            if ((lv_buttonClicked == libPBU2_gv_curateHeroSelectionUI.lv_heroButtons[lv_itHeroRow][lv_itHeroCol]) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer] == false)) {
+                libPBU2_gf_CurateHSUISelectHeroforPlayer(lv_itPlayer, lv_itHeroRow, lv_itHeroCol);
+                return true;
+            }
+
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPBU2_gt_CurateHSUIButtonClicked_Init () {
+    libPBU2_gt_CurateHSUIButtonClicked = TriggerCreate("libPBU2_gt_CurateHSUIButtonClicked_Func");
+    TriggerEnable(libPBU2_gt_CurateHSUIButtonClicked, false);
+    TriggerAddEventDialogControl(libPBU2_gt_CurateHSUIButtonClicked, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Curate HS UI Countdown Timer Expires
+//--------------------------------------------------------------------------------------------------
+bool libPBU2_gt_CurateHSUICountdownTimerExpires_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_itPlayer2;
+    sound lv_crowdSound;
+    int player;
+
+    // Automatic Variable Declarations
+    playergroup autoD70C5296_g;
+    playergroup auto2A9A4B3A_g;
+
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((TriggerIsEnabled(TriggerGetCurrent()) == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerExecute(libPBU2_timerExpired, false, false);
+    TriggerEnable(TriggerGetCurrent(), false);
+    libNtve_gf_StopTimer(libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer);
+    DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton, PlayerGroupAll(), false);
+    DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton, PlayerGroupAll(), false);
+    DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton, PlayerGroupAll(), false);
+    libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton, false, PlayerGroupAll());
+    libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton, false, PlayerGroupAll());
+    libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton, false, PlayerGroupAll());
+    autoD70C5296_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer2 = -1;
+    while (true) {
+        	lv_itPlayer2 = PlayerGroupNextPlayer(autoD70C5296_g, lv_itPlayer2);
+        	if (lv_itPlayer2<0) { break; }
+        	if ((PlayerStatus(lv_itPlayer2) != c_playerStatusUnused) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer2] == false)) {
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer2] > 0) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer2] > 0)) {
+                libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer2] = true;
+            }
+
+        }
+
+    }
+    auto2A9A4B3A_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer2 = -1;
+    while (true) {
+        	lv_itPlayer2 = PlayerGroupNextPlayer(auto2A9A4B3A_g, lv_itPlayer2);
+        	if (lv_itPlayer2<0) { break; }
+        	if ((PlayerStatus(lv_itPlayer2) != c_playerStatusUnused)) {
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer2] == false)) {
+                libPBU2_gf_CurateHSUIAutoPickHeroForPlayer(lv_itPlayer2);
+            }
+
+            libPBU2_gf_CurateHSUISetHeroSkinAndMountForPlayer(lv_itPlayer2, true);
+        }
+
+    }
+    for ( ; ( (1 >= 0 && player <= libCore_gv_bALMaxPlayers) || (1 < 0 && player >= libCore_gv_bALMaxPlayers) ) ; player += 1 ) {
+        if ((PlayerStatus(player) != c_playerStatusUnused) && (PlayerType(player) != c_playerTypeHostile)) {
+            if ((libGame_gv_players[player].lv_heroIndex == 0)) {
+                if (player >= 6) {
+                    libGame_gv_players[player].lv_heroIndex = libGame_gf_HeroSelectionRandomlyPickMetaUnusedHero(player);
+                    if ((libGame_gv_players[player].lv_heroIndex == 0)) {
+                        libGame_gv_players[player].lv_heroIndex = libGame_gf_HeroSelectionRandomlyPickUnusedHeroWithRole(player, true, true, true, true, true, false);
+                        if ((libGame_gv_players[player].lv_heroIndex == 0)) {
+                            libGame_gv_players[player].lv_heroIndex = libGame_gf_HeroSelectionRandomlyPickAnyUnusedHero(player, false, false);
+                            if ((libGame_gv_players[player].lv_heroIndex == 0)) {
+                                libGame_gv_players[player].lv_heroIndex = libGame_gf_HeroSelectionRandomlyPickAnyUnusedHero(player, true, false);
+                                if ((libGame_gv_players[player].lv_heroIndex == 0)) {
+                                    libGame_gv_players[player].lv_heroIndex = libGame_gf_HeroSelectionRandomlyPickAnyUnusedHero(player, true, true);
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+                libCore_gf_DataLoadHeroDataIntoIndex(libCore_gf_GetHeroFromIndex(libGame_gv_players[player].lv_heroIndex), player);
+                if ((PlayerType(player) != c_playerTypeComputer)) {
+                    libGame_gf_HeroSelectionRandomlyPickSkin(player);
+                    libGame_gf_HeroSelectionRandomlyPickMount(player);
+                }
+
+            }
+
+        }
+
+    }
+    libPBU2_gf_CurateHSUIUpdateHeroButtons();
+    SoundPlayForPlayer(SoundLink("UI_BNet_Draft_Countdown_Start", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
+    libPBU2_gf_CurateHSUILockUI();
+    Wait(1.0, c_timeGame);
+    DialogControlFadeTransparency(libPBU2_gv_curateHeroSelectionUI.lv_pickHeroPanel, PlayerGroupAll(), 0.5, 100.0);
+    Wait(0.5, c_timeGame);
+    libPBU2_gf_CurateHSUIShowFinalCountDownHeroCutscene();
+    libPBU2_gv_curateHeroSelectionSetting.lv_finalCountDownStarted = true;
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_countdownLabel, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_finalCountdownFrame, PlayerGroupAll(), true);
+    SoundPlayForPlayer(SoundLink("UI_BNet_Draft_Countdown", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
+    Wait(6.0, c_timeGame);
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_finalCountdownFrame, PlayerGroupAll(), false);
+    DialogSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_dialog, PlayerGroupAll(), false);
+    SoundtrackStopCurrent(PlayerGroupAll(), c_soundtrackCategoryAmbience, true);
+    SoundtrackPlay(PlayerGroupAll(), c_soundtrackCategoryAmbience, libCore_gv_mAPMapAmbience, c_soundtrackCueAny, c_soundtrackIndexAny, false);
+    UISetWorldVisible(PlayerGroupAll(), true);
+    DialogControlSetVisible(libUIUI_gv_uIObserverUI.lv_mainPanel, PlayerGroupSingle(libCore_gv_oBSERVER_ObserverUIPlayer), true);
+    CinematicFade(true, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, false);
+    libSond_gf_SoundtrackPlayMapSoundtrackAsDefaultSoundtrackForAllPlayers();
+    libGame_gv_heroPickDone = true;
+    libGame_gv_heroSpawnReady = true;
+    SetHeroLeaderPanelEnabled(true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPBU2_gt_CurateHSUICountdownTimerExpires_Init () {
+    libPBU2_gt_CurateHSUICountdownTimerExpires = TriggerCreate("libPBU2_gt_CurateHSUICountdownTimerExpires_Func");
+    TriggerEnable(libPBU2_gt_CurateHSUICountdownTimerExpires, false);
+    TriggerAddEventTimer(libPBU2_gt_CurateHSUICountdownTimerExpires, libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Curate HS UI Force Selection
+//--------------------------------------------------------------------------------------------------
+bool libPBU2_gt_CurateHSUIForceSelection_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_itPlayer2;
+    sound lv_crowdSound;
+
+    // Automatic Variable Declarations
+    playergroup autoB512AB23_g;
+    playergroup autoFFF27C12_g;
+
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((TriggerIsEnabled(TriggerGetCurrent()) == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerEnable(TriggerGetCurrent(), false);
+    libNtve_gf_StopTimer(libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer);
+    DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton, PlayerGroupAll(), false);
+    DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton, PlayerGroupAll(), false);
+    DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton, PlayerGroupAll(), false);
+    libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton, false, PlayerGroupAll());
+    libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton, false, PlayerGroupAll());
+    libNtve_gf_SetDialogItemToggled(libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton, false, PlayerGroupAll());
+    autoB512AB23_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer2 = -1;
+    while (true) {
+        	lv_itPlayer2 = PlayerGroupNextPlayer(autoB512AB23_g, lv_itPlayer2);
+        	if (lv_itPlayer2<0) { break; }
+        	if ((PlayerStatus(lv_itPlayer2) != c_playerStatusUnused) && (libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer2] == false)) {
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroRow[lv_itPlayer2] > 0) && (libPBU2_gv_curateHeroSelectionSetting.lv_selectedHeroCol[lv_itPlayer2] > 0)) {
+                libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer2] = true;
+            }
+
+        }
+
+    }
+    autoFFF27C12_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_itPlayer2 = -1;
+    while (true) {
+        	lv_itPlayer2 = PlayerGroupNextPlayer(autoFFF27C12_g, lv_itPlayer2);
+        	if (lv_itPlayer2<0) { break; }
+        	if ((PlayerStatus(lv_itPlayer2) != c_playerStatusUnused)) {
+            if ((libPBU2_gv_curateHeroSelectionSetting.lv_lockedIn[lv_itPlayer2] == false)) {
+                libPBU2_gf_CurateHSUIAutoPickHeroForPlayer(lv_itPlayer2);
+            }
+            else {
+                libUIUI_gf_UIDebugPanelSpawnOrSwapHeroForPlayer(libGame_gv_players[lv_itPlayer2].lv_heroIndex, libCore_gf_DataSkinsGetSkinIndexFromSkinLink((DataTableGetString(true, ("HeroIndex_" + IntToString(libGame_gv_players[lv_itPlayer2].lv_heroIndex) + "_SkinIndex_" + IntToString(DialogControlGetSelectedItem(libUIUI_gv_uIDebugPanel.lv_skinDropdown, lv_itPlayer2)))))), 0, libCore_gf_GetTotalXPForLevel(10), lv_itPlayer2, lv_itPlayer2);
+            }
+        }
+
+    }
+    libPBU2_gf_CurateHSUIUpdateHeroButtons();
+    libPBU2_gf_CurateHSUILockUI();
+    libPBU2_gv_curateHeroSelectionSetting.lv_finalCountDownStarted = true;
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_countdownLabel, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_finalCountdownFrame, PlayerGroupAll(), false);
+    DialogSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_dialog, PlayerGroupAll(), false);
+    UISetWorldVisible(PlayerGroupAll(), true);
+    DialogControlSetVisible(libUIUI_gv_uIObserverUI.lv_mainPanel, PlayerGroupSingle(libCore_gv_oBSERVER_ObserverUIPlayer), true);
+    CinematicFade(true, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, false);
+    libSond_gf_SoundtrackPlayMapSoundtrackAsDefaultSoundtrackForAllPlayers();
+    libGame_gv_heroPickDone = true;
+    libGame_gv_heroSpawnReady = true;
+    SetHeroLeaderPanelEnabled(true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPBU2_gt_CurateHSUIForceSelection_Init () {
+    libPBU2_gt_CurateHSUIForceSelection = TriggerCreate("libPBU2_gt_CurateHSUIForceSelection_Func");
+    TriggerEnable(libPBU2_gt_CurateHSUIForceSelection, false);
+}
+
+
+
+void libPBU2_InitTriggers () {
+    libPBU2_gt_IncludeMMPvEBrawlModUI_Init();
+    libPBU2_gt_CurateHSUIButtonClicked_Init();
+    libPBU2_gt_CurateHSUICountdownTimerExpires_Init();
+    libPBU2_gt_CurateHSUIForceSelection_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool libPBU2_InitLib_completed = false;
+
+void libPBU2_InitLib () {
+    if (libPBU2_InitLib_completed) {
+        return;
+    }
+
+    libPBU2_InitLib_completed = true;
+
+    libPBU2_InitLibraries();
+    libPBU2_InitVariables();
+    libPBU2_InitTriggers();
+}
+
