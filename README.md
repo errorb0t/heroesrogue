@@ -1,4 +1,4 @@
-# heroesrogue
+# Heroes Rogue
 Rogue-like mod for Heroes of the Storm.
 
 **How to Play:**
