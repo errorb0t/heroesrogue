@@ -103,7 +103,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const fixed libAffx_version = 0.63;
+const fixed libAffx_version = 0.64;
 
 
 struct libAffx_CatalogModification {
@@ -183,6 +183,9 @@ string libAffx_nextMap; // The next map used for saving into bank.
 int[libAffx_queueMax + 1] libAffx_queueAffixRarity;
 bool[libAffx_queueMax + 1] libAffx_queueAffixNegative;
 int[libAffx_queueMax + 1] libAffx_queueAffixLevel;
+int libAffx_currentAffixRarity;
+bool libAffx_currentAffixNegative;
+int libAffx_currentAffixLevel;
 int libAffx_queueCount; // Number of affixes in the queue.
 bool libAffx_queueActive; // Whether the affix queue is currently active.
 
@@ -211,8 +214,6 @@ int libAffx_currentRun; // Number of the current run.
 int libAffx_objectivesWon;
 int libAffx_objectivesWonCounter;
 int libAffx_skipCurseCounter;
-
-int libAffx_upgradedRarity;
 
 int libAffx_executingAffix;
 int libAffx_executingAffixCount;

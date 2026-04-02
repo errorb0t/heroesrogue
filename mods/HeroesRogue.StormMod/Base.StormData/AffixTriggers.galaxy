@@ -1115,6 +1115,9 @@ bool libAffx_CriticalMassHT (bool testConds, bool runActions) {
         if (player != libAffx_player) {
             return false;
         }
+        if (UnitTestState(unitVar, c_unitStateHallucination)) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;

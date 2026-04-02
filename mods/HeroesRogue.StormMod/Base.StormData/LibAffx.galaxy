@@ -1420,7 +1420,6 @@ int libAffx_RollRarity(int baseRarity, bool negative) {
             result = libAffx_rarityLegendary;
         }
     }
-    libAffx_upgradedRarity = result;
     return result;
 }
 
@@ -1569,7 +1568,9 @@ void libAffx_ProcessQueue() {
     if (libAffx_objectivesWonCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll) {
         libAffx_queueActive = true;
         libAffx_objectivesWonCounter -= 1;
-        libAffx_upgradedRarity = libAffx_queueAffixRarity[1];
+        libAffx_currentAffixRarity = libAffx_queueAffixRarity[1];
+        libAffx_currentAffixNegative = false;
+        libAffx_currentAffixLevel = libAffx_queueAffixLevel[1];
         libAffx_ChooseAffixes(libAffx_rarityCommon, false, libAffx_queueAffixLevel[1]);
     } else if (libAffx_skipCurseCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll) {
         libAffx_queueActive = false;
@@ -1577,7 +1578,9 @@ void libAffx_ProcessQueue() {
         UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseSkipped"));
     } else {
         libAffx_queueActive = true;
-        libAffx_upgradedRarity = libAffx_queueAffixRarity[1];
+        libAffx_currentAffixRarity = libAffx_queueAffixRarity[1];
+        libAffx_currentAffixNegative = libAffx_queueAffixNegative[1];
+        libAffx_currentAffixLevel = libAffx_queueAffixLevel[1];
         libAffx_ChooseAffixes(libAffx_queueAffixRarity[1], libAffx_queueAffixNegative[1], libAffx_queueAffixLevel[1]);
     }
 
@@ -1586,6 +1589,7 @@ void libAffx_ProcessQueue() {
         libAffx_queueAffixNegative[i] = libAffx_queueAffixNegative[i + 1];
         libAffx_queueAffixLevel[i] = libAffx_queueAffixLevel[i + 1];
     }
+    
     libAffx_queueCount = MaxI(0, libAffx_queueCount - 1);
 }
 
@@ -1605,6 +1609,7 @@ void libAffx_QueueAffix(int rarity, bool negative, int level, int amount) {
 }
 void libAffx_AffixSelected(int selectionIndex) {
     int i;
+
     DialogSetVisible(libAffx_dialogAffixSelection, PlayerGroupAll(), false);
 
     libAffx_AddAffix(libAffx_rolledAffixes[selectionIndex], 1);
@@ -1612,7 +1617,6 @@ void libAffx_AffixSelected(int selectionIndex) {
         libAffx_Pause(false);
     }
     libAffx_UpdateOwnedAffixes();
-
     libAffx_queueActive = false;
     libAffx_ProcessQueue();
 }
@@ -1620,6 +1624,9 @@ bool libAffx_AffixHotkeyPressedTrigger_Func (bool testConds, bool runActions) {
     int hotkeyPressed;
     if (testConds) {
         if (!libAffx_queueActive){
+            return false;
+        }
+        if (true) { // Disable for now
             return false;
         }
     }
@@ -1698,7 +1705,7 @@ bool libAffx_AffixRerollTrigger_Func (bool testConds, bool runActions) {
     }
 
     libAffx_rerolls -= 1;
-    libAffx_ChooseAffixes(libAffx_upgradedRarity, libAffx_queueAffixNegative[1], libAffx_queueAffixLevel[1]);
+    libAffx_ChooseAffixes(libAffx_currentAffixRarity, libAffx_currentAffixNegative, libAffx_currentAffixLevel);
 
     return true;
 }
@@ -1732,7 +1739,7 @@ bool libAffx_ResetCommandTrigger_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (StringWord(EventChatMessage(false), 1) != "resetgame") {
+        if (StringWord(EventChatMessage(false), 1) != "resetgame" && StringWord(EventChatMessage(false), 1) != "gg") {
             return false;
         }
     }
@@ -1752,6 +1759,7 @@ bool libAffx_ResetCommandTrigger_Func (bool testConds, bool runActions) {
 void libAffx_ResetCommandTrigger_Init () {
     libAffx_ResetCommandTrigger = TriggerCreate("libAffx_ResetCommandTrigger_Func");
     TriggerAddEventChatMessage(libAffx_ResetCommandTrigger, c_playerAny, "resetgame", false);
+    TriggerAddEventChatMessage(libAffx_ResetCommandTrigger, c_playerAny, "gg", false);
 }
 
 bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
