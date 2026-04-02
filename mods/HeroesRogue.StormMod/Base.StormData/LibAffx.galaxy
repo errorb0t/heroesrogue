@@ -1833,6 +1833,8 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
     } else if (StringWord(EventChatMessage(false), 1) == "testmap") {
         GameSetNextMap(StringWord(EventChatMessage(false), 2));
         KickFromGame(PlayerGroupAll());
+    } else if (StringWord(EventChatMessage(false), 1) == "camera") {
+        CameraSetValue(libAffx_player, StringToInt(StringWord(EventChatMessage(false), 2)), StringToFixed(StringWord(EventChatMessage(false), 3)), StringToFixed(StringWord(EventChatMessage(false), 4)), -1, 10);
     }
     return true;
 }
@@ -1844,14 +1846,16 @@ void libAffx_TestCommandTrigger_Init () {
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "nextmap", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "rerolls", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "forceunpause", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "camera", false);
 }
 
 bool libAffx_QueueAffixCommandTrigger_Func (bool testConds, bool runActions) {
     int rarity;
     int amount;
+    int affix;
 
     if (testConds) {
-        if (StringWord(EventChatMessage(false), 1) != "afxq" && StringWord(EventChatMessage(false), 1) != "afxqueue") {
+        if (StringWord(EventChatMessage(false), 1) != "afxq" && StringWord(EventChatMessage(false), 1) != "afxqueue" && StringWord(EventChatMessage(false), 1) != "afxadd" && StringWord(EventChatMessage(false), 1) != "afx") {
             return false;
         }
         if (!libAffx_cheatCommands) {
@@ -1862,27 +1866,45 @@ bool libAffx_QueueAffixCommandTrigger_Func (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    rarity = libAffx_rarityCommon;
-    amount = 1;
-    if (StringWord(EventChatMessage(false), 4) != null) {
-        amount = StringToInt(StringWord(EventChatMessage(false), 4));
-    }
-
-    if ((StringWord(EventChatMessage(false), 1) == null)) {
-        libAffx_DebugPrint("Usage: <afxq/afxqueue> [negative] [rarity] [amount]");
-    }
-    else {
-        if ((StringWord(EventChatMessage(false), 3) != null)) {
-            rarity = StringToInt(StringWord(EventChatMessage(false), 3));
+    if (StringWord(EventChatMessage(false), 1) == "afxq" || StringWord(EventChatMessage(false), 1) == "afxqueue") {
+        rarity = libAffx_rarityCommon;
+        amount = 1;
+        if (StringWord(EventChatMessage(false), 4) != null) {
+            amount = StringToInt(StringWord(EventChatMessage(false), 4));
         }
-        if ((StringWord(EventChatMessage(false), 2) != null)) {
-            if (StringWord(EventChatMessage(false), 2) == "true" || StringWord(EventChatMessage(false), 2) == "1") {
-                libAffx_QueueAffix(MaxI(rarity, libAffx_rarityCommon), true, UnitLevel(libGame_gv_players[libAffx_enemy].lv_heroUnit), amount);
+
+        if ((StringWord(EventChatMessage(false), 1) == null)) {
+            libAffx_DebugPrint("Usage: <afxq/afxqueue> [negative] [rarity] [amount]");
+        }
+        else {
+            if ((StringWord(EventChatMessage(false), 3) != null)) {
+                rarity = StringToInt(StringWord(EventChatMessage(false), 3));
+            }
+            if ((StringWord(EventChatMessage(false), 2) != null)) {
+                if (StringWord(EventChatMessage(false), 2) == "true" || StringWord(EventChatMessage(false), 2) == "1") {
+                    libAffx_QueueAffix(MaxI(rarity, libAffx_rarityCommon), true, UnitLevel(libGame_gv_players[libAffx_enemy].lv_heroUnit), amount);
+                } else {
+                    libAffx_QueueAffix(MaxI(rarity, libAffx_rarityCommon), false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), amount);
+                }
             } else {
                 libAffx_QueueAffix(MaxI(rarity, libAffx_rarityCommon), false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), amount);
             }
+        }
+    } else if (StringWord(EventChatMessage(false), 1) == "afx" || StringWord(EventChatMessage(false), 1) == "afxadd") {
+        amount = 1;
+        if ((StringWord(EventChatMessage(false), 2) == null)) {
+            libAffx_DebugPrint("Usage: <afx/afxadd> <affix name> [amount]");
         } else {
-            libAffx_QueueAffix(MaxI(rarity, libAffx_rarityCommon), false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), amount);
+            if (StringWord(EventChatMessage(false), 3) != null) {
+                amount = StringToInt(StringWord(EventChatMessage(false), 3));
+            }
+            affix = libAffx_GetAffixId(StringWord(EventChatMessage(false), 2));
+            if (affix == 0) {
+                libAffx_DebugPrint("Could not find affix by the name " + StringWord(EventChatMessage(false), 2));
+            } else {
+                libAffx_AddAffix(affix, amount);
+                libAffx_DebugPrint("Added affix: " + libAffx_affixes[affix].name);
+            }
         }
     }
     return true;
@@ -1891,6 +1913,8 @@ void libAffx_QueueAffixCommandTrigger_Init () {
     libAffx_QueueAffixCommandTrigger = TriggerCreate("libAffx_QueueAffixCommandTrigger_Func");
     TriggerAddEventChatMessage(libAffx_QueueAffixCommandTrigger, c_playerAny, "afxqueue", false);
     TriggerAddEventChatMessage(libAffx_QueueAffixCommandTrigger, c_playerAny, "afxq", false);
+    TriggerAddEventChatMessage(libAffx_QueueAffixCommandTrigger, c_playerAny, "afxadd", false);
+    TriggerAddEventChatMessage(libAffx_QueueAffixCommandTrigger, c_playerAny, "afx", false);
 }
 
 void libAffx_ApplyDifficulty () {

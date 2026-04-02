@@ -1566,10 +1566,10 @@
             <String String="LostVikingsMasteryJump">
                 <Field Id="TalentsAdd" Index="2"/>
             </String>
-            <String String="1 1 Add Abil,LostVikingsPressA,Cost.Cooldown.TimeUse -15">
+            <String String="1 1 Multiply Abil,LostVikingsPressA,Cost.Cooldown.TimeUse 0.5">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="1 1 Add Abil,LostVikingsSpinToWin,Cost.Cooldown.TimeUse -5">
+            <String String="1 1 Multiply Abil,LostVikingsSpinToWin,Cost.Cooldown.TimeUse 0.5">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
             <String String="1 0 LostVikingsVikingBriberyCarryBehavior">
@@ -1587,6 +1587,18 @@
             <String String="1 0 AffixButtonMasher">
                 <Field Id="Behavior" Index="3"/>
             </String>
+            <String String="LostVikingsMasteryNorseForce">
+                <Field Id="TalentsAdd" Index="3"/>
+            </String>
+            <String String="1 0 LostVikingsNorseForceEnabled">
+                <Field Id="Behavior" Index="4"/>
+            </String>
+            <String String="1 1 Multiply Abil,LostVikingsNorseForce,Cost.Cooldown.TimeUse 0.5">
+                <Field Id="CatalogModification" Index="2"/>
+            </String>
+            <String String="1 1 Multiply Abil,LostVikingsGoGoGo,Cost.Cooldown.TimeUse 0.5">
+                <Field Id="CatalogModification" Index="3"/>
+            </String>
         </Instances>
         <Instances Id="GreatVikingHoard">
             <String String="1 0 GreatVikingHoard">
@@ -1600,6 +1612,12 @@
             </String>
             <String String="LostVikings">
                 <Field Id="HeroSpecific"/>
+            </String>
+            <String String="UD libAffx_GreatVikingHoardUnitDied">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="UD libAffx_GreatVikingHoardUnitDiedStructure">
+                <Field Id="Trigger" Index="1"/>
             </String>
         </Instances>
         <Instances Id="SpecializedVikings">
@@ -1697,7 +1715,7 @@
             </String>
         </Instances>
         <Instances Id="ConvenientPortals">
-            <String String="Rare">
+            <String String="Uncommon">
                 <Field Id="Rarity"/>
             </String>
             <String String="Assets/Textures/storm_ui_icon_medivh_portal_a.dds">
@@ -1743,11 +1761,14 @@
             <String String="Win libAffx_UnendingHatredWin">
                 <Field Id="Trigger" Index="1"/>
             </String>
-            <String String="1 1 Multiply Effect,IllidanUnendingHatredMinionKillIncreaseQuestToken,Value 1.5">
+            <String String="1 1 Multiply Effect,IllidanUnendingHatredMinionKillIncreaseQuestToken,Value 1.25">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="1 1 Multiply Effect,IllidanUnendingHatredHeroKillIncreaseQuestToken,Value 1.5">
+            <String String="1 1 Multiply Effect,IllidanUnendingHatredHeroKillIncreaseQuestToken,Value 1.25">
                 <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="1 1 Multiply Effect,IllidanUnendingHatredQuestCompleteIncreaseQuestToken,Value 1.25">
+                <Field Id="CatalogModification" Index="2"/>
             </String>
         </Instances>
         <Instances Id="BurningBlades">
@@ -1791,6 +1812,104 @@
             </String>
             <String String="1 0 IllidanEvasionSpellArmor">
                 <Field Id="Behavior" Index="1"/>
+            </String>
+        </Instances>
+        <Instances Id="NoMinimapDLC">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Execute libAffx_NoMinimapDLCExecute">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_no_minimap.dds">
+                <Field Id="Icon"/>
+            </String>
+        </Instances>
+        <Instances Id="CameraZoom">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="Execute libAffx_CameraZoomExecute">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_camera_zoom.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Epic">
+                <Field Id="Rarity"/>
+            </String>
+        </Instances>
+        <Instances Id="EnemySpellShield">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_spell_shield.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="6 0 SpellShieldPrimed">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="7 0 SpellShieldPrimed">
+                <Field Id="Behavior" Index="1"/>
+            </String>
+            <String String="8 0 SpellShieldPrimed">
+                <Field Id="Behavior" Index="2"/>
+            </String>
+            <String String="9 0 SpellShieldPrimed">
+                <Field Id="Behavior" Index="3"/>
+            </String>
+            <String String="10 0 SpellShieldPrimed">
+                <Field Id="Behavior" Index="4"/>
+            </String>
+            <String String="6 0 SpellShieldItem">
+                <Field Id="Behavior" Index="5"/>
+            </String>
+            <String String="7 0 SpellShieldItem">
+                <Field Id="Behavior" Index="6"/>
+            </String>
+            <String String="8 0 SpellShieldItem">
+                <Field Id="Behavior" Index="7"/>
+            </String>
+            <String String="9 0 SpellShieldItem">
+                <Field Id="Behavior" Index="8"/>
+            </String>
+            <String String="10 0 SpellShieldItem">
+                <Field Id="Behavior" Index="9"/>
+            </String>
+        </Instances>
+        <Instances Id="EnemyBlock">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="Assets/Textures/affix_icon_enemy_block.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="6 0 TalentBucketBlockCharged">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="7 0 TalentBucketBlockCharged">
+                <Field Id="Behavior" Index="1"/>
+            </String>
+            <String String="8 0 TalentBucketBlockCharged">
+                <Field Id="Behavior" Index="2"/>
+            </String>
+            <String String="9 0 TalentBucketBlockCharged">
+                <Field Id="Behavior" Index="3"/>
+            </String>
+            <String String="10 0 TalentBucketBlockCharged">
+                <Field Id="Behavior" Index="4"/>
+            </String>
+            <String String="Execute libAffx_EnemyBlockExecute">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
     </CUser>

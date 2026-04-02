@@ -353,6 +353,7 @@ bool libAffx_DeathTimerUnitDied (bool testConds, bool runActions) {
     unit deadUnit;
     int deadPlayer;
     int killingPlayer;
+    fixed deathTime;
     deadUnit = EventUnit();
     deadPlayer = EventPlayer();
     killingPlayer = libNtve_gf_KillingPlayer();
@@ -388,7 +389,12 @@ bool libAffx_DeathTimerUnitDied (bool testConds, bool runActions) {
         return true;
     }
     if (deadPlayer >= 1 && deadPlayer <= 5) {
-        libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, (libCore_gf_HeroDeathTime(deadPlayer, UnitLevel(libGame_gv_players[deadPlayer].lv_heroUnit)) * (1 + deathTimerModifier * libAffx_affixes[deathTimerIndex].count)));
+        if (UnitGetType(deadUnit) == "HeroMurky" && !((UnitIsAlive(libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer]) == false) || (libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer] == null))) {
+            deathTime = libCore_gv_bALMurkyWithEggDeathTime * (1 + deathTimerModifier * libAffx_affixes[deathTimerIndex].count);
+        } else {
+            deathTime = libCore_gf_HeroDeathTime(deadPlayer, UnitLevel(libGame_gv_players[deadPlayer].lv_heroUnit)) * (1 + deathTimerModifier * libAffx_affixes[deathTimerIndex].count);
+        }
+        libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, deathTime);
         libGame_gf_HeroDeathUpdateUIElementsForDeath(true, true, true, deadPlayer, killingPlayer);
         libGame_gf_HeroDeathEnableDisableDeadSoundStateForPlayer(true, deadPlayer);
         libGame_gf_HeroDeathPortHeroBackAndSetDeathState(deadPlayer, libGame_gv_players[deadPlayer].lv_spawnPoint);
@@ -1114,7 +1120,6 @@ bool libAffx_CriticalMassHT (bool testConds, bool runActions) {
         return true;
     }
 
-    libAffx_DebugPrint("Resetting " + UnitGetType(unitVar) + "'s cooldowns");
     libAffx_ResetCooldowns(unitVar);
     
     return true;
@@ -1184,20 +1189,23 @@ bool libAffx_ResurgenceoftheStormUnitCreated (bool testConds, bool runActions) {
     return true;
 }
 bool libAffx_ResurgenceoftheStormUD (bool testConds, bool runActions) {
-    unit unitVar;
+    unit deadUnit;
 
-    unitVar = EventUnit();
+    deadUnit = EventUnit();
     if (testConds) {
         if (resurgenceoftheStormIndex == 0) {
             return false;
         }
-        if (UnitGetOwner(unitVar) != libAffx_player || libAffx_affixes[resurgenceoftheStormIndex].cooldown > 0) {
+        if (UnitGetOwner(deadUnit) != libAffx_player || libAffx_affixes[resurgenceoftheStormIndex].cooldown > 0) {
             return false;
         }
-        if (unitVar != libGame_gv_players[libAffx_player].lv_heroUnit) {
+        if (deadUnit != libGame_gv_players[libAffx_player].lv_heroUnit) {
             return false;
         }
         if (libGame_diabloUsedSouls[libAffx_player]) {
+            return false;
+        }
+        if (UnitGetType(deadUnit) == "HeroMurky" && !((UnitIsAlive(libGame_gv_heroDeathMurkyRespawnEggs[UnitGetOwner(deadUnit)]) == false) || (libGame_gv_heroDeathMurkyRespawnEggs[UnitGetOwner(deadUnit)] == null))) {
             return false;
         }
     }
@@ -1472,7 +1480,8 @@ bool libAffx_ClonedPeriodic (bool testConds, bool runActions) {
     if (libAffx_affixes[clonedIndex].cooldown <= 0) {
         random = RandomInt(6, 10);
         unitVar = libGame_gv_players[random].lv_heroUnit;
-        if (UnitGetType(unitVar) != "HeroLostVikingsController" && UnitGetType(unitVar) != "Medivh" && UnitGetType(unitVar) != "Leoric") {
+        // Block Leoric and Medivh clones due to issues with clones
+        if (UnitGetType(unitVar) != "HeroLostVikingsController" && UnitGetType(unitVar) != "HeroMedivh" && UnitGetType(unitVar) != "HeroLeoric") {
             libNtve_gf_CreateUnitsAtPoint2(1, UnitGetType(unitVar), 0, random, libGame_gv_players[random].lv_spawnPoint, null);
             libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "SetTintColor 135,135,255");
             libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "SetOpacity 0.6");
@@ -1604,13 +1613,60 @@ bool libAffx_GrenadierEffectUsed (bool testConds, bool runActions) {
     return true;
 }
 // ---------------------------------------------------------------
+// Great Viking Hoard
+// ---------------------------------------------------------------
+bool libAffx_GreatVikingHoardUnitDied (bool testConds, bool runActions) {
+    int i;
+    unit deadUnit = EventUnit();
+    if (testConds) {
+        if (UnitGetOwner(deadUnit) < 6 || UnitGetOwner(deadUnit) > 10) {
+            return false;
+        }
+        if (!UnitTypeTestAttribute(UnitGetType(deadUnit), c_unitAttributeHeroic)) {
+            return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    for (i = 1; i <= 5; i += 1) {
+        UnitCreate(1, "RegenGlobe", c_unitCreateIgnorePlacement, libAffx_teamOrder, PointWithOffsetPolar(UnitGetPosition(deadUnit), 2, 72 * i), 0, null);
+        UnitBehaviorRemove(UnitLastCreated(), "RegenGlobeTimedLifeInitial", 1);
+        UnitBehaviorAdd(UnitLastCreated(), "RegenGlobeTimedLife", UnitLastCreated(), 1);
+    }
+              
+    return true;
+}
+bool libAffx_GreatVikingHoardUnitDiedStructure (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    if (testConds) {
+        if (UnitGetOwner(deadUnit) != 12) {
+            return false;
+        }
+        if (!UnitTypeTestAttribute(UnitGetType(deadUnit), c_unitAttributeStructure)) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    UnitCreate(1, "RegenGlobe", c_unitCreateIgnorePlacement, libAffx_teamOrder, UnitGetPosition(deadUnit), 0, null);
+    UnitBehaviorRemove(UnitLastCreated(), "RegenGlobeTimedLifeInitial", 1);
+    UnitBehaviorAdd(UnitLastCreated(), "RegenGlobeTimedLife", UnitLastCreated(), 1);
+    UnitBehaviorSetDuration(UnitLastCreated(), "RegenGlobeTimedLife", 6);
+              
+    return true;
+}
+// ---------------------------------------------------------------
 // Button Masher
 // ---------------------------------------------------------------
 bool libAffx_ButtonMasherExecute (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    //SetTalentEnabled("LostVikingsMasteryNorseForce", false);
     return true;
 }
 // ---------------------------------------------------------------
@@ -1774,6 +1830,40 @@ bool libAffx_EvasiveUnitCreated (bool testConds, bool runActions) {
     }
     libAffx_AddBehavior(libAffx_player, "IllidanEvasion", 1, true);
     libAffx_AddBehavior(libAffx_player, "IllidanEvasionSpellArmor", 1, true);
+    return true;
+}
+// ---------------------------------------------------------------
+// No Minimap DLC
+// ---------------------------------------------------------------
+bool libAffx_NoMinimapDLCExecute (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    UISetFrameVisible(libCore_gv_playerGroupFromPlayer[libAffx_player], c_syncFrameTypeMinimapPanel, false);
+    return true;
+}
+// ---------------------------------------------------------------
+// Camera Zoom
+// ---------------------------------------------------------------
+bool libAffx_CameraZoomExecute (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    CameraSetValue(libAffx_player, c_cameraValueFieldOfView, 32, 0.5, -1, 10);
+    return true;
+}
+// ---------------------------------------------------------------
+// Enemy Block
+// ---------------------------------------------------------------
+bool libAffx_EnemyBlockExecute (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    PlayerAddTalent(6, "GenericTalentBlock");
+    PlayerAddTalent(7, "GenericTalentBlock");
+    PlayerAddTalent(8, "GenericTalentBlock");
+    PlayerAddTalent(9, "GenericTalentBlock");
+    PlayerAddTalent(10, "GenericTalentBlock");
     return true;
 }
 
