@@ -2250,7 +2250,7 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
         libGame_gf_HeroSelectionRandomlyPickMount(libAffx_player);
         libGame_gv_pickingHeroesCallback = libAffx_HeroSelectionTrigger;
     }
-    UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("Version " + FixedToString(libAffx_version, 1)));
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("Version " + libAffx_version));
 
     if (libAffx_currentRun == 1) {
         UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/GoldenBorder"));
