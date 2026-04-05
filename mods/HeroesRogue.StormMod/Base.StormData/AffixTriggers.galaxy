@@ -743,8 +743,8 @@ bool libAffx_KillContractQuestComplete (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_QueueAffix(libAffx_rarityCommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1);
-    libAffx_QueueAffix(libAffx_rarityUncommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1);
+    libAffx_QueueAffix(libAffx_rarityCommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, false);
+    libAffx_QueueAffix(libAffx_rarityUncommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, false);
     libAffx_affixes[killContract].quest.questDone = true;
     
     return true;
@@ -853,7 +853,7 @@ bool libAffx_StructureQuestComplete (bool testConds, bool runActions) {
         return true;
     }
     libAffx_affixes[structureQuestIndex].quest.questDone = true;
-    libAffx_QueueAffix(libAffx_rarityRare, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1);
+    libAffx_QueueAffix(libAffx_rarityRare, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, false);
     
     return true;
 }
@@ -866,7 +866,7 @@ bool libAffx_StructureQuest6 (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_QueueAffix(libAffx_rarityCommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1);
+    libAffx_QueueAffix(libAffx_rarityCommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, false);
     
     return true;
 }
@@ -879,51 +879,94 @@ bool libAffx_StructureQuest12 (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_QueueAffix(libAffx_rarityUncommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1);
+    libAffx_QueueAffix(libAffx_rarityUncommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, false);
     
     return true;
 }
 // ---------------------------------------------------------------
 // Fortifications
 // ---------------------------------------------------------------
-
+int fortificationsIndex;
 void libAffx_FortificationsCreateTower(string unitName, point location, fixed rotation) {
     UnitCreate(1, unitName, c_unitCreateIgnorePlacement, libAffx_teamChaos, location, rotation, null);
     UnitBehaviorAdd(UnitLastCreated(), "AffixFortificationsTowerReveal", UnitLastCreated(), 1);
     ActorSend(libNtve_gf_MainActorofUnit(UnitLastCreated()), "Signal PlayBuild");
 }
+bool libAffx_FortificationsAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    fortificationsIndex = libAffx_EventAffix("Fortifications");
+    return true;
+}
 bool libAffx_Fortifications (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    //while (TimerGetElapsed(libGame_gv_openTheGatesTimer) > 0.0 && TimerGetRemaining(libGame_gv_openTheGatesTimer) > 0.0) {
-    //    Wait(0.0625, c_timeGame);
-    //}
-    //Wait(0.25, c_timeGame);
     if (libAffx_currentMap == libAffx_mapCursedHollow) {
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(133, 155), 135);
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(144, 140), 225);
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(134, 70), 225);
         libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(196, 117), 135);
         libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(198, 106), 225);
+        if (libAffx_affixes[fortificationsIndex].count >= 2) {
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(143, 92), 225);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(158, 139), 45);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(178, 76), 225);
+        }
+        if (libAffx_affixes[fortificationsIndex].count >= 3) {
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(144, 123), 90);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(159, 85), 225);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 79), 135);
+        }
     } else if (libAffx_currentMap == libAffx_mapShrines) {
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 165), 180);
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 122), 225);
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 74), 225);
         libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(199, 97), 135);
         libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(201, 86), 225);
+        if (libAffx_affixes[fortificationsIndex].count >= 2) {
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(171, 74), 225);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(154, 75), 225);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(151, 116), 225);
+        }
+        if (libAffx_affixes[fortificationsIndex].count >= 3) {
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(128, 37), 135);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(170, 116), 225);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(136, 110), 180);
+        }
     } else if (libAffx_currentMap == libAffx_mapCrypts) {
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 115), 180);
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 83), 180);
         libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(192, 120), 135);
         libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(195, 108), 225);
+        if (libAffx_affixes[fortificationsIndex].count >= 2) {
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(150, 84), 180);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(144, 121), 180);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(135, 151), 225);
+        }
+        if (libAffx_affixes[fortificationsIndex].count >= 3) {
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(166, 129), 225);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(169, 84), 180);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(170, 63), 135);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 45), 135);
+        }
     } else if (libAffx_currentMap == libAffx_mapDragonShire) {
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(131, 157), 180);
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(135, 124), 225);
         libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(133, 76), 225);
         libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(193, 96), 135);
         libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(194, 86), 225);
-        
+        if (libAffx_affixes[fortificationsIndex].count >= 2) {
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(155, 113), 225);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(165, 76), 225);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(134, 43), 135);
+        }
+        if (libAffx_affixes[fortificationsIndex].count >= 3) {
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(148, 124), 225);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(139, 111), 135);
+            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(152, 70), 135);
+        }
     }
     
     return true;
@@ -1135,6 +1178,8 @@ bool libAffx_TrappedExecute (bool testConds, bool runActions) {
         return true;
     }
     libGame_AddAbilityEffectMapping("AbathurToxicNest", "ToxicNestDamage");
+    CatalogFieldValueSetFixed(c_gameCatalogEffect, "ToxicNestDamage", "Amount", libAffx_teamChaos, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "ToxicNestDamage", "Amount", 0)) * Pow(1.04, UnitLevel(libGame_gv_players[6].lv_heroUnit)));
+
     return true;
 }
 bool libAffx_TrappedAffixAdded (bool testConds, bool runActions) {
@@ -1164,8 +1209,23 @@ bool libAffx_TrappedPeriodic (bool testConds, bool runActions) {
     for (i = 1; i <= trapAmount; i += 1) {
         trapPoint = RegionRandomPoint(RegionEntireMap());
         random = RandomInt(1, 100);
-        PlayerCreateEffectPoint(libAffx_teamChaos, "AbathurToxicNestInitialSet", trapPoint);
+        UnitCreateEffectPoint(libGame_gv_teams[libAffx_teamChaosIndex].lv_core, "AbathurToxicNestInitialSet", trapPoint);
     }
+    return true;
+}
+bool libAffx_TrappedLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != 6) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    CatalogFieldValueSetFixed(c_gameCatalogEffect, "ToxicNestDamage", "Amount", libAffx_teamChaos, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "ToxicNestDamage", "Amount", 0)) * Pow(1.04, level));
+
     return true;
 }
 // ---------------------------------------------------------------
@@ -1176,18 +1236,6 @@ bool libAffx_ResurgenceoftheStormAffixAdded (bool testConds, bool runActions) {
         return true;
     }
     resurgenceoftheStormIndex = libAffx_EventAffix("ResurgenceoftheStorm");
-    return true;
-}
-bool libAffx_ResurgenceoftheStormUnitCreated (bool testConds, bool runActions) {
-    unit unitCreated = EventUnit();
-    if (testConds) {
-        if (UnitGetOwner(unitCreated) != libAffx_player) {
-            return false;
-        }
-    }
-    if (!runActions) {
-        return true;
-    }
     return true;
 }
 bool libAffx_ResurgenceoftheStormUD (bool testConds, bool runActions) {
@@ -1800,7 +1848,7 @@ bool libAffx_PeriodicRegenGlobesPeriodic (bool testConds, bool runActions) {
 // Evasive
 // ---------------------------------------------------------------
 bool libAffx_EvasiveUnitCreated (bool testConds, bool runActions) {
-    int player = UnitGetOwner(EventUnit());
+    int player = UnitGetOwner(EventUnitCreatedUnit());
     if (testConds) {
         if (player != libAffx_player) {
             return false;
@@ -1845,6 +1893,200 @@ bool libAffx_EnemyBlockExecute (bool testConds, bool runActions) {
     PlayerAddTalent(8, "GenericTalentBlock");
     PlayerAddTalent(9, "GenericTalentBlock");
     PlayerAddTalent(10, "GenericTalentBlock");
+    return true;
+}
+// ---------------------------------------------------------------
+// Unstoppable Avatar
+// ---------------------------------------------------------------
+bool libAffx_UnstoppableAvatarUnitCreated (bool testConds, bool runActions) {
+    if (testConds) {
+        if (EventUnitCreatedUnit() != libGame_gv_players[libAffx_player].lv_heroUnit) {
+            return false;
+        }
+        if (UnitGetType(EventUnitCreatedUnit()) != "HeroMuradin") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, false);
+    libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, false);
+    CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
+    UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "MuradinAvatarApplyBehaviorsSet", libGame_gv_players[libAffx_player].lv_heroUnit);
+    return true;
+}
+bool libAffx_UnstoppableAvatarExecute (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, false);
+    libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, false);
+    CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
+    UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "MuradinAvatarApplyBehaviorsSet", libGame_gv_players[libAffx_player].lv_heroUnit);
+    return true;
+}
+bool libAffx_UnstoppableAvatarLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
+    return true;
+}
+// ---------------------------------------------------------------
+// Second Start
+// ---------------------------------------------------------------
+bool libAffx_SecondStartExecuteOnce (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_QueueAffix(libAffx_rarityStarter, false, 1, 1, true);
+    return true;
+}
+bool libAffx_SecondStartExecute (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_boonsLevel10 -= 1;
+    return true;
+}
+// ---------------------------------------------------------------
+// Explosive End
+// ---------------------------------------------------------------
+bool libAffx_ExplosiveEndExecute (bool testConds, bool runActions) {
+    int i;
+    if (!runActions) {
+        return true;
+    }
+    for (i = 6; i <= 10; i += 1) {
+        CatalogFieldValueSetFixed(c_gameCatalogEffect, "JunkratTotalMayhemDamage", "Amount", i, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "JunkratTotalMayhemDamage", "Amount", 0)) * Pow(1.04, UnitLevel(libGame_gv_players[i].lv_heroUnit)));
+    }
+
+    return true;
+}
+bool libAffx_ExplosiveEndLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player < 6) {
+            return false;
+        }
+        if (player > 10) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+
+    CatalogFieldValueSetFixed(c_gameCatalogEffect, "JunkratTotalMayhemDamage", "Amount", player, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "JunkratTotalMayhemDamage", "Amount", 0)) * Pow(1.04, level));
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Lava Wave
+// ---------------------------------------------------------------
+int lavaWaveIndex;
+bool libAffx_LavaWaveAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    lavaWaveIndex = libAffx_EventAffix("LavaWave");
+    libGame_AddAbilityEffectMapping("AffixLavaWave", "RagnarosLavaWaveDamage");
+    CatalogFieldValueSetFixed(c_gameCatalogEffect, "RagnarosLavaWaveDamage", "Amount", libAffx_teamChaos, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "RagnarosLavaWaveDamage", "Amount", 0)) * Pow(1.04, UnitLevel(libGame_gv_players[libAffx_enemy].lv_heroUnit)));
+    TriggerEnable(libHMaj_gt_HeroRagnarosLavaWavePointTarget, true);
+    TriggerAddEventPlayerEffectUsed(libHMaj_gt_HeroRagnarosLavaWavePointTarget, c_playerAny, "AffixLavaWave");
+
+    return true;
+}
+bool libAffx_LavaWavePeriodic (bool testConds, bool runActions) {
+    int random;
+    point targetPoint;
+    if (testConds) {
+        if (libAffx_gamePaused) {
+            return false;
+        }
+        if (lavaWaveIndex == 0) {
+            return false;
+        }
+        if (!libAffx_GateIsOpen()) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+
+    if (libAffx_affixes[lavaWaveIndex].cooldown <= 0) {
+        random = RandomInt(1, 3);
+        if (random == 1) {
+            targetPoint = Point(202, 92);
+        } else if (random == 2) {
+            targetPoint = Point(186, 108);
+        } else if (random == 3) {
+            targetPoint = Point(194, 133);
+        }
+        UnitCreateEffectPoint(libGame_gv_teams[libAffx_teamChaosIndex].lv_core, "AffixLavaWave", targetPoint);
+    
+        libAffx_affixes[lavaWaveIndex].cooldown = 120;
+    } else {
+        libAffx_affixes[lavaWaveIndex].cooldown -= 0.0625;
+    }
+
+    return true;
+}
+bool libAffx_LavaWaveLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libAffx_enemy) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    CatalogFieldValueSetFixed(c_gameCatalogEffect, "RagnarosLavaWaveDamage", "Amount", libAffx_teamChaos, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "RagnarosLavaWaveDamage", "Amount", 0)) * Pow(1.04, level));
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Divine Intervention
+// ---------------------------------------------------------------
+bool libAffx_DivineInterventionExecute (bool testConds, bool runActions) {
+    int i;
+    if (!runActions) {
+        return true;
+    }
+    for (i = 6; i <= 10; i += 1) {
+        CatalogFieldValueSetFixed(c_gameCatalogEffect, "MonkDivinePalmCreateHealer", "RechargeVitalRate", i, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "MonkDivinePalmCreateHealer", "RechargeVitalRate", 0)) * Pow(1.04, UnitLevel(libGame_gv_players[i].lv_heroUnit)));
+    }
+
+    return true;
+}
+bool libAffx_DivineInterventionLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player < 6) {
+            return false;
+        }
+        if (player > 10) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    CatalogFieldValueSetFixed(c_gameCatalogEffect, "MonkDivinePalmCreateHealer", "RechargeVitalRate", player, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "MonkDivinePalmCreateHealer", "RechargeVitalRate", 0)) * Pow(1.04, level));
+
     return true;
 }
 

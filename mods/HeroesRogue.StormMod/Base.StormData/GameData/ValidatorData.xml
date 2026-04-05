@@ -93,4 +93,25 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Behavior value="AffixGrenadierReady" />
 </CValidatorUnitCompareBehaviorCount>
 
+<CValidatorCombine id="CasterNotInCombat4AndDoesNotHavePermanentSecondWind">
+  <Type value="And" />
+  <CombineArray value="CasterNotInCombat4" />
+  <CombineArray value="CasterDoesNotHavePermanentSecondWind" />
+</CValidatorCombine>
+<CValidatorCombine id="CasterNotInCombat4OrHasPermanentSecondWind">
+  <Type value="Or" />
+  <CombineArray value="CasterNotInCombat4" />
+  <CombineArray value="CasterHasPermanentSecondWind" />
+</CValidatorCombine>
+<CValidatorUnitCompareBehaviorCount id="CasterHasPermanentSecondWind">
+  <WhichUnit Value="Caster" />
+  <Compare value="GT" />
+  <Behavior value="MuradinPermanentSecondWind" />
+</CValidatorUnitCompareBehaviorCount>
+<CValidatorUnitCompareBehaviorCount id="CasterDoesNotHavePermanentSecondWind">
+  <WhichUnit Value="Caster" />
+  <Value value="0" />
+  <Behavior value="MuradinPermanentSecondWind" />
+</CValidatorUnitCompareBehaviorCount>
+
 </Catalog>

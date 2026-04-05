@@ -104,7 +104,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.73.0";
+const string libAffx_version = "0.8.0";
 
 struct libAffx_CatalogModification {
     int player;
@@ -187,9 +187,11 @@ string libAffx_nextMap; // The next map used for saving into bank.
 int[libAffx_queueMax + 1] libAffx_queueAffixRarity;
 bool[libAffx_queueMax + 1] libAffx_queueAffixNegative;
 int[libAffx_queueMax + 1] libAffx_queueAffixLevel;
+bool[libAffx_queueMax + 1] libAffx_queueAffixPreventUpgrade;
 int libAffx_currentAffixRarity;
 bool libAffx_currentAffixNegative;
 int libAffx_currentAffixLevel;
+bool libAffx_currentAffixPreventUpgrade;
 int libAffx_queueCount; // Number of affixes in the queue.
 bool libAffx_queueActive; // Whether the affix queue is currently active.
 
@@ -221,6 +223,8 @@ int libAffx_skipCurseCounter;
 
 int libAffx_executingAffix;
 int libAffx_executingAffixCount;
+
+int libAffx_boonsLevel10 = 1;
 
 int libAffx_difficulty = 1;
 
@@ -310,10 +314,11 @@ void libAffx_BankLoad();
 void libAffx_BankReset();
 bool libAffx_IntToBoolean(int value);
 int libAffx_RollRarity(int baseRarity, bool negative); // Roll rarity to upgrade.
-int libAffx_RollAffix(int rarity, bool negative, int level); // Returns an affix that matches the criteria and all requirements.
-void libAffx_ChooseAffixes(int rarity, bool negative, int level); // Chooses affixes and provide the player with the affix options.
+int libAffx_RollAffix(int rarity, bool negative, int level, bool preventUpgrade); // Returns an affix that matches the criteria and all requirements.
+void libAffx_ChooseAffixes(int rarity, bool negative, int level, bool preventUpgrade); // Chooses affixes and provide the player with the affix options.
 void libAffx_ProcessQueue(); // Goes through the affix queue.
-void libAffx_QueueAffix(int rarity, bool negative, int level, int amount); // Queue an affix with the specified criteria.
+void libAffx_MoveQueue();
+void libAffx_QueueAffix(int rarity, bool negative, int level, int amount, bool preventUpgrade); // Queue an affix with the specified criteria.
 void libAffx_AffixSelected(int selectionIndex);
 void libAffx_AffixInitBlank();
 void libAffx_AffixAddExclusion(int affix, int excludeAffix);

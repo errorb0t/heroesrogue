@@ -484,11 +484,88 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorTokenCounter id="SentinelShotDamageTokenCounter" parent="StormQuestToken">
   <Face value="SentinelShotDamageToken" />
-  <Max value="1000" />
+  <Max value="2000" />
 </CBehaviorTokenCounter>
 <CBehaviorTokenCounter id="TheMarkTokenCounter" parent="StormQuestToken">
   <Face value="TheMarkTokenCounter" />
   <Max value="30300" />
 </CBehaviorTokenCounter>
+
+<CBehaviorBuff id="MuradinDwarfTossUnstoppable" parent="StormUnstoppableParent" />
+
+<CBehaviorTokenCounter id="MuradinDwarfTossTokenCounter" parent="StormQuestToken">
+  <Face value="MuradinDwarfTossTokenCounter" />
+  <Max value="2000" />
+</CBehaviorTokenCounter>
+
+<CBehaviorBuff id="MuradinPermanentSecondWind" parent="CarryBehaviorParent" />
+
+<CBehaviorBuff id="MuradinSecondWind">
+  <Alignment value="Positive" />
+  <BehaviorFlags index="Permanent" value="1" />
+  <BehaviorFlags index="EnabledWhileDead" value="1" />
+  <InfoIcon value="Assets\Textures\storm_btn_d3_barbarian_ignorepain.dds" />
+  <DisableValidatorArray value="CasterLifeNotFull" />
+  <DisableValidatorArray value="MuradinNotCriticallyHealing" />
+  <DisableValidatorArray value="MuradinNotStoneforming" />
+  <DisableValidatorArray value="CasterNotInCombat4AndDoesNotHavePermanentSecondWind" />
+  <Period value="1" />
+  <PeriodicEffect value="MuradinSecondWindHealSwitch" />
+  <Face value="MuradinSecondWind" />
+</CBehaviorBuff>
+<CBehaviorBuff id="MuradinSecondWindActive">
+  <Alignment value="Positive" />
+  <BehaviorFlags index="Permanent" value="1" />
+  <InfoIcon value="Assets\Textures\storm_btn_d3_barbarian_ignorepain.dds" />
+  <DisableValidatorArray value="MuradinSecondWindLifeValidator" />
+  <DisableValidatorArray value="MuradinNoPassiveWeaponBuff" />
+  <DisableValidatorArray value="MuradinNotStoneforming" />
+  <DisableValidatorArray value="CasterNotInCombat4AndDoesNotHavePermanentSecondWind" />
+  <Period value="1" />
+  <PeriodicEffect value="MuradinSecondWindCriticalCreateHealer" />
+  <Face value="MuradinSecondWind" />
+</CBehaviorBuff>
+<CBehaviorBuff id="MuradinSecondWindActiveImproved">
+  <Alignment value="Positive" />
+  <BehaviorFlags index="Permanent" value="1" />
+  <InfoIcon value="Assets\Textures\storm_btn_d3_barbarian_ignorepain.dds" />
+  <DisableValidatorArray value="MuradinSecondWindImprovedLifeValidator" />
+  <DisableValidatorArray value="MuradinHasPassiveWeaponBuff" />
+  <DisableValidatorArray value="MuradinNotStoneforming" />
+  <DisableValidatorArray value="CasterNotInCombat4AndDoesNotHavePermanentSecondWind" />
+  <Period value="1" />
+  <PeriodicEffect value="MuradinSecondWindImprovedCriticalCreateHealer" />
+  <Face value="MuradinSecondWind" />
+</CBehaviorBuff>
+
+<CBehaviorBuff id="IllidanDiveUnstoppable" parent="StormUnstoppableParent">
+  <RemoveValidatorArray value="IllidanDiveLaunchMissileTargetUnitDisablesAndTimeStopCombine" />
+  <BuffFlags index="UpdateDurationWhileDisabled" value="1" />
+  <Duration value="0.9" />
+</CBehaviorBuff>
+<CBehaviorBuff id="IllidanDiveHardImpactStun" parent="StormStun">
+  <Duration value="0.25" />
+</CBehaviorBuff>
+
+
+<CBehaviorBuff id="MuradinDwarfTossVeryHeavyImpactStun" parent="StormStun">
+  <Duration value="0.75" />
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixAutoPalm" parent="CarryBehaviorParent">
+  <DamageResponse>
+    <Chance value="1" />
+    <Handled value="AffixAutoPalmSet" />
+    <ValidatorArray value="SourceLifeLT25Percent"/>
+  </DamageResponse>
+</CBehaviorBuff>
+<CBehaviorBuff id="AffixAutoPalmCooldown">
+  <Duration value="60" />
+  <Modification>
+    <BehaviorLinkDisableArray value="AffixAutoPalm" />
+  </Modification>
+</CBehaviorBuff>
+<CBehaviorBuff id="AffixPermanentCloak" parent="StormPersistentCloak">
+</CBehaviorBuff>
   
 </Catalog>

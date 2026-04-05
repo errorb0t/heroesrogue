@@ -401,9 +401,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectSet>
   <CEffectDamage id="SentinelShotDamage" parent="StormSpell">
     <Visibility value="Hidden" />
-    <Amount value="120">
-      <AccumulatorArray value="SentinelShotDamageAccumulator" />
-    </Amount>
+    <Amount value="120" />
+    <MultiplicativeModifierArray index="SentinelShotDamage" Accumulator="SentinelShotDamageAccumulator" />
     <MultiplicativeModifierArray index="Ranger" Validator="HasTyrandeSentinelRanger" Accumulator="TyrandeSentinelShotRangerAccumulator" />
   </CEffectDamage>
   <CEffectModifyTokenCount id="SentinelShotDamageModifyTokenCount" parent="BaseEffectModifyTokenCount">
@@ -449,5 +448,141 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectModifyPlayer id="LunarFlareQuestRangeUpgrade">
     <EffectArray Reference="Effect,TyrandeShootingStarProcSearchAffix,AreaArray[0].Radius" Value="$TyrandeLunarBlazeRangeIncrease" />
   </CEffectModifyPlayer>
+  
+  <CEffectSet id="MuradinDwarfTossNoDistanceLaunchSet">
+    <EffectArray value="MuradinDwarfTossApplyUnstoppable" />
+  </CEffectSet>
+  <CEffectSet id="MuradinDwarfTossLaunchSet">
+    <EffectArray value="MuradinDwarfTossApplyUnstoppable" />
+  </CEffectSet>
+  <CEffectSet id="MuradinDwarfTossLandSet">
+    <EffectArray value="MuradinDwarfTossRemoveUnstoppable" />
+  </CEffectSet>
+  <CEffectSet id="MuradinDwarfTossDamageSet">
+    <EffectArray value="MuradinDwarfTossModifyTokenCount" />
+    <EffectArray value="MuradinDwarfTossVeryHeavyImpactApplyBehavior" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="MuradinDwarfTossVeryHeavyImpactApplyBehavior">
+    <Chance value="0" />
+    <Behavior value="MuradinDwarfTossVeryHeavyImpactStun" />
+  </CEffectApplyBehavior>
+
+  <CEffectModifyTokenCount id="MuradinDwarfTossModifyTokenCount" parent="BaseEffectModifyTokenCount">
+    <Chance value="0" />
+    <ValidatorArray value="TargetIsHero" />
+    <EffectCategory index="Quest" value="1" />
+    <TokenId value="MuradinDwarfTossTokenCounter" />
+  </CEffectModifyTokenCount>
+  <CEffectApplyBehavior id="MuradinDwarfTossApplyUnstoppable">
+    <Chance value="0" />
+    <WhichUnit Value="Caster" />
+    <Behavior value="MuradinDwarfTossUnstoppable" />
+  </CEffectApplyBehavior>
+  <CEffectRemoveBehavior id="MuradinDwarfTossRemoveUnstoppable">
+    <Chance value="0" />
+    <WhichUnit Value="Caster" />
+    <BehaviorLink value="MuradinDwarfTossUnstoppable" />
+  </CEffectRemoveBehavior>
+  <CEffectDamage id="MuradinDwarfTossDamage" parent="StormSpell">
+    <Amount value="59" />
+    <MultiplicativeModifierArray index="LunarBlaze" Accumulator="MuradinDwarfTossAccumulator" />
+  </CEffectDamage>
+  
+  <CEffectCreateHealer id="MuradinSecondWindCreateHealer" parent="StormSelfOnlyHealingSpell">
+    <ImpactUnit Value="Caster" />
+    <ValidatorArray value="CasterNotInCombat4OrHasPermanentSecondWind" />
+    <ValidatorArray value="TargetLifeNotFull" />
+    <RechargeVitalRate value="55.3" />
+  </CEffectCreateHealer>
+  <CEffectCreateHealer id="MuradinSecondWindCriticalCreateHealer" parent="StormSelfOnlyHealingSpell">
+    <ValidatorArray value="CasterNotInCombat4OrHasPermanentSecondWind" />
+    <ValidatorArray value="TargetLifeNotFull" />
+    <ImpactUnit Value="Caster" />
+    <RechargeVitalRate value="110.6" />
+  </CEffectCreateHealer>
+  <CEffectCreateHealer id="MuradinSecondWindImprovedCriticalCreateHealer" parent="StormSelfOnlyHealingSpell">
+    <ValidatorArray value="CasterNotInCombat4OrHasPermanentSecondWind" />
+    <ValidatorArray value="TargetLifeNotFull" />
+    <ImpactUnit Value="Caster" />
+    <RechargeVitalRate value="180" />
+  </CEffectCreateHealer>
+  <CEffectCreateHealer id="MuradinSecondWindImprovedCreateHealer" parent="StormSelfOnlyHealingSpell">
+    <ValidatorArray value="CasterNotInCombat4OrHasPermanentSecondWind" />
+    <ValidatorArray value="TargetLifeNotFull" />
+    <ImpactUnit Value="Caster" />
+    <RechargeVitalRate value="90" />
+  </CEffectCreateHealer>
+  
+  <CEffectDamage id="MuradinWeaponDamage" parent="StormWeapon">
+    <Amount value="88" />
+    <FlatModifierArray index="MuradinWeaponDamage" Validator="CasterHasPermanentSecondWind" Accumulator="MuradinCurrentHealthAccumulator" />
+    <MultiplicativeModifierArray index="SkullcrackerCrit" Validator="MuradinSkullcrackerDamageValidator" Modifier="0.9" Crit="1" />
+  </CEffectDamage>
+  <CEffectDamage id="StormBoltHammererDamage" parent="StormSpellPercentDamage">
+    <ValidatorArray value="TargetIsHero" />
+    <Chance value="0" />
+    <VitalFractionMax index="Life" value="0.06" />
+  </CEffectDamage>
+  <CEffectSet id="StormBoltImpactSet">
+    <EffectArray value="StormBoltHammererDamage" />
+  </CEffectSet>
+
+  <CEffectSet id="MuradinStormBoltInitialSet">
+    <EffectArray value="MuradinStormBoltInitialSetCreatePersistent" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="MuradinStormBoltInitialSetCreatePersistent">
+    <Chance value="0" />
+    <WhichLocation Effect="MuradinStormBoltInitialSet" />
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="StormBoltLaunchMissile" />
+    <PeriodicPeriodArray value="0.25" />
+  </CEffectCreatePersistent>
+
+  <CEffectDamage id="IllidanDiveDeepDiveDamage" parent="StormSpell">
+    <ValidatorArray value="TargetIsHero" />
+    <Chance value="0" />
+    <VitalFractionMax index="Life" value="0.05" />
+    <LeechValidator index="Life" value="HasIllidanCombatStyleHuntersOnslaught" />
+    <LeechFraction index="Life" value="0.35" />
+    <LeechFlatModifierArray index="Hero" Validator="IllidanHuntersOnslaughtEmpowered" Modifier="0.35" />
+  </CEffectDamage>
+  <CEffectSet id="IllidanDiveRangedImpactSet">
+    <EffectArray value="IllidanDiveDeepDiveDamage" />
+    <EffectArray value="IllidanDiveHardImpactApplyStun" />
+  </CEffectSet>
+  <CEffectSet id="IllidanDiveMeleeImpactSet">
+    <EffectArray value="IllidanDiveDeepDiveDamage" />
+    <EffectArray value="IllidanDiveHardImpactApplyStun" />
+  </CEffectSet>
+  <CEffectSet id="IllidanDiveInitialSet">
+    <EffectArray value="IllidanDiveApplyUnstoppable" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="IllidanDiveApplyUnstoppable">
+    <Chance value="0" />
+    <WhichUnit Value="Caster" />
+    <Behavior value="IllidanDiveUnstoppable" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="IllidanDiveHardImpactApplyStun">
+    <Chance value="0" />
+    <WhichUnit Value="Target" />
+    <Behavior value="IllidanDiveHardImpactStun" />
+  </CEffectApplyBehavior>
+
+  <CEffectSet id="AffixLavaWave">
+    <TargetLocationType value="Point"/>
+  </CEffectSet>
+
+  <CEffectSet id="AffixAutoPalmSet">
+    <EffectArray value="AffixAutoPalmPersistent" />
+    <EffectArray value="AffixAutoPalmApplyCooldown" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="AffixAutoPalmPersistent">
+    <WhichLocation Value="SourceUnit" />
+    <InitialEffect value="MonkDivinePalmInitialSet" />
+  </CEffectCreatePersistent>
+  <CEffectApplyBehavior id="AffixAutoPalmApplyCooldown">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixAutoPalmCooldown" />
+  </CEffectApplyBehavior>
 
 </Catalog>

@@ -38,5 +38,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CButton id="TheMarkTokenCounter" parent="StormButtonParent">
   <Icon value="Assets\Textures\storm_ui_icon_talent_autoattack_damage.dds" />
 </CButton>
+<CButton id="MuradinDwarfTossTokenCounter" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_muradin_dwarftoss_a.dds" />
+</CButton>
 
 </Catalog>

@@ -34,7 +34,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ApplicationRule value="Add" />
     <TokenId value="SentinelShotDamageTokenCounter" />
     <Scale value="0.05" />
-    <MaxAccumulation value="50" />
+    <MaxAccumulation value="100" />
   </CAccumulatorToken>
   <CAccumulatorToken id="TheMarkAccumulator" parent="BaseAccumulator">
     <SourceEffect value="TyrandeHeroWeaponDamage" />
@@ -43,5 +43,21 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Scale value="0.33" />
     <MaxAccumulation value="9999" />
   </CAccumulatorToken>
+  <CAccumulatorToken id="MuradinDwarfTossAccumulator" parent="BaseAccumulator">
+    <SourceEffect value="MuradinDwarfTossDamage" />
+    <ApplicationRule value="Add" />
+    <TokenId value="MuradinDwarfTossTokenCounter" />
+    <Scale value="0.1" />
+    <MaxAccumulation value="100" />
+  </CAccumulatorToken>
+  
+  <CAccumulatorVitals id="MuradinCurrentHealthAccumulator" parent="BaseVitalAccumulator">
+    <ApplicationRule value="Add" />
+    <Ratio value="0.05" />
+    <VitalType value="Life" />
+    <UnitSource Value="Caster" />
+    <ModificationType value="PerUnit" />
+    <MaxAccumulation value="99999"/>
+  </CAccumulatorVitals>
 
 </Catalog>
