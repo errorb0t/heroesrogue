@@ -1361,16 +1361,16 @@ bool libAffx_BriberyP (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Path of the Wizard
 // ---------------------------------------------------------------
-int pathOfTheWizardCount = 1;
+int pathOfTheWizardIndex;
 bool libAffx_PathoftheWizardAffixAdded (bool testConds, bool runActions) {
     int level;
     if (!runActions) {
         return true;
     }
-    pathOfTheWizardCount = libAffx_EventAffixCount("PathoftheWizard");
+    pathOfTheWizardIndex = libAffx_EventAffix("PathoftheWizard");
     level = UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit);
-    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWizard", "Modification.VitalRegenArray[Energy]", libAffx_player, 0.2 * pathOfTheWizardCount * level);
-    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWizard", "Modification.VitalMaxArray[Energy]", libAffx_player, 10 * pathOfTheWizardCount * level);
+    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWizard", "Modification.VitalRegenArray[Energy]", libAffx_player, 0.2 * libAffx_affixes[pathOfTheWizardIndex].count * level);
+    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWizard", "Modification.VitalMaxArray[Energy]", libAffx_player, 10 * libAffx_affixes[pathOfTheWizardIndex].count * level);
     return true;
 }
 
@@ -1380,34 +1380,7 @@ bool libAffx_PathoftheWizardLevelUp (bool testConds, bool runActions) {
         if (libGame_gf_HeroLevelUpPlayer() != libAffx_player) {
             return false;
         }
-    }
-    if (!runActions) {
-        return true;
-    }
-    level = libGame_gf_HeroLevelUpLevel();
-
-    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWizard", "Modification.VitalRegenArray[Energy]", libGame_gf_HeroLevelUpPlayer(), 0.2 * pathOfTheWizardCount * level);
-    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWizard", "Modification.VitalMaxArray[Energy]", libGame_gf_HeroLevelUpPlayer(), 10 * pathOfTheWizardCount * level);
-    return true;
-}
-// ---------------------------------------------------------------
-// Path of the Warrior
-// ---------------------------------------------------------------
-int pathOfTheWarriorCount = 1;
-bool libAffx_PathoftheWarriorAffixAdded (bool testConds, bool runActions) {
-    int level;
-    if (!runActions) {
-        return true;
-    }
-    pathOfTheWarriorCount = libAffx_EventAffixCount("PathoftheWarrior");
-    level = UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit);
-    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWarrior", "Modification.VitalMaxArray[Life]", libAffx_player, 40 * pathOfTheWarriorCount * level);
-    return true;
-}
-bool libAffx_PathoftheWarriorLevelUp (bool testConds, bool runActions) {
-    int level;
-    if (testConds) {
-        if (libGame_gf_HeroLevelUpPlayer() != libAffx_player) {
+        if (pathOfTheWizardIndex == 0) {
             return false;
         }
     }
@@ -1416,14 +1389,47 @@ bool libAffx_PathoftheWarriorLevelUp (bool testConds, bool runActions) {
     }
     level = libGame_gf_HeroLevelUpLevel();
 
-    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWarrior", "Modification.VitalMaxArray[Life]", libGame_gf_HeroLevelUpPlayer(), 40 * pathOfTheWarriorCount * level);
+    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWizard", "Modification.VitalRegenArray[Energy]", libGame_gf_HeroLevelUpPlayer(), 0.2 * libAffx_affixes[pathOfTheWizardIndex].count * level);
+    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWizard", "Modification.VitalMaxArray[Energy]", libGame_gf_HeroLevelUpPlayer(), 10 * libAffx_affixes[pathOfTheWizardIndex].count * level);
+    return true;
+}
+// ---------------------------------------------------------------
+// Path of the Warrior
+// ---------------------------------------------------------------
+int pathOfTheWarriorIndex;
+bool libAffx_PathoftheWarriorAffixAdded (bool testConds, bool runActions) {
+    int level;
+    if (!runActions) {
+        return true;
+    }
+    pathOfTheWarriorIndex = libAffx_EventAffix("PathoftheWarrior");
+    level = UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit);
+    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWarrior", "Modification.VitalMaxArray[Life]", libAffx_player, 40 * libAffx_affixes[pathOfTheWarriorIndex].count * level);
+    return true;
+}
+bool libAffx_PathoftheWarriorLevelUp (bool testConds, bool runActions) {
+    int level;
+    if (testConds) {
+        if (libGame_gf_HeroLevelUpPlayer() != libAffx_player) {
+            return false;
+        }
+        if (pathOfTheWarriorIndex == 0) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    level = libGame_gf_HeroLevelUpLevel();
+
+    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWarrior", "Modification.VitalMaxArray[Life]", libGame_gf_HeroLevelUpPlayer(), 40 * libAffx_affixes[pathOfTheWarriorIndex].count * level);
     return true;
 }
 // ---------------------------------------------------------------
 // Path of the Assassin
 // ---------------------------------------------------------------
 fixed pathoftheAssassinValue = 5;
-int pathOfTheAssassinCount = 1;
+int pathOfTheAssassinIndex;
 bool libAffx_HasFastAA(int heroIndex) {
     if (heroIndex == libCore_gf_GetIndexFromHero("DVa")) {
         return true;
@@ -1447,7 +1453,7 @@ bool libAffx_PathoftheAssassinAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    pathOfTheAssassinCount = libAffx_EventAffixCount("PathoftheAssassin");
+    pathOfTheAssassinIndex = libAffx_EventAffix("PathoftheAssassin");
     level = UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit);
     if (libAffx_playerHeroIndex == libCore_gf_GetIndexFromHero("Tracer")) {
         pathoftheAssassinValue = 1;
@@ -1456,7 +1462,7 @@ bool libAffx_PathoftheAssassinAffixAdded (bool testConds, bool runActions) {
     } else {
         pathoftheAssassinValue = 5;
     }
-    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheAssassin", "Modification.DamageDealtScaled[Basic]", libAffx_player, pathoftheAssassinValue * pathOfTheAssassinCount * level);
+    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheAssassin", "Modification.DamageDealtScaled[Basic]", libAffx_player, pathoftheAssassinValue * libAffx_affixes[pathOfTheAssassinIndex].count * level);
     
     return true;
 }
@@ -1466,13 +1472,16 @@ bool libAffx_PathoftheAssassinLevelUp (bool testConds, bool runActions) {
         if (libGame_gf_HeroLevelUpPlayer() != libAffx_player) {
             return false;
         }
+        if (pathOfTheAssassinIndex == 0) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
     }
     level = libGame_gf_HeroLevelUpLevel();
 
-    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheAssassin", "Modification.DamageDealtScaled[Basic]", libGame_gf_HeroLevelUpPlayer(), pathoftheAssassinValue * pathOfTheAssassinCount * level);
+    CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheAssassin", "Modification.DamageDealtScaled[Basic]", libGame_gf_HeroLevelUpPlayer(), pathoftheAssassinValue * libAffx_affixes[pathOfTheAssassinIndex].count * level);
     return true;
 }
 
@@ -2099,7 +2108,7 @@ bool libAffx_DivineInterventionAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixAutoPalmCooldown", "Duration", 240 - 60 * libAffx_EventAffixCount("DivineIntervention"));
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixAutoPalmCooldown", "Duration", 240 - 60 * libAffx_affixes[libAffx_EventAffix("DivineIntervention")].count);
     return true;
 }
 bool libAffx_DivineInterventionExecute (bool testConds, bool runActions) {
