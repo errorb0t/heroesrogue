@@ -41,5 +41,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CButton id="MuradinDwarfTossTokenCounter" parent="StormButtonParent">
   <Icon value="Assets\Textures\storm_ui_icon_muradin_dwarftoss_a.dds" />
 </CButton>
+<CButton id="NightElfBond" parent="StormButtonParent">
+  <Icon value="Assets\Textures\affix_icon_night_elf_bond.dds" />
+</CButton>
 
 </Catalog>

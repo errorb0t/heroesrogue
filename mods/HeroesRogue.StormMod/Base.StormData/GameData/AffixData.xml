@@ -32,7 +32,7 @@
             <EditorColumn value="5"/>
         </Fields>
         <Fields Id="Max" Type="Int" EditorColumn="1"/>
-        <Fields Id="HeroSpecific" Type="String" EditorColumn="5"/>
+        <Fields Id="HeroSpecific" Type="String" EditorColumn="3"/>
         <Fields Id="HeroTags" Type="String" EditorColumn="5"/>
         <Fields Id="Enabled" Type="Int" EditorColumn="1"/>
         <Fields>
@@ -62,12 +62,13 @@
             <Count value="10"/>
             <EditorColumn value="3"/>
         </Fields>
-        <Fields Id="Quest" Type="Int" EditorColumn="2"/>
+        <Fields Id="Quest" Type="Int" EditorColumn="3"/>
         <Fields Id="TalentsRequired" Type="String" Count="10"/>
         <Fields Id="QuestPersists" Type="Int"/>
         <Fields Id="CooldownLink" Type="String"/>
         <Fields Id="SkipCurses" Type="Int"/>
         <Fields Id="QuestRetain" Type="String" Count="10"/>
+        <Fields Id="CooldownHidden" Type="Int"/>
         <Instances Id="[Default]">
             <Int Int="1">
                 <Field Id="Enabled"/>
@@ -286,6 +287,9 @@
             </String>
         </Instances>
         <Instances Id="BlessingoftheDragons">
+            <Int Int="2">
+                <Field Id="Max"/>
+            </Int>
             <String String="Epic">
                 <Field Id="Rarity"/>
             </String>
@@ -313,8 +317,14 @@
             <String String="0 2 Set Behavior,AffixBlessingoftheDragons,Modification.VitalMaxArray[Life] 500">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
+            <String String="AA libAffx_BlessingoftheDragonsAffixAdded">
+                <Field Id="Trigger" Index="1"/>
+            </String>
         </Instances>
         <Instances Id="AARange">
+            <Int>
+                <Field Id="Max"/>
+            </Int>
             <String String="Uncommon">
                 <Field Id="Rarity"/>
             </String>
@@ -333,8 +343,14 @@
             <String String="1 2 Set Behavior,AffixAARange,Modification.WeaponScanBonus 1.1">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
+            <String String="AA libAffx_AARangeAffixAdded">
+                <Field Id="Trigger"/>
+            </String>
         </Instances>
         <Instances Id="Buddy">
+            <Int Int="4">
+                <Field Id="Max"/>
+            </Int>
             <String String="Rare">
                 <Field Id="Rarity"/>
             </String>
@@ -349,6 +365,9 @@
             </String>
             <String String="LevelUp libAffx_BuddyLevelUp">
                 <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="AA libAffx_BuddyAffixAdded">
+                <Field Id="Trigger" Index="2"/>
             </String>
         </Instances>
         <Instances Id="ManyRituals">
@@ -922,6 +941,9 @@
             </String>
         </Instances>
         <Instances Id="AASpeed">
+            <Int>
+                <Field Id="Max"/>
+            </Int>
             <String String="Uncommon">
                 <Field Id="Rarity"/>
             </String>
@@ -930,6 +952,9 @@
             </String>
             <String String="Assets/Textures/storm_ui_icon_talent_autoattack_speed.dds">
                 <Field Id="Icon"/>
+            </String>
+            <String String="AA libAffx_AASpeedAffixAdded">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
         <Instances Id="MountSpeed">
@@ -971,6 +996,9 @@
             </String>
         </Instances>
         <Instances Id="GladiatorsMedallion">
+            <Int Int="3">
+                <Field Id="Max"/>
+            </Int>
             <String String="Epic">
                 <Field Id="Rarity"/>
             </String>
@@ -983,6 +1011,9 @@
             <String String="Abil/AffixMedallion">
                 <Field Id="CooldownLink"/>
             </String>
+            <String String="1 8 Add Abil,AffixMedallion,Cost.Cooldown.TimeUse -20">
+                <Field Id="CatalogModification"/>
+            </String>
         </Instances>
         <Instances Id="DoubleUlt">
             <Int Int="1">
@@ -990,9 +1021,6 @@
             </Int>
             <Int Int="10">
                 <Field Id="LevelMin"/>
-            </Int>
-            <Int Int="1">
-                <Field Id="SkipCurses"/>
             </Int>
             <String String="Epic">
                 <Field Id="Rarity"/>
@@ -1280,6 +1308,9 @@
             </String>
         </Instances>
         <Instances Id="AASearing">
+            <Int>
+                <Field Id="Max"/>
+            </Int>
             <String String="Uncommon">
                 <Field Id="Rarity"/>
             </String>
@@ -1288,6 +1319,9 @@
             </String>
             <String String="1 0 AffixAASearing">
                 <Field Id="Behavior"/>
+            </String>
+            <String String="AA libAffx_AASearingAffixAdded">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
         <Instances Id="ResurgenceoftheStorm">
@@ -1328,6 +1362,9 @@
             </String>
         </Instances>
         <Instances Id="PathoftheWizard">
+            <Int Int="5">
+                <Field Id="Max"/>
+            </Int>
             <String String="Assets/Textures/affix_icon_wizard_path.dds">
                 <Field Id="Icon"/>
             </String>
@@ -1340,11 +1377,14 @@
             <String String="mana">
                 <Field Id="HeroTags"/>
             </String>
-            <String String="Execute libAffx_PathoftheWizardExecute">
+            <String String="AA libAffx_PathoftheWizardAffixAdded">
                 <Field Id="Trigger" Index="1"/>
             </String>
         </Instances>
         <Instances Id="PathoftheWarrior">
+            <Int Int="5">
+                <Field Id="Max"/>
+            </Int>
             <String String="Assets/Textures/affix_icon_warrior_path.dds">
                 <Field Id="Icon"/>
             </String>
@@ -1354,12 +1394,15 @@
             <String String="1 0 AffixPathoftheWarrior">
                 <Field Id="Behavior"/>
             </String>
-            <String String="Execute libAffx_PathoftheWarriorExecute">
+            <String String="AA libAffx_PathoftheWarriorAffixAdded">
                 <Field Id="Trigger" Index="1"/>
             </String>
         </Instances>
         <Instances Id="PathoftheAssassin">
-            <String String="Execute libAffx_PathoftheAssassinExecute">
+            <Int Int="5">
+                <Field Id="Max"/>
+            </Int>
+            <String String="AA libAffx_PathoftheAssassinAffixAdded">
                 <Field Id="Trigger"/>
             </String>
             <String String="1 0 AffixPathoftheAssassin">
@@ -1425,6 +1468,9 @@
             <Int Int="1">
                 <Field Id="SkipCurses"/>
             </Int>
+            <Int Int="4">
+                <Field Id="Max"/>
+            </Int>
             <String String="Legendary">
                 <Field Id="Rarity"/>
             </String>
@@ -1446,10 +1492,25 @@
             <String String="10 0 AffixEnemyAllStats">
                 <Field Id="Behavior" Index="4"/>
             </String>
+            <String String="0 2 Set Behavior,AffixEnemyAllStats,Modification.AdditiveAttackSpeedFactor 0.25">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="0 2 Set Behavior,AffixEnemyAllStats,Modification.DamageDealtFraction[Basic] 0.25">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="0 2 Set Behavior,AffixEnemyAllStats,Modification.DamageDealtFraction[Ability] 0.25">
+                <Field Id="CatalogModification" Index="2"/>
+            </String>
+            <String String="0 2 Set Behavior,AffixEnemyAllStats,Modification.VitalMaxFractionArray[Life] 0.25">
+                <Field Id="CatalogModification" Index="3"/>
+            </String>
         </Instances>
         <Instances Id="Cloned">
             <Int Int="1">
                 <Field Id="Negative"/>
+            </Int>
+            <Int>
+                <Field Id="Enabled"/>
             </Int>
             <String String="Epic">
                 <Field Id="Rarity"/>
@@ -1470,6 +1531,9 @@
         <Instances Id="StructureAmmo">
             <Int Int="1">
                 <Field Id="Negative"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="SkipCurses"/>
             </Int>
             <String String="Execute libAffx_StructureAmmoExecute">
                 <Field Id="Trigger"/>
@@ -1676,6 +1740,9 @@
             </String>
         </Instances>
         <Instances Id="AmplifiedHealing">
+            <Int>
+                <Field Id="Max"/>
+            </Int>
             <String String="Assets/Textures/storm_ui_icon_talent_amplifiedhealing.dds">
                 <Field Id="Icon"/>
             </String>
@@ -1685,8 +1752,14 @@
             <String String="Uncommon">
                 <Field Id="Rarity"/>
             </String>
+            <String String="AA libAffx_AmplifiedHealingAffixAdded">
+                <Field Id="Trigger"/>
+            </String>
         </Instances>
         <Instances Id="GatheringPower">
+            <Int>
+                <Field Id="Max"/>
+            </Int>
             <String String="Uncommon">
                 <Field Id="Rarity"/>
             </String>
@@ -1695,6 +1768,9 @@
             </String>
             <String String="1 0 AffixGatheringPower">
                 <Field Id="Behavior"/>
+            </String>
+            <String String="AA libAffx_GatheringPowerAffixAdded">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
         <Instances Id="ConvenientPortals">
@@ -1845,7 +1921,7 @@
             <Int Int="1">
                 <Field Id="Negative"/>
             </Int>
-            <Int Int="500">
+            <Int Int="100">
                 <Field Id="Weight"/>
             </Int>
             <String String="Legendary">
@@ -1862,7 +1938,7 @@
             <Int Int="1">
                 <Field Id="Negative"/>
             </Int>
-            <Int Int="500">
+            <Int Int="100">
                 <Field Id="Weight"/>
             </Int>
             <String String="Execute libAffx_CameraZoomExecute">
@@ -2490,6 +2566,489 @@
             </String>
             <String String="10 0 AffixPermanentCloakDisableController">
                 <Field Id="Behavior" Index="9"/>
+            </String>
+        </Instances>
+        <Instances Id="TalentDisadvantage">
+            <Int Int="1">
+                <Field Id="SkipCurses"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <Int Int="5">
+                <Field Id="Max"/>
+            </Int>
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_talent_disadvantage.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="LU libAffx_TalentDisadvantageLevelUp">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="AA libAffx_TalentDisadvantageAffixAdded">
+                <Field Id="Trigger"/>
+            </String>
+        </Instances>
+        <Instances Id="Greed">
+            <Int Int="2">
+                <Field Id="SkipCurses"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="Assets/Textures/storm_ui_icon_azmodan_sinsgrasp.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="E libAffx_GreedExecute">
+                <Field Id="Trigger"/>
+            </String>
+        </Instances>
+        <Instances Id="Pre2020">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="SkipCurses"/>
+            </Int>
+            <String String="E libAffx_Pre2020Execute">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_pre2020.dds">
+                <Field Id="Icon"/>
+            </String>
+        </Instances>
+        <Instances Id="AllTalents">
+            <String String="Assets/Textures/affix_icon_limitless.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Starter">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="!starter">
+                <Field Id="HeroTags"/>
+            </String>
+            <String String="LU libAffx_AllTalentsLevelUp">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="AA libAffx_AllTalentsAffixAdded">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+        </Instances>
+        <Instances Id="AllStatsSelf">
+            <String String="Starter">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="1 0 AffixAllStatsSelf">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="bc libAffx_AffixAllStatsSelfBehaviorChange AffixAllStatsSelf">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="!starter">
+                <Field Id="HeroTags"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_all_stats_self.dds">
+                <Field Id="Icon"/>
+            </String>
+        </Instances>
+        <Instances Id="SelfReliant">
+            <String String="Starter">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_talent_resistance.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="!starter">
+                <Field Id="HeroTags"/>
+            </String>
+            <String String="2 0 AffixSelfReliant">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="3 0 AffixSelfReliant">
+                <Field Id="Behavior" Index="1"/>
+            </String>
+            <String String="4 0 AffixSelfReliant">
+                <Field Id="Behavior" Index="2"/>
+            </String>
+            <String String="5 0 AffixSelfReliant">
+                <Field Id="Behavior" Index="3"/>
+            </String>
+        </Instances>
+        <Instances Id="LegallyBlind">
+            <String String="Assets/Textures/storm_ui_icon_illidan_evasion_b.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Illidan">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="bcc libAffx_LegallyBlindBehaviorChangeCategory blind">
+                <Field Id="Trigger"/>
+            </String>
+        </Instances>
+        <Instances Id="SurpriseHunt">
+            <String String="Illidan">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_illidan_thehunt.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="1 3 Add Abil,IllidanTheHunt,Cost.Cooldown.TimeUse -30">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="1 3 Add Behavior,IllidanTheHuntStun,Duration 1">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+        </Instances>
+        <Instances Id="EfficientMorph">
+            <String String="Illidan">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_illidan_metamorphosis.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="1 3 Add Abil,IllidanMetamorphosisTargeted,Cost.Cooldown.TimeUse -40">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="1 3 Multiply Behavior,IllidanMetamorphosisBonusHealthScaler,Modification.VitalMaxArray[Life] 2">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+        </Instances>
+        <Instances Id="BelligerentGladiator">
+            <String String="Assets/Textures/storm_ui_icon_trinket_medallion.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Epic">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="1 3 Add Effect,AffixMedallionApplyCleanse,Duration 2">
+                <Field Id="CatalogModification"/>
+            </String>
+            <User Type="Affix" Instance="GladiatorsMedallion">
+                <Field Id="AffixesRequired"/>
+            </User>
+        </Instances>
+        <Instances Id="WheresIllidan">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="CooldownHidden"/>
+            </Int>
+            <String String="Illidan">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_maiev_heroic_1_b.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="AA libAffx_WheresIllidanAffixAdded">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="P libAffx_WheresIllidanPeriodic">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+        </Instances>
+        <Instances Id="Owling">
+            <Int Int="2">
+                <Field Id="Max"/>
+            </Int>
+            <String String="Assets/Textures/storm_ui_icon_tyrande_sentinel.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Tyrande">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Uncommon">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="1 3 Add Abil,TyrandeSentinelShot,Cost.Charge.TimeUse -3">
+                <Field Id="CatalogModification"/>
+            </String>
+        </Instances>
+        <Instances Id="StarRain">
+            <String String="Epic">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_tyrande_starfall.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Tyrande">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="1 3 Add Abil,TyrandeStarfall,Cost.Cooldown.TimeUse -40">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="1 1 Set Abil,TyrandeStarfall,Range 500">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="1 1 Set Actor,TyrandeStarfallRangeSplat,Scale 500">
+                <Field Id="CatalogModification" Index="2"/>
+            </String>
+        </Instances>
+        <Instances Id="Shadowstalker">
+            <String String="Tyrande">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Epic">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_tyrande_shadowstalk.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="1 3 Add Abil,TyrandeShadowstalk,Cost.Cooldown.TimeUse -45">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="1 1 Set Effect,TyrandeShadowstalkApplyUnrevealable,Chance 1">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+        </Instances>
+        <Instances Id="LunarShower">
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Tyrande">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_tyrande_lunarflare.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="1 1 Set Effect,LunarFlareInitialPersistent2,Chance 1">
+                <Field Id="CatalogModification"/>
+            </String>
+        </Instances>
+        <Instances Id="NightElfBond">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="Tyrande">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_night_elf_bond.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Respawn libAffx_NightElfBondRespawn">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="AA libAffx_NightElfBondAffixAdded">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="UD libAffx_NightElfBondUnitDied">
+                <Field Id="Trigger" Index="2"/>
+            </String>
+            <String String="P libAffx_NightElfBondPeriodic 1">
+                <Field Id="Trigger" Index="3"/>
+            </String>
+        </Instances>
+        <Instances Id="FastPunch">
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_muradin_haymaker.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Muradin">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="1 3 Add Abil,MuradinHaymaker,Cost.Charge.TimeUse -20">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="1 3 Add Abil,MuradinHaymaker,Cost.Charge.CountMax 1">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="1 3 Add Abil,MuradinHaymaker,Cost.Charge.CountStart 1">
+                <Field Id="CatalogModification" Index="2"/>
+            </String>
+            <String String="1 1 Set Abil,MuradinHaymaker,Cost.Charge.HideCount 0">
+                <Field Id="CatalogModification" Index="3"/>
+            </String>
+        </Instances>
+        <Instances Id="FastThunderClap">
+            <String String="Assets/Textures/storm_ui_icon_muradin_thunderclap.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Muradin">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Epic">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="1 3 Multiply Abil,MuradinThunderclap,Cost.Vital[Energy] 0.5">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="1 3 Multiply Abil,MuradinThunderclap,Cost.Charge.TimeUse 0.5">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="1 3 Add Abil,MuradinThunderclap,Cost.Charge.CountMax 2">
+                <Field Id="CatalogModification" Index="2"/>
+            </String>
+            <String String="1 3 Add Abil,MuradinThunderclap,Cost.Charge.CountStart 2">
+                <Field Id="CatalogModification" Index="3"/>
+            </String>
+            <String String="1 1 Set Abil,MuradinThunderclap,Cost.Charge.HideCount 0">
+                <Field Id="CatalogModification" Index="4"/>
+            </String>
+        </Instances>
+        <Instances Id="MuradinRAGE">
+            <String String="Muradin">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_talent_burningrage.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="MuradinBronzebeardRage">
+                <Field Id="TalentsAdd"/>
+            </String>
+            <String String="1 1 Set Behavior,MuradinBronzebeardRage,Period 0.5">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="1 3 Multiply Effect,MuradinBronzebeardRageSearch,AreaArray[0].Radius 3">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+        </Instances>
+        <Instances Id="MuradinLightFeet">
+            <String String="Muradin">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_muradin_dwarftoss.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="1 3 Add Abil,MuradinDwarfToss,Cost.Vital[Energy] -30">
+                <Field Id="CatalogModification"/>
+            </String>
+        </Instances>
+        <Instances Id="ToyHammer">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="Assets/Textures/storm_ui_icon_hammerofjustice_3.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="1 1 Set Effect,StormBoltApplyBehavior,Chance 0.5">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="Muradin">
+                <Field Id="HeroSpecific"/>
+            </String>
+        </Instances>
+        <Instances Id="DelayedRitual">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="Assets/Textures/storm_ui_icon_nazeebo_voodooritual.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="WitchDoctor">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="1 3 Add Behavior,WitchDoctorVoodooRitualDoT,Duration 6">
+                <Field Id="CatalogModification"/>
+            </String>
+        </Instances>
+        <Instances Id="SpiderToads">
+            <Int>
+                <Field Id="Enabled"/>
+            </Int>
+            <String String="WitchDoctor">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_spider_toads.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="1 1 Set Effect,NazeeboCorpseSpidersSpawnImpactSetToads,Chance 1">
+                <Field Id="CatalogModification"/>
+            </String>
+        </Instances>
+        <Instances Id="GreatRitual">
+            <String String="WitchDoctor">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_nazeebo_voodooritual.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="1 3 Add Effect,WitchDoctorVoodooRitualModifyToken,Value 1">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="1 3 Add Effect,WitchDoctorVoodooRitualModifyTokenQuest,Value 1">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+        </Instances>
+        <Instances Id="LostVikingsLost">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="LostVikings">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_lostvikings_64kbmarathon.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="1 0 LostVikingsLost">
+                <Field Id="Behavior"/>
+            </String>
+        </Instances>
+        <Instances Id="Blindfolded">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <Int Int="4">
+                <Field Id="Max"/>
+            </Int>
+            <String String="LostVikings">
+                <Field Id="HeroesExcluded"/>
+            </String>
+            <String String="1 0 AffixBlindfolded">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="1 2 Set Behavior,AffixBlindfolded,Modification.SightBonus -1">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_malganis_blindbat.dds">
+                <Field Id="Icon"/>
+            </String>
+        </Instances>
+        <Instances Id="Injury">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="Assets/Textures/affix_icon_injury.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Uncommon">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="E libAffx_InjuryExecute">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="LU libAffx_InjuryLevelUp">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="1 0 AffixInjury">
+                <Field Id="Behavior"/>
             </String>
         </Instances>
     </CUser>

@@ -387,6 +387,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Behavior value="AffixBurningBlades" />
     <Chance value="0" />
   </CEffectApplyBehavior>
+  <CEffectSet id="AffixBurningBladesRefreshSet">
+    <EffectArray value="IllidanRemoveBurningBladesDecay" />
+    <EffectArray value="AffixBurningBladesTokenCounterModify" />
+  </CEffectSet>
   <CEffectModifyTokenCount id="AffixBurningBladesTokenCounterModify" parent="BaseEffectModifyTokenCount">
     <TokenId value="AffixBurningBladesTokenCounter" />
   </CEffectModifyTokenCount>
@@ -395,6 +399,27 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Operation value="Set" />
     <Value value="0" />
   </CEffectModifyTokenCount>
+  <CEffectSet id="AffixBurningBladesDecaySet">
+    <EffectArray value="IllidanApplyBurningBladesDecay" />
+    <EffectArray value="AffixBurningBladesDecaySwitch" />
+  </CEffectSet>
+  <CEffectSwitch id="AffixBurningBladesDecaySwitch">
+    <CaseArray Validator="HasBurningBladesTokens" Effect="AffixBurningBladesTokenCounterDecay" />
+    <CaseDefault value="IllidanRemoveBurningBladesDecay" />
+  </CEffectSwitch>
+  <CEffectModifyTokenCount id="AffixBurningBladesTokenCounterDecay" parent="BaseEffectModifyTokenCount">
+    <TokenId value="AffixBurningBladesTokenCounter" />
+    <Operation value="Add" />
+    <Value value="-10" />
+  </CEffectModifyTokenCount>
+  <CEffectApplyBehavior id="IllidanApplyBurningBladesDecay">
+    <WhichUnit Value="Caster" />
+    <Behavior value="AffixBurningBladesDecay" />
+  </CEffectApplyBehavior>
+  <CEffectRemoveBehavior id="IllidanRemoveBurningBladesDecay">
+    <WhichUnit Value="Caster" />
+    <BehaviorLink value="AffixBurningBladesDecay" />
+  </CEffectRemoveBehavior>
   
   <CEffectSet id="SentinelShotImpactSet">
     <EffectArray value="SentinelShotDamageModifyTokenCount" />
@@ -448,6 +473,33 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectModifyPlayer id="LunarFlareQuestRangeUpgrade">
     <EffectArray Reference="Effect,TyrandeShootingStarProcSearchAffix,AreaArray[0].Radius" Value="$TyrandeLunarBlazeRangeIncrease" />
   </CEffectModifyPlayer>
+  <CEffectSet id="TyrandeLunarFlareSearchSet">
+    <EffectArray value="LunarFlareInitialPersistent2" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="LunarFlareInitialPersistent2">
+    <Chance value="0" />
+    <ExpireDelay value="1.75" />
+    <ExpireEffect value="LunarFlareInitialPersistent3" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="LunarFlareInitialPersistent3">
+    <ExpireDelay value="0.75" />
+    <ExpireEffect value="TyrandeLunarFlareSearchSet2" />
+    <RevealRadius value="1.5" />
+    <RevealFlags index="Unfog" value="1" />
+  </CEffectCreatePersistent>
+  <CEffectSet id="TyrandeLunarFlareSearchSet2">
+    <EffectArray value="LunarFlareImpactSearchArea" />
+    <EffectArray value="TyrandeLunarFlareCreatePersistentReveal" />
+  </CEffectSet>
+  
+  <CEffectApplyBehavior id="TyrandeShadowstalkApplyUnrevealable">
+    <Behavior value="ShadowstalkerUnrevealable" />
+    <Chance value="0" />
+    <ValidatorArray index="0" value="TargetNotDead" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="TyrandeShadowstalkInitialSet">
+    <EffectArray value="TyrandeShadowstalkApplyUnrevealable" />
+  </CEffectSet>
   
   <CEffectSet id="MuradinDwarfTossNoDistanceLaunchSet">
     <EffectArray value="MuradinDwarfTossApplyUnstoppable" />
@@ -537,10 +589,15 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectSet id="IllidanDiveRangedImpactSet">
     <EffectArray value="IllidanDiveDeepDiveDamage" />
     <EffectArray value="IllidanDiveHardImpactApplyStun" />
+    <EffectArray value="IllidanApplyAffixBurningBlades" />
   </CEffectSet>
   <CEffectSet id="IllidanDiveMeleeImpactSet">
     <EffectArray value="IllidanDiveDeepDiveDamage" />
     <EffectArray value="IllidanDiveHardImpactApplyStun" />
+    <EffectArray value="IllidanApplyAffixBurningBlades" />
+  </CEffectSet>
+  <CEffectSet id="IllidanSweepingStrikeImpactSet">
+    <EffectArray value="IllidanApplyAffixBurningBlades" />
   </CEffectSet>
   <CEffectSet id="IllidanDiveInitialSet">
     <EffectArray value="IllidanDiveApplyUnstoppable" />
@@ -572,5 +629,102 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <WhichUnit Value="Source" />
     <Behavior value="AffixAutoPalmCooldown" />
   </CEffectApplyBehavior>
+  
+  <CEffectApplyBehavior id="ApplyNightElfBondMalfurion">
+    <Behavior value="NightElfBondMalfurion" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="NightElfBondMalfurionOrderSet">
+    <EffectArray value="NightElfBondMalfurionOrderAttack" />
+    <EffectArray value="NightElfBondMalfurionMalfurionSearchEnemiesMoonfire" />
+    <EffectArray value="NightElfBondMalfurionMalfurionSearchEnemiesRoot" />
+    <EffectArray value="NightElfBondMalfurionOrderMalfurionInnervate" />
+    <EffectArray value="NightElfBondMalfurionOrderMalfurionRegrowth" />
+    <EffectArray value="NightElfBondMalfurionOrderMove" />
+  </CEffectSet>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionMoonfire">
+    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
+    <WhichUnit Value="Source" />
+    <Abil value="MalfurionMoonfire" />
+    <Target Value="TargetUnit" />
+  </CEffectIssueOrder>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionEntanglingRoots">
+    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
+    <WhichUnit Value="Source" />
+    <Abil value="MalfurionEntanglingRoots" />
+    <Target Value="TargetUnit" />
+  </CEffectIssueOrder>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionInnervate">
+    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
+    <WhichUnit Value="Source" />
+    <Abil value="MalfurionInnervate" />
+    <Target Value="CasterUnit" />
+  </CEffectIssueOrder>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionRegrowth">
+    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
+    <WhichUnit Value="Source" />
+    <Abil value="MalfurionRegrowth" />
+    <Target Value="CasterUnit" />
+  </CEffectIssueOrder>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderAttack">
+    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrandeAndGT4" />
+    <WhichUnit Value="Source" />
+    <Abil value="attack" />
+    <Target Value="CasterPoint" />
+  </CEffectIssueOrder>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderMove">
+    <ValidatorArray value="NightElfBondMalfurionGT6RangeOfTyrande" />
+    <WhichUnit Value="Source" />
+    <Abil value="move" />
+    <Target Value="CasterPoint" />
+  </CEffectIssueOrder>
+  <CEffectEnumArea id="NightElfBondMalfurionMalfurionSearchEnemiesMoonfire">
+    <SearchFilters value="Visible;Self,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="NightElfBondMalfurionOrderMalfurionMoonfire">
+      <Radius value="9" />
+    </AreaArray>
+    <TargetSorts>
+      <SortArray value="TSHeroic" />
+      <SortArray value="TSMerc" />
+      <SortArray value="TSMinion" />
+      <SortArray value="TSDistance" />
+    </TargetSorts>
+  </CEffectEnumArea>
+  <CEffectEnumArea id="NightElfBondMalfurionMalfurionSearchEnemiesRoot">
+    <SearchFilters value="Visible,Heroic;Self,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="NightElfBondMalfurionOrderMalfurionEntanglingRoots">
+      <Radius value="8" />
+    </AreaArray>
+    <TargetSorts>
+      <SortArray value="TSHeroic" />
+    </TargetSorts>
+  </CEffectEnumArea>
+  <CEffectDamage id="NightElfBondDamage" parent="StormSpellPercentDamage">
+    <VitalFractionMax index="Life" value="10" />
+  </CEffectDamage>
+  <CEffectSet id="WitchDoctorPlagueofToadsExplodeImpactSet1">
+    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
+  </CEffectSet>
+  <CEffectSet id="WitchDoctorPlagueofToadsExplodeImpactSet2">
+    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
+  </CEffectSet>
+  <CEffectSet id="WitchDoctorPlagueofToadsExplodeImpactSet3">
+    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
+  </CEffectSet>
+  <CEffectSet id="WitchDoctorPlagueofToadsExplodeImpactSet4">
+    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
+  </CEffectSet>
+  <CEffectSet id="WitchDoctorPlagueofToadsExplodeImpactSet5">
+    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
+  </CEffectSet>
+  <CEffectSet id="WitchDoctorPlagueofToadsExpireSet">
+    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
+  </CEffectSet>
+
+  <CEffectCreatePersistent id="NazeeboCorpseSpidersSpawnImpactSetToads">
+    <Chance value="0" />
+    <InitialEffect value="CorpseSpidersSpawnSpider"/>
+  </CEffectCreatePersistent>
+  
+
 
 </Catalog>

@@ -26,7 +26,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <MaxAccumulation value="8" />
     <ApplicationRule value="Add" />
     <TokenId value="AffixBurningBladesTokenCounter" />
-    <Scale value="0.01" />
+    <Scale value="0.005" />
   </CAccumulatorToken>
   
   <CAccumulatorToken id="SentinelShotDamageAccumulator" parent="BaseAccumulator">

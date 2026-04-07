@@ -1928,6 +1928,9 @@ EffectAbilityMap[libGame_abilityEffectMapMax + 1] libGame_abilityEffectMap;
 
 bool[11] libGame_diabloUsedSouls;
 
+bool libGame_teamOrderSharedXPDisabled = false;
+bool libGame_teamOrderXPGlobesDisabled = false;
+
 // Library Initialization
 void libGame_InitVariables ();
 

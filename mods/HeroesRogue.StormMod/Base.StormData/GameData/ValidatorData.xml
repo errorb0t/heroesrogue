@@ -78,6 +78,32 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Behavior value="Mounted" />
   <Compare value="GT" />
 </CValidatorUnitCompareBehaviorCount>
+<CValidatorUnitCompareBehaviorCount id="TargetIsMounted">
+  <WhichUnit Value="TargetUnit" />
+  <Behavior value="Mounted" />
+  <Compare value="GT" />
+</CValidatorUnitCompareBehaviorCount>
+
+<CValidatorLocationCompareRange id="NightElfBondMalfurionGT4RangeOfTyrande">
+  <WhichLocation Value="TargetUnit" />
+  <Compare value="GT" />
+  <Range value="4" />
+</CValidatorLocationCompareRange>
+<CValidatorLocationCompareRange id="NightElfBondMalfurionGT6RangeOfTyrande">
+  <WhichLocation Value="TargetUnit" />
+  <Compare value="GT" />
+  <Range value="6" />
+</CValidatorLocationCompareRange>
+<CValidatorLocationCompareRange id="NightElfBondMalfurionLT6RangeOfTyrande">
+  <WhichLocation Value="TargetUnit" />
+  <Compare value="LT" />
+  <Range value="6" />
+</CValidatorLocationCompareRange>
+<CValidatorCombine id="NightElfBondMalfurionLT6RangeOfTyrandeAndGT4">
+  <Type value="And" />
+  <CombineArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
+  <CombineArray value="NightElfBondMalfurionGT4RangeOfTyrande" />
+</CValidatorCombine>
 
 <CValidatorUnitCompareVital id="CasterShieldGT0Percent">
   <WhichUnit Value="Caster" />
@@ -115,5 +141,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <WhichUnit Value="Caster" />
   <Behavior value="MuradinSecondWindActiveImprovedPermanent" />
 </CValidatorUnitCompareBehaviorCount>
+
+<CValidatorUnitCompareTokenCount id="HasBurningBladesTokens">
+  <Compare value="GT" />
+  <TokenId value="AffixBurningBladesTokenCounter" />
+</CValidatorUnitCompareTokenCount>
 
 </Catalog>

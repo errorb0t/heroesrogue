@@ -142,4 +142,57 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <On Terms="Effect.ZaryaParticleGrenadeDamageAffix.Start; At Target" Send="Create" />
   </CActorModel>
 
+  
+  <CActorSound id="TyrandeLunarFlareTargetSound3" parent="SoundOneShot">
+    <On Terms="Effect.LunarFlareInitialPersistent3.Start" Send="Create" />
+    <Sound value="Tyrande_LunarFlare_TargetEffect" />
+  </CActorSound>
+  <CActorSound id="TyrandeLunarFlareFlybySound3" parent="SoundContinuous">
+    <Sound value="Tyrande_SearingArrow_FlyBy" />
+    <On Terms="Effect.LunarFlareInitialPersistent3.Start" Send="Create" />
+    <On Terms="Effect.LunarFlareInitialPersistent3.Stop" Send="Destroy" />
+  </CActorSound>
+  <CActorModel id="TyrandeLunarFlareImpact3" parent="StormModelNoAnims">
+    <On Terms="ActorCreation" Send="AnimPlay Birth Birth NonLooping" />
+    <On Terms="ActorOrphan" Send="Destroy" />
+    <On Terms="ActorCreation" Send="TimerSet 0.500000 Impact" />
+    <On Terms="TimerExpired; TimerName Impact" Send="AnimClear Birth" />
+    <On Terms="TimerExpired; TimerName Impact" Send="AnimPlay Death Death" />
+    <On Terms="Effect.LunarFlareInitialPersistent3.Start; At Effect" Send="Create" />
+    <On Terms="AnimDone; AnimName Death" Send="Destroy" />
+    <HostSiteOps Ops="SOpShadow" />
+    <Scale value="1.200000" />
+    <ModelFlags index="AutomateGlobalLoops" value="1" />
+  </CActorModel>
+  <CModel id="TyrandeLunarFlareImpact3" parent="PersistentSpellFX">
+      <Model value="Assets\Effects\Storm_Effect_Tyrande_Base_LunarFlare_Impact\Storm_Effect_Tyrande_Base_LunarFlare_Impact.m3"/>
+      <RadiusLoose value="1.000000"/>
+  </CModel>
+
+  <CSound id="MaievWheresIllidanWarning" parent="HeroVO_3D_Intro">
+    <AssetArray TemplateParam="MaievBase_VOX_TimeStopIllidan00"/>
+    <AssetArray TemplateParam="MaievBase_Pissed03"/>
+    <AssetArray TemplateParam="MaievBase_VoiceLineOne00"/>
+    <AssetArray TemplateParam="MaievBase_VoiceLineTwo00"/>
+    <AssetArray TemplateParam="MaievBase_VoiceLineThree00"/>
+    <AssetArray TemplateParam="MaievBase_VoiceLineFour00"/>
+    <AssetArray TemplateParam="MaievBase_Attack05"/>
+    <AssetArray TemplateParam="MaievBase_UI_Purchase00"/>
+    <AssetArray TemplateParam="MaievBase_UI_Lockin00"/>
+    <AssetArray TemplateParam="MaievBase_Resurrected00"/>
+    <Volume value="2.000000,2.000000"/>
+    <Category value="User9"/>
+    <CategoryDuckingLocal value="Explosions"/>
+    <CategoryDuckingNonLocal value="Explosions"/>
+    <Exclusivity value="HeroVO_3D_Critical"/>
+    <StopActionArray Sound="MaievBase_Ultimate1Used" UseSustainFadeTime="0"/>
+</CSound>
+
+  <CActorSound id="MaievWheresIllidanWarningVO" parent="SoundOneShot">
+    <Inherits index="Visibility" value="0" />
+    <FogVisibility value="Visible" />
+    <Host Scope="Target" />
+    <Sound value="MaievWheresIllidanWarning" />
+  </CActorSound>
+
 </Catalog>
