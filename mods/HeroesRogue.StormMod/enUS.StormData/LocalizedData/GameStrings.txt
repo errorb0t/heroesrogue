@@ -447,7 +447,7 @@ Affix/Name/LiMingTeleporter=Teleporter
 Affix/Tooltip/LiMingTeleporter=Gain the benefits of all Teleport talents. Calamity deals <c val="#TooltipNumbers">50%</c> damage to non-Heroes.<n/><n/>Increases Teleport's range by <c val="#TooltipNumbers">100%</c> and maximum charges by <c val="#TooltipNumbers">2</c>.
 Affix/Tooltip/Append/LiMingTeleporter=
 Affix/Name/LiMingMissileBarrage=Missile Barrage
-Affix/Tooltip/LiMingMissileBarrage=Gain the benefits of all Magic Missiles talents.<n/><n/>After the initial missiles, Magic Missiles fires a barage of <c val="#TooltipNumbers">15</c> magic missiles over <c val="#TooltipNumbers">1</c> second dealing <c val="#TooltipNumbers">50%</c> damage, but its cooldown is increased to <c val="#TooltipNumbers">7</c> seconds.<n/><n/>The additional magic missiles deal <c val="#TooltipNumbers">10%</c> damage to Structures.<n/><n/>Seeker can only triger <c val="#TooltipNumbers">2</c> times per cast.
+Affix/Tooltip/LiMingMissileBarrage=Gain the benefits of all Magic Missiles talents.<n/><n/>After the initial missiles, Magic Missiles fires a barage of <c val="#TooltipNumbers">15</c> magic missiles over <c val="#TooltipNumbers">1</c> second dealing <c val="#TooltipNumbers">50%</c> damage, but its cooldown is increased to <c val="#TooltipNumbers">7</c> seconds.<n/><n/>The additional magic missiles deal <c val="#TooltipNumbers">10%</c> damage to Structures.<n/><n/>Seeker can only trigger <c val="#TooltipNumbers">2</c> times per cast.
 Affix/Tooltip/Append/LiMingMissileBarrage=
 Affix/Name/LiMingOrbing=Orbing
 Affix/Tooltip/LiMingOrbing=Gain the benefits of all Arcane Orb talents.<n/><n/>Arcane Orb fires <c val="#TooltipNumbers">2</c> additional orbs in an arc.
