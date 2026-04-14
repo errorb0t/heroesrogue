@@ -177,6 +177,20 @@ def is_affix_enabled(fields: dict[str, str]) -> bool:
     return enabled_value not in {"", "0"}
 
 
+def parse_int_field(
+    raw_value: str | None, *, default: int = 0, empty_value: int = 0
+) -> int:
+    if raw_value is None:
+        return default
+    stripped = raw_value.strip()
+    if not stripped:
+        return empty_value
+    try:
+        return int(stripped)
+    except ValueError as exc:
+        raise RuntimeError(f"Expected integer field value, got {raw_value!r}") from exc
+
+
 def icon_file_name(icon_path: str) -> str:
     stem = Path(icon_path).stem.strip().lower().replace("-", "_")
     return f"{stem}.png" if stem else ""
@@ -243,6 +257,7 @@ def load_affixes(
             icon_dir,
             icon_cache,
         )
+        max_stacks = parse_int_field(fields.get("Max"), default=1, empty_value=0)
         negative = fields.get("Negative", "0") == "1"
         rarity = fields.get("Rarity", "Common") or "Common"
         hero_specific_raw = fields.get("HeroSpecific", "")
@@ -255,6 +270,7 @@ def load_affixes(
                 tooltip_html=tooltip_html,
                 tooltip_plain=tooltip_plain,
                 rarity=rarity,
+                max_stacks=max_stacks,
                 icon_name=icon_name,
                 icon_url=icon_url,
                 negative=negative,

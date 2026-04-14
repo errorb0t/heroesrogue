@@ -10,6 +10,7 @@ class AffixRecord:
     tooltip_html: str
     tooltip_plain: str
     rarity: str
+    max_stacks: int
     icon_name: str
     icon_url: str
     negative: bool

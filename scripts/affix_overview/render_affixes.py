@@ -8,6 +8,14 @@ from .models import AffixRecord
 from .render_common import render_github_link, render_nav
 
 
+def render_stackability_label(affix: AffixRecord) -> str:
+    if affix.max_stacks == 0:
+        return "Stacks infinitely"
+    if affix.max_stacks == 1:
+        return "Doesn't stack"
+    return f"Stacks up to {affix.max_stacks}"
+
+
 def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) -> str:
     page_label = "Boons" if page_type == "boon" else "Curses"
     page_label_singular = "boon" if page_type == "boon" else "curse"
@@ -34,6 +42,7 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
             if affix.hero_specific
             else ""
         )
+        stackability_label = render_stackability_label(affix)
         cards.append(
             f"""
             <article class="affix-card" data-rarity="{html.escape(affix.rarity)}" data-hero-specific="{str(bool(affix.hero_specific)).lower()}" data-search="{html.escape(search_blob)}">
@@ -46,6 +55,7 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
               </div>
               <h2 class="card-title">{html.escape(affix.name)}</h2>
               <div class="tooltip-copy">{affix.tooltip_html}</div>
+              <footer class="card-footer">{html.escape(stackability_label)}</footer>
             </article>
             """.strip()
         )
@@ -279,6 +289,15 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
     .tooltip-copy {{
       color: #dce7f9;
       line-height: 1.55;
+    }}
+
+    .card-footer {{
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid #24344a;
+      color: var(--muted);
+      font-size: 0.88rem;
+      letter-spacing: 0.02em;
     }}
 
     .tooltip-copy br {{
