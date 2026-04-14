@@ -36,11 +36,11 @@ This is a fan-made project and is not affiliated with or endorsed by Blizzard En
 
 The static compendium under `docs/` can be published directly with GitHub Pages.
 
-1. Push this repository, including `.github/workflows/pages.yml` and the `docs/` folder, to GitHub.
+1. Push this repository, including the `docs/` folder, to GitHub.
 2. In GitHub, open `Settings` -> `Pages`.
-3. Under `Build and deployment`, set `Source` to `GitHub Actions`.
-4. Push to your default branch again if needed, or run the `Deploy GitHub Pages` workflow manually from the `Actions` tab.
+3. Under `Build and deployment`, set `Source` to `Deploy from a branch`.
+4. Set `Branch` to `master` and the folder to `/docs`, then save.
 
-After the workflow finishes, the site will be available at:
+After that, each push to `master` that updates `docs/` will republish the site at:
 
 `https://errorb0t.github.io/heroesrogue/`
