@@ -31,3 +31,16 @@ Singleplayer rogue-like mod for Heroes of the Storm.
 
 #### Disclaimer:
 This is a fan-made project and is not affiliated with or endorsed by Blizzard Entertainment. The mod runs locally and does not interact with Blizzard's servers. All original game assets, characters, and intellectual property belong to Blizzard Entertainment.
+
+## GitHub Pages
+
+The static compendium under `docs/` can be published directly with GitHub Pages.
+
+1. Push this repository, including `.github/workflows/pages.yml` and the `docs/` folder, to GitHub.
+2. In GitHub, open `Settings` -> `Pages`.
+3. Under `Build and deployment`, set `Source` to `GitHub Actions`.
+4. Push to your default branch again if needed, or run the `Deploy GitHub Pages` workflow manually from the `Actions` tab.
+
+After the workflow finishes, the site will be available at:
+
+`https://errorb0t.github.io/heroesrogue/`
