@@ -81,6 +81,7 @@ def main() -> None:
     hero_name_overrides = load_hero_name_overrides(args.hero_name_overrides.resolve())
     map_name_overrides = load_map_name_overrides(args.map_name_overrides.resolve())
     resolver = DynamicValueResolver(dynamic_overrides)
+    resolver.set_hero_name_overrides(hero_name_overrides)
     affixes = load_affixes(
         strings,
         output_dir,

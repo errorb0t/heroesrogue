@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import html
+import re
 from datetime import datetime, timezone
 
 from .constants import RARITY_COLORS
@@ -14,6 +15,10 @@ def render_stackability_label(affix: AffixRecord) -> str:
     if affix.max_stacks == 1:
         return "Doesn't stack"
     return f"Stacks up to {affix.max_stacks}"
+
+
+def render_footer_highlight(value: str) -> str:
+    return f'<span class="footer-highlight">{html.escape(value)}</span>'
 
 
 def render_condition_sentence(key: str, value: str) -> str:
@@ -43,13 +48,82 @@ def render_condition_sentence(key: str, value: str) -> str:
     return value if value.endswith(".") else f"{value}."
 
 
-def render_footer_text(affix: AffixRecord) -> str:
-    parts = [f"{render_stackability_label(affix)}."]
+def render_stackability_html(affix: AffixRecord) -> str:
+    if affix.max_stacks == 0:
+        return "Stacks infinitely."
+    if affix.max_stacks == 1:
+        return "Doesn't stack."
+    return f"Stacks up to {render_footer_highlight(str(affix.max_stacks))}."
+
+
+def render_condition_sentence_html(key: str, value: str) -> str:
+    highlighted_value = render_footer_highlight(value)
+    if key == "hero-specific":
+        hero_name = value[:-5] if value.endswith(" only") else value
+        return f"Appears for {render_footer_highlight(hero_name)} only."
+    if key == "hero-tag":
+        return f"Appears for {highlighted_value}."
+    if key == "heroes-excluded":
+        return f"Does not appear for {highlighted_value}."
+    if key == "map-specific":
+        map_name = value[:-5] if value.endswith(" only") else value
+        return f"Appears on {render_footer_highlight(map_name)} only."
+    if key == "maps-excluded":
+        return f"Does not appear on {highlighted_value}."
+    if key == "affixes-required":
+        return f"Requires {highlighted_value}."
+    if key == "affixes-excluded":
+        return f"Cannot appear with {highlighted_value}."
+    if key == "talents-required":
+        return f"Requires talents {highlighted_value}."
+    if key == "level-range":
+        lower_value = value.lower()
+        if lower_value.startswith("up to "):
+            return f"Appears {render_footer_highlight(lower_value)} only."
+        if lower_value.endswith(" only"):
+            return f"Appears at {highlighted_value}."
+        return f"Appears at {highlighted_value} only."
+    return render_footer_highlight(value if value.endswith(".") else f"{value}.")
+
+
+def render_footer_summary_html(affix: AffixRecord) -> str:
+    parts = [render_stackability_html(affix)]
     parts.extend(
-        render_condition_sentence(condition.key, condition.value)
+        render_condition_sentence_html(condition.key, condition.value)
         for condition in affix.conditions
     )
     return " ".join(parts)
+
+
+def render_footer_footnote_text_html(text: str) -> str:
+    sentences = re.findall(r"[^.]+\.", text)
+    if not sentences:
+        return html.escape(text)
+
+    rendered_sentences: list[str] = []
+    for sentence in sentences:
+        stripped = sentence.strip()
+        match = re.fullmatch(r"Reduced to (.+?) for (.+)\.", stripped)
+        if match is None:
+            rendered_sentences.append(html.escape(stripped))
+            continue
+        reduced_value, heroes = match.groups()
+        rendered_sentences.append(
+            f"Reduced to {render_footer_highlight(reduced_value)} for {render_footer_highlight(heroes)}."
+        )
+    return " ".join(rendered_sentences)
+
+
+def render_footer_footnotes_html(affix: AffixRecord) -> str:
+    if not affix.tooltip_footnotes:
+        return ""
+
+    items = []
+    for footnote in affix.tooltip_footnotes:
+        items.append(
+            f'<li><span class="footer-footnote-marker">{html.escape(footnote.marker)}</span> {render_footer_footnote_text_html(footnote.text)}</li>'
+        )
+    return f'<ul class="footer-footnotes">{"".join(items)}</ul>'
 
 
 def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) -> str:
@@ -68,6 +142,7 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
                 affix.tooltip_plain,
                 affix.rarity,
                 affix.hero_specific,
+                *(footnote.text for footnote in affix.tooltip_footnotes),
                 *(condition.search_text for condition in affix.conditions),
                 "curse" if affix.negative else "boon",
             ]
@@ -78,7 +153,8 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
             if affix.hero_specific
             else ""
         )
-        footer_text = render_footer_text(affix)
+        footer_summary_html = render_footer_summary_html(affix)
+        footer_footnotes_html = render_footer_footnotes_html(affix)
         cards.append(
             f"""
             <article class="affix-card" data-rarity="{html.escape(affix.rarity)}" data-hero-limited="{str(affix.has_hero_condition).lower()}" data-search="{html.escape(search_blob)}">
@@ -91,7 +167,10 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
               </div>
               <h2 class="card-title">{html.escape(affix.name)}</h2>
               <div class="tooltip-copy">{affix.tooltip_html}</div>
-              <footer class="card-footer">{html.escape(footer_text)}</footer>
+              <footer class="card-footer">
+                <div class="footer-summary">{footer_summary_html}</div>
+                {footer_footnotes_html}
+              </footer>
             </article>
             """.strip()
         )
@@ -327,6 +406,16 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
       line-height: 1.55;
     }}
 
+    .dynamic-footnote-marker,
+    .footer-footnote-marker {{
+      color: #ffe38d;
+      font-weight: 700;
+    }}
+
+    .footer-highlight {{
+      color: #ffe38d;
+    }}
+
     .card-footer {{
       margin-top: auto;
       padding-top: 12px;
@@ -335,6 +424,23 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
       font-size: 0.88rem;
       line-height: 1.5;
       letter-spacing: 0.02em;
+    }}
+
+    .footer-summary {{
+      color: var(--muted);
+    }}
+
+    .footer-footnotes {{
+      margin: 8px 0 0;
+      padding-left: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }}
+
+    .footer-footnotes li + li {{
+      margin-top: 4px;
     }}
 
     .tooltip-copy br {{

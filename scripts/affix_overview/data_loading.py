@@ -162,7 +162,9 @@ def load_difficulties(
             else ""
         )
         tooltip = strings.get(localized_tooltip_key, "")
-        tooltip_html, tooltip_plain = convert_storm_markup(tooltip, resolver)
+        tooltip_html, tooltip_plain, _tooltip_footnotes = convert_storm_markup(
+            tooltip, resolver
+        )
         difficulties.append(
             DifficultyRecord(
                 difficulty_value=int(value_text),
@@ -292,8 +294,6 @@ def append_condition(
             search_text=" ".join(part for part in search_parts if part),
         )
     )
-
-
 def format_level_condition(min_level: int, max_level: int) -> str:
     if min_level > 0 and max_level > 0:
         if min_level == max_level:
@@ -474,7 +474,9 @@ def load_affixes(
         if name is None or tooltip is None:
             continue
 
-        tooltip_html, tooltip_plain = convert_storm_markup(tooltip, resolver)
+        tooltip_html, tooltip_plain, tooltip_footnotes = convert_storm_markup(
+            tooltip, resolver
+        )
         icon_path = fields.get("Icon", default_fields.get("Icon", ""))
         icon_name = icon_file_name(icon_path)
         icon_url, uses_placeholder = resolve_icon_url(
@@ -499,6 +501,7 @@ def load_affixes(
                 name=name,
                 tooltip_html=tooltip_html,
                 tooltip_plain=tooltip_plain,
+                tooltip_footnotes=tooltip_footnotes,
                 rarity=rarity,
                 max_stacks=max_stacks,
                 icon_name=icon_name,

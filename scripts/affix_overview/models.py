@@ -11,12 +11,19 @@ class AffixCondition:
     search_text: str
 
 
+@dataclass(frozen=True)
+class TooltipFootnote:
+    marker: str
+    text: str
+
+
 @dataclass
 class AffixRecord:
     affix_id: str
     name: str
     tooltip_html: str
     tooltip_plain: str
+    tooltip_footnotes: list[TooltipFootnote]
     rarity: str
     max_stacks: int
     icon_name: str

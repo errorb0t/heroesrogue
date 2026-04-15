@@ -5,6 +5,7 @@ import re
 
 from .constants import STORM_COLORS
 from .dynamic_values import DynamicValueResolver
+from .models import TooltipFootnote
 
 
 def normalize_color(value: str) -> str | None:
@@ -24,9 +25,43 @@ def format_dynamic_value(value: float, precision: int | None) -> str:
     return f"{value:.4f}".rstrip("0").rstrip(".")
 
 
-def convert_storm_markup(text: str, resolver: DynamicValueResolver) -> tuple[str, str]:
+def format_dynamic_variant_footnote(
+    ref: str, resolver: DynamicValueResolver
+) -> TooltipFootnote | None:
+    galaxy_var_match = re.fullmatch(r"\$GalaxyVar:([^$]+)\$", ref)
+    if galaxy_var_match is None:
+        return None
+
+    variant_group = resolver.resolve_galaxy_var_variants(galaxy_var_match.group(1))
+    if variant_group is None or not variant_group.variants:
+        return None
+
+    sentences: list[str] = []
+    for variant in sorted(
+        variant_group.variants,
+        key=lambda item: (-item.value, tuple(resolver.resolve_hero_name(hero) for hero in item.heroes)),
+    ):
+        heroes_text = ", ".join(
+            resolver.resolve_hero_name(hero_id) for hero_id in variant.heroes
+        )
+        sentences.append(
+            f"Reduced to {format_dynamic_value(variant.value, None)} for {heroes_text}."
+        )
+    return TooltipFootnote(marker="*", text=" ".join(sentences))
+
+
+def next_footnote_marker(existing_count: int) -> str:
+    return "*" * (existing_count + 1)
+
+
+def convert_storm_markup(
+    text: str, resolver: DynamicValueResolver
+) -> tuple[str, str, list[TooltipFootnote]]:
     plain_parts: list[str] = []
     html_parts: list[str] = []
+    footnotes: list[TooltipFootnote] = []
+    seen_footnotes: set[tuple[str, str]] = set()
+    ref_markers: dict[str, str] = {}
     cursor = 0
 
     def append_text(chunk: str) -> None:
@@ -79,8 +114,29 @@ def convert_storm_markup(text: str, resolver: DynamicValueResolver) -> tuple[str
                 )
             else:
                 formatted_value = format_dynamic_value(resolved_value, precision)
-                plain_parts.append(formatted_value)
-                html_parts.append(html.escape(formatted_value))
+                variant_footnote = format_dynamic_variant_footnote(ref, resolver)
+                markers: list[str] = []
+                if variant_footnote is not None:
+                    marker = ref_markers.get(ref)
+                    if marker is None:
+                        marker = next_footnote_marker(len(footnotes))
+                        ref_markers[ref] = marker
+                        footnote_key = (marker, variant_footnote.text)
+                        if footnote_key not in seen_footnotes:
+                            seen_footnotes.add(footnote_key)
+                            footnotes.append(
+                                TooltipFootnote(marker=marker, text=variant_footnote.text)
+                            )
+                    markers.append(marker)
+                marker_suffix = "".join(markers)
+                plain_parts.append(f"{formatted_value}{marker_suffix}")
+                html_parts.append(
+                    html.escape(formatted_value)
+                    + "".join(
+                        f'<sup class="dynamic-footnote-marker">{html.escape(marker)}</sup>'
+                        for marker in markers
+                    )
+                )
             continue
 
     append_text(text[cursor:])
@@ -90,4 +146,4 @@ def convert_storm_markup(text: str, resolver: DynamicValueResolver) -> tuple[str
     plain_text = "".join(plain_parts)
     plain_text = re.sub(r"\n{3,}", "\n\n", plain_text)
     plain_text = re.sub(r"[ \t]+", " ", plain_text).strip()
-    return html_text, plain_text
+    return html_text, plain_text, footnotes
