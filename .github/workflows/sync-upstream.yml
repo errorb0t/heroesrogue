@@ -1,0 +1,46 @@
+name: Sync Upstream
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: write-master
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out master
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: master
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install generator dependency
+        run: python3 -m pip install Pillow
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Ensure branch checkout
+        run: git checkout master
+
+      - name: Sync upstream and regenerate docs
+        env:
+          UPSTREAM_URL: https://github.com/sobbyellow/heroesrogue.git
+          UPSTREAM_BRANCH: master
+        run: ./scripts/sync_upstream.sh --branch master --push

@@ -1,0 +1,58 @@
+name: Regenerate Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - "mods/**"
+      - "scripts/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: write-master
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    if: github.event_name == 'workflow_dispatch' || github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out master
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: master
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install generator dependency
+        run: python3 -m pip install Pillow
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Ensure branch checkout
+        run: git checkout master
+
+      - name: Regenerate docs
+        run: python3 scripts/generate_affix_overview.py
+
+      - name: Commit and push docs
+        run: |
+          git add docs
+          if git diff --cached --quiet; then
+            echo "No docs changes to commit."
+            exit 0
+          fi
+          git commit -m "Regenerate affix overview"
+          git push origin master
