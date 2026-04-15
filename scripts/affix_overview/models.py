@@ -3,6 +3,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 
+@dataclass(frozen=True)
+class AffixCondition:
+    key: str
+    label: str
+    value: str
+    search_text: str
+
+
 @dataclass
 class AffixRecord:
     affix_id: str
@@ -15,7 +23,8 @@ class AffixRecord:
     icon_url: str
     negative: bool
     hero_specific: str
-    hero_specific_raw: str
+    has_hero_condition: bool
+    conditions: list[AffixCondition]
     uses_placeholder: bool
 
 

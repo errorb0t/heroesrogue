@@ -13,7 +13,22 @@ from .constants import (
 )
 from .dynamic_values import DynamicValueResolver
 from .markup import convert_storm_markup
-from .models import AffixRecord, DifficultyRecord
+from .models import AffixCondition, AffixRecord, DifficultyRecord
+
+
+FIELD_VALUE_ATTRIBUTES = ("String", "Int", "value", "Value")
+HERO_TAG_LABELS = {
+    "mana": "Mana heroes only",
+    "!mana": "Non-mana heroes only",
+    "melee": "Melee heroes only",
+    "!melee": "Non-melee heroes only",
+    "ranged": "Ranged heroes only",
+    "!ranged": "Non-ranged heroes only",
+    "all": "All heroes",
+    "!all": "No heroes",
+    "starter": "Starter heroes only",
+    "!starter": "Non-starter heroes only",
+}
 
 
 def load_strings(path: Path) -> dict[str, str]:
@@ -69,7 +84,7 @@ def load_dynamic_value_overrides(
     return overrides
 
 
-def load_hero_name_overrides(path: Path) -> dict[str, str]:
+def load_name_overrides(path: Path, *, label: str) -> dict[str, str]:
     if not path.exists():
         return {}
 
@@ -78,15 +93,23 @@ def load_hero_name_overrides(path: Path) -> dict[str, str]:
         raise RuntimeError(f"Expected a JSON object in {path}")
 
     overrides: dict[str, str] = {}
-    for hero_id, display_name in raw_data.items():
-        if not isinstance(hero_id, str) or not isinstance(display_name, str):
+    for raw_key, display_name in raw_data.items():
+        if not isinstance(raw_key, str) or not isinstance(display_name, str):
             raise RuntimeError(
-                f"Invalid hero name override entry in {path}: "
-                f"{hero_id!r}={display_name!r}"
+                f"Invalid {label} override entry in {path}: "
+                f"{raw_key!r}={display_name!r}"
             )
-        overrides[hero_id] = display_name
+        overrides[raw_key] = display_name
 
     return overrides
+
+
+def load_hero_name_overrides(path: Path) -> dict[str, str]:
+    return load_name_overrides(path, label="hero name")
+
+
+def load_map_name_overrides(path: Path) -> dict[str, str]:
+    return load_name_overrides(path, label="map name")
 
 
 def extract_function_body(path: Path, signature: str) -> str:
@@ -154,8 +177,19 @@ def load_difficulties(
     return sorted(difficulties, key=lambda item: item.difficulty_value)
 
 
-def instance_fields(instance: ET.Element) -> dict[str, str]:
+def field_child_value(child: ET.Element) -> str:
+    if child.tag == "User":
+        return child.attrib.get("Instance", "")
+    for attr_name in FIELD_VALUE_ATTRIBUTES:
+        if attr_name in child.attrib:
+            return child.attrib[attr_name]
+    return ""
+
+
+def instance_fields(instance: ET.Element | None) -> dict[str, str]:
     values: dict[str, str] = {}
+    if instance is None:
+        return values
     for child in instance:
         field = child.find("Field")
         if field is None or "Index" in field.attrib:
@@ -163,12 +197,22 @@ def instance_fields(instance: ET.Element) -> dict[str, str]:
         field_id = field.attrib.get("Id")
         if not field_id:
             continue
-        for attr_name in ("String", "Int", "value", "Value"):
-            if attr_name in child.attrib:
-                values[field_id] = child.attrib[attr_name]
-                break
-        else:
-            values[field_id] = ""
+        values[field_id] = field_child_value(child)
+    return values
+
+
+def instance_field_lists(instance: ET.Element | None) -> dict[str, list[str]]:
+    values: dict[str, list[str]] = {}
+    if instance is None:
+        return values
+    for child in instance:
+        field = child.find("Field")
+        if field is None:
+            continue
+        field_id = field.attrib.get("Id")
+        if not field_id:
+            continue
+        values.setdefault(field_id, []).append(field_child_value(child))
     return values
 
 
@@ -208,9 +252,188 @@ def resolve_icon_url(
     if icon_name and (icon_dir / icon_name).exists():
         cache[icon_path] = (f"icons/{icon_name}", False)
     else:
-        print("Icon not found")
-        raise
+        placeholder_name = "affix_icon_question_mark.png"
+        if not (icon_dir / placeholder_name).exists():
+            raise RuntimeError(
+                f"Icon not found for {icon_path!r} and placeholder {placeholder_name!r} is missing"
+            )
+        cache[icon_path] = (f"icons/{placeholder_name}", True)
     return cache[icon_path]
+
+
+def split_semicolon_tags(raw_tags: str) -> list[str]:
+    return [tag for tag in (part.strip() for part in raw_tags.split(";")) if tag]
+
+
+def resolve_affix_name(affix_id: str, strings: Mapping[str, str]) -> str:
+    return strings.get(f"Affix/Name/{affix_id}", affix_id)
+
+
+def resolve_display_name(raw_name: str, overrides: Mapping[str, str]) -> str:
+    return overrides.get(raw_name, raw_name)
+
+
+def append_condition(
+    conditions: list[AffixCondition],
+    *,
+    key: str,
+    label: str,
+    value: str,
+    raw_values: list[str] | None = None,
+) -> None:
+    search_parts = [label, value]
+    if raw_values:
+        search_parts.extend(raw_values)
+    conditions.append(
+        AffixCondition(
+            key=key,
+            label=label,
+            value=value,
+            search_text=" ".join(part for part in search_parts if part),
+        )
+    )
+
+
+def format_level_condition(min_level: int, max_level: int) -> str:
+    if min_level > 0 and max_level > 0:
+        if min_level == max_level:
+            return f"Level {min_level} only"
+        return f"Levels {min_level}-{max_level}"
+    if min_level > 0:
+        return f"Level {min_level}+"
+    if max_level > 0:
+        return f"Up to Level {max_level}"
+    return ""
+
+
+def build_affix_conditions(
+    fields: Mapping[str, str],
+    field_lists: Mapping[str, list[str]],
+    strings: Mapping[str, str],
+    hero_name_overrides: Mapping[str, str],
+    map_name_overrides: Mapping[str, str],
+) -> tuple[list[AffixCondition], str, bool]:
+    conditions: list[AffixCondition] = []
+    hero_specific_raw = fields.get("HeroSpecific", "").strip()
+    hero_specific = ""
+    has_hero_condition = False
+
+    if hero_specific_raw:
+        hero_specific = resolve_display_name(hero_specific_raw, hero_name_overrides)
+        append_condition(
+            conditions,
+            key="hero-specific",
+            label="Hero",
+            value=f"{hero_specific} only",
+            raw_values=[hero_specific_raw, hero_specific],
+        )
+        has_hero_condition = True
+    else:
+        hero_tags = split_semicolon_tags(fields.get("HeroTags", ""))
+        if hero_tags:
+            has_hero_condition = True
+            for hero_tag in hero_tags:
+                append_condition(
+                    conditions,
+                    key="hero-tag",
+                    label="Heroes",
+                    value=HERO_TAG_LABELS.get(hero_tag, hero_tag),
+                    raw_values=[hero_tag],
+                )
+
+        excluded_heroes = [
+            resolve_display_name(hero_id, hero_name_overrides)
+            for hero_id in field_lists.get("HeroesExcluded", [])
+            if hero_id.strip()
+        ]
+        if excluded_heroes:
+            has_hero_condition = True
+            append_condition(
+                conditions,
+                key="heroes-excluded",
+                label="Excludes Heroes",
+                value=", ".join(excluded_heroes),
+                raw_values=excluded_heroes,
+            )
+
+    map_specific_raw = fields.get("MapSpecific", "").strip()
+    if map_specific_raw:
+        map_name = resolve_display_name(map_specific_raw, map_name_overrides)
+        append_condition(
+            conditions,
+            key="map-specific",
+            label="Map",
+            value=f"{map_name} only",
+            raw_values=[map_specific_raw, map_name],
+        )
+    else:
+        excluded_maps = [
+            resolve_display_name(map_id, map_name_overrides)
+            for map_id in field_lists.get("MapsExcluded", [])
+            if map_id.strip()
+        ]
+        if excluded_maps:
+            append_condition(
+                conditions,
+                key="maps-excluded",
+                label="Excludes Maps",
+                value=", ".join(excluded_maps),
+                raw_values=excluded_maps,
+            )
+
+    required_affixes = [
+        resolve_affix_name(required_affix, strings)
+        for required_affix in field_lists.get("AffixesRequired", [])
+        if required_affix.strip() and required_affix != "[Default]"
+    ]
+    if required_affixes:
+        append_condition(
+            conditions,
+            key="affixes-required",
+            label="Requires Affixes",
+            value=", ".join(required_affixes),
+            raw_values=required_affixes,
+        )
+
+    excluded_affixes = [
+        resolve_affix_name(excluded_affix, strings)
+        for excluded_affix in field_lists.get("AffixesExcluded", [])
+        if excluded_affix.strip() and excluded_affix != "[Default]"
+    ]
+    if excluded_affixes:
+        append_condition(
+            conditions,
+            key="affixes-excluded",
+            label="Excludes Affixes",
+            value=", ".join(excluded_affixes),
+            raw_values=excluded_affixes,
+        )
+
+    required_talents = [
+        talent_id for talent_id in field_lists.get("TalentsRequired", []) if talent_id
+    ]
+    if required_talents:
+        append_condition(
+            conditions,
+            key="talents-required",
+            label="Requires Talents",
+            value=", ".join(required_talents),
+            raw_values=required_talents,
+        )
+
+    level_condition = format_level_condition(
+        parse_int_field(fields.get("LevelMin"), default=0, empty_value=0),
+        parse_int_field(fields.get("LevelMax"), default=0, empty_value=0),
+    )
+    if level_condition:
+        append_condition(
+            conditions,
+            key="level-range",
+            label="Levels",
+            value=level_condition,
+        )
+
+    return conditions, hero_specific, has_hero_condition
 
 
 def load_affixes(
@@ -218,6 +441,7 @@ def load_affixes(
     output_dir: Path,
     resolver: DynamicValueResolver,
     hero_name_overrides: Mapping[str, str],
+    map_name_overrides: Mapping[str, str],
 ) -> list[AffixRecord]:
     tree = ET.parse(AFFIX_DATA_PATH)
     affix_user = tree.find(".//CUser[@id='Affix']")
@@ -239,6 +463,7 @@ def load_affixes(
             continue
 
         fields = {**default_fields, **instance_fields(instance)}
+        field_lists = instance_field_lists(instance)
         if not is_affix_enabled(fields):
             continue
 
@@ -260,8 +485,13 @@ def load_affixes(
         max_stacks = parse_int_field(fields.get("Max"), default=1, empty_value=0)
         negative = fields.get("Negative", "0") == "1"
         rarity = fields.get("Rarity", "Common") or "Common"
-        hero_specific_raw = fields.get("HeroSpecific", "")
-        hero_specific = hero_name_overrides.get(hero_specific_raw, hero_specific_raw)
+        conditions, hero_specific, has_hero_condition = build_affix_conditions(
+            fields,
+            field_lists,
+            strings,
+            hero_name_overrides,
+            map_name_overrides,
+        )
 
         affixes.append(
             AffixRecord(
@@ -275,7 +505,8 @@ def load_affixes(
                 icon_url=icon_url,
                 negative=negative,
                 hero_specific=hero_specific,
-                hero_specific_raw=hero_specific_raw,
+                has_hero_condition=has_hero_condition,
+                conditions=conditions,
                 uses_placeholder=uses_placeholder,
             )
         )

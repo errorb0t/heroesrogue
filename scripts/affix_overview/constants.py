@@ -14,6 +14,7 @@ GAME_DATA_DIR = MOD_ROOT / "Base.StormData" / "GameData"
 STRINGS_PATH = MOD_ROOT / "enUS.StormData" / "LocalizedData" / "GameStrings.txt"
 DYNAMIC_OVERRIDES_PATH = ROOT / "scripts" / "affix_dynamic_overrides.json"
 HERO_NAME_OVERRIDES_PATH = ROOT / "scripts" / "affix_hero_names.json"
+MAP_NAME_OVERRIDES_PATH = ROOT / "scripts" / "affix_map_names.json"
 
 RARITY_ORDER = ["Starter", "Common", "Uncommon", "Rare", "Epic", "Legendary"]
 RARITY_COLORS = {

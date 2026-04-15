@@ -235,6 +235,7 @@
       border-top: 1px solid #24344a;
       color: var(--muted);
       font-size: 0.88rem;
+      line-height: 1.5;
       letter-spacing: 0.02em;
     }
 
@@ -323,11 +324,11 @@
     <section class="hero">
       <div class="hero-head">
         <h2>Boons</h2>
-        <input id="search" class="search" type="search" placeholder="Search by boon name, hero, rarity, or tooltip text">
+        <input id="search" class="search" type="search" placeholder="Search by boon name, hero, tooltip, ...">
       </div>
       <div class="filter-row" id="filters">
         <button class="filter-chip active" type="button" data-rarity-filter="all">All</button>
-        <button class="filter-chip" type="button" data-rarity-filter="hero-specific">Hero specific</button>
+        <button class="filter-chip" type="button" data-rarity-filter="hero-limited">Hero-specific</button>
         <button class="filter-chip" type="button" data-rarity-filter="Starter">Starter</button>
         <button class="filter-chip" type="button" data-rarity-filter="Common">Common</button>
         <button class="filter-chip" type="button" data-rarity-filter="Uncommon">Uncommon</button>
@@ -339,11 +340,11 @@
     </section>
 
     <section class="grid" id="affix-grid">
-      <article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="themark accurate mark gain the benefits of trueshot aura and all hunter&#x27;s mark talents. increases hunter&#x27;s mark duration by 4 seconds.
+      <article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="themark accurate mark gain the benefits of trueshot aura and all hunter&#x27;s mark talents. increases hunter&#x27;s mark duration by 4 seconds.
 
 [quest] repeatable quest: basic attacks against enemy heroes increases attack damage by 0.33.
 
-retain 50% of quest progress after winning the game. starter tyrande tyrande boon">
+retain 50% of quest progress after winning the game. starter tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_huntersmark.png" alt="Accurate Mark icon" loading="lazy">
                 <div class="meta-row">
@@ -353,8 +354,8 @@ retain 50% of quest progress after winning the game. starter tyrande tyrande boo
               </div>
               <h2 class="card-title">Accurate Mark</h2>
               <div class="tooltip-copy">Gain the benefits of Trueshot Aura and all Hunter&#x27;s Mark talents. Increases Hunter&#x27;s Mark duration by <span style="color: #ffd96a">4</span> seconds.<br><br><span class="storm-inline-icon" aria-hidden="true">◆</span><span style="color: #99d0ff">Repeatable Quest:</span> Basic Attacks against enemy Heroes increases Attack Damage by <span style="color: #ffd96a">0.33</span>.<br><br>Retain <span style="color: #ffd96a">50%</span> of Quest progress after winning the game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="false" data-search="alltalents all talents gain all talents in a tier whenever you reach a non-heroic talent tier. starter boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="alltalents all talents gain all talents in a tier whenever you reach a non-heroic talent tier. starter heroes non-starter heroes only !starter boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_limitless.png" alt="All Talents icon" loading="lazy">
                 <div class="meta-row">
@@ -364,8 +365,8 @@ retain 50% of quest progress after winning the game. starter tyrande tyrande boo
               </div>
               <h2 class="card-title">All Talents</h2>
               <div class="tooltip-copy">Gain all talents in a tier whenever you reach a non-Heroic talent tier.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="spidermastery arachnophile gain the benefits of all corpse spiders talents. improved corpse spider talents become available to choose. starter nazeebo witchdoctor boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Non-starter heroes only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="spidermastery arachnophile gain the benefits of all corpse spiders talents. improved corpse spider talents become available to choose. starter nazeebo hero nazeebo only witchdoctor nazeebo boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_nazeebo_corpsespider.png" alt="Arachnophile icon" loading="lazy">
                 <div class="meta-row">
@@ -375,12 +376,12 @@ retain 50% of quest progress after winning the game. starter tyrande tyrande boo
               </div>
               <h2 class="card-title">Arachnophile</h2>
               <div class="tooltip-copy">Gain the benefits of all Corpse Spiders talents. Improved Corpse Spider talents become available to choose.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="burningblades burning blades gain the benefits of fiery brand.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Nazeebo only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="burningblades burning blades gain the benefits of fiery brand.
 
 basic attacks increase attack speed by 0.5%, up to 800%. after 2.25 seconds, burning blades rapidly decays.
 
-dealing damage with dive or sweeping strike grants 1 stack of burning blades. starter illidan illidan boon">
+dealing damage with dive or sweeping strike grants 1 stack of burning blades. starter illidan hero illidan only illidan illidan boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_illidan_sweepingstrike_b.png" alt="Burning Blades icon" loading="lazy">
                 <div class="meta-row">
@@ -390,10 +391,10 @@ dealing damage with dive or sweeping strike grants 1 stack of burning blades. st
               </div>
               <h2 class="card-title">Burning Blades</h2>
               <div class="tooltip-copy">Gain the benefits of Fiery Brand.<br><br>Basic Attacks increase Attack Speed by <span style="color: #ffd96a">0.5%</span>, up to <span style="color: #ffd96a">800%</span>. After <span style="color: #ffd96a">2.25</span> seconds, Burning Blades rapidly decays.<br><br>Dealing damage with Dive or Sweeping Strike grants <span style="color: #ffd96a">1</span> stack of Burning Blades.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="buttonmasher button masher gain the benefits of viking bribery, spin to win!, norse force, and jump!.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Illidan only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="buttonmasher button masher gain the benefits of viking bribery, spin to win!, norse force, and jump!.
 
-reduces spin to win!, norse force, jump!, and go go go! cooldowns by 50%. starter the lost vikings lostvikings boon">
+reduces spin to win!, norse force, jump!, and go go go! cooldowns by 50%. starter the lost vikings hero the lost vikings only lostvikings the lost vikings boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_lostvikings_jump.png" alt="Button Masher icon" loading="lazy">
                 <div class="meta-row">
@@ -403,10 +404,10 @@ reduces spin to win!, norse force, jump!, and go go go! cooldowns by 50%. starte
               </div>
               <h2 class="card-title">Button Masher</h2>
               <div class="tooltip-copy">Gain the benefits of Viking Bribery, Spin To Win!, Norse Force, and Jump!.<br><br>Reduces Spin To Win!, Norse Force, Jump!, and Go Go Go! cooldowns by <span style="color: #ffd96a">50%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="deepdive deep dive gain the benefits of all dive talents.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for The Lost Vikings only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="deepdive deep dive gain the benefits of all dive talents.
 
-dive gains unlimited range and deals bonus damage to heroes equal to 5% of their maximum health. starter illidan illidan boon">
+dive gains unlimited range and deals bonus damage to heroes equal to 5% of their maximum health. starter illidan hero illidan only illidan illidan boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_illidan_dive_a.png" alt="Deep Dive icon" loading="lazy">
                 <div class="meta-row">
@@ -416,12 +417,12 @@ dive gains unlimited range and deals bonus damage to heroes equal to 5% of their
               </div>
               <h2 class="card-title">Deep Dive</h2>
               <div class="tooltip-copy">Gain the benefits of all Dive talents.<br><br>Dive gains unlimited range and deals bonus damage to Heroes equal to <span style="color: #ffd96a">5%</span> of their maximum Health.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="elunesranger elune&#x27;s ranger gain the benefits of all sentinel talents and sentinel gains a 3rd charge. reduces the mana cost of sentinel by 100%.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Illidan only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="elunesranger elune&#x27;s ranger gain the benefits of all sentinel talents and sentinel gains a 3rd charge. reduces the mana cost of sentinel by 100%.
 
 [quest] repeatable quest: hitting enemy heroes with sentinel increases its damage by 5%.
 
-retain 25% of quest progress after winning the game. starter tyrande tyrande boon">
+retain 25% of quest progress after winning the game. starter tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_sentinel.png" alt="Elune&#x27;s Ranger icon" loading="lazy">
                 <div class="meta-row">
@@ -431,10 +432,10 @@ retain 25% of quest progress after winning the game. starter tyrande tyrande boo
               </div>
               <h2 class="card-title">Elune&#x27;s Ranger</h2>
               <div class="tooltip-copy">Gain the benefits of all Sentinel talents and Sentinel gains a <span style="color: #ffd96a">3rd</span> charge. Reduces the Mana Cost of Sentinel by <span style="color: #ffd96a">100%</span>.<br><br><span class="storm-inline-icon" aria-hidden="true">◆</span><span style="color: #99d0ff">Repeatable Quest:</span> Hitting enemy Heroes with Sentinel increases its damage by <span style="color: #ffd96a">5%</span>.<br><br>Retain <span style="color: #ffd96a">25%</span> of Quest progress after winning the game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="frostwolffury frostwolf&#x27;s fury gain the benefits of frostwolf pack, ancestral wrath, frostwolf&#x27;s grace, and spirit shield.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="frostwolffury frostwolf&#x27;s fury gain the benefits of frostwolf pack, ancestral wrath, frostwolf&#x27;s grace, and spirit shield.
 
-basic attacks grant 1 stack of frostwolf resilience. starter thrall thrall boon">
+basic attacks grant 1 stack of frostwolf resilience. starter thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_frostwolf_fury.png" alt="Frostwolf&#x27;s Fury icon" loading="lazy">
                 <div class="meta-row">
@@ -444,12 +445,12 @@ basic attacks grant 1 stack of frostwolf resilience. starter thrall thrall boon"
               </div>
               <h2 class="card-title">Frostwolf&#x27;s Fury</h2>
               <div class="tooltip-copy">Gain the benefits of Frostwolf Pack, Ancestral Wrath, Frostwolf&#x27;s Grace, and Spirit Shield.<br><br>Basic Attacks grant <span style="color: #ffd96a">1</span> stack of Frostwolf Resilience.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="greatvikinghoard great viking hoard enemy heroes drop 4 regeneration globes and enemy structures drop 1 regeneration globe on death. these globes do not turn neutral.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="greatvikinghoard great viking hoard enemy heroes drop 4 regeneration globes and enemy structures drop 1 regeneration globe on death. these globes do not turn neutral.
 
 [quest] quest: viking hoard grants 0.5% attack damage, spell power, movement speed, and maximum health per regeneration globe.
 
-retain 25% of viking hoard&#x27;s quest progress after winning the game. starter the lost vikings lostvikings boon">
+retain 25% of viking hoard&#x27;s quest progress after winning the game. starter the lost vikings hero the lost vikings only lostvikings the lost vikings boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_lostvikings_vikinghoard.png" alt="Great Viking Hoard icon" loading="lazy">
                 <div class="meta-row">
@@ -459,10 +460,10 @@ retain 25% of viking hoard&#x27;s quest progress after winning the game. starter
               </div>
               <h2 class="card-title">Great Viking Hoard</h2>
               <div class="tooltip-copy">Enemy Heroes drop <span style="color: #ffd96a">4</span> Regeneration Globes and enemy Structures drop <span style="color: #ffd96a">1</span> Regeneration Globe on death. These globes do not turn Neutral.<br><br><span class="storm-inline-icon" aria-hidden="true">◆</span><span style="color: #99d0ff">Quest:</span> Viking Hoard grants <span style="color: #ffd96a">0.5%</span> Attack Damage, Spell Power, Movement Speed, and maximum Health per Regeneration Globe.<br><br>Retain <span style="color: #ffd96a">25%</span> of Viking Hoard&#x27;s Quest progress after winning the game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="hammertime hammerer gain the benefits of all storm bolt talents. storm bolt deals bonus damage to enemy heroes equal to 7% of their maximum health.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for The Lost Vikings only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="hammertime hammerer gain the benefits of all storm bolt talents. storm bolt deals bonus damage to enemy heroes equal to 7% of their maximum health.
 
-retain storm bolt&#x27;s quest progress after winning the game. starter muradin muradin boon">
+retain storm bolt&#x27;s quest progress after winning the game. starter muradin hero muradin only muradin muradin boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_muradin_stormbolt_a.png" alt="Hammerer icon" loading="lazy">
                 <div class="meta-row">
@@ -472,14 +473,14 @@ retain storm bolt&#x27;s quest progress after winning the game. starter muradin 
               </div>
               <h2 class="card-title">Hammerer</h2>
               <div class="tooltip-copy">Gain the benefits of all Storm Bolt talents. Storm Bolt deals bonus damage to enemy Heroes equal to <span style="color: #ffd96a">7%</span> of their maximum Health.<br><br>Retain Storm Bolt&#x27;s Quest progress after winning the game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="jumper jumper gain the benefits of all dwarf toss talents and gain unstoppable during the jump.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Muradin only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="jumper jumper gain the benefits of all dwarf toss talents and gain unstoppable during the jump.
 
 increases dwarf toss&#x27;s range and radius by 100%.
 
 [quest] repeatable quest: hitting enemy heroes with dwarf toss increases its damage by 10%.
 
-retain 50% of quest progress after winning the game. starter muradin muradin boon">
+retain 50% of quest progress after winning the game. starter muradin hero muradin only muradin muradin boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_muradin_dwarftoss_a.png" alt="Jumper icon" loading="lazy">
                 <div class="meta-row">
@@ -489,10 +490,10 @@ retain 50% of quest progress after winning the game. starter muradin muradin boo
               </div>
               <h2 class="card-title">Jumper</h2>
               <div class="tooltip-copy">Gain the benefits of all Dwarf Toss talents and gain Unstoppable during the jump.<br><br>Increases Dwarf Toss&#x27;s range and radius by <span style="color: #ffd96a">100%</span>.<br><br><span class="storm-inline-icon" aria-hidden="true">◆</span><span style="color: #99d0ff">Repeatable Quest:</span> Hitting enemy Heroes with Dwarf Toss increases its damage by <span style="color: #ffd96a">10%</span>.<br><br>Retain <span style="color: #ffd96a">50%</span> of Quest progress after winning the game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="rangedthrall lightning rod thrall&#x27;s basic attack becomes ranged. gain the benefits of nexus blades and elemental assault.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Muradin only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="rangedthrall lightning rod thrall&#x27;s basic attack becomes ranged. gain the benefits of nexus blades and elemental assault.
 
-increases feral spirit and chain lightning&#x27;s range by 50%. starter thrall thrall boon">
+increases feral spirit and chain lightning&#x27;s range by 50%. starter thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_ranged_thrall.png" alt="Lightning Rod icon" loading="lazy">
                 <div class="meta-row">
@@ -502,10 +503,10 @@ increases feral spirit and chain lightning&#x27;s range by 50%. starter thrall t
               </div>
               <h2 class="card-title">Lightning Rod</h2>
               <div class="tooltip-copy">Thrall&#x27;s Basic Attack becomes ranged. Gain the benefits of Nexus Blades and Elemental Assault.<br><br>Increases Feral Spirit and Chain Lightning&#x27;s range by <span style="color: #ffd96a">50%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="meteorshower meteor shower gain the benefits of elune&#x27;s gift. every basic attack has a 33% chance to fire a lunar flare at a random nearby enemy.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="meteorshower meteor shower gain the benefits of elune&#x27;s gift. every basic attack has a 33% chance to fire a lunar flare at a random nearby enemy.
 
-retain lunar flare&#x27;s quest progress after winning the game. starter tyrande tyrande boon">
+retain lunar flare&#x27;s quest progress after winning the game. starter tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_lunarflare.png" alt="Meteor Shower icon" loading="lazy">
                 <div class="meta-row">
@@ -515,14 +516,14 @@ retain lunar flare&#x27;s quest progress after winning the game. starter tyrande
               </div>
               <h2 class="card-title">Meteor Shower</h2>
               <div class="tooltip-copy">Gain the benefits of Elune&#x27;s Gift. Every Basic Attack has a <span style="color: #ffd96a">33%</span> chance to fire a Lunar Flare at a random nearby enemy.<br><br>Retain Lunar Flare&#x27;s Quest progress after winning the game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="limingmissilebarrage missile barrage gain the benefits of all magic missiles talents.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="limingmissilebarrage missile barrage gain the benefits of all magic missiles talents.
 
 after the initial missiles, magic missiles fires a barage of 15 magic missiles over 1 second dealing 50% damage, but its cooldown is increased to 7 seconds.
 
 the additional magic missiles deal 10% damage to structures.
 
-additional missiles do not benefit from seeker. starter li-ming wizard boon">
+additional missiles do not benefit from seeker. starter li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_wizard_magicmissiles.png" alt="Missile Barrage icon" loading="lazy">
                 <div class="meta-row">
@@ -532,10 +533,10 @@ additional missiles do not benefit from seeker. starter li-ming wizard boon">
               </div>
               <h2 class="card-title">Missile Barrage</h2>
               <div class="tooltip-copy">Gain the benefits of all Magic Missiles talents.<br><br>After the initial missiles, Magic Missiles fires a barage of <span style="color: #ffd96a">15</span> magic missiles over <span style="color: #ffd96a">1</span> second dealing <span style="color: #ffd96a">50%</span> damage, but its cooldown is increased to <span style="color: #ffd96a">7</span> seconds.<br><br>The additional magic missiles deal <span style="color: #ffd96a">10%</span> damage to Structures.<br><br>Additional missiles do not benefit from Seeker.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="limingorbing orbing gain the benefits of all arcane orb talents.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="limingorbing orbing gain the benefits of all arcane orb talents.
 
-arcane orb fires 2 additional orbs in an arc. starter li-ming wizard boon">
+arcane orb fires 2 additional orbs in an arc. starter li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_wizard_arcaneorb.png" alt="Orbing icon" loading="lazy">
                 <div class="meta-row">
@@ -545,12 +546,12 @@ arcane orb fires 2 additional orbs in an arc. starter li-ming wizard boon">
               </div>
               <h2 class="card-title">Orbing</h2>
               <div class="tooltip-copy">Gain the benefits of all Arcane Orb talents.<br><br>Arcane Orb fires <span style="color: #ffd96a">2</span> additional orbs in an arc.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="false" data-search="allstatsself overwhelming power increases attack speed, movement speed, spell power, and all damage dealt by 20%.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="allstatsself overwhelming power increases attack speed, movement speed, spell power, and all damage dealt by 20%.
 
 basic abilities recharge 50% faster.
 
-heal for 10% of damage dealt. starter boon">
+heal for 10% of damage dealt. starter heroes non-starter heroes only !starter boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_all_stats_self.png" alt="Overwhelming Power icon" loading="lazy">
                 <div class="meta-row">
@@ -560,8 +561,8 @@ heal for 10% of damage dealt. starter boon">
               </div>
               <h2 class="card-title">Overwhelming Power</h2>
               <div class="tooltip-copy">Increases Attack Speed, Movement Speed, Spell Power, and all damage dealt by <span style="color: #ffd96a">20%</span>.<br><br>Basic Abilities recharge <span style="color: #ffd96a">50%</span> faster.<br><br>Heal for <span style="color: #ffd96a">10%</span> of damage dealt.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="powerritual power ritual basic attacks deal bonus damage equal to your voodoo ritual stacks and splash for 40.0% damage. starter nazeebo witchdoctor boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Non-starter heroes only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="powerritual power ritual basic attacks deal bonus damage equal to your voodoo ritual stacks and splash for 40.0% damage. starter nazeebo hero nazeebo only witchdoctor nazeebo boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_nazeebo_voodooritual_a.png" alt="Power Ritual icon" loading="lazy">
                 <div class="meta-row">
@@ -571,12 +572,12 @@ heal for 10% of damage dealt. starter boon">
               </div>
               <h2 class="card-title">Power Ritual</h2>
               <div class="tooltip-copy">Basic Attacks deal bonus damage equal to your Voodoo Ritual stacks and splash for <span style="color: #ffd96a">40.0%</span> damage.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="thrallquestsgalore quests galore gain the benefits of echo of the elements, crash lightning, maelstrom weapon, frostwolf pack, and thunderstorm.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Nazeebo only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="thrallquestsgalore quests galore gain the benefits of echo of the elements, crash lightning, maelstrom weapon, frostwolf pack, and thunderstorm.
 
 completing crash lightning and echo of the elements will allow chain lightning to bounce on the same target.
 
-retain 50% of quest progress on these quests after winning the game. starter thrall thrall boon">
+retain 50% of quest progress on these quests after winning the game. starter thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_raid_boss.png" alt="Quests Galore icon" loading="lazy">
                 <div class="meta-row">
@@ -586,10 +587,10 @@ retain 50% of quest progress on these quests after winning the game. starter thr
               </div>
               <h2 class="card-title">Quests Galore</h2>
               <div class="tooltip-copy">Gain the benefits of Echo of the Elements, Crash Lightning, Maelstrom Weapon, Frostwolf Pack, and Thunderstorm.<br><br>Completing Crash Lightning and Echo of the Elements will allow Chain Lightning to bounce on the same target.<br><br>Retain <span style="color: #ffd96a">50%</span> of Quest progress on these Quests after winning the game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="false" data-search="selfreliant self reliant your ai teammates gain 25 permanent armor and 300% increased health and mana regeneration.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="selfreliant self reliant your ai teammates gain 25 permanent armor and 300% increased health and mana regeneration.
 
-your ai teammates heal for 33% of their damage dealt. starter boon">
+your ai teammates heal for 33% of their damage dealt. starter heroes non-starter heroes only !starter boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_talent_resistance.png" alt="Self Reliant icon" loading="lazy">
                 <div class="meta-row">
@@ -599,12 +600,12 @@ your ai teammates heal for 33% of their damage dealt. starter boon">
               </div>
               <h2 class="card-title">Self Reliant</h2>
               <div class="tooltip-copy">Your AI teammates gain <span style="color: #ffd96a">25</span> permanent Armor and <span style="color: #ffd96a">300%</span> increased Health and Mana regeneration.<br><br>Your AI teammates heal for <span style="color: #ffd96a">33%</span> of their damage dealt.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="specializedvikings specialized vikings olaf gains the benefits of large and in charge, 40 permanent armor, and reduces olaf&#x27;s charge cooldown by 25%.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Non-starter heroes only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="specializedvikings specialized vikings olaf gains the benefits of large and in charge, 40 permanent armor, and reduces olaf&#x27;s charge cooldown by 25%.
 
 increases baleog&#x27;s attack speed by 40%.
 
-increases erik&#x27;s attack range by 5.5. starter the lost vikings lostvikings boon">
+increases erik&#x27;s attack range by 5.5. starter the lost vikings hero the lost vikings only lostvikings the lost vikings boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_vikings_selection_all.png" alt="Specialized Vikings icon" loading="lazy">
                 <div class="meta-row">
@@ -614,10 +615,10 @@ increases erik&#x27;s attack range by 5.5. starter the lost vikings lostvikings 
               </div>
               <h2 class="card-title">Specialized Vikings</h2>
               <div class="tooltip-copy">Olaf gains the benefits of Large and In Charge, <span style="color: #ffd96a">40</span> permanent Armor, and reduces Olaf&#x27;s Charge cooldown by <span style="color: #ffd96a">25%</span>.<br><br>Increases Baleog&#x27;s Attack Speed by <span style="color: #ffd96a">40%</span>.<br><br>Increases Erik&#x27;s Attack Range by <span style="color: #ffd96a">5.5</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="limingteleporter teleporter gain the benefits of all teleport talents. calamity deals 50% damage to non-heroes.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for The Lost Vikings only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="limingteleporter teleporter gain the benefits of all teleport talents. calamity deals 50% damage to non-heroes.
 
-increases teleport&#x27;s range by 100% and maximum charges by 2. starter li-ming wizard boon">
+increases teleport&#x27;s range by 100% and maximum charges by 2. starter li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_wizard_teleport.png" alt="Teleporter icon" loading="lazy">
                 <div class="meta-row">
@@ -627,10 +628,10 @@ increases teleport&#x27;s range by 100% and maximum charges by 2. starter li-min
               </div>
               <h2 class="card-title">Teleporter</h2>
               <div class="tooltip-copy">Gain the benefits of all Teleport talents. Calamity deals <span style="color: #ffd96a">50%</span> damage to non-Heroes.<br><br>Increases Teleport&#x27;s range by <span style="color: #ffd96a">100%</span> and maximum charges by <span style="color: #ffd96a">2</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="unendinghatred true unending hatred gain the benefits of nexus blades and unending hatred. increases unending hatred&#x27;s quest stacks obtained from all sources by 25%.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="unendinghatred true unending hatred gain the benefits of nexus blades and unending hatred. increases unending hatred&#x27;s quest stacks obtained from all sources by 25%.
 
-retain 50% of quest progress after winning the game. starter illidan illidan boon">
+retain 50% of quest progress after winning the game. starter illidan hero illidan only illidan illidan boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_talent_seasonedmarksman.png" alt="True Unending Hatred icon" loading="lazy">
                 <div class="meta-row">
@@ -640,10 +641,10 @@ retain 50% of quest progress after winning the game. starter illidan illidan boo
               </div>
               <h2 class="card-title">True Unending Hatred</h2>
               <div class="tooltip-copy">Gain the benefits of Nexus Blades and Unending Hatred. Increases Unending Hatred&#x27;s Quest stacks obtained from all sources by <span style="color: #ffd96a">25%</span>.<br><br>Retain <span style="color: #ffd96a">50%</span> of Quest progress after winning the game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="unstoppableavatar unstoppable avatar gain the benefits of avatar, unstoppable force, and all second wind talents. avatar is always active.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Illidan only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="unstoppableavatar unstoppable avatar gain the benefits of avatar, unstoppable force, and all second wind talents. avatar is always active.
 
-basic attacks deal bonus damage equal to 3% of your current health. starter muradin muradin boon">
+basic attacks deal bonus damage equal to 3% of your current health. starter muradin hero muradin only muradin muradin boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_muradin_avatar.png" alt="Unstoppable Avatar icon" loading="lazy">
                 <div class="meta-row">
@@ -653,12 +654,12 @@ basic attacks deal bonus damage equal to 3% of your current health. starter mura
               </div>
               <h2 class="card-title">Unstoppable Avatar</h2>
               <div class="tooltip-copy">Gain the benefits of Avatar, Unstoppable Force, and all Second Wind talents. Avatar is always active.<br><br>Basic Attacks deal bonus damage equal to <span style="color: #ffd96a">3%</span> of your current Health.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Starter" data-hero-specific="true" data-search="zombiehandler zombie handler gain the benefits of all zombie wall talents.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Muradin only.</footer>
+            </article><article class="affix-card" data-rarity="Starter" data-hero-limited="true" data-search="zombiehandler zombie handler gain the benefits of all zombie wall talents.
 
 reduces zombie wall&#x27;s cooldown and mana cost by 25% and increases the zombies&#x27; maximum health by 50%.
 
-when a nearby enemy minion dies, it has a 50.0% chance to summon a zombie. starter nazeebo witchdoctor boon">
+when a nearby enemy minion dies, it has a 50.0% chance to summon a zombie. starter nazeebo hero nazeebo only witchdoctor nazeebo boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_nazeebo_zombiewall.png" alt="Zombie Handler icon" loading="lazy">
                 <div class="meta-row">
@@ -668,8 +669,8 @@ when a nearby enemy minion dies, it has a 50.0% chance to summon a zombie. start
               </div>
               <h2 class="card-title">Zombie Handler</h2>
               <div class="tooltip-copy">Gain the benefits of all Zombie Wall talents.<br><br>Reduces Zombie Wall&#x27;s cooldown and Mana cost by <span style="color: #ffd96a">25%</span> and increases the Zombies&#x27; maximum Health by <span style="color: #ffd96a">50%</span>.<br><br>When a nearby enemy Minion dies, it has a <span style="color: #ffd96a">50.0%</span> chance to summon a Zombie.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="structurequest destruction [quest] quest: destroy enemy forts or keeps.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Nazeebo only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="structurequest destruction [quest] quest: destroy enemy forts or keeps.
 
 reward: after destroying 6 forts and keeps, gain 1 common boon.
 
@@ -687,8 +688,8 @@ retain quest progress after winning the game. common boon">
               </div>
               <h2 class="card-title">Destruction</h2>
               <div class="tooltip-copy"><span class="storm-inline-icon" aria-hidden="true">◆</span><span style="color: #99d0ff">Quest:</span> Destroy enemy Forts or Keeps.<br><br><span style="color: #99d0ff">Reward:</span> After destroying <span style="color: #ffd96a">6</span> Forts and Keeps, gain <span style="color: #ffd96a">1</span> common Boon.<br><br><span style="color: #99d0ff">Reward:</span> After destroying <span style="color: #ffd96a">12</span> Forts and Keeps, gain <span style="color: #ffd96a">1</span> uncommon Boon.<br><br><span style="color: #99d0ff">Reward:</span> After destroying <span style="color: #ffd96a">24</span> Forts and Keeps, gain <span style="color: #ffd96a">1</span> rare Boon.<br><br>Retain Quest progress after winning the game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="electricclap electrocution increases thunder clap&#x27;s slow by 20%. common muradin muradin boon">
+              <footer class="card-footer">Doesn&#x27;t stack.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="electricclap electrocution increases thunder clap&#x27;s slow by 20%. common muradin hero muradin only muradin muradin boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_muradin_thunderclap.png" alt="Electrocution icon" loading="lazy">
                 <div class="meta-row">
@@ -698,8 +699,8 @@ retain quest progress after winning the game. common boon">
               </div>
               <h2 class="card-title">Electrocution</h2>
               <div class="tooltip-copy">Increases Thunder Clap&#x27;s Slow by <span style="color: #ffd96a">20%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="elunesreach elune&#x27;s reach increases light of elune&#x27;s range by 50%. common tyrande tyrande boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Muradin only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="elunesreach elune&#x27;s reach increases light of elune&#x27;s range by 50%. common tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_lightofelune.png" alt="Elune&#x27;s Reach icon" loading="lazy">
                 <div class="meta-row">
@@ -709,8 +710,8 @@ retain quest progress after winning the game. common boon">
               </div>
               <h2 class="card-title">Elune&#x27;s Reach</h2>
               <div class="tooltip-copy">Increases Light of Elune&#x27;s range by <span style="color: #ffd96a">50%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="allyhealth endurance increases maximum health of all allies by 7%. common boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="allyhealth endurance increases maximum health of all allies by 7%. common boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_ally_health.png" alt="Endurance icon" loading="lazy">
                 <div class="meta-row">
@@ -720,8 +721,8 @@ retain quest progress after winning the game. common boon">
               </div>
               <h2 class="card-title">Endurance</h2>
               <div class="tooltip-copy">Increases maximum Health of ALL allies by <span style="color: #ffd96a">7%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="allyspeed fast feet increases movement speed of all allies by 6%. common boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="allyspeed fast feet increases movement speed of all allies by 6%. common boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_talent_deaths_advance.png" alt="Fast Feet icon" loading="lazy">
                 <div class="meta-row">
@@ -731,8 +732,8 @@ retain quest progress after winning the game. common boon">
               </div>
               <h2 class="card-title">Fast Feet</h2>
               <div class="tooltip-copy">Increases Movement Speed of ALL allies by <span style="color: #ffd96a">6%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="fastuproot fast uproot reduces the initial delay and cast time of zombie wall by 50%. common nazeebo witchdoctor boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="fastuproot fast uproot reduces the initial delay and cast time of zombie wall by 50%. common nazeebo hero nazeebo only witchdoctor nazeebo boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_nazeebo_zombiewall.png" alt="Fast Uproot icon" loading="lazy">
                 <div class="meta-row">
@@ -742,8 +743,8 @@ retain quest progress after winning the game. common boon">
               </div>
               <h2 class="card-title">Fast Uproot</h2>
               <div class="tooltip-copy">Reduces the initial delay and cast time of Zombie Wall by <span style="color: #ffd96a">50%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="inarush in a rush increases windfury&#x27;s movement speed bonus by 10% and its duration by 0.5 seconds. common thrall thrall boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Nazeebo only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="inarush in a rush increases windfury&#x27;s movement speed bonus by 10% and its duration by 0.5 seconds. common thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_thrall_windfury.png" alt="In a Rush icon" loading="lazy">
                 <div class="meta-row">
@@ -753,8 +754,8 @@ retain quest progress after winning the game. common boon">
               </div>
               <h2 class="card-title">In a Rush</h2>
               <div class="tooltip-copy">Increases Windfury&#x27;s Movement Speed bonus by <span style="color: #ffd96a">10%</span> and its duration by <span style="color: #ffd96a">0.5</span> seconds.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="jaroffrogs jar of frogs increases maximum charges of plague of toads by 2. common nazeebo witchdoctor boon">
+              <footer class="card-footer">Stacks infinitely. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="jaroffrogs jar of frogs increases maximum charges of plague of toads by 2. common nazeebo hero nazeebo only witchdoctor nazeebo boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_nazeebo_plagueoftoads.png" alt="Jar of Frogs icon" loading="lazy">
                 <div class="meta-row">
@@ -764,8 +765,8 @@ retain quest progress after winning the game. common boon">
               </div>
               <h2 class="card-title">Jar of Frogs</h2>
               <div class="tooltip-copy">Increases maximum charges of Plague of Toads by <span style="color: #ffd96a">2</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="killcontract kill contract [quest] quest: get 25 hero takedowns. progress is lost between rounds.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Nazeebo only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="killcontract kill contract [quest] quest: get 25 hero takedowns. progress is lost between rounds.
 
 reward: gain 1 common and 1 uncommon boon. common boon">
               <div class="card-top">
@@ -777,8 +778,8 @@ reward: gain 1 common and 1 uncommon boon. common boon">
               </div>
               <h2 class="card-title">Kill Contract</h2>
               <div class="tooltip-copy"><span class="storm-inline-icon" aria-hidden="true">◆</span><span style="color: #99d0ff">Quest:</span> Get <span style="color: #ffd96a">25</span> Hero Takedowns. Progress is lost between rounds.<br><br><span style="color: #99d0ff">Reward:</span> Gain <span style="color: #ffd96a">1</span> common and <span style="color: #ffd96a">1</span> uncommon Boon.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="muradinlightfeet light feet reduces dwarf toss&#x27;s mana cost by 30. common muradin muradin boon">
+              <footer class="card-footer">Doesn&#x27;t stack.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="muradinlightfeet light feet reduces dwarf toss&#x27;s mana cost by 30. common muradin hero muradin only muradin muradin boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_muradin_dwarftoss.png" alt="Light Feet icon" loading="lazy">
                 <div class="meta-row">
@@ -788,8 +789,8 @@ reward: gain 1 common and 1 uncommon boon. common boon">
               </div>
               <h2 class="card-title">Light Feet</h2>
               <div class="tooltip-copy">Reduces Dwarf Toss&#x27;s Mana cost by <span style="color: #ffd96a">30</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="longblades long blades increases attack range by 0.75. common illidan illidan boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Muradin only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="longblades long blades increases attack range by 0.75. common illidan hero illidan only illidan illidan boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_illidan_sweepingstrike_c.png" alt="Long Blades icon" loading="lazy">
                 <div class="meta-row">
@@ -799,10 +800,10 @@ reward: gain 1 common and 1 uncommon boon. common boon">
               </div>
               <h2 class="card-title">Long Blades</h2>
               <div class="tooltip-copy">Increases Attack Range by <span style="color: #ffd96a">0.75</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="manyrituals many rituals gain 40 voodoo ritual stacks now and at the start of every game.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Illidan only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="manyrituals many rituals gain 40 voodoo ritual stacks now and at the start of every game.
 
-additional stacks increase voodoo ritual stacks by an additional 20. common nazeebo witchdoctor boon">
+additional stacks increase voodoo ritual stacks by an additional 20. common nazeebo hero nazeebo only witchdoctor nazeebo boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_nazeebo_voodooritual.png" alt="Many Rituals icon" loading="lazy">
                 <div class="meta-row">
@@ -812,8 +813,8 @@ additional stacks increase voodoo ritual stacks by an additional 20. common naze
               </div>
               <h2 class="card-title">Many Rituals</h2>
               <div class="tooltip-copy">Gain <span style="color: #ffd96a">40</span> Voodoo Ritual stacks now and at the start of every game.<br><br>Additional stacks increase Voodoo Ritual stacks by an additional <span style="color: #ffd96a">20</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="nimblelegs nimble legs increases movement speed of corpse spiders by 20%. common nazeebo witchdoctor boon">
+              <footer class="card-footer">Stacks infinitely. Appears for Nazeebo only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="nimblelegs nimble legs increases movement speed of corpse spiders by 20%. common nazeebo hero nazeebo only witchdoctor nazeebo boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_nazeebo_corpsespider.png" alt="Nimble Legs icon" loading="lazy">
                 <div class="meta-row">
@@ -823,8 +824,8 @@ additional stacks increase voodoo ritual stacks by an additional 20. common naze
               </div>
               <h2 class="card-title">Nimble Legs</h2>
               <div class="tooltip-copy">Increases Movement Speed of Corpse Spiders by <span style="color: #ffd96a">20%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="pathoftheassassin path of the assassin increases basic attack damage by 5 per level.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Nazeebo only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="pathoftheassassin path of the assassin increases basic attack damage by 5 per level.
 
 additional stacks increase basic attack damage by 2.0. common boon">
               <div class="card-top">
@@ -836,8 +837,8 @@ additional stacks increase basic attack damage by 2.0. common boon">
               </div>
               <h2 class="card-title">Path of the Assassin</h2>
               <div class="tooltip-copy">Increases Basic Attack damage by <span style="color: #ffd96a">5</span> per level.<br><br>Additional stacks increase Basic Attack damage by <span style="color: #ffd96a">2.0</span>.</div>
-              <footer class="card-footer">Stacks up to 5</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="pathofthewarrior path of the warrior increases maximum health by 40 per level. common boon">
+              <footer class="card-footer">Stacks up to 5.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="pathofthewarrior path of the warrior increases maximum health by 40 per level. common boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_warrior_path.png" alt="Path of the Warrior icon" loading="lazy">
                 <div class="meta-row">
@@ -847,8 +848,8 @@ additional stacks increase basic attack damage by 2.0. common boon">
               </div>
               <h2 class="card-title">Path of the Warrior</h2>
               <div class="tooltip-copy">Increases maximum Health by <span style="color: #ffd96a">40</span> per level.</div>
-              <footer class="card-footer">Stacks up to 5</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="pathofthewizard path of the wizard increases maximum mana by 10 and mana regeneration by 0.2 per second per level. common boon">
+              <footer class="card-footer">Stacks up to 5.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="pathofthewizard path of the wizard increases maximum mana by 10 and mana regeneration by 0.2 per second per level. common heroes mana heroes only mana excludes heroes li-ming li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_wizard_path.png" alt="Path of the Wizard icon" loading="lazy">
                 <div class="meta-row">
@@ -858,10 +859,10 @@ additional stacks increase basic attack damage by 2.0. common boon">
               </div>
               <h2 class="card-title">Path of the Wizard</h2>
               <div class="tooltip-copy">Increases maximum Mana by <span style="color: #ffd96a">10</span> and Mana Regeneration by <span style="color: #ffd96a">0.2</span> per second per level.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="pathofthewizard2 path of the wizard increases maximum mana by 10 and mana regeneration by 0.2 per second per level.
+              <footer class="card-footer">Stacks infinitely. Appears for Mana heroes only. Does not appear for Li-Ming.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="pathofthewizard2 path of the wizard increases maximum mana by 10 and mana regeneration by 0.2 per second per level.
 
-better to be a wizard than a mage. common li-ming wizard boon">
+better to be a wizard than a mage. common li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_wizard_path.png" alt="Path of the Wizard icon" loading="lazy">
                 <div class="meta-row">
@@ -871,8 +872,8 @@ better to be a wizard than a mage. common li-ming wizard boon">
               </div>
               <h2 class="card-title">Path of the Wizard</h2>
               <div class="tooltip-copy">Increases maximum Mana by <span style="color: #ffd96a">10</span> and Mana Regeneration by <span style="color: #ffd96a">0.2</span> per second per level.<br><br>Better to be a wizard than a mage.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="allydamage powerful increases spell power and attack damage of all allies by 5%. common boon">
+              <footer class="card-footer">Stacks infinitely. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="allydamage powerful increases spell power and attack damage of all allies by 5%. common boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_ally_damage.png" alt="Powerful icon" loading="lazy">
                 <div class="meta-row">
@@ -882,8 +883,8 @@ better to be a wizard than a mage. common li-ming wizard boon">
               </div>
               <h2 class="card-title">Powerful</h2>
               <div class="tooltip-copy">Increases Spell Power and Attack Damage of ALL allies by <span style="color: #ffd96a">5%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="structurehealth reinforced walls increases maximum health of allied structures by 15%. common boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="structurehealth reinforced walls increases maximum health of allied structures by 15%. common boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_deathrecap_npc_structure.png" alt="Reinforced Walls icon" loading="lazy">
                 <div class="meta-row">
@@ -893,8 +894,8 @@ better to be a wizard than a mage. common li-ming wizard boon">
               </div>
               <h2 class="card-title">Reinforced Walls</h2>
               <div class="tooltip-copy">Increases maximum Health of allied Structures by <span style="color: #ffd96a">15%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="magicring ring of magic you and allied heroes recharge ability cooldowns 5% faster. common boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="magicring ring of magic you and allied heroes recharge ability cooldowns 5% faster. common boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_magic_ring.png" alt="Ring of Magic icon" loading="lazy">
                 <div class="meta-row">
@@ -904,8 +905,8 @@ better to be a wizard than a mage. common li-ming wizard boon">
               </div>
               <h2 class="card-title">Ring of Magic</h2>
               <div class="tooltip-copy">You and allied Heroes recharge Ability cooldowns <span style="color: #ffd96a">5%</span> faster.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="false" data-search="regenerationring ring of regeneration you and allied heroes regenerate 5 health per second. common boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="regenerationring ring of regeneration you and allied heroes regenerate 5 health per second. common boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_regen_ring.png" alt="Ring of Regeneration icon" loading="lazy">
                 <div class="meta-row">
@@ -915,8 +916,8 @@ better to be a wizard than a mage. common li-ming wizard boon">
               </div>
               <h2 class="card-title">Ring of Regeneration</h2>
               <div class="tooltip-copy">You and allied Heroes regenerate <span style="color: #ffd96a">5</span> Health per second.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-specific="true" data-search="limingselfishpower selfish power increases spell power by 7.5%. common li-ming wizard boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="true" data-search="limingselfishpower selfish power increases spell power by 7.5%. common li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_talent_powerhungry.png" alt="Selfish Power icon" loading="lazy">
                 <div class="meta-row">
@@ -926,8 +927,8 @@ better to be a wizard than a mage. common li-ming wizard boon">
               </div>
               <h2 class="card-title">Selfish Power</h2>
               <div class="tooltip-copy">Increases Spell Power by <span style="color: #ffd96a">7.5%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="amplifiedhealing amplified healing increases regeneration effects and all healing received by 25%.
+              <footer class="card-footer">Stacks infinitely. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="amplifiedhealing amplified healing increases regeneration effects and all healing received by 25%.
 
 additional stacks increase regeneration effects and all healing received by 10% uncommon boon">
               <div class="card-top">
@@ -939,8 +940,8 @@ additional stacks increase regeneration effects and all healing received by 10% 
               </div>
               <h2 class="card-title">Amplified Healing</h2>
               <div class="tooltip-copy">Increases regeneration effects and all healing received by <span style="color: #ffd96a">25%</span>.<br><br>Additional stacks increase regeneration effects and all healing received by <span style="color: #ffd96a">10%</span></div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="true" data-search="limingarcaneloop arcane loop using a basic ability reduces the cooldown of your other basic abilities by 0.5 seconds. uncommon li-ming wizard boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="limingarcaneloop arcane loop using a basic ability reduces the cooldown of your other basic abilities by 0.5 seconds. uncommon li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_wizard_criticalmass.png" alt="Arcane Loop icon" loading="lazy">
                 <div class="meta-row">
@@ -950,8 +951,8 @@ additional stacks increase regeneration effects and all healing received by 10% 
               </div>
               <h2 class="card-title">Arcane Loop</h2>
               <div class="tooltip-copy">Using a Basic Ability reduces the cooldown of your other Basic Abilities by <span style="color: #ffd96a">0.5</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="true" data-search="bigstar big star increases lunar flare&#x27;s radius by 20%. uncommon tyrande tyrande boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="bigstar big star increases lunar flare&#x27;s radius by 20%. uncommon tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_lunarflare.png" alt="Big Star icon" loading="lazy">
                 <div class="meta-row">
@@ -961,8 +962,8 @@ additional stacks increase regeneration effects and all healing received by 10% 
               </div>
               <h2 class="card-title">Big Star</h2>
               <div class="tooltip-copy">Increases Lunar Flare&#x27;s radius by <span style="color: #ffd96a">20%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="byebye bye bye! reduces your team&#x27;s hearthstone cast time by 75%. uncommon boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="byebye bye bye! reduces your team&#x27;s hearthstone cast time by 75%. uncommon boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_chromie_poof.png" alt="Bye Bye! icon" loading="lazy">
                 <div class="meta-row">
@@ -972,8 +973,8 @@ additional stacks increase regeneration effects and all healing received by 10% 
               </div>
               <h2 class="card-title">Bye Bye!</h2>
               <div class="tooltip-copy">Reduces your Team&#x27;s Hearthstone cast time by <span style="color: #ffd96a">75%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="convenientportals convenient portals creates a permanent portal between the top lane and the bottom lane, only usable by your team. uncommon boon">
+              <footer class="card-footer">Doesn&#x27;t stack.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="convenientportals convenient portals creates a permanent portal between the top lane and the bottom lane, only usable by your team. uncommon boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_medivh_portal_a.png" alt="Convenient Portals icon" loading="lazy">
                 <div class="meta-row">
@@ -983,8 +984,8 @@ additional stacks increase regeneration effects and all healing received by 10% 
               </div>
               <h2 class="card-title">Convenient Portals</h2>
               <div class="tooltip-copy">Creates a permanent Portal between the top lane and the bottom lane, only usable by your Team.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="besieger demolitionist increases damage dealt to structures by 15%. uncommon boon">
+              <footer class="card-footer">Doesn&#x27;t stack.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="besieger demolitionist increases damage dealt to structures by 15%. uncommon boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_talent_autoattack_building.png" alt="Demolitionist icon" loading="lazy">
                 <div class="meta-row">
@@ -994,8 +995,8 @@ additional stacks increase regeneration effects and all healing received by 10% 
               </div>
               <h2 class="card-title">Demolitionist</h2>
               <div class="tooltip-copy">Increases damage dealt to Structures by <span style="color: #ffd96a">15%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="true" data-search="extendedassault extended assault increases sweeping strike&#x27;s basic attack damage bonus duration by 3 seconds. uncommon illidan illidan boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="extendedassault extended assault increases sweeping strike&#x27;s basic attack damage bonus duration by 3 seconds. uncommon illidan hero illidan only illidan illidan boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_illidan_sweepingstrike.png" alt="Extended Assault icon" loading="lazy">
                 <div class="meta-row">
@@ -1005,8 +1006,8 @@ additional stacks increase regeneration effects and all healing received by 10% 
               </div>
               <h2 class="card-title">Extended Assault</h2>
               <div class="tooltip-copy">Increases Sweeping Strike&#x27;s Basic Attack damage bonus duration by <span style="color: #ffd96a">3</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="true" data-search="limingfarshot farshot increases magic missiles&#x27;s range by 15%. uncommon li-ming wizard boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Illidan only.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="limingfarshot farshot increases magic missiles&#x27;s range by 15%. uncommon li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_wizard_magicmissiles.png" alt="Farshot icon" loading="lazy">
                 <div class="meta-row">
@@ -1016,8 +1017,8 @@ additional stacks increase regeneration effects and all healing received by 10% 
               </div>
               <h2 class="card-title">Farshot</h2>
               <div class="tooltip-copy">Increases Magic Missiles&#x27;s range by <span style="color: #ffd96a">15%</span>.</div>
-              <footer class="card-footer">Stacks up to 2</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="gatheringpower gathering power increases spell power by 15%.
+              <footer class="card-footer">Stacks up to 2. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="gatheringpower gathering power increases spell power by 15%.
 
 additional stacks increase spell power by 10%. uncommon boon">
               <div class="card-top">
@@ -1029,8 +1030,8 @@ additional stacks increase spell power by 10%. uncommon boon">
               </div>
               <h2 class="card-title">Gathering Power</h2>
               <div class="tooltip-copy">Increases Spell Power by <span style="color: #ffd96a">15%</span>.<br><br>Additional stacks increase Spell Power by <span style="color: #ffd96a">10%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="true" data-search="heavyhammer heavy hammer increases storm bolt&#x27;s stun duration by 0.25 seconds. uncommon muradin muradin boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="heavyhammer heavy hammer increases storm bolt&#x27;s stun duration by 0.25 seconds. uncommon muradin hero muradin only muradin muradin boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_muradin_stormbolt.png" alt="Heavy Hammer icon" loading="lazy">
                 <div class="meta-row">
@@ -1040,8 +1041,8 @@ additional stacks increase spell power by 10%. uncommon boon">
               </div>
               <h2 class="card-title">Heavy Hammer</h2>
               <div class="tooltip-copy">Increases Storm Bolt&#x27;s Stun duration by <span style="color: #ffd96a">0.25</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="minionkiller minion killer increases damage dealt to minions and mercenaries by 15%. uncommon boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Muradin only.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="minionkiller minion killer increases damage dealt to minions and mercenaries by 15%. uncommon boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_minion_killer.png" alt="Minion Killer icon" loading="lazy">
                 <div class="meta-row">
@@ -1051,8 +1052,8 @@ additional stacks increase spell power by 10%. uncommon boon">
               </div>
               <h2 class="card-title">Minion Killer</h2>
               <div class="tooltip-copy">Increases damage dealt to Minions and Mercenaries by <span style="color: #ffd96a">15%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="aaspeed nexus frenzy increases attack speed by 15%.
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="aaspeed nexus frenzy increases attack speed by 15%.
 
 additional stacks increase attack speed by 8%. uncommon boon">
               <div class="card-top">
@@ -1064,10 +1065,10 @@ additional stacks increase attack speed by 8%. uncommon boon">
               </div>
               <h2 class="card-title">Nexus Frenzy</h2>
               <div class="tooltip-copy">Increases Attack Speed by <span style="color: #ffd96a">15%</span>.<br><br>Additional stacks increase Attack Speed by <span style="color: #ffd96a">8%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="aarange nexus range increases attack range by 1.1.
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="aarange nexus range increases attack range by 1.1.
 
-additional stacks increase attack range by 0.5. uncommon boon">
+additional stacks increase attack range by 0.5. uncommon heroes non-melee heroes only !melee excludes heroes gall gall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_talent_autoattack_range.png" alt="Nexus Range icon" loading="lazy">
                 <div class="meta-row">
@@ -1077,8 +1078,8 @@ additional stacks increase attack range by 0.5. uncommon boon">
               </div>
               <h2 class="card-title">Nexus Range</h2>
               <div class="tooltip-copy">Increases Attack Range by <span style="color: #ffd96a">1.1</span>.<br><br>Additional stacks increase Attack Range by <span style="color: #ffd96a">0.5</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="true" data-search="owling owling reduces sentinel&#x27;s cooldown by 3 seconds. uncommon tyrande tyrande boon">
+              <footer class="card-footer">Stacks infinitely. Appears for Non-melee heroes only. Does not appear for Gall.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="owling owling reduces sentinel&#x27;s cooldown by 3 seconds. uncommon tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_sentinel.png" alt="Owling icon" loading="lazy">
                 <div class="meta-row">
@@ -1088,8 +1089,8 @@ additional stacks increase attack range by 0.5. uncommon boon">
               </div>
               <h2 class="card-title">Owling</h2>
               <div class="tooltip-copy">Reduces Sentinel&#x27;s cooldown by <span style="color: #ffd96a">3</span> seconds.</div>
-              <footer class="card-footer">Stacks up to 2</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="true" data-search="pinneddown pinned down increases feral spirit&#x27;s root duration by 0.25 seconds. uncommon thrall thrall boon">
+              <footer class="card-footer">Stacks up to 2. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="pinneddown pinned down increases feral spirit&#x27;s root duration by 0.25 seconds. uncommon thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_thrall_feralspirit.png" alt="Pinned Down icon" loading="lazy">
                 <div class="meta-row">
@@ -1099,8 +1100,8 @@ additional stacks increase attack range by 0.5. uncommon boon">
               </div>
               <h2 class="card-title">Pinned Down</h2>
               <div class="tooltip-copy">Increases Feral Spirit&#x27;s Root duration by <span style="color: #ffd96a">0.25</span> seconds.</div>
-              <footer class="card-footer">Stacks up to 2</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="mountspeed quick mount increases the movement speed bonus of summon mount by 40% for all allies. uncommon boon">
+              <footer class="card-footer">Stacks up to 2. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="mountspeed quick mount increases the movement speed bonus of summon mount by 40% for all allies. uncommon boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_epicmount.png" alt="Quick Mount icon" loading="lazy">
                 <div class="meta-row">
@@ -1110,8 +1111,8 @@ additional stacks increase attack range by 0.5. uncommon boon">
               </div>
               <h2 class="card-title">Quick Mount</h2>
               <div class="tooltip-copy">Increases the Movement Speed bonus of Summon Mount by <span style="color: #ffd96a">40%</span> for ALL allies.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="true" data-search="quickscare quick scare increases ravenous spirit&#x27;s duration by 2 seconds and movement speed by 15%. uncommon nazeebo witchdoctor boon">
+              <footer class="card-footer">Doesn&#x27;t stack.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="quickscare quick scare increases ravenous spirit&#x27;s duration by 2 seconds and movement speed by 15%. uncommon nazeebo hero nazeebo only witchdoctor nazeebo levels level 10+ boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_nazeebo_ravenousspirit.png" alt="Quick Scare icon" loading="lazy">
                 <div class="meta-row">
@@ -1121,8 +1122,8 @@ additional stacks increase attack range by 0.5. uncommon boon">
               </div>
               <h2 class="card-title">Quick Scare</h2>
               <div class="tooltip-copy">Increases Ravenous Spirit&#x27;s duration by <span style="color: #ffd96a">2</span> seconds and Movement Speed by <span style="color: #ffd96a">15%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="aasearing searing attacks increases attack damage by 20%.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Nazeebo only. Appears at Level 10+ only.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="aasearing searing attacks increases attack damage by 20%.
 
 additional stacks increase attack damage by 10%. uncommon boon">
               <div class="card-top">
@@ -1134,8 +1135,8 @@ additional stacks increase attack damage by 10%. uncommon boon">
               </div>
               <h2 class="card-title">Searing Attacks</h2>
               <div class="tooltip-copy">Increases Attack Damage by <span style="color: #ffd96a">20%</span>.<br><br>Additional stacks increase Attack Damage by <span style="color: #ffd96a">10%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="true" data-search="stunninglight stunning light increases lunar flare&#x27;s stun duration by 0.25 seconds. uncommon tyrande tyrande boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="stunninglight stunning light increases lunar flare&#x27;s stun duration by 0.25 seconds. uncommon tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_lunarflare.png" alt="Stunning Light icon" loading="lazy">
                 <div class="meta-row">
@@ -1145,8 +1146,8 @@ additional stacks increase attack damage by 10%. uncommon boon">
               </div>
               <h2 class="card-title">Stunning Light</h2>
               <div class="tooltip-copy">Increases Lunar Flare&#x27;s Stun duration by <span style="color: #ffd96a">0.25</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="false" data-search="superiority superiority gain 10 armor against non-heroic enemies, reducing the damage taken from non-heroic enemies by 10%. uncommon boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="superiority superiority gain 10 armor against non-heroic enemies, reducing the damage taken from non-heroic enemies by 10%. uncommon boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_superiority.png" alt="Superiority icon" loading="lazy">
                 <div class="meta-row">
@@ -1156,8 +1157,8 @@ additional stacks increase attack damage by 10%. uncommon boon">
               </div>
               <h2 class="card-title">Superiority</h2>
               <div class="tooltip-copy">Gain <span style="color: #ffd96a">10</span> Armor against non-Heroic enemies, reducing the damage taken from non-Heroic enemies by <span style="color: #ffd96a">10%</span>.</div>
-              <footer class="card-footer">Stacks up to 5</footer>
-            </article><article class="affix-card" data-rarity="Uncommon" data-hero-specific="true" data-search="tantrum tantrum reduces gargantuan&#x27;s stomp&#x27;s cooldown by 3 seconds and increases the stomp damage by 25%. uncommon nazeebo witchdoctor boon">
+              <footer class="card-footer">Stacks up to 5.</footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="tantrum tantrum reduces gargantuan&#x27;s stomp&#x27;s cooldown by 3 seconds and increases the stomp damage by 25%. uncommon nazeebo hero nazeebo only witchdoctor nazeebo levels level 10+ boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_nazeebo_gargantuanstomp.png" alt="Tantrum icon" loading="lazy">
                 <div class="meta-row">
@@ -1167,8 +1168,8 @@ additional stacks increase attack damage by 10%. uncommon boon">
               </div>
               <h2 class="card-title">Tantrum</h2>
               <div class="tooltip-copy">Reduces Gargantuan&#x27;s Stomp&#x27;s cooldown by <span style="color: #ffd96a">3</span> seconds and increases the stomp damage by <span style="color: #ffd96a">25%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="false" data-search="regenerativewalls automatic repairs allied structures regenerate 50 health per second.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Nazeebo only. Appears at Level 10+ only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="false" data-search="regenerativewalls automatic repairs allied structures regenerate 50 health per second.
 
 does not affect your allied core. rare boon">
               <div class="card-top">
@@ -1180,8 +1181,8 @@ does not affect your allied core. rare boon">
               </div>
               <h2 class="card-title">Automatic Repairs</h2>
               <div class="tooltip-copy">Allied Structures regenerate <span style="color: #ffd96a">50</span> Health per second.<br><br>Does not affect your allied Core.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="thrallbreezingwind breeze reduces windfury&#x27;s cooldown by 4 seconds and its mana cost by 20. rare thrall thrall boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="thrallbreezingwind breeze reduces windfury&#x27;s cooldown by 4 seconds and its mana cost by 20. rare thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_thrall_windfury_var1.png" alt="Breeze icon" loading="lazy">
                 <div class="meta-row">
@@ -1191,8 +1192,8 @@ does not affect your allied core. rare boon">
               </div>
               <h2 class="card-title">Breeze</h2>
               <div class="tooltip-copy">Reduces Windfury&#x27;s cooldown by <span style="color: #ffd96a">4</span> seconds and its Mana Cost by <span style="color: #ffd96a">20</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="false" data-search="bribery bribery automatically bribe a neutral mercenary camp to your side every 300 seconds. camps taken this way respawn 50% faster. does not work on bosses.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="false" data-search="bribery bribery automatically bribe a neutral mercenary camp to your side every 300 seconds. camps taken this way respawn 50% faster. does not work on bosses.
 
 additional stacks reduce the cooldown by 60 seconds. rare boon">
               <div class="card-top">
@@ -1204,8 +1205,8 @@ additional stacks reduce the cooldown by 60 seconds. rare boon">
               </div>
               <h2 class="card-title">Bribery</h2>
               <div class="tooltip-copy">Automatically bribe a neutral Mercenary camp to your side every <span style="color: #ffd96a">300</span> seconds. Camps taken this way respawn <span style="color: #ffd96a">50%</span> faster. Does not work on Bosses.<br><br>Additional stacks reduce the cooldown by <span style="color: #ffd96a">60</span> seconds.</div>
-              <footer class="card-footer">Stacks up to 5</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="false" data-search="buddy buddy a friendly drone follows you around, healing you for 154 health every 3 seconds.
+              <footer class="card-footer">Stacks up to 5.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="false" data-search="buddy buddy a friendly drone follows you around, healing you for 154 health every 3 seconds.
 
 buddy shoots a missile every 4 seconds at the nearest enemy, dealing 142 damage in the area.
 
@@ -1219,10 +1220,10 @@ additional stacks reduce buddy&#x27;s missile cooldown by 1 second and healing b
               </div>
               <h2 class="card-title">BUDDY</h2>
               <div class="tooltip-copy">A friendly Drone follows you around, healing you for <span style="color: #ffd96a">154</span> Health every <span style="color: #ffd96a">3</span> seconds.<br><br>BUDDY shoots a missile every <span style="color: #ffd96a">4</span> seconds at the nearest enemy, dealing <span style="color: #ffd96a">142</span> damage in the area.<br><br>Additional stacks reduce BUDDY&#x27;s missile cooldown by <span style="color: #ffd96a">1</span> second and healing beam cooldown by <span style="color: #ffd96a">0.25</span> seconds.</div>
-              <footer class="card-footer">Stacks up to 4</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="thrallcrushingsunder crushing sunder gain the benefits of worldbreaker.
+              <footer class="card-footer">Stacks up to 4.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="thrallcrushingsunder crushing sunder gain the benefits of worldbreaker.
 
-increases sundering&#x27;s stun duration by 1.5 seconds. rare thrall thrall boon">
+increases sundering&#x27;s stun duration by 1.5 seconds. rare thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_thrall_sundering.png" alt="Crushing Sunder icon" loading="lazy">
                 <div class="meta-row">
@@ -1232,8 +1233,8 @@ increases sundering&#x27;s stun duration by 1.5 seconds. rare thrall thrall boon
               </div>
               <h2 class="card-title">Crushing Sunder</h2>
               <div class="tooltip-copy">Gain the benefits of Worldbreaker.<br><br>Increases Sundering&#x27;s Stun duration by <span style="color: #ffd96a">1.5</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="deadlymark deadly mark increases hunter&#x27;s mark&#x27;s armor reduction by 10. rare tyrande tyrande boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="deadlymark deadly mark increases hunter&#x27;s mark&#x27;s armor reduction by 10. rare tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_huntersmark.png" alt="Deadly Mark icon" loading="lazy">
                 <div class="meta-row">
@@ -1243,10 +1244,10 @@ increases sundering&#x27;s stun duration by 1.5 seconds. rare thrall thrall boon
               </div>
               <h2 class="card-title">Deadly Mark</h2>
               <div class="tooltip-copy">Increases Hunter&#x27;s Mark&#x27;s Armor reduction by <span style="color: #ffd96a">10</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="thrallearthshatter earth shatterer earthquake gains unlimited range.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="thrallearthshatter earth shatterer earthquake gains unlimited range.
 
-reduces earthquake&#x27;s cooldown by 50 seconds. rare thrall thrall boon">
+reduces earthquake&#x27;s cooldown by 50 seconds. rare thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_thrall_earthquake.png" alt="Earth Shatterer icon" loading="lazy">
                 <div class="meta-row">
@@ -1256,8 +1257,8 @@ reduces earthquake&#x27;s cooldown by 50 seconds. rare thrall thrall boon">
               </div>
               <h2 class="card-title">Earth Shatterer</h2>
               <div class="tooltip-copy">Earthquake gains unlimited range.<br><br>Reduces Earthquake&#x27;s cooldown by <span style="color: #ffd96a">50</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="efficientmorph efficient morph increases metamorphosis&#x27;s maximum health bonus by 100% and reduces its cooldown by 40 seconds. rare illidan illidan boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="efficientmorph efficient morph increases metamorphosis&#x27;s maximum health bonus by 100% and reduces its cooldown by 40 seconds. rare illidan hero illidan only illidan illidan boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_illidan_metamorphosis.png" alt="Efficient Morph icon" loading="lazy">
                 <div class="meta-row">
@@ -1267,8 +1268,8 @@ reduces earthquake&#x27;s cooldown by 50 seconds. rare thrall thrall boon">
               </div>
               <h2 class="card-title">Efficient Morph</h2>
               <div class="tooltip-copy">Increases Metamorphosis&#x27;s maximum Health bonus by <span style="color: #ffd96a">100%</span> and reduces its cooldown by <span style="color: #ffd96a">40</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="elunesgrace elune&#x27;s grace increases maximum charges of light of elune by 1. rare tyrande tyrande boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Illidan only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="elunesgrace elune&#x27;s grace increases maximum charges of light of elune by 1. rare tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_lightofelune.png" alt="Elune&#x27;s Grace icon" loading="lazy">
                 <div class="meta-row">
@@ -1278,10 +1279,10 @@ reduces earthquake&#x27;s cooldown by 50 seconds. rare thrall thrall boon">
               </div>
               <h2 class="card-title">Elune&#x27;s Grace</h2>
               <div class="tooltip-copy">Increases maximum charges of Light of Elune by <span style="color: #ffd96a">1</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="fastpunch fast puncher haymaker gains 1 additional charge.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="fastpunch fast puncher haymaker gains 1 additional charge.
 
-reduces haymaker&#x27;s cooldown by 20 seconds. rare muradin muradin boon">
+reduces haymaker&#x27;s cooldown by 20 seconds. rare muradin hero muradin only muradin muradin boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_muradin_haymaker.png" alt="Fast Puncher icon" loading="lazy">
                 <div class="meta-row">
@@ -1291,8 +1292,8 @@ reduces haymaker&#x27;s cooldown by 20 seconds. rare muradin muradin boon">
               </div>
               <h2 class="card-title">Fast Puncher</h2>
               <div class="tooltip-copy">Haymaker gains <span style="color: #ffd96a">1</span> additional charge.<br><br>Reduces Haymaker&#x27;s cooldown by <span style="color: #ffd96a">20</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="false" data-search="firstaid first aid regenerate 1% of your maximum health per second.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Muradin only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="false" data-search="firstaid first aid regenerate 1% of your maximum health per second.
 
 additional stacks increase healing by 0.5% of maximum health per second. rare boon">
               <div class="card-top">
@@ -1304,8 +1305,8 @@ additional stacks increase healing by 0.5% of maximum health per second. rare bo
               </div>
               <h2 class="card-title">First Aid</h2>
               <div class="tooltip-copy">Regenerate <span style="color: #ffd96a">1%</span> of your maximum Health per second.<br><br>Additional stacks increase healing by <span style="color: #ffd96a">0.5%</span> of maximum Health per second.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="false" data-search="periodicregenglobes globe huffer spawns a regeneration globe near a random allied hero every 12 seconds, with you twice as likely to be chosen.
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="false" data-search="periodicregenglobes globe huffer spawns a regeneration globe near a random allied hero every 12 seconds, with you twice as likely to be chosen.
 
 your regeneration globes take 100% longer to turn neutral.
 
@@ -1319,8 +1320,8 @@ additional stacks reduce the cooldown by 4 seconds. rare boon">
               </div>
               <h2 class="card-title">Globe Huffer</h2>
               <div class="tooltip-copy">Spawns a Regeneration Globe near a random allied Hero every <span style="color: #ffd96a">12</span> seconds, with you twice as likely to be chosen.<br><br>Your Regeneration Globes take <span style="color: #ffd96a">100%</span> longer to turn Neutral.<br><br>Additional stacks reduce the cooldown by <span style="color: #ffd96a">4</span> seconds.</div>
-              <footer class="card-footer">Stacks up to 3</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="hardimpact hard impact dive stuns enemies for 0.25 seconds. rare illidan illidan boon">
+              <footer class="card-footer">Stacks up to 3.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="hardimpact hard impact dive stuns enemies for 0.25 seconds. rare illidan hero illidan only illidan illidan boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_illidan_dive.png" alt="Hard Impact icon" loading="lazy">
                 <div class="meta-row">
@@ -1330,8 +1331,8 @@ additional stacks reduce the cooldown by 4 seconds. rare boon">
               </div>
               <h2 class="card-title">Hard Impact</h2>
               <div class="tooltip-copy">Dive Stuns enemies for <span style="color: #ffd96a">0.25</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="limingimprovedarchon improved archon reduces disintegrate&#x27;s cooldown to 0.5 seconds and its mana cost to 5. rare li-ming wizard boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Illidan only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="limingimprovedarchon improved archon reduces disintegrate&#x27;s cooldown to 0.5 seconds and its mana cost to 5. rare li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_wizard_archon.png" alt="Improved Archon icon" loading="lazy">
                 <div class="meta-row">
@@ -1341,8 +1342,8 @@ additional stacks reduce the cooldown by 4 seconds. rare boon">
               </div>
               <h2 class="card-title">Improved Archon</h2>
               <div class="tooltip-copy">Reduces Disintegrate&#x27;s cooldown to <span style="color: #ffd96a">0.5</span> seconds and its Mana cost to <span style="color: #ffd96a">5</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="false" data-search="merclord mercenary lord friendly non-boss mercenaries near you deal 50% more damage. rare boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="merclord mercenary lord friendly non-boss mercenaries near you deal 50% more damage. rare excludes heroes the lost vikings the lost vikings boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_talent_mercenarylord.png" alt="Mercenary Lord icon" loading="lazy">
                 <div class="meta-row">
@@ -1352,8 +1353,8 @@ additional stacks reduce the cooldown by 4 seconds. rare boon">
               </div>
               <h2 class="card-title">Mercenary Lord</h2>
               <div class="tooltip-copy">Friendly non-Boss Mercenaries near you deal <span style="color: #ffd96a">50%</span> more damage.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="false" data-search="promote promote allied minions take 25% reduced damage from non-heroic enemies and deal 50% increased damage to non-heroic enemies.
+              <footer class="card-footer">Doesn&#x27;t stack. Does not appear for The Lost Vikings.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="false" data-search="promote promote allied minions take 25% reduced damage from non-heroic enemies and deal 50% increased damage to non-heroic enemies.
 
 additional stacks increase the damage by 20%. rare boon">
               <div class="card-top">
@@ -1365,8 +1366,8 @@ additional stacks increase the damage by 20%. rare boon">
               </div>
               <h2 class="card-title">Promote</h2>
               <div class="tooltip-copy">Allied Minions take <span style="color: #ffd96a">25%</span> reduced damage from non-Heroic enemies and deal <span style="color: #ffd96a">50%</span> increased damage to non-Heroic enemies.<br><br>Additional stacks increase the damage by <span style="color: #ffd96a">20%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="thrallquicklightning quick lightning reduces chain lightning&#x27;s cooldown by 3 seconds. rare thrall thrall boon">
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="thrallquicklightning quick lightning reduces chain lightning&#x27;s cooldown by 3 seconds. rare thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_thrall_chainlightning.png" alt="Quick Lightning icon" loading="lazy">
                 <div class="meta-row">
@@ -1376,8 +1377,8 @@ additional stacks increase the damage by 20%. rare boon">
               </div>
               <h2 class="card-title">Quick Lightning</h2>
               <div class="tooltip-copy">Reduces Chain Lightning&#x27;s cooldown by <span style="color: #ffd96a">3</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="false" data-search="regenerativecore regenerative core your core regenerates 2% of maximum health per second while its shield is active. rare boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="false" data-search="regenerativecore regenerative core your core regenerates 2% of maximum health per second while its shield is active. rare excludes maps towers of doom towers of doom boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_blaze_vanadium_plating.png" alt="Regenerative Core icon" loading="lazy">
                 <div class="meta-row">
@@ -1387,8 +1388,8 @@ additional stacks increase the damage by 20%. rare boon">
               </div>
               <h2 class="card-title">Regenerative Core</h2>
               <div class="tooltip-copy">Your Core regenerates <span style="color: #ffd96a">2%</span> of maximum Health per second while its Shield is active.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="surprisehunt surprise hunt increases the hunt&#x27;s stun duration by 1 second and reduces its cooldown by 30 seconds. rare illidan illidan boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Does not appear on Towers of Doom.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="surprisehunt surprise hunt increases the hunt&#x27;s stun duration by 1 second and reduces its cooldown by 30 seconds. rare illidan hero illidan only illidan illidan boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_illidan_thehunt.png" alt="Surprise Hunt icon" loading="lazy">
                 <div class="meta-row">
@@ -1398,8 +1399,8 @@ additional stacks increase the damage by 20%. rare boon">
               </div>
               <h2 class="card-title">Surprise Hunt</h2>
               <div class="tooltip-copy">Increases The Hunt&#x27;s Stun duration by <span style="color: #ffd96a">1</span> second and reduces its cooldown by <span style="color: #ffd96a">30</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="veryheavyimpact very heavy impact dwarf toss stuns enemies for 0.75 seconds. rare muradin muradin boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Illidan only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="veryheavyimpact very heavy impact dwarf toss stuns enemies for 0.75 seconds. rare muradin hero muradin only muradin muradin boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_muradin_dwarftoss.png" alt="Very Heavy Impact icon" loading="lazy">
                 <div class="meta-row">
@@ -1409,10 +1410,10 @@ additional stacks increase the damage by 20%. rare boon">
               </div>
               <h2 class="card-title">Very Heavy Impact</h2>
               <div class="tooltip-copy">Dwarf Toss Stuns enemies for <span style="color: #ffd96a">0.75</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Rare" data-hero-specific="true" data-search="limingwaveofdeath wave of doom gain the benefits of repulsion.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Muradin only.</footer>
+            </article><article class="affix-card" data-rarity="Rare" data-hero-limited="true" data-search="limingwaveofdeath wave of doom gain the benefits of repulsion.
 
-wave of force reduces the spell armor of enemy heroes by 50 for 0.5 seconds. rare li-ming wizard boon">
+wave of force reduces the spell armor of enemy heroes by 50 for 0.5 seconds. rare li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_wizard_waveofforce.png" alt="Wave of Doom icon" loading="lazy">
                 <div class="meta-row">
@@ -1422,8 +1423,8 @@ wave of force reduces the spell armor of enemy heroes by 50 for 0.5 seconds. rar
               </div>
               <h2 class="card-title">Wave of Doom</h2>
               <div class="tooltip-copy">Gain the benefits of Repulsion.<br><br>Wave of Force reduces the Spell Armor of enemy Heroes by <span style="color: #ffd96a">50</span> for <span style="color: #ffd96a">0.5</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="belligerentgladiator belligerent gladiator increases gladiator&#x27;s medallion&#x27;s unstoppable duration by 2 seconds. epic boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="belligerentgladiator belligerent gladiator increases gladiator&#x27;s medallion&#x27;s unstoppable duration by 2 seconds. epic requires affixes gladiator&#x27;s medallion gladiator&#x27;s medallion boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_trinket_medallion.png" alt="Belligerent Gladiator icon" loading="lazy">
                 <div class="meta-row">
@@ -1433,8 +1434,8 @@ wave of force reduces the spell armor of enemy heroes by 50 for 0.5 seconds. rar
               </div>
               <h2 class="card-title">Belligerent Gladiator</h2>
               <div class="tooltip-copy">Increases Gladiator&#x27;s Medallion&#x27;s Unstoppable duration by <span style="color: #ffd96a">2</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="blessingofthedragons blessing of the dragons your ai teammates gain 500 maximum health and 20% movement speed, and basic abilities recharge 35.0% faster. epic boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Requires Gladiator&#x27;s Medallion.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="blessingofthedragons blessing of the dragons your ai teammates gain 500 maximum health and 20% movement speed, and basic abilities recharge 35.0% faster. epic boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_blessing_of_the_dragons.png" alt="Blessing of the Dragons icon" loading="lazy">
                 <div class="meta-row">
@@ -1444,8 +1445,8 @@ wave of force reduces the spell armor of enemy heroes by 50 for 0.5 seconds. rar
               </div>
               <h2 class="card-title">Blessing of the Dragons</h2>
               <div class="tooltip-copy">Your AI teammates gain <span style="color: #ffd96a">500</span> maximum Health and <span style="color: #ffd96a">20%</span> Movement Speed, and Basic Abilities recharge <span style="color: #ffd96a">35.0%</span> faster.</div>
-              <footer class="card-footer">Stacks up to 2</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="true" data-search="thrallelectricshock electric shock chain lightning stuns enemies hit for 0.5 seconds. epic thrall thrall boon">
+              <footer class="card-footer">Stacks up to 2.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="true" data-search="thrallelectricshock electric shock chain lightning stuns enemies hit for 0.5 seconds. epic thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_thrall_chainlightning_var1.png" alt="Electric Shock icon" loading="lazy">
                 <div class="meta-row">
@@ -1455,8 +1456,8 @@ wave of force reduces the spell armor of enemy heroes by 50 for 0.5 seconds. rar
               </div>
               <h2 class="card-title">Electric Shock</h2>
               <div class="tooltip-copy">Chain Lightning Stuns enemies hit for <span style="color: #ffd96a">0.5</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="emergencymeasure emergency measure on fatal damage, your ai teammates gain a shield equal to 50% of maximum health for 4 seconds.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="emergencymeasure emergency measure on fatal damage, your ai teammates gain a shield equal to 50% of maximum health for 4 seconds.
 
 this effect has a 60 second cooldown per hero. epic boon">
               <div class="card-top">
@@ -1468,8 +1469,8 @@ this effect has a 60 second cooldown per hero. epic boon">
               </div>
               <h2 class="card-title">Emergency Measure</h2>
               <div class="tooltip-copy">On fatal damage, your AI teammates gain a Shield equal to <span style="color: #ffd96a">50%</span> of Maximum Health for <span style="color: #ffd96a">4</span> seconds.<br><br>This effect has a <span style="color: #ffd96a">60</span> second cooldown per Hero.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="experienced experienced increases your team&#x27;s experience gain by 15%. epic boon">
+              <footer class="card-footer">Doesn&#x27;t stack.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="experienced experienced increases your team&#x27;s experience gain by 15%. epic boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_experienced.png" alt="Experienced icon" loading="lazy">
                 <div class="meta-row">
@@ -1479,12 +1480,12 @@ this effect has a 60 second cooldown per hero. epic boon">
               </div>
               <h2 class="card-title">Experienced</h2>
               <div class="tooltip-copy">Increases your team&#x27;s experience gain by <span style="color: #ffd96a">15%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="gladiatorsmedallion gladiator&#x27;s medallion cooldown: 60 seconds
+              <footer class="card-footer">Doesn&#x27;t stack.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="true" data-search="gladiatorsmedallion gladiator&#x27;s medallion cooldown: 60 seconds
 
 activate to become unstoppable for 2 seconds.
 
-additional stacks reduce the cooldown by 20 seconds. epic boon">
+additional stacks reduce the cooldown by 20 seconds. epic excludes heroes gall gall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_trinket_medallion.png" alt="Gladiator&#x27;s Medallion icon" loading="lazy">
                 <div class="meta-row">
@@ -1494,8 +1495,8 @@ additional stacks reduce the cooldown by 20 seconds. epic boon">
               </div>
               <h2 class="card-title">Gladiator&#x27;s Medallion</h2>
               <div class="tooltip-copy"><span style="color: #ffd96a">Cooldown: 60 seconds</span><br><br>Activate to become Unstoppable for <span style="color: #ffd96a">2</span> seconds.<br><br>Additional stacks reduce the cooldown by <span style="color: #ffd96a">20</span> seconds.</div>
-              <footer class="card-footer">Stacks up to 3</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="true" data-search="limingneedmoremana need more mana! takedowns restore mana equal to 30% of li-ming&#x27;s maximum mana. epic li-ming wizard boon">
+              <footer class="card-footer">Stacks up to 3. Does not appear for Gall.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="true" data-search="limingneedmoremana need more mana! takedowns restore mana equal to 30% of li-ming&#x27;s maximum mana. epic li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_wizard_criticalmass.png" alt="Need More Mana! icon" loading="lazy">
                 <div class="meta-row">
@@ -1505,8 +1506,8 @@ additional stacks reduce the cooldown by 20 seconds. epic boon">
               </div>
               <h2 class="card-title">Need More Mana!</h2>
               <div class="tooltip-copy">Takedowns restore Mana equal to <span style="color: #ffd96a">30%</span> of Li-Ming&#x27;s maximum Mana.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="physicalarmor physical armor gain permanent 10 physical armor.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="physicalarmor physical armor gain permanent 10 physical armor.
 
 additional stacks increase physical armor by 5. epic boon">
               <div class="card-top">
@@ -1518,8 +1519,8 @@ additional stacks increase physical armor by 5. epic boon">
               </div>
               <h2 class="card-title">Physical Armor</h2>
               <div class="tooltip-copy">Gain permanent <span style="color: #ffd96a">10</span> Physical Armor.<br><br>Additional stacks increase Physical Armor by <span style="color: #ffd96a">5</span>.</div>
-              <footer class="card-footer">Stacks up to 14</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="physicalleech physical leech basic attacks heal for 10% of the damage dealt.
+              <footer class="card-footer">Stacks up to 14.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="physicalleech physical leech basic attacks heal for 10% of the damage dealt.
 
 additional stacks increase healing by 5%. epic boon">
               <div class="card-top">
@@ -1531,10 +1532,10 @@ additional stacks increase healing by 5%. epic boon">
               </div>
               <h2 class="card-title">Physical Leech</h2>
               <div class="tooltip-copy">Basic Attacks heal for <span style="color: #ffd96a">10%</span> of the damage dealt.<br><br>Additional stacks increase healing by <span style="color: #ffd96a">5%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="resurgenceofthestorm resurgence of the storm upon dying, revive back at your altar after 5 seconds. this effect has a 300 second cooldown.
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="true" data-search="resurgenceofthestorm resurgence of the storm upon dying, revive back at your altar after 5 seconds. this effect has a 300 second cooldown.
 
-additional stacks reduce the cooldown by 60 seconds. epic boon">
+additional stacks reduce the cooldown by 60 seconds. epic excludes heroes the lost vikings the lost vikings boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_resurgence.png" alt="Resurgence of the Storm icon" loading="lazy">
                 <div class="meta-row">
@@ -1544,10 +1545,10 @@ additional stacks reduce the cooldown by 60 seconds. epic boon">
               </div>
               <h2 class="card-title">Resurgence of the Storm</h2>
               <div class="tooltip-copy">Upon dying, revive back at your Altar after <span style="color: #ffd96a">5</span> seconds. This effect has a <span style="color: #ffd96a">300</span> second cooldown.<br><br>Additional stacks reduce the cooldown by <span style="color: #ffd96a">60</span> seconds.</div>
-              <footer class="card-footer">Stacks up to 3</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="true" data-search="shadowstalker shadowstalker shadowstalk grants unrevealable for 4 seconds.
+              <footer class="card-footer">Stacks up to 3. Does not appear for The Lost Vikings.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="true" data-search="shadowstalker shadowstalker shadowstalk grants unrevealable for 4 seconds.
 
-reduces shadowstalk&#x27;s cooldown by 45. epic tyrande tyrande boon">
+reduces shadowstalk&#x27;s cooldown by 45. epic tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_shadowstalk.png" alt="Shadowstalker icon" loading="lazy">
                 <div class="meta-row">
@@ -1557,8 +1558,8 @@ reduces shadowstalk&#x27;s cooldown by 45. epic tyrande tyrande boon">
               </div>
               <h2 class="card-title">Shadowstalker</h2>
               <div class="tooltip-copy">Shadowstalk grants Unrevealable for <span style="color: #ffd96a">4</span> seconds.<br><br>Reduces Shadowstalk&#x27;s cooldown by <span style="color: #ffd96a">45</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="spellarmor spell armor gain permanent 10 spell armor.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="spellarmor spell armor gain permanent 10 spell armor.
 
 additional stacks increase spell armor by 5. epic boon">
               <div class="card-top">
@@ -1570,8 +1571,8 @@ additional stacks increase spell armor by 5. epic boon">
               </div>
               <h2 class="card-title">Spell Armor</h2>
               <div class="tooltip-copy">Gain permanent <span style="color: #ffd96a">10</span> Spell Armor.<br><br>Additional stacks increase Spell Armor by <span style="color: #ffd96a">5</span>.</div>
-              <footer class="card-footer">Stacks up to 14</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="spellleech spell leech abilities heal for 10% of the damage dealt.
+              <footer class="card-footer">Stacks up to 14.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="spellleech spell leech abilities heal for 10% of the damage dealt.
 
 additional stacks increase healing by 5%. epic boon">
               <div class="card-top">
@@ -1583,10 +1584,10 @@ additional stacks increase healing by 5%. epic boon">
               </div>
               <h2 class="card-title">Spell Leech</h2>
               <div class="tooltip-copy">Abilities heal for <span style="color: #ffd96a">10%</span> of the damage dealt.<br><br>Additional stacks increase healing by <span style="color: #ffd96a">5%</span>.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="true" data-search="starrain star rain starfall gains unlimited range.
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="true" data-search="starrain star rain starfall gains unlimited range.
 
-reduces starfall&#x27;s cooldown by 40. epic tyrande tyrande boon">
+reduces starfall&#x27;s cooldown by 40. epic tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_starfall.png" alt="Star Rain icon" loading="lazy">
                 <div class="meta-row">
@@ -1596,8 +1597,8 @@ reduces starfall&#x27;s cooldown by 40. epic tyrande tyrande boon">
               </div>
               <h2 class="card-title">Star Rain</h2>
               <div class="tooltip-copy">Starfall gains unlimited range.<br><br>Reduces Starfall&#x27;s cooldown by <span style="color: #ffd96a">40</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="false" data-search="shield storm shield gain a shield equal to 25% of your maximum health. shields regenerate quickly as long as you haven&#x27;t taken damage recently.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="shield storm shield gain a shield equal to 25% of your maximum health. shields regenerate quickly as long as you haven&#x27;t taken damage recently.
 
 additional stacks increase the shield by 10% of maximum health. epic boon">
               <div class="card-top">
@@ -1609,10 +1610,10 @@ additional stacks increase the shield by 10% of maximum health. epic boon">
               </div>
               <h2 class="card-title">Storm Shield</h2>
               <div class="tooltip-copy">Gain a Shield equal to <span style="color: #ffd96a">25%</span> of your maximum Health. Shields regenerate quickly as long as you haven&#x27;t taken damage recently.<br><br>Additional stacks increase the Shield by <span style="color: #ffd96a">10%</span> of maximum Health.</div>
-              <footer class="card-footer">Stacks infinitely</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="true" data-search="fastthunderclap thundering smash thunder clap gains 1 additional charges.
+              <footer class="card-footer">Stacks infinitely.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="true" data-search="fastthunderclap thundering smash thunder clap gains 1 additional charges.
 
-reduces thunder clap&#x27;s cooldown and mana cost by 40%. epic muradin muradin boon">
+reduces thunder clap&#x27;s cooldown and mana cost by 40%. epic muradin hero muradin only muradin muradin boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_muradin_thunderclap.png" alt="Thundering Smash icon" loading="lazy">
                 <div class="meta-row">
@@ -1622,8 +1623,8 @@ reduces thunder clap&#x27;s cooldown and mana cost by 40%. epic muradin muradin 
               </div>
               <h2 class="card-title">Thundering Smash</h2>
               <div class="tooltip-copy">Thunder Clap gains <span style="color: #ffd96a">1</span> additional charges.<br><br>Reduces Thunder Clap&#x27;s cooldown and Mana cost by <span style="color: #ffd96a">40%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Epic" data-hero-specific="true" data-search="unstoppabledive unstoppable dive dive grants unstoppable for the duration. epic illidan illidan boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Muradin only.</footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="true" data-search="unstoppabledive unstoppable dive dive grants unstoppable for the duration. epic illidan hero illidan only illidan illidan boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_illidan_dive_a.png" alt="Unstoppable Dive icon" loading="lazy">
                 <div class="meta-row">
@@ -1633,8 +1634,8 @@ reduces thunder clap&#x27;s cooldown and mana cost by 40%. epic muradin muradin 
               </div>
               <h2 class="card-title">Unstoppable Dive</h2>
               <div class="tooltip-copy">Dive grants Unstoppable for the duration.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="false" data-search="buddyall army of buddys your ai teammates gain their own buddys with 50% damage and healing. legendary boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Illidan only.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="false" data-search="buddyall army of buddys your ai teammates gain their own buddys with 50% damage and healing. legendary requires affixes buddy buddy boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_scoutingdrone_multiple.png" alt="Army of BUDDYs icon" loading="lazy">
                 <div class="meta-row">
@@ -1644,8 +1645,8 @@ reduces thunder clap&#x27;s cooldown and mana cost by 40%. epic muradin muradin 
               </div>
               <h2 class="card-title">Army of BUDDYs</h2>
               <div class="tooltip-copy">Your AI teammates gain their own BUDDYs with <span style="color: #ffd96a">50%</span> damage and healing.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="false" data-search="bloodlust bloodlust increases attack speed by 20% and movement speed by 17.5%
+              <footer class="card-footer">Doesn&#x27;t stack. Requires BUDDY.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="false" data-search="bloodlust bloodlust increases attack speed by 20% and movement speed by 17.5%
 
 basic attacks heal for 15% of the damage dealt. legendary boon">
               <div class="card-top">
@@ -1657,8 +1658,8 @@ basic attacks heal for 15% of the damage dealt. legendary boon">
               </div>
               <h2 class="card-title">Bloodlust</h2>
               <div class="tooltip-copy">Increases Attack Speed by <span style="color: #ffd96a">20%</span> and Movement Speed by <span style="color: #ffd96a">17.5%</span><br><br>Basic Attacks heal for <span style="color: #ffd96a">15%</span> of the damage dealt.</div>
-              <footer class="card-footer">Stacks up to 2</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="true" data-search="thralldoubletrait critical healing frostwolf resilience has a 50% chance to grant 1 additional stack. legendary thrall thrall boon">
+              <footer class="card-footer">Stacks up to 2.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="true" data-search="thralldoubletrait critical healing frostwolf resilience has a 50% chance to grant 1 additional stack. legendary thrall hero thrall only thrall thrall boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_thrall_double_trait.png" alt="Critical Healing icon" loading="lazy">
                 <div class="meta-row">
@@ -1668,8 +1669,8 @@ basic attacks heal for 15% of the damage dealt. legendary boon">
               </div>
               <h2 class="card-title">Critical Healing</h2>
               <div class="tooltip-copy">Frostwolf Resilience has a <span style="color: #ffd96a">50%</span> chance to grant <span style="color: #ffd96a">1</span> additional stack.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="false" data-search="criticalmass critical mass getting a takedown will refresh the cooldown on all of your abilities. legendary boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Thrall only.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="true" data-search="criticalmass critical mass getting a takedown will refresh the cooldown on all of your abilities. legendary excludes heroes li-ming li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_wizard_criticalmass.png" alt="Critical Mass icon" loading="lazy">
                 <div class="meta-row">
@@ -1679,10 +1680,10 @@ basic attacks heal for 15% of the damage dealt. legendary boon">
               </div>
               <h2 class="card-title">Critical Mass</h2>
               <div class="tooltip-copy">Getting a Takedown will refresh the cooldown on all of your Abilities.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="true" data-search="limingcriticalpower critical power takedowns increase spell power by 1%.
+              <footer class="card-footer">Doesn&#x27;t stack. Does not appear for Li-Ming.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="true" data-search="limingcriticalpower critical power takedowns increase spell power by 1%.
 
-retain 50% of quest progress after winning the game. legendary li-ming wizard boon">
+retain 50% of quest progress after winning the game. legendary li-ming hero li-ming only wizard li-ming boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_wizard_criticalmass.png" alt="Critical Power icon" loading="lazy">
                 <div class="meta-row">
@@ -1692,8 +1693,8 @@ retain 50% of quest progress after winning the game. legendary li-ming wizard bo
               </div>
               <h2 class="card-title">Critical Power</h2>
               <div class="tooltip-copy">Takedowns increase Spell Power by <span style="color: #ffd96a">1%</span>.<br><br>Retain <span style="color: #ffd96a">50%</span> of Quest progress after winning the game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="true" data-search="greatritual great ritual increases voodoo ritual stacks gained by 100%. legendary nazeebo witchdoctor boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Li-Ming only.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="true" data-search="greatritual great ritual increases voodoo ritual stacks gained by 100%. legendary nazeebo hero nazeebo only witchdoctor nazeebo boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_nazeebo_voodooritual.png" alt="Great Ritual icon" loading="lazy">
                 <div class="meta-row">
@@ -1703,8 +1704,8 @@ retain 50% of quest progress after winning the game. legendary li-ming wizard bo
               </div>
               <h2 class="card-title">Great Ritual</h2>
               <div class="tooltip-copy">Increases Voodoo Ritual stacks gained by <span style="color: #ffd96a">100%</span>.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="true" data-search="legallyblind legally blind gain immunity to blind. legendary illidan illidan boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Nazeebo only.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="true" data-search="legallyblind legally blind gain immunity to blind. legendary illidan hero illidan only illidan illidan boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_illidan_evasion_b.png" alt="Legally Blind icon" loading="lazy">
                 <div class="meta-row">
@@ -1714,8 +1715,8 @@ retain 50% of quest progress after winning the game. legendary li-ming wizard bo
               </div>
               <h2 class="card-title">Legally Blind</h2>
               <div class="tooltip-copy">Gain immunity to Blind.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="true" data-search="lunarshower lunar shower lunar flare triggers a second time 1.75 seconds later. legendary tyrande tyrande boon">
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Illidan only.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="true" data-search="lunarshower lunar shower lunar flare triggers a second time 1.75 seconds later. legendary tyrande hero tyrande only tyrande tyrande boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_tyrande_lunarflare.png" alt="Lunar Shower icon" loading="lazy">
                 <div class="meta-row">
@@ -1725,10 +1726,10 @@ retain 50% of quest progress after winning the game. legendary li-ming wizard bo
               </div>
               <h2 class="card-title">Lunar Shower</h2>
               <div class="tooltip-copy">Lunar Flare triggers a second time <span style="color: #ffd96a">1.75</span> seconds later.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="false" data-search="nanoboost nano boost increases spell power by 15% and recharge basic abilities 75% faster.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Tyrande only.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="true" data-search="nanoboost nano boost increases spell power by 15% and recharge basic abilities 75% faster.
 
-regenerate 2 mana per second. legendary boon">
+regenerate 2 mana per second. legendary heroes mana heroes only mana boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_ana_nano_bost.png" alt="Nano Boost icon" loading="lazy">
                 <div class="meta-row">
@@ -1738,8 +1739,8 @@ regenerate 2 mana per second. legendary boon">
               </div>
               <h2 class="card-title">Nano Boost</h2>
               <div class="tooltip-copy">Increases Spell Power by <span style="color: #ffd96a">15%</span> and recharge Basic Abilities <span style="color: #ffd96a">75%</span> faster.<br><br>Regenerate <span style="color: #ffd96a">2</span> Mana per second.</div>
-              <footer class="card-footer">Stacks up to 2</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="false" data-search="nanoboostnomana nano boost increases spell power by 15% and recharge basic abilities 75.0% faster. legendary boon">
+              <footer class="card-footer">Stacks up to 2. Appears for Mana heroes only.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="true" data-search="nanoboostnomana nano boost increases spell power by 15% and recharge basic abilities 75.0% faster. legendary heroes non-mana heroes only !mana boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_ana_nano_bost.png" alt="Nano Boost icon" loading="lazy">
                 <div class="meta-row">
@@ -1749,10 +1750,10 @@ regenerate 2 mana per second. legendary boon">
               </div>
               <h2 class="card-title">Nano Boost</h2>
               <div class="tooltip-copy">Increases Spell Power by <span style="color: #ffd96a">15%</span> and recharge Basic Abilities <span style="color: #ffd96a">75.0%</span> faster.</div>
-              <footer class="card-footer">Stacks up to 2</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="true" data-search="muradinrage rage! gain the benefits of bronzebeard rage.
+              <footer class="card-footer">Stacks up to 2. Appears for Non-mana heroes only.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="true" data-search="muradinrage rage! gain the benefits of bronzebeard rage.
 
-increases bronzebeard rage&#x27;s radius by 200% and reduces its damage interval by 0.5 seconds. legendary muradin muradin boon">
+increases bronzebeard rage&#x27;s radius by 200% and reduces its damage interval by 0.5 seconds. legendary muradin hero muradin only muradin muradin boon">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_talent_burningrage.png" alt="RAGE! icon" loading="lazy">
                 <div class="meta-row">
@@ -1762,8 +1763,8 @@ increases bronzebeard rage&#x27;s radius by 200% and reduces its damage interval
               </div>
               <h2 class="card-title">RAGE!</h2>
               <div class="tooltip-copy">Gain the benefits of Bronzebeard Rage.<br><br>Increases Bronzebeard Rage&#x27;s radius by <span style="color: #ffd96a">200%</span> and reduces its damage interval by <span style="color: #ffd96a">0.5</span> seconds.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
-            </article><article class="affix-card" data-rarity="Legendary" data-hero-specific="false" data-search="secondstart second start gain 1 more starter boon.
+              <footer class="card-footer">Doesn&#x27;t stack. Appears for Muradin only.</footer>
+            </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="false" data-search="secondstart second start gain 1 more starter boon.
 
 obtain an additional curse every game. legendary boon">
               <div class="card-top">
@@ -1775,7 +1776,7 @@ obtain an additional curse every game. legendary boon">
               </div>
               <h2 class="card-title">Second Start</h2>
               <div class="tooltip-copy">Gain <span style="color: #ffd96a">1</span> more Starter boon.<br><br>Obtain an additional Curse every game.</div>
-              <footer class="card-footer">Doesn&#x27;t stack</footer>
+              <footer class="card-footer">Doesn&#x27;t stack.</footer>
             </article>
     </section>
 
@@ -1793,8 +1794,8 @@ obtain an additional curse every game. legendary boon">
 
     function matchesRarity(card) {
       if (activeRarity === "all") return true;
-      if (activeRarity === "hero-specific") {
-        return card.dataset.heroSpecific === "true";
+      if (activeRarity === "hero-limited") {
+        return card.dataset.heroLimited === "true";
       }
       return card.dataset.rarity === activeRarity;
     }

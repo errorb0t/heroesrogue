@@ -16,6 +16,42 @@ def render_stackability_label(affix: AffixRecord) -> str:
     return f"Stacks up to {affix.max_stacks}"
 
 
+def render_condition_sentence(key: str, value: str) -> str:
+    if key == "hero-specific":
+        return f"Appears for {value}."
+    if key == "hero-tag":
+        return f"Appears for {value}."
+    if key == "heroes-excluded":
+        return f"Does not appear for {value}."
+    if key == "map-specific":
+        return f"Appears on {value}."
+    if key == "maps-excluded":
+        return f"Does not appear on {value}."
+    if key == "affixes-required":
+        return f"Requires {value}."
+    if key == "affixes-excluded":
+        return f"Cannot appear with {value}."
+    if key == "talents-required":
+        return f"Requires talents {value}."
+    if key == "level-range":
+        lower_value = value.lower()
+        if lower_value.startswith("up to "):
+            return f"Appears {lower_value} only."
+        if lower_value.endswith(" only"):
+            return f"Appears at {value}."
+        return f"Appears at {value} only."
+    return value if value.endswith(".") else f"{value}."
+
+
+def render_footer_text(affix: AffixRecord) -> str:
+    parts = [f"{render_stackability_label(affix)}."]
+    parts.extend(
+        render_condition_sentence(condition.key, condition.value)
+        for condition in affix.conditions
+    )
+    return " ".join(parts)
+
+
 def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) -> str:
     page_label = "Boons" if page_type == "boon" else "Curses"
     page_label_singular = "boon" if page_type == "boon" else "curse"
@@ -32,7 +68,7 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
                 affix.tooltip_plain,
                 affix.rarity,
                 affix.hero_specific,
-                affix.hero_specific_raw,
+                *(condition.search_text for condition in affix.conditions),
                 "curse" if affix.negative else "boon",
             ]
             if part
@@ -42,10 +78,10 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
             if affix.hero_specific
             else ""
         )
-        stackability_label = render_stackability_label(affix)
+        footer_text = render_footer_text(affix)
         cards.append(
             f"""
-            <article class="affix-card" data-rarity="{html.escape(affix.rarity)}" data-hero-specific="{str(bool(affix.hero_specific)).lower()}" data-search="{html.escape(search_blob)}">
+            <article class="affix-card" data-rarity="{html.escape(affix.rarity)}" data-hero-limited="{str(affix.has_hero_condition).lower()}" data-search="{html.escape(search_blob)}">
               <div class="card-top">
                 <img class="affix-icon" src="{html.escape(affix.icon_url)}" alt="{html.escape(affix.name)} icon" loading="lazy">
                 <div class="meta-row">
@@ -55,7 +91,7 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
               </div>
               <h2 class="card-title">{html.escape(affix.name)}</h2>
               <div class="tooltip-copy">{affix.tooltip_html}</div>
-              <footer class="card-footer">{html.escape(stackability_label)}</footer>
+              <footer class="card-footer">{html.escape(footer_text)}</footer>
             </article>
             """.strip()
         )
@@ -297,6 +333,7 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
       border-top: 1px solid #24344a;
       color: var(--muted);
       font-size: 0.88rem;
+      line-height: 1.5;
       letter-spacing: 0.02em;
     }}
 
@@ -383,11 +420,11 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
     <section class="hero">
       <div class="hero-head">
         <h2>{page_label}</h2>
-        <input id="search" class="search" type="search" placeholder="Search by {page_label_singular} name, hero, rarity, or tooltip text">
+        <input id="search" class="search" type="search" placeholder="Search by {page_label_singular} name, hero, tooltip, ...">
       </div>
       <div class="filter-row" id="filters">
         <button class="filter-chip active" type="button" data-rarity-filter="all">All</button>
-        <button class="filter-chip" type="button" data-rarity-filter="hero-specific">Hero specific</button>
+        <button class="filter-chip" type="button" data-rarity-filter="hero-limited">Hero-specific</button>
         <button class="filter-chip" type="button" data-rarity-filter="Starter">Starter</button>
         <button class="filter-chip" type="button" data-rarity-filter="Common">Common</button>
         <button class="filter-chip" type="button" data-rarity-filter="Uncommon">Uncommon</button>
@@ -416,8 +453,8 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
 
     function matchesRarity(card) {{
       if (activeRarity === "all") return true;
-      if (activeRarity === "hero-specific") {{
-        return card.dataset.heroSpecific === "true";
+      if (activeRarity === "hero-limited") {{
+        return card.dataset.heroLimited === "true";
       }}
       return card.dataset.rarity === activeRarity;
     }}

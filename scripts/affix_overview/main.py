@@ -7,6 +7,7 @@ from .constants import (
     DYNAMIC_OVERRIDES_PATH,
     HERO_NAME_OVERRIDES_PATH,
     LIB_AFFX_HEADER_PATH,
+    MAP_NAME_OVERRIDES_PATH,
     ROOT,
     STRINGS_PATH,
     TEXTURES_DIR,
@@ -16,6 +17,7 @@ from .data_loading import (
     load_difficulties,
     load_dynamic_value_overrides,
     load_hero_name_overrides,
+    load_map_name_overrides,
     load_mod_version,
     load_strings,
 )
@@ -56,6 +58,12 @@ def parse_args() -> argparse.Namespace:
         default=HERO_NAME_OVERRIDES_PATH,
         help='JSON file containing custom hero display names as {"HeroId": "Display Name"}.',
     )
+    parser.add_argument(
+        "--map-name-overrides",
+        type=Path,
+        default=MAP_NAME_OVERRIDES_PATH,
+        help='JSON file containing custom map display names as {"MapId": "Display Name"}.',
+    )
     return parser.parse_args()
 
 
@@ -71,8 +79,15 @@ def main() -> None:
         args.dynamic_overrides.resolve(), args.dynamic_override
     )
     hero_name_overrides = load_hero_name_overrides(args.hero_name_overrides.resolve())
+    map_name_overrides = load_map_name_overrides(args.map_name_overrides.resolve())
     resolver = DynamicValueResolver(dynamic_overrides)
-    affixes = load_affixes(strings, output_dir, resolver, hero_name_overrides)
+    affixes = load_affixes(
+        strings,
+        output_dir,
+        resolver,
+        hero_name_overrides,
+        map_name_overrides,
+    )
     difficulties = load_difficulties(strings, resolver)
     boons = [affix for affix in affixes if not affix.negative]
     curses = [affix for affix in affixes if affix.negative]
