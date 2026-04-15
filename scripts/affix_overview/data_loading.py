@@ -8,27 +8,15 @@ from typing import Mapping
 
 from .constants import (
     AFFIX_DATA_PATH,
+    FIELD_VALUE_ATTRIBUTES,
+    HERO_TAG_LABELS,
     LIB_AFFX_SOURCE_PATH,
     RARITY_ORDER,
 )
 from .dynamic_values import DynamicValueResolver
+from .icon_names import icon_file_name
 from .markup import convert_storm_markup
 from .models import AffixCondition, AffixRecord, DifficultyRecord
-
-
-FIELD_VALUE_ATTRIBUTES = ("String", "Int", "value", "Value")
-HERO_TAG_LABELS = {
-    "mana": "Mana heroes only",
-    "!mana": "Non-mana heroes only",
-    "melee": "Melee heroes only",
-    "!melee": "Non-melee heroes only",
-    "ranged": "Ranged heroes only",
-    "!ranged": "Non-ranged heroes only",
-    "all": "All heroes",
-    "!all": "No heroes",
-    "starter": "Starter heroes only",
-    "!starter": "Non-starter heroes only",
-}
 
 
 def load_strings(path: Path) -> dict[str, str]:
@@ -237,11 +225,6 @@ def parse_int_field(
         raise RuntimeError(f"Expected integer field value, got {raw_value!r}") from exc
 
 
-def icon_file_name(icon_path: str) -> str:
-    stem = Path(icon_path).stem.strip().lower().replace("-", "_")
-    return f"{stem}.png" if stem else ""
-
-
 def resolve_icon_url(
     icon_path: str,
     icon_dir: Path,
@@ -294,6 +277,8 @@ def append_condition(
             search_text=" ".join(part for part in search_parts if part),
         )
     )
+
+
 def format_level_condition(min_level: int, max_level: int) -> str:
     if min_level > 0 and max_level > 0:
         if min_level == max_level:

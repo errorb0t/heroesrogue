@@ -96,9 +96,8 @@ def main() -> None:
     pages = {
         output_dir / "index.html": render_html(boons, "boon", mod_version),
         output_dir / "curses.html": render_html(curses, "curse", mod_version),
-        output_dir
-        / "difficulties.html": render_difficulties_html(
-            difficulties, strings, mod_version
+        output_dir / "difficulties.html": render_difficulties_html(
+            difficulties, mod_version
         ),
     }
 

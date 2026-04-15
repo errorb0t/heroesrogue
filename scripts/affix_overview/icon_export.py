@@ -4,14 +4,12 @@ import subprocess
 from pathlib import Path
 from shutil import which
 
+from .icon_names import icon_file_name
+
 try:
     from PIL import Image
 except ImportError:  # pragma: no cover - exercised only when Pillow is absent.
     Image = None  # type: ignore[assignment]
-
-
-def icon_file_name_from_path(path: Path) -> str:
-    return f"{path.stem.strip().lower().replace('-', '_')}.png"
 
 
 def needs_export(source_path: Path, target_path: Path) -> bool:
@@ -45,7 +43,7 @@ def export_texture_icons(source_dir: Path, output_dir: Path) -> int:
 
     exported = 0
     for source_path in sorted(source_dir.glob("*.dds")):
-        target_path = output_dir / icon_file_name_from_path(source_path)
+        target_path = output_dir / icon_file_name(source_path)
         if not needs_export(source_path, target_path):
             continue
 

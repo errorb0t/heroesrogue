@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Heroes Rogue Wiki - v0.11.2 - Boons</title>
   <style>
+
     :root {
       --bg: #0c1220;
       --panel: #162133;
@@ -95,6 +96,56 @@
       margin-bottom: 28px;
     }
 
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+    }
+
+    .results-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .tooltip-copy {
+      color: #dce7f9;
+      line-height: 1.55;
+    }
+
+    .tooltip-copy br {
+      content: "";
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 20px, 1400px);
+        padding-top: 20px;
+      }
+
+      .hero,
+      .affix-card {
+        border-radius: 18px;
+      }
+
+      .top-bar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .github-link {
+        align-self: flex-start;
+      }
+    }
+
+
     .hero-head {
       display: flex;
       flex-wrap: wrap;
@@ -104,10 +155,7 @@
     }
 
     .hero h2 {
-      margin: 0 0 10px;
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      line-height: 0.95;
-      letter-spacing: 0.02em;
+      margin-bottom: 10px;
     }
 
     .search {
@@ -145,11 +193,6 @@
       background: #19314c;
       border-color: #4f81b7;
       color: #d9f1ff;
-    }
-
-    .results-note {
-      color: var(--muted);
-      font-size: 0.95rem;
     }
 
     .grid {
@@ -224,11 +267,6 @@
       color: #b2d2ff;
     }
 
-    .tooltip-copy {
-      color: #dce7f9;
-      line-height: 1.55;
-    }
-
     .dynamic-footnote-marker,
     .footer-footnote-marker {
       color: #ffe38d;
@@ -266,10 +304,6 @@
       margin-top: 4px;
     }
 
-    .tooltip-copy br {
-      content: "";
-    }
-
     .storm-inline-icon {
       color: #b9dcff;
       margin-right: 0.3em;
@@ -290,32 +324,7 @@
       border-radius: 20px;
     }
 
-    .footer-note {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
     @media (max-width: 720px) {
-      .shell {
-        width: min(100% - 20px, 1400px);
-        padding-top: 20px;
-      }
-
-      .hero,
-      .affix-card {
-        border-radius: 18px;
-      }
-
-      .top-bar {
-        align-items: stretch;
-        flex-direction: column;
-      }
-
-      .github-link {
-        align-self: flex-start;
-      }
-
       .hero-head {
         align-items: stretch;
       }
@@ -334,6 +343,7 @@
         border-radius: 14px;
       }
     }
+
   </style>
 </head>
   <body>
@@ -2159,7 +2169,8 @@ obtain an additional curse every game. legendary boon">
     </section>
 
     <div class="empty-state" id="empty-state">No boons matched the current filter.</div>
-    <p class="footer-note">This Compendium is generated programmatically and may contain errors. Heroes Rogue is a fan-made project and is not affiliated with or endorsed by Blizzard Entertainment. The mod runs locally and does not interact with Blizzard's servers. All original game assets, characters, and intellectual property belong to Blizzard Entertainment.</p>
+
+    <p class="footer-note">This Compendium is generated programmatically and may contain errors. Heroes Rogue is a fan-made project and is not affiliated with or endorsed by Blizzard Entertainment. The mod runs locally and does not interact with Blizzard&#x27;s servers. All original game assets, characters, and intellectual property belong to Blizzard Entertainment.</p>
   </div>
 
   <script>
@@ -2207,5 +2218,6 @@ obtain an additional curse every game. legendary boon">
 
     applyFilters();
   </script>
+
 </body>
 </html>
