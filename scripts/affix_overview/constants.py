@@ -35,7 +35,7 @@ RARITY_DISPLAY_NAMES = {
     "Rare": "Rare",
     "Epic": "Epic",
     "Legendary": "Legendary",
-    "MythicCurse": "Mythic Curse",
+    "MythicCurse": "Mythic",
 }
 RARITY_ALIASES = {
     "starter": "Starter",
