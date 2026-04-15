@@ -9,6 +9,7 @@ from .constants import (
     LIB_AFFX_HEADER_PATH,
     ROOT,
     STRINGS_PATH,
+    TEXTURES_DIR,
 )
 from .data_loading import (
     load_affixes,
@@ -19,6 +20,7 @@ from .data_loading import (
     load_strings,
 )
 from .dynamic_values import DynamicValueResolver
+from .icon_export import export_texture_icons
 from .render_affixes import render_html
 from .render_difficulties import render_difficulties_html
 
@@ -61,6 +63,7 @@ def main() -> None:
     args = parse_args()
     output_dir = args.output.resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
+    exported_icons = export_texture_icons(TEXTURES_DIR, output_dir / "icons")
 
     mod_version = load_mod_version(LIB_AFFX_HEADER_PATH)
     strings = load_strings(STRINGS_PATH)
@@ -91,6 +94,7 @@ def main() -> None:
     print(f"Boons: {len(boons)}")
     print(f"Curses: {len(curses)}")
     print(f"Difficulties: {len(difficulties)}")
+    print(f"Exported icons: {exported_icons}")
     missing_icon_names = sorted(
         {
             affix.icon_name
