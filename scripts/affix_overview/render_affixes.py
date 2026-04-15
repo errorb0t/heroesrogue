@@ -20,6 +20,17 @@ def render_stackability_html(affix: AffixRecord) -> str:
     return f"Stacks up to {render_footer_highlight(str(affix.max_stacks))}."
 
 
+def render_mythic_order_html(affix: AffixRecord) -> str:
+    if affix.rarity != "MythicCurse":
+        return ""
+
+    match = re.fullmatch(r"Mythic(\d+)", affix.affix_id)
+    if match is None:
+        return ""
+
+    return f"Mythic {render_footer_highlight(match.group(1))}."
+
+
 def render_condition_sentence_html(key: str, value: str) -> str:
     highlighted_value = render_footer_highlight(value)
     if key == "hero-specific":
@@ -51,7 +62,11 @@ def render_condition_sentence_html(key: str, value: str) -> str:
 
 
 def render_footer_summary_html(affix: AffixRecord) -> str:
-    parts = [render_stackability_html(affix)]
+    parts: list[str] = []
+    mythic_order_html = render_mythic_order_html(affix)
+    if mythic_order_html:
+        parts.append(mythic_order_html)
+    parts.append(render_stackability_html(affix))
     parts.extend(
         render_condition_sentence_html(condition.key, condition.value)
         for condition in affix.conditions
