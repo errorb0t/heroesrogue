@@ -11,6 +11,7 @@ from .constants import (
     FIELD_VALUE_ATTRIBUTES,
     HERO_TAG_LABELS,
     LIB_AFFX_SOURCE_PATH,
+    RARITY_ALIASES,
     RARITY_ORDER,
 )
 from .dynamic_values import DynamicValueResolver
@@ -223,6 +224,30 @@ def parse_int_field(
         return int(stripped)
     except ValueError as exc:
         raise RuntimeError(f"Expected integer field value, got {raw_value!r}") from exc
+
+
+def normalize_affix_rarity(raw_rarity: str | None) -> str:
+    if raw_rarity is None:
+        return "Common"
+
+    stripped = raw_rarity.strip()
+    if not stripped:
+        return "Common"
+
+    normalized = RARITY_ALIASES.get(stripped.casefold())
+    if normalized is not None:
+        return normalized
+
+    condensed = re.sub(r"[\s_-]+", "", stripped.casefold())
+    normalized = RARITY_ALIASES.get(condensed)
+    if normalized is not None:
+        return normalized
+
+    return stripped
+
+
+def affix_is_curse(fields: Mapping[str, str]) -> bool:
+    return parse_int_field(fields.get("Curse"), default=0, empty_value=0) > 0
 
 
 def resolve_icon_url(
@@ -470,8 +495,8 @@ def load_affixes(
             icon_cache,
         )
         max_stacks = parse_int_field(fields.get("Max"), default=1, empty_value=0)
-        negative = fields.get("Negative", "0") == "1"
-        rarity = fields.get("Rarity", "Common") or "Common"
+        negative = affix_is_curse(fields)
+        rarity = normalize_affix_rarity(fields.get("Rarity"))
         conditions, hero_specific, has_hero_condition = build_affix_conditions(
             fields,
             field_lists,

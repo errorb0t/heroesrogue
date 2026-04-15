@@ -3,7 +3,7 @@ from __future__ import annotations
 import html
 import re
 
-from .constants import RARITY_COLORS, RARITY_FILTERS
+from .constants import RARITY_COLORS, RARITY_DISPLAY_NAMES, RARITY_FILTERS
 from .models import AffixRecord
 from .render_common import render_page
 
@@ -162,6 +162,11 @@ AFFIX_PAGE_STYLES = """
       padding: 18px;
     }
 
+    .affix-card[data-rarity="MythicCurse"] {
+      border-color: rgba(255, 91, 110, 0.65);
+      box-shadow: inset 0 0 0 1px rgba(255, 91, 110, 0.12);
+    }
+
     .affix-card.hidden {
       display: none;
     }
@@ -211,6 +216,11 @@ AFFIX_PAGE_STYLES = """
 
     .rarity-chip {
       color: var(--rarity-color);
+    }
+
+    .affix-card[data-rarity="MythicCurse"] .rarity-chip {
+      background: rgba(76, 10, 18, 0.9);
+      border-color: rgba(255, 91, 110, 0.4);
     }
 
     .hero-chip {
@@ -304,6 +314,7 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
     cards = []
     for affix in affixes:
         rarity_color = RARITY_COLORS.get(affix.rarity, "#f2f5f8")
+        rarity_label = RARITY_DISPLAY_NAMES.get(affix.rarity, affix.rarity)
         search_blob = " ".join(
             part
             for part in [
@@ -311,6 +322,7 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
                 affix.name,
                 affix.tooltip_plain,
                 affix.rarity,
+                rarity_label,
                 affix.hero_specific,
                 *(footnote.text for footnote in affix.tooltip_footnotes),
                 *(condition.search_text for condition in affix.conditions),
@@ -331,7 +343,7 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
               <div class="card-top">
                 <img class="affix-icon" src="{html.escape(affix.icon_url)}" alt="{html.escape(affix.name)} icon" loading="lazy">
                 <div class="meta-row">
-                  <span class="meta-chip rarity-chip" style="--rarity-color: {html.escape(rarity_color)}">{html.escape(affix.rarity)}</span>
+                  <span class="meta-chip rarity-chip" style="--rarity-color: {html.escape(rarity_color)}">{html.escape(rarity_label)}</span>
                   {hero_badge}
                 </div>
               </div>

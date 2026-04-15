@@ -18,11 +18,40 @@ DYNAMIC_OVERRIDES_PATH = CONFIG_DIR / "dynamic_overrides.json"
 HERO_NAME_OVERRIDES_PATH = CONFIG_DIR / "hero_names.json"
 MAP_NAME_OVERRIDES_PATH = CONFIG_DIR / "map_names.json"
 
-RARITY_ORDER = ["Starter", "Common", "Uncommon", "Rare", "Epic", "Legendary"]
+RARITY_ORDER = [
+    "Starter",
+    "Common",
+    "Uncommon",
+    "Rare",
+    "Epic",
+    "Legendary",
+    "MythicCurse",
+]
+RARITY_DISPLAY_NAMES = {
+    "Starter": "Starter",
+    "Common": "Common",
+    "Uncommon": "Uncommon",
+    "Rare": "Rare",
+    "Epic": "Epic",
+    "Legendary": "Legendary",
+    "MythicCurse": "Mythic Curse",
+}
+RARITY_ALIASES = {
+    "starter": "Starter",
+    "common": "Common",
+    "uncommon": "Uncommon",
+    "rare": "Rare",
+    "epic": "Epic",
+    "legendary": "Legendary",
+    "mythiccurse": "MythicCurse",
+    "mythic curse": "MythicCurse",
+    "mythic_curse": "MythicCurse",
+    "mythic-curse": "MythicCurse",
+}
 RARITY_FILTERS = [
     ("all", "All"),
     ("hero-limited", "Hero-specific"),
-    *((rarity, rarity) for rarity in RARITY_ORDER),
+    *((rarity, RARITY_DISPLAY_NAMES[rarity]) for rarity in RARITY_ORDER),
 ]
 RARITY_COLORS = {
     "Starter": "#e6cc80",
@@ -31,6 +60,7 @@ RARITY_COLORS = {
     "Rare": "#4f95ff",
     "Epic": "#d26dff",
     "Legendary": "#ff9d3a",
+    "MythicCurse": "#ff5b6e",
 }
 STORM_COLORS = {
     "#TooltipNumbers": "#ffd96a",
