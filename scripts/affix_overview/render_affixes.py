@@ -60,16 +60,21 @@ def render_footer_summary_html(affix: AffixRecord) -> str:
 
 
 def render_footer_footnote_text_html(text: str) -> str:
-    sentences = re.findall(r"[^.]+\.", text)
+    # Only split on sentence-ending periods so hero names like D.Va and E.T.C.
+    # remain intact inside highlighted footnotes.
+    sentences = [
+        match.group(0).strip()
+        for match in re.finditer(r".+?(?:\.(?=\s|$)|$)", text)
+        if match.group(0).strip()
+    ]
     if not sentences:
         return html.escape(text)
 
     rendered_sentences: list[str] = []
     for sentence in sentences:
-        stripped = sentence.strip()
-        match = re.fullmatch(r"Reduced to (.+?) for (.+)\.", stripped)
+        match = re.fullmatch(r"Reduced to (.+?) for (.+)\.", sentence)
         if match is None:
-            rendered_sentences.append(html.escape(stripped))
+            rendered_sentences.append(html.escape(sentence))
             continue
         reduced_value, heroes = match.groups()
         rendered_sentences.append(
