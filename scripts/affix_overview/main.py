@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from .constants import (
+    AFFIX_OVERVIEW_CONFIG_PATH,
     DYNAMIC_OVERRIDES_PATH,
     HERO_NAME_OVERRIDES_PATH,
     LIB_AFFX_HEADER_PATH,
@@ -16,6 +17,7 @@ from .data_loading import (
     load_affixes,
     load_difficulties,
     load_dynamic_value_overrides,
+    load_hidden_affix_ids,
     load_hero_name_overrides,
     load_map_name_overrides,
     load_mod_version,
@@ -64,6 +66,15 @@ def parse_args() -> argparse.Namespace:
         default=MAP_NAME_OVERRIDES_PATH,
         help='JSON file containing custom map display names as {"MapId": "Display Name"}.',
     )
+    parser.add_argument(
+        "--overview-config",
+        type=Path,
+        default=AFFIX_OVERVIEW_CONFIG_PATH,
+        help=(
+            "JSON file containing overview-only settings such as "
+            '{"hidden_affixes": ["AffixId"]}.'
+        ),
+    )
     return parser.parse_args()
 
 
@@ -80,6 +91,7 @@ def main() -> None:
     )
     hero_name_overrides = load_hero_name_overrides(args.hero_name_overrides.resolve())
     map_name_overrides = load_map_name_overrides(args.map_name_overrides.resolve())
+    hidden_affix_ids = load_hidden_affix_ids(args.overview_config.resolve())
     resolver = DynamicValueResolver(dynamic_overrides)
     resolver.set_hero_name_overrides(hero_name_overrides)
     affixes = load_affixes(
@@ -89,6 +101,8 @@ def main() -> None:
         hero_name_overrides,
         map_name_overrides,
     )
+    if hidden_affix_ids:
+        affixes = [affix for affix in affixes if affix.affix_id not in hidden_affix_ids]
     difficulties = load_difficulties(strings, resolver)
     boons = [affix for affix in affixes if not affix.negative]
     curses = [affix for affix in affixes if affix.negative]

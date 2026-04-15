@@ -101,6 +101,25 @@ def load_map_name_overrides(path: Path) -> dict[str, str]:
     return load_name_overrides(path, label="map name")
 
 
+def load_hidden_affix_ids(path: Path) -> set[str]:
+    if not path.exists():
+        return set()
+
+    raw_data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw_data, dict):
+        raise RuntimeError(f"Expected a JSON object in {path}")
+
+    hidden_affixes = raw_data.get("hidden_affixes", [])
+    if not isinstance(hidden_affixes, list) or not all(
+        isinstance(affix_id, str) for affix_id in hidden_affixes
+    ):
+        raise RuntimeError(
+            f"Expected {path} to define hidden_affixes as a list of affix ids"
+        )
+
+    return {affix_id.strip() for affix_id in hidden_affixes if affix_id.strip()}
+
+
 def extract_function_body(path: Path, signature: str) -> str:
     text = path.read_text(encoding="utf-8")
     start = text.find(signature)

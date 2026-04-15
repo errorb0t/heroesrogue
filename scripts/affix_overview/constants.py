@@ -17,6 +17,7 @@ STRINGS_PATH = MOD_ROOT / "enUS.StormData" / "LocalizedData" / "GameStrings.txt"
 DYNAMIC_OVERRIDES_PATH = CONFIG_DIR / "dynamic_overrides.json"
 HERO_NAME_OVERRIDES_PATH = CONFIG_DIR / "hero_names.json"
 MAP_NAME_OVERRIDES_PATH = CONFIG_DIR / "map_names.json"
+AFFIX_OVERVIEW_CONFIG_PATH = CONFIG_DIR / "overview_config.json"
 
 RARITY_ORDER = [
     "Starter",
