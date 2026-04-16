@@ -273,7 +273,7 @@ bool libAffx_BuddyAffixAdded (bool testConds, bool runActions) {
     libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogEffect, "AffixBuddyHealCreatePersistent", "PeriodicPeriodArray[0]", 3 - (0.25 * (libAffx_affixes[affix].count - 1)));
     return true;
 }
-bool libaffx_BuddyExecuteOnce (bool testConds, bool runActions) {
+bool libaffx_BuddyExecuteOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
@@ -2140,6 +2140,9 @@ bool libAffx_SecondStartExecute (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
+    while (!libAffx_startingBoonsQueued) {
+        libAffx_Wait(0.0625, c_timeGame);
+    }
     libAffx_QueueAffix(libAffx_rarityCommon, true, 1, 1, false);
     return true;
 }
@@ -3245,6 +3248,7 @@ bool libAffx_Mythic5UnitDied (bool testConds, bool runActions) {
 }
 // ---------------------------------------------------------------
 // Ritual of Boons
+// ---------------------------------------------------------------
 int ritualOfBoonsIndex;
 bool libAffx_NazeeboRitualofBoonsAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {

@@ -2202,17 +2202,17 @@ void libAffx_ChooseAffixes(int rarity, bool negative, int level, bool preventUpg
 
     libAffx_processQueueTimeElapsed = 0;
     if (rarity == libAffx_rarityMythicCurse) {
-        if (libAffx_currentRun == 4) {
+        if (libAffx_currentRun == 5) {
             libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic1");
-        } else if (libAffx_currentRun == 8) {
+        } else if (libAffx_currentRun == 10) {
             libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic2");
-        } else if (libAffx_currentRun == 12) {
+        } else if (libAffx_currentRun == 15) {
             libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic3");
-        } else if (libAffx_currentRun == 16) {
-            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic4");
         } else if (libAffx_currentRun == 20) {
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic4");
+        } else if (libAffx_currentRun == 25) {
             libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic5");
-        } else if (libAffx_currentRun >= 24) {
+        } else if (libAffx_currentRun >= 30) {
             libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic6");
         }
         SoundPlayOnUnit(SoundLink("UI_Game_LevelUp_Talent", -1), PlayerGroupSingle(1), libGame_gv_players[libAffx_player].lv_heroUnit, 8.0, 100.0, 0.0);
@@ -2749,13 +2749,13 @@ bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
     if (player == libAffx_player) {
         if (level == 1) {
             libAffx_Wait(libAffx_gameStartDelay, c_timeGame);
-            if (libAffx_currentRun != 0 && libAffx_currentRun % 4 == 0 && libAffx_difficulty == 3) {
+            if (libAffx_currentRun != 0 && libAffx_currentRun % 5 == 0 && libAffx_difficulty == 3) {
                 libAffx_QueueAffix2(libAffx_rarityMythicCurse, true, level, 1, true, true);
             }
             if (libAffx_currentRun <= 1) {
                 libAffx_QueueAffix(libAffx_rarityStarter, false, level, 1, false);
             } else {
-                if (libAffx_currentRun % 4 == 0) {
+                if (libAffx_currentRun % 5 == 0) {
                     libAffx_QueueAffix(libAffx_rarityLegendary, false, level, 1, false);
                 } else {
                     libAffx_QueueAffix(libAffx_rarityRare, false, level, 1, false);
