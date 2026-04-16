@@ -229,6 +229,9 @@ class DynamicValueResolver:
         "Validator": "CValidator",
         "Weapon": "CWeapon",
     }
+    HERO_INDEX_EXPRESSION_PATTERN = (
+        r"(?:libAffx_playerHeroIndex|libAffx_playersHeroIndex\s*\[\s*libAffx_player\s*\])"
+    )
 
     def __init__(self, manual_overrides: Mapping[str, float] | None = None) -> None:
         self.catalog_entries = self._load_catalog_entries()
@@ -424,14 +427,18 @@ class DynamicValueResolver:
         self, condition: str, helper_groups: Mapping[str, tuple[str, ...]]
     ) -> tuple[str, ...]:
         hero_match = re.search(
-            r'libAffx_playerHeroIndex\s*==\s*libCore_gf_GetIndexFromHero\("([^"]+)"\)',
+            self.HERO_INDEX_EXPRESSION_PATTERN
+            + r'\s*==\s*libCore_gf_GetIndexFromHero\("([^"]+)"\)',
             condition,
         )
         if hero_match:
             return (hero_match.group(1),)
 
         helper_match = re.search(
-            r"(libAffx_[A-Za-z0-9_]+)\s*\(\s*libAffx_playerHeroIndex\s*\)", condition
+            r"(libAffx_[A-Za-z0-9_]+)\s*\(\s*"
+            + self.HERO_INDEX_EXPRESSION_PATTERN
+            + r"\s*\)",
+            condition,
         )
         if helper_match:
             return helper_groups.get(helper_match.group(1), ())
