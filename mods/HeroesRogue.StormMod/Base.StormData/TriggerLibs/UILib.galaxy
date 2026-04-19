@@ -13157,13 +13157,13 @@ bool libUIUI_gt_HeroicsObtainedNotifyTeams_Func (bool testConds, bool runActions
 
     lv_alliedTeam = libGame_gf_PlayersOnTeamHeroes(libGame_gf_TeamNumberOfPlayer(libGame_gf_HeroLevelUpPlayer()), false);
     lv_enemyTeam = libGame_gf_PlayersOnTeamHeroes(libGame_gf_EnemyTeamNumberOfPlayer(libGame_gf_HeroLevelUpPlayer()), false);
-    if ((PlayerHero(libGame_gf_HeroLevelUpPlayer()) == "Chromie")) {
+    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[libGame_gf_HeroLevelUpPlayer()].lv_heroIndex) == "Chromie")) {
         auto4C80ADCF_g = lv_alliedTeam;
         auto4C80ADCF_var = -1;
         while (true) {
             	auto4C80ADCF_var = PlayerGroupNextPlayer(auto4C80ADCF_g, auto4C80ADCF_var);
             	if (auto4C80ADCF_var<0) { break; }
-            	if ((PlayerHero(auto4C80ADCF_var) != "Chromie")) {
+            	if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[auto4C80ADCF_var].lv_heroIndex) != "Chromie")) {
                 lv_skipMessaging = true;
                 break;
             }
@@ -13244,13 +13244,13 @@ bool libUIUI_gt_StormTalentsObtainedNotifyTeams_Func (bool testConds, bool runAc
 
     lv_alliedTeam = libGame_gf_PlayersOnTeamHeroes(libGame_gf_TeamNumberOfPlayer(libGame_gf_HeroLevelUpPlayer()), false);
     lv_enemyTeam = libGame_gf_PlayersOnTeamHeroes(libGame_gf_EnemyTeamNumberOfPlayer(libGame_gf_HeroLevelUpPlayer()), false);
-    if ((PlayerHero(libGame_gf_HeroLevelUpPlayer()) == "Chromie")) {
+    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[libGame_gf_HeroLevelUpPlayer()].lv_heroIndex) == "Chromie")) {
         autoC07B5041_g = lv_alliedTeam;
         autoC07B5041_var = -1;
         while (true) {
             	autoC07B5041_var = PlayerGroupNextPlayer(autoC07B5041_g, autoC07B5041_var);
             	if (autoC07B5041_var<0) { break; }
-            	if ((PlayerHero(autoC07B5041_var) != "Chromie")) {
+            	if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[autoC07B5041_var].lv_heroIndex) != "Chromie")) {
                 lv_skipMessaging = true;
                 break;
             }

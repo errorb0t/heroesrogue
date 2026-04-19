@@ -30,24 +30,30 @@ const string libAffx_BankSectionSettings = "Heroes Rogue Settings";
 
 // Trigger types
 
-const int libAffx_triggerExecute                 =   1;     // Executes immediately.
-const int libAffx_triggerAffixAdded              =   2;     // Executes immediately and contains affix data with AffixAddedEvent.
-const int libAffx_triggerNPCTakedown             =   3;     // Executes on minion/mercenary/structure takedown.
-const int libAffx_triggerHeroTakedown            =   4;     // Executes on Hero takedown.
-const int libAffx_triggerUnitCreated             =   5;     // Executes on unit creation.
-const int libAffx_triggerUnitDied                =   6;     // Executes on unit death.
-const int libAffx_triggerBehaviorChange          =   7;     // Executes on behavior added/removed.
-const int libAffx_triggerEffectUsed              =   8;     // Executes on CEffect use.
-const int libAffx_triggerLevelUp                 =   9;     // Executes at the start (ignoring test conds) and on level up.
-const int libAffx_triggerQuest                   =   10;    // Executes immediately if quest is not completed.
-const int libAffx_triggerUnitChangeOwner         =   11;    // Executes on unit ownership change.
-const int libAffx_triggerBehaviorChangeCategory  =   12;    // Executes on behavior added/removed based on category.
-const int libAffx_triggerPeriodic                =   13;    // Executes every game tick.
-const int libAffx_triggerExecuteOnce             =   14;    // Executes immediately but only once.
-const int libAffx_triggerWin                     =   15;    // Executes when enemy core dies.
-const int libAffx_triggerRespawn                 =   16;    // Executes when a Hero respawns.
-const int libAffx_triggerExecuteImmediate        =   17;    // Executes immediately once at the start of game, regardless of stack count.
-const int libAffx_triggerExecuteOncePerGame      =   18;    // Executes once per game.
+const int libAffx_triggerAffixAdded                  =   1;     // Runs immediately and at the start of every game
+const int libAffx_triggerGameStart                   =   2;     // Runs one time at the start of the game, regardless of stack count
+const int libAffx_triggerOncePerGame                 =   3;     // Runs immediately and at the start of every game. Can only run once per game
+const int libAffx_triggerOneTime                     =   4;     // Runs immediately. Does not run at the start of the game
+
+const int libAffx_triggerNPCTakedown                 =   5;     // Runs on any NPC takedown
+const int libAffx_triggerHeroTakedown                =   6;     // Runs on any Hero takedown
+
+const int libAffx_triggerUnitCreated                 =   7;     // Runs when any unit is created
+const int libAffx_triggerUnitDied                    =   8;     // Runs when any unit dies
+const int libAffx_triggerUnitBehaviorChange          =   9;     // Runs when a unit receives specified behavior
+const int libAffx_triggerUnitBehaviorChangeCategory  =   10;    // Runs when a unit receives behavior with the specified category
+const int libAffx_triggerUnitChangeOwner             =   11;    // Runs when a unit changes ownership
+
+const int libAffx_triggerPlayerEffectUsed            =   12;    // Runs when any player triggers the specified effect
+const int libAffx_triggerHeroLevelUp                 =   13;    // Runs immediately once and on Hero level up
+const int libAffx_triggerHeroRespawn                 =   14;    // Runs when Hero respawns
+const int libAffx_triggerScaling                     =   15;    // Same as libAffx_triggerHeroLevelUp but also runs regardless of stack count
+
+const int libAffx_triggerQuest                       =   16;    // Runs immediately if affix quest is NOT complete
+const int libAffx_triggerPeriodic                    =   17;    // Runs periodically. Default: 0.0625s
+const int libAffx_triggerWin                         =   18;    // Executes when enemy core dies.
+
+const int libAffx_triggerExecute                 =   19;     // Obsolete, converts into libAffx_triggerAffixAdded
 
 
 const string libAffx_eventID = "EventAffix";
@@ -67,8 +73,8 @@ const fixed libAffx_rareToEpic          =   0.15;
 const fixed libAffx_rareToLegendary     =   0.015;
 const fixed libAffx_epicToLegendary     =   0.02;
 
-const fixed libAffx_negativeUpgrade     =   0.30; // Additional chance for higher rarity negative affixes
-const fixed libAffx_negativeUpgradeHigh =   0.35; // Additional chance for epic and legendary negative affixes
+const fixed libAffx_curseAddRoll     =   0.30; // Additional chance for higher rarity curses
+const fixed libAffx_curseAddHighRoll =   0.35; // Additional chance for epic and legendary curses
 
 // Rarity IDs
 
@@ -78,7 +84,7 @@ const int libAffx_rarityRare        =   3;
 const int libAffx_rarityEpic        =   4;
 const int libAffx_rarityLegendary   =   5;
 const int libAffx_rarityStarter     =   6;
-const int libAffx_rarityMythicCurse =   7;
+const int libAffx_rarityMythic      =   7;
 
 // Map IDs
 
@@ -110,7 +116,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.12.4";
+const string libAffx_version = "0.13.0";
 
 struct libAffx_CatalogModification {
     int player;
@@ -131,6 +137,7 @@ struct libAffx_Trigger {
     string name;
     string arg1;
     bool init;
+    bool hasExecuted;
 };
 
 struct libAffx_Quest {
@@ -158,7 +165,6 @@ struct libAffx_AffixData {
 
     bool enabled;
     bool shouldExecute;
-    bool hasExecuted;
 
     bool cannotRoll;
 
@@ -166,6 +172,7 @@ struct libAffx_AffixData {
     bool[libAffx_affixMax + 1] requiredAffixes; // List of required affixes.
     bool[libAffx_maxHeroes + 1] allowedHero; // List of Hero requirements.
     bool[libAffx_maxMaps + 1] allowedMap; // List of Map requirements
+    int requiredDifficulty;
 
     string[libAffx_maxTalentsAdd + 1] addTalents;
     string[libAffx_maxTalentsAdd + 1] showTalents;
@@ -185,9 +192,13 @@ struct libAffx_AffixData {
     fixed cooldown;
     bool cooldownHidden;
 
+    fixed customValue;
+    bool customBool;
+
     int lastSeen;
 
     bool excludeChoGall;
+    bool excludeChoGallForAIEffect;
 
     int count; // Current number of stacks of the affix.
     int max; // Maximum amount allowed. 0 = Infinite
@@ -203,11 +214,11 @@ string libAffx_nextMap; // The next map used for saving into bank.
 int libAffx_maxAffixesFromObjectives = 1; // Maximum affixes that can be gained from winning objectives.
 
 int[libAffx_queueMax + 1] libAffx_queueAffixRarity;
-bool[libAffx_queueMax + 1] libAffx_queueAffixNegative;
+bool[libAffx_queueMax + 1] libAffx_queueAffixCurse;
 int[libAffx_queueMax + 1] libAffx_queueAffixLevel;
 bool[libAffx_queueMax + 1] libAffx_queueAffixPreventUpgrade;
 int libAffx_currentAffixRarity;
-bool libAffx_currentAffixNegative;
+bool libAffx_currentAffixCurse;
 int libAffx_currentAffixLevel;
 bool libAffx_currentAffixPreventUpgrade;
 int libAffx_queueCount; // Number of affixes in the queue.
@@ -228,6 +239,7 @@ int libAffx_dialogControlOptions;
 int libAffx_dialogOptions;
 int libAffx_dialogOptionsRestart;
 int libAffx_dialogControlOptionsSpeedup;
+int libAffx_dialogControlOptionsSpeedupDeath;
 int libAffx_dialogControlOptionsReturn;
 int libAffx_dialogControlOptionsRestart;
 int libAffx_dialogControlOptionsRestartYes;
@@ -271,11 +283,14 @@ int libAffx_difficulty = 1;
 int libAffx_loadedDifficulty;
 
 bool libAffx_speedUpStart;
+bool libAffx_speedUpDeath;
 
 int libAffx_gallPlayer;
 int libAffx_choPlayer;
 
 fixed libAffx_processQueueTimeElapsed;
+
+int libAffx_lastSelected;
 
 // Triggers
 trigger libAffx_HeroSelectionTrigger;
@@ -307,13 +322,18 @@ trigger libAffx_OptionsRestartClickedTrigger;
 trigger libAffx_DVaCallMechCompletedTrigger;
 trigger libAffx_DVaRespawnTrigger;
 trigger libAffx_OptionsSpeedUpClickedTrigger;
+trigger libAffx_OptionsSpeedUpDeathClickedTrigger;
 trigger libAffx_SpeedUpTrigger;
+trigger libAffx_SpeedUpDeathTrigger;
+trigger libAffx_SpeedUpDeathUnitDiedTrigger;
 trigger libAffx_PBU2DifficultyChangedTrigger;
 
 // Debug options
 bool libAffx_loadTryMeMode = false; // Try mode 2.0
 bool libAffx_cheatCommands = false; // Enables cheat/debug commands
 bool libAffx_skipIntro = false; // Skips the Hero selection.
+string libAffx_skipHero = "WitchDoctor"; // Player hero when hero selection is skipped.
+bool libAffx_forceHeroes = false; // Force enemy heroes to specific heroes.
 bool libAffx_debugPrint = false; // Enables debug logging
 bool libAffx_pauseDisabled = false; // Disables pause features
 bool libAffx_ignoreMap = false; // Ignores the saved map.
@@ -321,6 +341,7 @@ bool libAffx_disableAffixes = false; // Disables queueing affixes.
 
 bool libAffx_debugCommandsAddAll = false;
 
+void testcommandafx (int lp_heroIndex, int lp_player);
 void libAffx_DebugPrint(string print);
 string libAffx_GetRarityString(int rarity); // Gets rarity name.
 int libAffx_GetAffixId(string affixName); // Get affix index by name.
@@ -333,9 +354,9 @@ string libAffx_GetAffixLabelSuffix(int affix);
 color libAffx_GetAffixColor(int affix);
 string libAffx_GetAffixSuffix(int affix);
 string libAffx_CountToString(int count, int maxCount);
-text libAffx_GetAffixTitle(bool negative);
+text libAffx_GetAffixTitle(bool curse);
 void libAffx_CreateAffixDialogItem(int buttonIndex, int affix, int xOffset);
-void libAffx_CreateAffixDialog(bool negative);
+void libAffx_CreateAffixDialog(bool curse);
 void libAffx_ShowAffixDialog(int showCount); // Show dialog for picking affixes.
 void libAffx_CreateUI();
 void libAffx_CreateCurrentRunDialog();
@@ -374,12 +395,12 @@ void libAffx_BankSave();
 void libAffx_BankLoad();
 void libAffx_BankReset();
 bool libAffx_IntToBoolean(int value);
-int libAffx_RollRarity(int baseRarity, bool negative); // Roll rarity to upgrade.
-int libAffx_RollAffix(int rarity, bool negative, int level, bool preventUpgrade); // Returns an affix that matches the criteria and all requirements.
-void libAffx_ChooseAffixes(int rarity, bool negative, int level, bool preventUpgrade); // Chooses affixes and provide the player with the affix options.
+int libAffx_RollRarity(int baseRarity, bool curse); // Roll rarity to upgrade.
+int libAffx_RollAffix(int rarity, bool curse, int level, bool preventUpgrade); // Returns an affix that matches the criteria and all requirements.
+void libAffx_ChooseAffixes(int rarity, bool curse, int level, bool preventUpgrade); // Chooses affixes and provide the player with the affix options.
 void libAffx_ProcessQueue(); // Goes through the affix queue.
 void libAffx_MoveQueue();
-void libAffx_QueueAffix(int rarity, bool negative, int level, int amount, bool preventUpgrade); // Queue an affix with the specified criteria.
+void libAffx_QueueAffix(int rarity, bool curse, int level, int amount, bool preventUpgrade); // Queue an affix with the specified criteria.
 void libAffx_AffixSelected(int selectionIndex);
 void libAffx_AffixInitBlank();
 void libAffx_AffixAddExclusion(int affix, int excludeAffix);

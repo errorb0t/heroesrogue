@@ -165,6 +165,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectApplyBehavior id="AffixBuddyDroneApplyController">
     <Behavior value="AffixBuddyDroneController" />
   </CEffectApplyBehavior>
+  <CEffectSet id="AffixBuddyDroneOwnerSet" />
   
   <CEffectSet id="AffixBuddyHealCastSet">
     <EffectArray value="AffixBuddyHealClearTracking" />
@@ -1377,7 +1378,17 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <MaxCount value="1"/>
 </CEffectEnumArea>
 
-  
+
+<CEffectDamage id="AffixGiantKillerDamage" parent="StormSpellPercentDamage">
+  <Visibility value="Hidden" />
+  <VitalFractionMax index="Life" value="0.02" />
+  <CritValidatorArray value="CritAliasSpellPower" />
+</CEffectDamage>
+
+<CEffectSet id="AffixAncientBlessingsAoEProcDummy">
+  <EffectArray value="DeckardAncientBlessingsHealAoESearch" />
+  <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+</CEffectSet>
 
 
 </Catalog>

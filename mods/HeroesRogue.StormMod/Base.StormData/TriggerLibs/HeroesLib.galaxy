@@ -1249,8 +1249,8 @@ string libCore_gf_GetDefaultVoiceLineForPlayer (int lp_player) {
     // Automatic Variable Declarations
     // Variable Initialization
     lv_value = "";
-    lv_hero = PlayerHero(lp_player);
-    lv_skin = PlayerSkin(lp_player);
+    lv_hero = libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex);
+    lv_skin = PlayerSkin(lp_player); 
 
     // Implementation
     if ((lv_skin != "") && (CatalogEntryIsValid(c_gameCatalogSkin, lv_skin) == true) && (CatalogFieldValueCount(c_gameCatalogSkin, lv_skin, "VoiceLineArray", c_playerAny) > 1)) {
@@ -2019,7 +2019,7 @@ void libCore_gf_SetTalentsTierLevels (int lp_player) {
     // Implementation
     lv_itTier = 1;
     for ( ; ( (autoEE7F0FF9_ai >= 0 && lv_itTier <= autoEE7F0FF9_ae) || (autoEE7F0FF9_ai < 0 && lv_itTier >= autoEE7F0FF9_ae) ) ; lv_itTier += autoEE7F0FF9_ai ) {
-        libGame_gv_players[lp_player].lv_talents_TierLevels[lv_itTier].lv_level = CatalogFieldValueGetAsInt(c_gameCatalogHero, PlayerHero(lp_player), "TalentTierArray[" + IntToString((lv_itTier-1)) + "].Level", lp_player);
+        libGame_gv_players[lp_player].lv_talents_TierLevels[lv_itTier].lv_level = CatalogFieldValueGetAsInt(c_gameCatalogHero, libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex), "TalentTierArray[" + IntToString((lv_itTier-1)) + "].Level", lp_player);
     }
 }
 
@@ -2037,7 +2037,7 @@ void libCore_gf_SetHeroicTalentTier (int lp_player) {
     auto4418CAF4_ae = libCore_gv_talents_MaxTiers_C;
     lv_itTier = 1;
     for ( ; lv_itTier <= auto4418CAF4_ae ; lv_itTier += 1 ) {
-        if ((CatalogFieldValueGetAsInt(c_gameCatalogHero, PlayerHero(lp_player), "TalentTierArray[" + IntToString((lv_itTier-1)) + "].ContainsHeroic", c_playerAny) == 1)) {
+        if ((CatalogFieldValueGetAsInt(c_gameCatalogHero, libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex), "TalentTierArray[" + IntToString((lv_itTier-1)) + "].ContainsHeroic", c_playerAny) == 1)) {
             libGame_gv_players[lp_player].lv_talent_HeroicTalentTier = lv_itTier;
             break;
         }

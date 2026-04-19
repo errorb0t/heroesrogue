@@ -13266,7 +13266,7 @@ bool libGDHL_gt_HeroLostVikingsOlafTheStout_Func (bool testConds, bool runAction
 
     // Conditions
     if (testConds) {
-        if (!((PlayerHero(libGame_gf_HeroGainTalentPlayer()) == "LostVikings"))) {
+        if (!((libCore_gf_GetHeroFromIndex(libGame_gv_players[libGame_gf_HeroGainTalentPlayer()].lv_heroIndex) == "LostVikings"))) {
             return false;
         }
 
