@@ -47,13 +47,14 @@ const int libAffx_triggerUnitChangeOwner             =   11;    // Runs when a u
 const int libAffx_triggerPlayerEffectUsed            =   12;    // Runs when any player triggers the specified effect
 const int libAffx_triggerHeroLevelUp                 =   13;    // Runs immediately once and on Hero level up
 const int libAffx_triggerHeroRespawn                 =   14;    // Runs when Hero respawns
-const int libAffx_triggerScaling                     =   15;    // Same as libAffx_triggerHeroLevelUp but also runs regardless of stack count
+const int libAffx_triggerHeroKilled                  =   15;    // Runs when a Hero is killed
+const int libAffx_triggerScaling                     =   16;    // Same as libAffx_triggerHeroLevelUp but also runs regardless of stack count
 
-const int libAffx_triggerQuest                       =   16;    // Runs immediately if affix quest is NOT complete
-const int libAffx_triggerPeriodic                    =   17;    // Runs periodically. Default: 0.0625s
-const int libAffx_triggerWin                         =   18;    // Executes when enemy core dies.
+const int libAffx_triggerQuest                       =   17;    // Runs immediately if affix quest is NOT complete
+const int libAffx_triggerPeriodic                    =   18;    // Runs periodically. Default: 0.0625s
+const int libAffx_triggerWin                         =   19;    // Executes when enemy core dies.
 
-const int libAffx_triggerExecute                 =   19;     // Obsolete, converts into libAffx_triggerAffixAdded
+const int libAffx_triggerExecute                     =   20;     // Obsolete, converts into libAffx_triggerAffixAdded
 
 
 const string libAffx_eventID = "EventAffix";
@@ -116,7 +117,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.13.0";
+const string libAffx_version = "0.13.1";
 
 struct libAffx_CatalogModification {
     int player;
@@ -130,6 +131,8 @@ struct libAffx_Behavior {
     int player;
     string behavior;
     bool affectedByCount; // Whether behavior stacks scales with affix stacks.
+    bool disallowManaUsers;
+    bool onlyManaUsers;
 };
 
 struct libAffx_Trigger {
@@ -332,7 +335,7 @@ trigger libAffx_PBU2DifficultyChangedTrigger;
 bool libAffx_loadTryMeMode = false; // Try mode 2.0
 bool libAffx_cheatCommands = false; // Enables cheat/debug commands
 bool libAffx_skipIntro = false; // Skips the Hero selection.
-string libAffx_skipHero = "WitchDoctor"; // Player hero when hero selection is skipped.
+string libAffx_skipHero = "Leoric"; // Player hero when hero selection is skipped.
 bool libAffx_forceHeroes = false; // Force enemy heroes to specific heroes.
 bool libAffx_debugPrint = false; // Enables debug logging
 bool libAffx_pauseDisabled = false; // Disables pause features

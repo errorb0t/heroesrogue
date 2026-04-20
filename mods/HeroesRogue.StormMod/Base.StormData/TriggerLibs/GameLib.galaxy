@@ -7668,7 +7668,7 @@ void libGame_gf_HeroSelectionSetBNetHeroAndSkinSelectionsForAllPlayers () {
     // Implementation
     lv_itPlayer = 1;
     for ( ; ( (autoB9931724_ai >= 0 && lv_itPlayer <= autoB9931724_ae) || (autoB9931724_ai < 0 && lv_itPlayer >= autoB9931724_ae) ) ; lv_itPlayer += autoB9931724_ai ) {
-        lv_heroLink = libCore_gf_GetHeroFromIndex(libGame_gv_players[lv_itPlayer].lv_heroIndex);
+        lv_heroLink = PlayerHero(lv_itPlayer);
         if (((lv_heroLink == null) || (lv_heroLink == libCore_gv_heroes_RandomHeroID))) {
             continue;
         }
@@ -10740,7 +10740,6 @@ bool auto_libGame_gf_SpawnHero_TriggerFunc (bool testConds, bool runActions) {
 
     PlayerSetHero(lp_player, libGame_gv_players[lp_heroIndex].lv_heroData.lv_heroCatalogLink);
     
-    UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText(""));
     StatEventCreate("PlayerSpawned");
     StatEventAddDataInt(StatEventLastCreated(), "PlayerID", lp_player);
     StatEventAddDataString(StatEventLastCreated(), "Hero", (libGame_gv_players[lp_heroIndex].lv_heroData.lv_unitType));
@@ -12465,11 +12464,11 @@ void libGame_gf_UnitSelectionEnterVehicle (unit lp_vehicle, unit lp_hero, int lp
         UnitSelect(lp_vehicle, lp_player, true);
     }
 
-    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex) == "LostVikings")) {
+    if (PlayerHero(lp_player) == "LostVikings") {
         libGame_gf_ControlGroupsEnterVehicleLostVikings(lp_vehicle, lp_hero, lp_player);
     }
 
-    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex) == "Samuro") && (PlayerHasTalent(lp_player, "SamuroHeroicAbilityIllusionMaster") == true)) {
+    if (PlayerHero(lp_player) == "Samuro" && (PlayerHasTalent(lp_player, "SamuroHeroicAbilityIllusionMaster") == true)) {
         libGame_gf_ControlGroupsEnterVehicleSamuro(lp_vehicle, lp_hero, lp_player);
     }
 
@@ -12497,11 +12496,11 @@ void libGame_gf_UnitSelectionExitVehicle (unit lp_vehicle, unit lp_hero, int lp_
 
     }
 
-    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex) == "LostVikings")) {
+    if ((PlayerHero(lp_player) == "LostVikings")) {
         libGame_gf_ControlGroupsExitVehicleLostVikings(lp_vehicle, lp_hero, lp_player);
     }
 
-    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex) == "Samuro") && (PlayerHasTalent(lp_player, "SamuroHeroicAbilityIllusionMaster") == true)) {
+    if ((PlayerHero(lp_player) == "Samuro") && (PlayerHasTalent(lp_player, "SamuroHeroicAbilityIllusionMaster") == true)) {
         libGame_gf_ControlGroupsExitVehicleSamuro(lp_vehicle, lp_hero, lp_player);
     }
 
@@ -12510,11 +12509,11 @@ void libGame_gf_UnitSelectionExitVehicle (unit lp_vehicle, unit lp_hero, int lp_
 void libGame_gf_UnitSelectionSwapVehicle (unit lp_originVehicle, unit lp_newVehicle, int lp_player) {
     // Automatic Variable Declarations
     // Implementation
-    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex) == "Samuro") && (PlayerHasTalent(lp_player, "SamuroHeroicAbilityIllusionMaster") == true)) {
+    if ((PlayerHero(lp_player) == "Samuro") && (PlayerHasTalent(lp_player, "SamuroHeroicAbilityIllusionMaster") == true)) {
         libGame_gf_ControlGroupsSwapVehicleSamuro(lp_originVehicle, lp_newVehicle, lp_player);
     }
 
-    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex) == "LostVikings")) {
+    if ((PlayerHero(lp_player) == "LostVikings")) {
         libGame_gf_ControlGroupsSwapVehicleLostVikings(lp_originVehicle, lp_newVehicle, lp_player);
     }
 
@@ -13410,7 +13409,7 @@ bool libGame_gt_AfkCheckPlayerMoving_Func (bool testConds, bool runActions) {
     for ( ; ( (auto1288AF32_ai >= 0 && lv_itPlayer <= auto1288AF32_ae) || (auto1288AF32_ai < 0 && lv_itPlayer >= auto1288AF32_ae) ) ; lv_itPlayer += auto1288AF32_ai ) {
         lv_itTeam = libGame_gf_TeamNumberOfPlayer(lv_itPlayer);
         if ((libGame_gv_afk_PlayerStationaryDuration[lv_itPlayer] < 4)) {
-            if (((libGame_gv_players[lv_itPlayer].lv_isDead == false) || (libCore_gf_GetHeroFromIndex(libGame_gv_players[lv_itPlayer].lv_heroIndex) == "Leoric"))) {
+            if (((libGame_gv_players[lv_itPlayer].lv_isDead == false) || (PlayerHero(lv_itPlayer) == "Leoric"))) {
                 if ((UnitIsAlive(libGame_gv_players[lv_itPlayer].lv_heroUnit) == true)) {
                     lv_nearbyEnemyHeroes = UnitGroupAlliance(lv_itPlayer, c_unitAllianceEnemy, RegionCircle(UnitGetPosition(libGame_gv_players[lv_itPlayer].lv_heroUnit), libGame_gv_afk_PlayerCheckNearbyEnemyHeroRadius_C), libCore_gv_filtersHeroic, 0);
                 }
@@ -16102,7 +16101,7 @@ bool libGame_gt_StartGame_Func (bool testConds, bool runActions) {
         lv_teamOfPlayer = libGame_gf_TeamNumberOfPlayer(lv_itPlayer);
         lv_itManualSpawnHero = 1;
         for ( ; ( (auto48C055FE_ai >= 0 && lv_itManualSpawnHero <= auto48C055FE_ae) || (auto48C055FE_ai < 0 && lv_itManualSpawnHero >= auto48C055FE_ae) ) ; lv_itManualSpawnHero += auto48C055FE_ai ) {
-            lv_heroIndexOfPlayer = libCore_gf_GetIndexFromHero(libCore_gf_GetHeroFromIndex(libGame_gv_players[lv_itPlayer].lv_heroIndex));
+            lv_heroIndexOfPlayer = libCore_gf_GetIndexFromHero(PlayerHero(lv_itPlayer));
             if ((libCore_gv_dataHeroesManualSpawnHeroIDs[lv_itManualSpawnHero].lv_heroIndex == lv_heroIndexOfPlayer) && (libCore_gv_dataHeroesManualSpawnHeroIDs[lv_itManualSpawnHero].lv_core == true)) {
                 libGame_gv_coreHeroPlayer = lv_itPlayer;
                 TriggerExecute(libCore_gv_dataHeroesManualSpawnHeroIDs[lv_itManualSpawnHero].lv_coreSpawnTrigger, true, true);
@@ -17124,7 +17123,7 @@ bool libGame_gt_HeroDeathUpdateStatsAwardXPMakeAnnouccementsCORE_Func (bool test
     else {
         lv_killingFaction = libGame_ge_Faction_Order;
     }
-    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[lv_deadPlayer].lv_heroIndex) != "Leoric")) {
+    if ((PlayerHero(lv_deadPlayer) != "Leoric")) {
         libGame_gf_AfkPauseWarningTimerForPlayer(lv_deadPlayer, true);
     }
 
