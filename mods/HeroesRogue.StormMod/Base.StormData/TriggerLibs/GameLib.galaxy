@@ -540,7 +540,7 @@ void libGame_gf_AfkStopAfkWarningSystem () {
 void libGame_gf_AfkResetWarningTimerForPlayer (int lp_player) {
     // Automatic Variable Declarations
     // Implementation
-    if ((((libGame_gv_players[lp_player].lv_isDead == true) && (libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_player].lv_heroIndex) != "Leoric")) || (libGame_gv_afk_AfkDetectionSystemEnabled == false) || (libGame_gv_players[lp_player].lv_playerIgnoresAFKSystem == true))) {
+    if ((((libGame_gv_players[lp_player].lv_isDead == true) && (PlayerHero(lp_player) != "Leoric")) || (libGame_gv_afk_AfkDetectionSystemEnabled == false) || (libGame_gv_players[lp_player].lv_playerIgnoresAFKSystem == true))) {
         return ;
     }
 
@@ -5570,7 +5570,7 @@ void libGame_gf_ChoGallSkinSelection (int lp_choPlayerID) {
     // Variable Initialization
 
     // Implementation
-    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_choPlayerID].lv_heroIndex) == "Gall")) {
+    if ((PlayerHero(lp_choPlayerID) == "Gall")) {
         return ;
     }
 
@@ -5579,7 +5579,7 @@ void libGame_gf_ChoGallSkinSelection (int lp_choPlayerID) {
     while (true) {
         	lv_itPlayer = PlayerGroupNextPlayer(autoA94CBDD9_g, lv_itPlayer);
         	if (lv_itPlayer<0) { break; }
-        	if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[lv_itPlayer].lv_heroIndex) == "Gall")) {
+        	if ((PlayerHero(lv_itPlayer) == "Gall")) {
             lv_gallPlayerID = lv_itPlayer;
             break;
         }
@@ -5652,7 +5652,7 @@ void libGame_gf_ChoGallMountandBannerSelection (int lp_skinSelectedPlayer, int l
 
     // Implementation
     lv_mountSelectedHeroIndex = lp_mountSelectedPlayer;
-    if ((libCore_gf_GetHeroFromIndex(libGame_gv_players[lp_skinSelectedPlayer].lv_heroIndex) == "Cho")) {
+    if ((PlayerHero(lp_skinSelectedPlayer) == "Cho")) {
         lv_choPlayerID = lp_skinSelectedPlayer;
     }
     else {
@@ -11040,6 +11040,9 @@ void libGame_gf_ShareUnshareVisionOfAlliesForPlayer (bool lp_onOff, int lp_playe
 
     // Automatic Variable Declarations
     playergroup auto198D0B9F_g;
+    unitgroup autoB2B49E2C_g;
+    int autoB2B49E2C_u;
+    unit autoB2B49E2C_var;
 
     // Variable Initialization
     lv_allyPlayerGroup = PlayerGroupEmpty();
@@ -11055,6 +11058,15 @@ void libGame_gf_ShareUnshareVisionOfAlliesForPlayer (bool lp_onOff, int lp_playe
             PlayerSetAlliance(lv_i, c_allianceIdVision, lp_player, lp_onOff);
         }
 
+    }
+    if ((UnitGroupCount(libGDHL_gv_updateOnAnyVisibilityChangeUnitGroup, c_unitCountAlive) >= 1)) {
+        autoB2B49E2C_g = libGDHL_gv_updateOnAnyVisibilityChangeUnitGroup;
+        autoB2B49E2C_u = UnitGroupCount(autoB2B49E2C_g, c_unitCountAll);
+        for (;; autoB2B49E2C_u -= 1) {
+            autoB2B49E2C_var = UnitGroupUnitFromEnd(autoB2B49E2C_g, autoB2B49E2C_u);
+            if (autoB2B49E2C_var == null) { break; }
+            libNtve_gf_SendActorMessageToUnit(autoB2B49E2C_var, "Signal VisUpdate");
+        }
     }
 }
 
@@ -14445,7 +14457,6 @@ bool libGame_gt_CCRecognitionSlow_Func (bool testConds, bool runActions) {
     }
 
     libGame_gf_CCRecognitionCCReduction(EventUnit(), EventUnitBehavior());
-    //libGame_CCRecognitionCCIncrease(EventUnit(), EventUnitBehavior());
     return true;
 }
 
@@ -14488,7 +14499,6 @@ bool libGame_gt_CCRecognitionBlind_Func (bool testConds, bool runActions) {
     }
 
     libGame_gf_CCRecognitionCCReduction(lv_blindedUnit, EventUnitBehavior());
-    //libGame_CCRecognitionCCIncrease(lv_blindedUnit, EventUnitBehavior());
     return true;
 }
 
@@ -14528,7 +14538,6 @@ bool libGame_gt_CCRecognitionRoot_Func (bool testConds, bool runActions) {
     }
 
     libGame_gf_CCRecognitionCCReduction(lv_unit, lv_behavior);
-    //libGame_CCRecognitionCCIncrease(lv_unit, lv_behavior);
     if ((UnitBehaviorCount(EventUnit(), "HeroGenericHasNoStatusBar") == 0)) {
         libUIUI_gf_HeroConsoleUnitStatusBarsUpdateStunDeathBar(lv_behavior, UnitGetOwner(lv_unit));
     }
@@ -14590,7 +14599,6 @@ bool libGame_gt_CCRecognitionStun_Func (bool testConds, bool runActions) {
             libUIUI_gf_FullscreenOverlaysCreateCCEffectFlashForPlayer(UnitGetOwner(lv_unit), UnitBehaviorDuration(lv_unit, lv_behavior));
         }
     }
-    //libGame_CCRecognitionCCIncrease(lv_unit, lv_behavior);
 
     UIAlert("YourHeroHasBeenStunned", UnitGetOwner(lv_unit), StringToText(""), null);
     return true;

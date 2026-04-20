@@ -154,7 +154,7 @@ Affix/Name/Buddy=BUDDY
 Affix/Tooltip/Buddy=A friendly Drone follows you around, healing you for <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreateHealer,RechargeVitalRate" player="1" precision="0"/></c> Health every <c val="#TooltipNumbers">3</c> seconds.<n/><n/>BUDDY shoots a missile every <c val="#TooltipNumbers">4</c> seconds at the nearest enemy, dealing <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyDroneMissileDamage,Amount" player="1" precision="0"/></c> damage in the area.<n/><n/>Additional stacks reduce BUDDY's missile cooldown by <c val="#TooltipNumbers">1</c> second and healing beam cooldown by <c val="#TooltipNumbers">0.25</c> seconds.
 Affix/Tooltip/Append/Buddy=<n/><n/>Healing cooldown: <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreatePersistent,PeriodicPeriodArray[0]" precision="2"/></c> seconds<n/>Missile cooldown: <c val="#TooltipNumbers"><d ref="Behavior,AffixBuddyDroneController,Period" precision="2"/></c> seconds
 Affix/Name/BuddyAll=Army of BUDDYs
-Affix/Tooltip/BuddyAll=Gain an additional BUDDY and your AI teammates gain their own BUDDYs with <c val="#TooltipNumbers">50%</c> damage and healing.<n/><n/>Additional stacks grant another BUDDY.
+Affix/Tooltip/BuddyAll=Gain an additional BUDDY and your AI teammates gain their own BUDDYs with <c val="#TooltipNumbers">50%</c> damage and healing.<n/><n/>Additional stacks grant another BUDDY to you.
 Affix/Tooltip/Append/BuddyAll=
 Affix/Name/ManyRituals=Many Rituals
 Affix/Tooltip/ManyRituals=Gain <c val="#TooltipNumbers">40</c> Voodoo Ritual stacks now and at the start of every game.<n/><n/>Additional stacks increase Voodoo Ritual stacks by an additional <c val="#TooltipNumbers">20</c>.
@@ -684,7 +684,7 @@ Affix/Name/ExpensiveAttacks=Expensive Attacks
 Affix/Tooltip/ExpensiveAttacks=Basic Attacks consume <c val="#TooltipNumbers">4</c> Mana.
 Affix/Tooltip/Append/ExpensiveAttacks=
 Affix/Name/LastMoments=Last Moments
-Affix/Tooltip/LastMoments=Last Rites is cast on you when your Health drops below <c val="#TooltipNumbers">35%</c>.<n/><n/>This effect has a <c val="#TooltipNumbers">300</c> second cooldown.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">60</c> seconds.
+Affix/Tooltip/LastMoments=Last Rites is cast on you when you take damage while below <c val="#TooltipNumbers">35%</c> Health.<n/><n/>This effect has a <c val="#TooltipNumbers">300</c> second cooldown.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">60</c> seconds.
 Affix/Tooltip/Append/LastMoments=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="Behavior,AffixLastMomentsCooldown,Duration" precision="2"/></c> seconds
 Affix/Name/Slowfury=Slowfury
 Affix/Tooltip/Slowfury=Reduces Windfury's Attack Speed bonus by <c val="#TooltipNumbers">50%</c>.<n/><n/><c val="FFDE36">Skips the next Curse.</c>

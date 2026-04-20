@@ -910,6 +910,9 @@ bool libAffx_SpeedUpDeathTrigger_Func (bool testConds, bool runActions) {
         if (!libAffx_speedUpDeath) {
             return false;
         }
+        if (libGame_gv_gameOver) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
@@ -918,7 +921,7 @@ bool libAffx_SpeedUpDeathTrigger_Func (bool testConds, bool runActions) {
     if (libAffx_speedUpDeath) {
         GameSetSpeedValue(4);
         libAffx_DebugPrint("Alive units: " + IntToString(groupCount));
-        while (groupCount <= 0 && libAffx_speedUpDeath) {
+        while (groupCount <= 0 && libAffx_speedUpDeath && !libGame_gv_gameOver) {
             groupCount = UnitGroupCount(heroGroup, c_unitCountAlive);
             Wait(0.0625, c_timeGame);
         }
@@ -932,13 +935,19 @@ bool libAffx_SpeedUpTrigger_Func (bool testConds, bool runActions) {
         if (libAffx_GateIsOpen()) {
             return false;
         }
+        if (!libAffx_speedUpStart) {
+            return false;
+        }
+        if (libGame_gv_gameOver) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
     }
     if (libAffx_speedUpStart) {
         GameSetSpeedValue(4);
-        while (!libAffx_GateIsOpen() && libAffx_speedUpStart) {
+        while (!libAffx_GateIsOpen() && libAffx_speedUpStart && !libGame_gv_gameOver) {
             Wait(0.0625, c_timeGame);
         }
         GameSetSpeedValue(2);
@@ -1295,11 +1304,14 @@ int libAffx_EventAffixCount() {
     return libAffx_affixes[libAffx_EventAffix()].count;
 }
 
-bool libAffx_FilterMatches(unit unitVar, unitfilter unitFilter, int player, string unitType) {
+bool libAffx_FilterMatchesExclude(unit unitVar, unitfilter unitFilter, int player, string unitType, string exclude) {
     if (unitFilter != null && !UnitFilterMatch(unitVar, libAffx_player, unitFilter)) {
         return false;
     }
     if (player != 0 && UnitGetOwner(unitVar) != player) {
+        return false;
+    }
+    if (exclude != "" && UnitGetType(unitVar) == exclude) {
         return false;
     }
     if (unitType != "" && UnitGetType(unitVar) != unitType) {
@@ -1307,31 +1319,22 @@ bool libAffx_FilterMatches(unit unitVar, unitfilter unitFilter, int player, stri
     }
     return true;
 }
-void libAffx_AddBehaviorFilter(unit unitVar, string behavior, unitfilter unitFilter, int player, string unitType, int stacks) {
-    if (libAffx_FilterMatches(unitVar, unitFilter, player, unitType)) {
+bool libAffx_FilterMatches(unit unitVar, unitfilter unitFilter, int player, string unitType) {
+    return libAffx_FilterMatchesExclude(unitVar, unitFilter, player, unitType, "");
+}
+void libAffx_AddBehaviorFilterExclude(unit unitVar, string behavior, unitfilter unitFilter, int player, string unitType, string exclude, int stacks) {
+    if (libAffx_FilterMatchesExclude(unitVar, unitFilter, player, unitType, exclude)) {
         UnitBehaviorAdd(unitVar, behavior, unitVar, stacks);
     }
+}
+void libAffx_AddBehaviorFilter(unit unitVar, string behavior, unitfilter unitFilter, int player, string unitType, int stacks) {
+    libAffx_AddBehaviorFilterExclude(unitVar, behavior, unitFilter, player, unitType, "", stacks);
 }
 void libAffx_AddAndRemoveBehaviorFilter(unit unitVar, string behavior, unitfilter unitFilter, int player, string unitType, int stacks) {
     if (libAffx_FilterMatches(unitVar, unitFilter, player, unitType)) {
         UnitBehaviorAdd(unitVar, behavior, unitVar, stacks);
     } else {
         UnitBehaviorRemove(unitVar, behavior, stacks);
-    }
-}
-void libAffx_AddBehaviorAllUnitsFilter (string behavior, unitfilter filter, int player, string unitType, int stacks) {
-    unit unitVar;
-    unitgroup unitGroup = UnitGroup(null, c_playerAny, RegionEntireMap(), filter, 0);
-    int i = UnitGroupCount(unitGroup, c_unitCountAll);
-    for (;; i -= 1) {
-        if (i <= 0) { break; }
-        unitVar = UnitGroupUnitFromEnd(unitGroup, i);
-        if (unitVar == null) {
-            break;
-        }
-        if (libAffx_FilterMatches(unitVar, filter, player, unitType)) {
-            UnitBehaviorAdd(unitVar, behavior, unitVar, stacks);
-        }
     }
 }
 void libAffx_AddBehaviorAllUnitsFilterExclude (string behavior, unitfilter filter, int player, string unitType, string exclude, int stacks) {
@@ -1351,6 +1354,9 @@ void libAffx_AddBehaviorAllUnitsFilterExclude (string behavior, unitfilter filte
             UnitBehaviorAdd(unitVar, behavior, unitVar, stacks);
         }
     }
+}
+void libAffx_AddBehaviorAllUnitsFilter (string behavior, unitfilter filter, int player, string unitType, int stacks) {
+    libAffx_AddBehaviorAllUnitsFilterExclude(behavior, filter, player, unitType, "", stacks);
 }
 void libAffx_RemoveBehaviorAllUnitsFilter (string behavior, unitfilter filter, int player, string unitType, int stacks) {
     unit unitVar;
@@ -1537,6 +1543,26 @@ void libAffx_UnitCreateEffectUnit (int player, string effect) {
         for (i = unitGroupCount; i > 0; i -= 1) {
             UnitCreateEffectUnit(UnitGroupUnitFromEnd(unitGroup, i), effect, UnitGroupUnitFromEnd(unitGroup, i));
         }
+    }
+}
+
+unit libAffx_GetHeroUnit (int player) {
+    unitgroup heroGroup;
+    unit heroUnit;
+    int unitGroupCount;
+    if (libGame_gv_players[player].lv_heroIndex == libCore_gf_GetIndexFromHero("LostVikings")) {
+        heroGroup = libGame_gv_players[player].lv_heroUnitGroup;
+        unitGroupCount = UnitGroupCount(heroGroup, c_unitCountAll);
+        for (;; unitGroupCount -= 1) {
+            if (unitGroupCount <= 0) { break; }
+            heroUnit = UnitGroupUnitFromEnd(heroGroup, unitGroupCount);
+            if (UnitGetType(heroUnit) == "HeroOlaf") {
+                return heroUnit;
+            }
+        }
+        return null;
+    } else {
+        return libGame_gv_players[player].lv_heroUnit;
     }
 }
 
