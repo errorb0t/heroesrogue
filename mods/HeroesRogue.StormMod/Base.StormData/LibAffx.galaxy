@@ -73,10 +73,10 @@ bool libAffx_HeroSelectionTrigger_Func (bool testConds, bool runActions) {
                     }
                     if (libAffx_forceHeroes) {
                         libGame_gv_players[6].lv_heroIndex = libCore_gf_GetIndexFromHero("Uther");
-                        libGame_gv_players[7].lv_heroIndex = libCore_gf_GetIndexFromHero("Uther");
-                        libGame_gv_players[8].lv_heroIndex = libCore_gf_GetIndexFromHero("Uther");
-                        libGame_gv_players[9].lv_heroIndex = libCore_gf_GetIndexFromHero("Uther");
-                        libGame_gv_players[10].lv_heroIndex = libCore_gf_GetIndexFromHero("Uther");
+                        libGame_gv_players[7].lv_heroIndex = libCore_gf_GetIndexFromHero("Leoric");
+                        libGame_gv_players[8].lv_heroIndex = libCore_gf_GetIndexFromHero("Tyrael");
+                        libGame_gv_players[9].lv_heroIndex = libCore_gf_GetIndexFromHero("Cho");
+                        libGame_gv_players[10].lv_heroIndex = libCore_gf_GetIndexFromHero("Gall");
                     }
 
                     libAffx_playersHeroIndex[player] = libGame_gv_players[player].lv_heroIndex;
@@ -1699,13 +1699,21 @@ void libAffx_ApplyBehaviors(int affix, int amount) {
                     if ((i2 == libAffx_choPlayer || i2 == libAffx_gallPlayer) && libAffx_affixes[affix].excludeChoGall) {
                         continue;
                     } else {
-                        libAffx_AddBehavior(i2, behavior, amountToAdd, true);
+                        if (UnitHasBehavior2(libGame_gv_players[i2].lv_heroUnit, "NotManaUserDummy") && libAffx_affixes[affix].behaviors[i].onlyManaUsers) {
+                        } else if (!UnitHasBehavior2(libGame_gv_players[i2].lv_heroUnit, "NotManaUserDummy") && libAffx_affixes[affix].behaviors[i].disallowManaUsers) {
+                        } else {
+                            libAffx_AddBehavior(i2, behavior, amountToAdd, true);
+                        }
                     }
                 }
             } else if ((behaviorPlayer == libAffx_choPlayer || behaviorPlayer == libAffx_gallPlayer) && libAffx_affixes[affix].excludeChoGall) {
                 continue;
             } else if (behaviorPlayer >= 1 && behaviorPlayer <= 10) {
-                libAffx_AddBehavior(behaviorPlayer, behavior, amountToAdd, true);
+                if (UnitHasBehavior2(libGame_gv_players[behaviorPlayer].lv_heroUnit, "NotManaUserDummy") && libAffx_affixes[affix].behaviors[i].onlyManaUsers) {
+                } else if (!UnitHasBehavior2(libGame_gv_players[behaviorPlayer].lv_heroUnit, "NotManaUserDummy") && libAffx_affixes[affix].behaviors[i].disallowManaUsers) {
+                } else {
+                    libAffx_AddBehavior(behaviorPlayer, behavior, amountToAdd, true);
+                }
             }
         }
     }
@@ -1795,6 +1803,8 @@ void libAffx_ApplyTriggers(int affix, int amount) {
                     libGame_gf_HeroLevelUp(libAffx_affixes[affix].createdTriggers[i]);
                 } else if (triggerType == libAffx_triggerUnitDied) {
                     TriggerAddEventUnitDied(libAffx_affixes[affix].createdTriggers[i], null);
+                } else if (triggerType == libAffx_triggerHeroKilled) {
+                    libGame_gf_HeroKilled(libAffx_affixes[affix].createdTriggers[i]);
                 } else if (triggerType == libAffx_triggerQuest) {
                     if (libAffx_affixes[affix].quest.isQuest && !libAffx_affixes[affix].quest.questDone) {
                         TriggerExecute(libAffx_affixes[affix].createdTriggers[i], true, false);
@@ -2141,7 +2151,7 @@ bool libAffx_AffixLogicUnitCreatedTrigger_Func (bool testConds, bool runActions)
         }
         libAffx_ApplyImmediateTriggers();
     }
-    if (player >= 2 && player <= 10) {
+    if (player >= 2 && player <= 10 && !libAffx_playersFirstSpawnIn[player]) {
         libAffx_playersFirstSpawnIn[player] = true;
         libGame_gv_players[player].lv_heroIndex = libAffx_playersHeroIndex[player];
     }
@@ -3311,6 +3321,9 @@ void libAffx_AffixSetHero(int affix, string hero, bool allowed) {
     }
     libAffx_affixes[affix].allowedHero[index] = allowed;
 }
+
+// Exceptions: Greymane (both melee and ranged) and Gall
+
 void libAffx_AffixSetHeroAllRanged(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Chromie")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Zagara")] = allowed;
@@ -3358,7 +3371,7 @@ void libAffx_AffixSetHeroAllRanged(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Probius")] = allowed;
 }
 void libAffx_AffixSetHeroAllMelee(int affix, bool allowed) {
-    libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Blaze")] = allowed;
+    libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Firebat")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("DVa")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Deathwing")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("NexusHunter")] = allowed;
@@ -3441,7 +3454,7 @@ void libAffx_AffixSetHeroUsesMana(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Mephisto")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Tychus")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Probius")] = allowed;
-    libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Blaze")] = allowed;
+    libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Firebat")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("NexusHunter")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Arthas")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Imperius")] = allowed;
@@ -3780,13 +3793,14 @@ void libAffx_InitAffixes () {
                 }
             }
         }
-        // Behavior: <player> <affected by count?> <behavior>
+        // Behavior: <player> <affected by count?> <behavior> (tags)
         for (i2 = 1; i2 <= libAffx_maxBehavior; i2 += 1) {
             affixString = UserDataGetString("Affix", affixInstance, "Behavior", i2);
             if (affixString != "") {
                 affixBehavior1 = StringToInt(StringWord(affixString, 1));
                 affixBehavior2 = StringToInt(StringWord(affixString, 2));
                 affixBehavior3 = StringWord(affixString, 3);
+                affixTrigger1 = StringWord(affixString, 4);
                 if (affixBehavior1 <= 12 && affixBehavior1 >= 0) {
                     libAffx_affixes[i].behaviors[i2].player = affixBehavior1;
                 } else {
@@ -3796,6 +3810,12 @@ void libAffx_InitAffixes () {
                     libAffx_affixes[i].behaviors[i2].affectedByCount = true;
                 } else {
                     libAffx_affixes[i].behaviors[i2].affectedByCount = false;
+                }
+                affixTrigger1 = ";" + affixTrigger1 + ";";
+                if (StringContains(affixTrigger1, ";mana;", c_stringAnywhere, c_stringNoCase)) {
+                    libAffx_affixes[i].behaviors[i2].onlyManaUsers = true;
+                } else if (StringContains(affixTrigger1, ";!mana;", c_stringAnywhere, c_stringNoCase)) {
+                    libAffx_affixes[i].behaviors[i2].disallowManaUsers = true;
                 }
                 libAffx_affixes[i].behaviors[i2].behavior = affixBehavior3;
             }
@@ -3844,6 +3864,8 @@ void libAffx_InitAffixes () {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerWin;
                     } else if (affixTrigger1 == "herorespawn" || affixTrigger1 == "hr" || affixTrigger1 == "respawn" || affixTrigger1 == "r") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroRespawn;
+                    } else if (affixTrigger1 == "herokilled" || affixTrigger1 == "herokill" || affixTrigger1 == "hk") {
+                        libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroKilled;
                     } else {
                         libAffx_affixes[i].triggers[i2].type = 0;
                     }

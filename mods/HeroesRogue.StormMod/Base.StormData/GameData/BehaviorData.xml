@@ -139,6 +139,21 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Modification>
       <VitalRegenMultiplier index="Life" value="3" />
       <VitalRegenMultiplier index="Shields" value="3" />
+      <VitalRegenMultiplier index="Energy" value="3" />
+      <VitalDamageLeechArray index="Life">
+        <KindArray index="Basic" value="0.33" />
+        <KindArray index="Ability" value="0.33" />
+      </VitalDamageLeechArray>
+      <VitalDamageLeechScoreArray Value="Healing" />
+    </Modification>
+    <ArmorModification StackCount="1" >
+      <AllArmorBonus value="25" />
+    </ArmorModification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixSelfReliantNoMana" parent="CarryBehaviorParent">
+    <Modification>
+      <VitalRegenMultiplier index="Life" value="3" />
+      <VitalRegenMultiplier index="Shields" value="3" />
       <VitalDamageLeechArray index="Life">
         <KindArray index="Basic" value="0.33" />
         <KindArray index="Ability" value="0.33" />
@@ -779,7 +794,26 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <DamageResponse Chance="0.02" TargetFilters="-;-" ModifyFraction="0" />
 </CBehaviorBuff>
 
-<CBehaviorBuff id="AffixExpensiveAttacks" parent="CarryBehaviorParent" />
+<CBehaviorBuff id="AffixExpensiveAttacks" parent="CarryBehaviorParent">
+  <DamageResponse Chance="1" Handled="AffixExpensiveAttacksSet" Location="Attacker">
+    <Cost>
+      <Cooldown Location="Unit" TimeUse="0.0625" />
+    </Cost>
+    <Kind index="Splash" value="0" />
+    <Kind index="Ability" value="0" />
+  </DamageResponse>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixAncientBlessings" parent="CarryBehaviorParent">
+  <DamageResponse Chance="1" Handled="AffixAncientBlessingsAoEProcDummy" Location="Attacker">
+    <Cost>
+      <Cooldown Location="Unit" TimeUse="1" />
+    </Cost>
+    <Kind index="Splash" value="0" />
+    <Kind index="Ability" value="0" />
+  </DamageResponse>
+  <BehaviorCategories index="BuffAutoattackDPS" value="1" />
+</CBehaviorBuff>
 
 <CBehaviorBuff id="RegenerativeWalls" parent="CarryBehaviorParent">
   <Modification>

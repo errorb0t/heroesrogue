@@ -487,14 +487,11 @@ bool libAffx_DeathTimerAffixAdded (bool testConds, bool runActions) {
     deathTimerCurrentMod = deathTimerModifier * libAffx_EventAffixCount();
     return true;
 }
-bool libAffx_DeathTimerUnitDied (bool testConds, bool runActions) {
-    unit deadUnit;
-    int deadPlayer;
-    int killingPlayer;
+bool libAffx_DeathTimerHeroKilled (bool testConds, bool runActions) {
+    unit deadUnit = libGame_gf_HeroKilledUnit();
+    int deadPlayer = libGame_gf_HeroKilledPlayer();
+    int killingPlayer = libGame_gf_HeroKilledKillingPlayer();
     fixed deathTime;
-    deadUnit = EventUnit();
-    deadPlayer = EventPlayer();
-    killingPlayer = libNtve_gf_KillingPlayer();
     // Conditions
     if (testConds) {
         if (libGame_gv_gameOver) {
@@ -532,10 +529,26 @@ bool libAffx_DeathTimerUnitDied (bool testConds, bool runActions) {
         } else {
             deathTime = libCore_gf_HeroDeathTime(deadPlayer, UnitLevel(libGame_gv_players[deadPlayer].lv_heroUnit)) * (1 + deathTimerCurrentMod);
         }
-        libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, deathTime);
-        libGame_gf_HeroDeathUpdateUIElementsForDeath(true, true, true, deadPlayer, killingPlayer);
-        libGame_gf_HeroDeathEnableDisableDeadSoundStateForPlayer(true, deadPlayer);
-        libGame_gf_HeroDeathPortHeroBackAndSetDeathState(deadPlayer, libGame_gv_players[deadPlayer].lv_spawnPoint);
+        if (UnitGetType(deadUnit) == "HeroLeoric") {
+            libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, deathTime);
+            libNtve_gf_SendActorMessageToUnit(deadUnit, "SetShowStatusBar 1");
+            if ((TimerGetDuration(libGame_gv_players[deadPlayer].lv_respawnTimer) > 0.0)) {
+                UnitBehaviorSetDuration(deadUnit, "LeoricUndying", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
+                UnitBehaviorSetDuration(deadUnit, "Dead", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
+                libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
+            }
+            else {
+                UnitBehaviorSetDuration(deadUnit, "LeoricUndying", 0.0);
+                UnitBehaviorSetDuration(deadUnit, "Dead", 0.0);
+                libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
+            }
+            CatalogFieldValueSetFixed(c_gameCatalogEffect, "LeoricUndyingLifeRegenModifyUnit", "VitalArray[" + IntToString(0) + "].ChangeFraction", deadPlayer, (0.5 / (libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] - 2.0)));
+        } else {
+            libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, deathTime);
+            libGame_gf_HeroDeathUpdateUIElementsForDeath(true, true, true, deadPlayer, killingPlayer);
+            libGame_gf_HeroDeathEnableDisableDeadSoundStateForPlayer(true, deadPlayer);
+            libGame_gf_HeroDeathPortHeroBackAndSetDeathState(deadPlayer, libGame_gv_players[deadPlayer].lv_spawnPoint);
+        }
     }
     return true;
 }
@@ -1414,7 +1427,7 @@ bool libAffx_TrappedPeriodic (bool testConds, bool runActions) {
     for (i = 1; i <= trapAmount; i += 1) {
         trapPoint = RegionRandomPoint(RegionEntireMap());
         random = RandomInt(1, 100);
-        PlayerCreateEffectPoint(libAffx_teamChaos, "AbathurToxicNestInitialSet", trapPoint);
+        UnitCreateEffectPoint(libGame_gv_teams[libAffx_teamChaosIndex].lv_core, "AbathurToxicNestInitialSet", trapPoint);
     }
     return true;
 }
@@ -1422,7 +1435,7 @@ bool libAffx_TrappedLevelUp (bool testConds, bool runActions) {
     int player = libGame_gf_HeroLevelUpPlayer();
     int level = libGame_gf_HeroLevelUpLevel();
     if (testConds) {
-        if (player != 6) {
+        if (player != libAffx_enemy) {
             return false;
         }
     }
@@ -1445,15 +1458,16 @@ bool libAffx_ResurgenceoftheStormAffixAdded (bool testConds, bool runActions) {
     resurgenceoftheStormCooldown = 300 - (60 * (libAffx_EventAffixCount() - 1));
     return true;
 }
-bool libAffx_ResurgenceoftheStormUD (bool testConds, bool runActions) {
-    unit deadUnit;
+bool libAffx_ResurgenceoftheStormHeroKilled (bool testConds, bool runActions) {
+    unit deadUnit = libGame_gf_HeroKilledUnit();
+    int deadPlayer = libGame_gf_HeroKilledPlayer();
+    fixed lifeModifier;
 
-    deadUnit = EventUnit();
     if (testConds) {
         if (resurgenceoftheStormIndex == 0) {
             return false;
         }
-        if (UnitGetOwner(deadUnit) != libAffx_player || libAffx_affixes[resurgenceoftheStormIndex].cooldown > 0) {
+        if (deadPlayer != libAffx_player || libAffx_affixes[resurgenceoftheStormIndex].cooldown > 0) {
             return false;
         }
         if (deadUnit != libGame_gv_players[libAffx_player].lv_heroUnit) {
@@ -1462,7 +1476,7 @@ bool libAffx_ResurgenceoftheStormUD (bool testConds, bool runActions) {
         if (libGame_diabloUsedSouls[libAffx_player]) {
             return false;
         }
-        if (UnitGetType(deadUnit) == "HeroMurky" && !((UnitIsAlive(libGame_gv_heroDeathMurkyRespawnEggs[UnitGetOwner(deadUnit)]) == false) || (libGame_gv_heroDeathMurkyRespawnEggs[UnitGetOwner(deadUnit)] == null))) {
+        if (UnitGetType(deadUnit) == "HeroMurky" && !((UnitIsAlive(libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer]) == false) || (libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer] == null))) {
             return false;
         }
     }
@@ -1473,6 +1487,12 @@ bool libAffx_ResurgenceoftheStormUD (bool testConds, bool runActions) {
     libGame_gv_players[libAffx_player].lv_suppressReviveVOSound = true;
     libAffx_affixes[resurgenceoftheStormIndex].cooldown = resurgenceoftheStormCooldown;
     libGame_gf_HeroDeathUpdateRespawnTimer(libAffx_player, 5);
+    if (UnitGetType(deadUnit) == "HeroLeoric") {
+        UnitBehaviorSetDuration(deadUnit, "LeoricUndying", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
+        UnitBehaviorSetDuration(deadUnit, "Dead", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
+        libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
+        CatalogFieldValueSetFixed(c_gameCatalogEffect, "LeoricUndyingLifeRegenModifyUnit", "VitalArray[" + IntToString(0) + "].ChangeFraction", deadPlayer, (0.5 / (libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer])));
+    }
     return true;
 }
 bool libAffx_ResurgenceoftheStormP (bool testConds, bool runActions) {
@@ -1914,11 +1934,12 @@ bool libAffx_GrenadierEffectUsed (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Great Viking Hoard
 // ---------------------------------------------------------------
-bool libAffx_GreatVikingHoardUnitDied (bool testConds, bool runActions) {
+bool libAffx_GreatVikingHoardHeroKilled (bool testConds, bool runActions) {
     int i;
-    unit deadUnit = EventUnit();
+    unit deadUnit = libGame_gf_HeroKilledUnit();
+    int deadPlayer = libGame_gf_HeroKilledPlayer();
     if (testConds) {
-        if (UnitGetOwner(deadUnit) < 6 || UnitGetOwner(deadUnit) > 10) {
+        if (deadPlayer < 6 || deadPlayer > 10) {
             return false;
         }
         if (!UnitTypeTestAttribute(UnitGetType(deadUnit), c_unitAttributeHeroic)) {
@@ -3315,10 +3336,10 @@ bool libAffx_Mythic5OncePerGame (bool testConds, bool runActions) {
     libAffx_maxAffixesFromObjectives -= 1;
     return true;
 }
-bool libAffx_Mythic5UnitDied (bool testConds, bool runActions) {
-    unit deadUnit = EventUnit();
-    int deadPlayer = EventPlayer();
-    int killingPlayer = libNtve_gf_KillingPlayer();
+bool libAffx_Mythic5HeroKilled (bool testConds, bool runActions) {
+    unit deadUnit = libGame_gf_HeroKilledUnit();
+    int deadPlayer = libGame_gf_HeroKilledPlayer();
+    int killingPlayer = libGame_gf_HeroKilledKillingPlayer();
     int i;
     if (testConds) {
         if (libGame_gv_gameOver) {
@@ -3530,7 +3551,10 @@ void libAffx_CastPurifierBeam() {
             if (groupCount <= 0) { break; }
             heroUnit = UnitGroupUnitFromEnd(heroGroup, groupCount);
             if (UnitGetType(heroUnit) == "HeroLostVikingsController") { continue; }
-            if (!UnitIsAlive(heroUnit) || UnitHasBehavior2(heroUnit, "HallOfStormsProtectionBuff")) { continue; }
+            
+            while (!UnitIsAlive(heroUnit) || UnitHasBehavior2(heroUnit, "HallOfStormsProtectionBuff")) {
+                libAffx_Wait(0.0625, c_timeGame);
+            }
     
             libAffx_purificationProtocolUnit = heroUnit;
             UnitCreateEffectUnit(libGame_gv_teams[libAffx_teamChaosIndex].lv_core, "ArtanisSpearofAdunPurifierBeamInitialSet", libAffx_purificationProtocolUnit);
@@ -3562,7 +3586,7 @@ bool libAffx_PurificationProtocolLevelUp (bool testConds, bool runActions) {
     int player = libGame_gf_HeroLevelUpPlayer();
     int level = libGame_gf_HeroLevelUpLevel();
     if (testConds) {
-        if (player != 6) {
+        if (player != libAffx_enemy) {
             return false;
         }
     }
@@ -3570,21 +3594,6 @@ bool libAffx_PurificationProtocolLevelUp (bool testConds, bool runActions) {
         return true;
     }
     libAffx_LevelUpScaling("Effect,ArtanisSpearofAdunPurifierBeamDamage,Amount", libAffx_teamChaos);
-    
-    return true;
-}
-bool libAffx_PurificationProtocolUnitDied (bool testConds, bool runActions) {
-    unit deadUnit = EventUnit();
-    int deadPlayer = EventPlayer();
-    int killingPlayer = libNtve_gf_KillingPlayer();
-    if (testConds) {
-        if (deadUnit != libAffx_purificationProtocolUnit) {
-            return false;
-        }
-    }
-    if (!runActions) {
-        return true;
-    }
     
     return true;
 }

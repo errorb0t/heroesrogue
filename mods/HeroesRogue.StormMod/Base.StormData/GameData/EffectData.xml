@@ -763,18 +763,14 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <SourceButtonFace value="AffixFirstAid" />
   </CEffectCreateHealer>
 
-  <CEffectSet id="UniversalWeaponImpact">
-    <EffectArray value="HeroExpensiveAttacksSet" />
-  </CEffectSet>
-
-  <CEffectSet id="HeroExpensiveAttacksSet">
-    <ValidatorArray value="CasterHasExpensiveAttacks" />
+  <CEffectSet id="AffixExpensiveAttacksSet">
     <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
     <EffectArray value="AffixExpensiveAttacksEffect" />
   </CEffectSet>
 
   <CEffectModifyUnit id="AffixExpensiveAttacksEffect">
-    <ImpactUnit Value="Caster" />
+    <LaunchUnit Value="Source" />
+    <ImpactUnit Value="Source" />
     <VitalArray index="Energy">
       <Change value="-4" />
     </VitalArray>

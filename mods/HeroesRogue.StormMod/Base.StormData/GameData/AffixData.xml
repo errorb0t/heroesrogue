@@ -534,7 +534,7 @@
             <String String="OPG libAffx_Mythic5OncePerGame">
                 <Field Id="Trigger" Index="1"/>
             </String>
-            <String String="UD libAffx_Mythic5UnitDied">
+            <String String="HK libAffx_Mythic5HeroKilled">
                 <Field Id="Trigger" Index="2"/>
             </String>
             <String String="LU libAffx_Mythic5LevelUp">
@@ -652,7 +652,7 @@
             <String String="Assets/Textures/storm_ui_icon_guldan_darkbargain.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="UnitDied libAffx_DeathTimerUnitDied">
+            <String String="HeroKilled libAffx_DeathTimerHeroKilled">
                 <Field Id="Trigger"/>
             </String>
             <String String="AA libAffx_DeathTimerAffixAdded">
@@ -1523,7 +1523,7 @@
             <String String="Assets/Textures/affix_icon_resurgence.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="UD libAffx_ResurgenceoftheStormUD">
+            <String String="HK libAffx_ResurgenceoftheStormHeroKilled">
                 <Field Id="Trigger"/>
             </String>
             <String String="P libAffx_ResurgenceoftheStormP">
@@ -1855,7 +1855,7 @@
             <String String="LostVikings">
                 <Field Id="HeroSpecific"/>
             </String>
-            <String String="UD libAffx_GreatVikingHoardUnitDied">
+            <String String="HK libAffx_GreatVikingHoardHeroKilled">
                 <Field Id="Trigger"/>
             </String>
             <String String="UD libAffx_GreatVikingHoardUnitDiedStructure">
@@ -2853,17 +2853,29 @@
             <String String="!starter">
                 <Field Id="HeroTags"/>
             </String>
-            <String String="2 0 AffixSelfReliant">
+            <String String="2 0 AffixSelfReliant mana">
                 <Field Id="Behavior"/>
             </String>
-            <String String="3 0 AffixSelfReliant">
+            <String String="3 0 AffixSelfReliant mana">
                 <Field Id="Behavior" Index="1"/>
             </String>
-            <String String="4 0 AffixSelfReliant">
+            <String String="4 0 AffixSelfReliant mana">
                 <Field Id="Behavior" Index="2"/>
             </String>
-            <String String="5 0 AffixSelfReliant">
+            <String String="5 0 AffixSelfReliant mana">
                 <Field Id="Behavior" Index="3"/>
+            </String>
+            <String String="2 0 AffixSelfReliantNoMana !mana">
+                <Field Id="Behavior" Index="4"/>
+            </String>
+            <String String="3 0 AffixSelfReliantNoMana !mana">
+                <Field Id="Behavior" Index="5"/>
+            </String>
+            <String String="4 0 AffixSelfReliantNoMana !mana">
+                <Field Id="Behavior" Index="6"/>
+            </String>
+            <String String="5 0 AffixSelfReliantNoMana !mana">
+                <Field Id="Behavior" Index="7"/>
             </String>
         </Instances>
         <Instances Id="LegallyBlind">
@@ -4465,9 +4477,6 @@
             </String>
             <String String="LU libAffx_PurificationProtocolLevelUp">
                 <Field Id="Trigger" Index="1"/>
-            </String>
-            <String String="UD libAffx_PurificationProtocolUnitDied">
-                <Field Id="Trigger" Index="2"/>
             </String>
         </Instances>
         <Instances Id="GiantKiller">
