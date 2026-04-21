@@ -117,7 +117,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.13.1";
+const string libAffx_version = "0.13.2";
 
 struct libAffx_CatalogModification {
     int player;
@@ -335,7 +335,7 @@ trigger libAffx_PBU2DifficultyChangedTrigger;
 bool libAffx_loadTryMeMode = false; // Try mode 2.0
 bool libAffx_cheatCommands = false; // Enables cheat/debug commands
 bool libAffx_skipIntro = false; // Skips the Hero selection.
-string libAffx_skipHero = "Leoric"; // Player hero when hero selection is skipped.
+string libAffx_skipHero = "WitchDoctor"; // Player hero when hero selection is skipped.
 bool libAffx_forceHeroes = false; // Force enemy heroes to specific heroes.
 bool libAffx_debugPrint = false; // Enables debug logging
 bool libAffx_pauseDisabled = false; // Disables pause features

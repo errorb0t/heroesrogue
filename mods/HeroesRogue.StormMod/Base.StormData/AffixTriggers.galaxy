@@ -169,7 +169,7 @@ bool libAffx_BuddyAI (bool testConds, bool runActions) {
     buddyUnit = UnitLastCreated();
     UnitGroupAdd(libGame_gv_players[ownerPlayer].lv_summonedUnitGroup, buddyUnit);
     libAffx_AddBuddy(ownerPlayer, ownerUnit, 1);
-    circleAngle = libNtve_gf_RandomAngle();
+    circleAngle = RandomFixed(0, 360);
     while ((UnitIsAlive(buddyUnit) == true) && (UnitIsAlive(ownerUnit) == true) && (UnitHasBehavior2(ownerUnit, "Dead") == false)) {
         circleAngle += 2.15;
         if (circleAngle >= 360) {
@@ -3043,11 +3043,25 @@ bool libAffx_RingOfMagicAffixAdded (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Last Moments
 // ---------------------------------------------------------------
+int libAffx_lastMomentsIndex;
 bool libAffx_LastMomentsAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
+    libAffx_lastMomentsIndex = libAffx_EventAffix();
     libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixLastMomentsCooldown", "Duration", 300 - (60 * (libAffx_EventAffixCount() - 1)));
+    return true;
+}
+bool libAffx_LastMomentsPeriodic (bool testConds, bool runActions) {
+    if (testConds) {
+        if (libAffx_lastMomentsIndex == 0) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_affixes[libAffx_lastMomentsIndex].cooldown = UnitBehaviorDuration(libAffx_GetHeroUnit(libAffx_player), "AffixLastMomentsCooldown");
     return true;
 }
 // ---------------------------------------------------------------

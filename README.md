@@ -28,6 +28,14 @@ Singleplayer rogue-like mod for Heroes of the Storm.
 
 - If your Core gets destroyed, all boons and curses are reset and you have to start over. You can also type 'resetgame' in chat to manually restart the run.
 
+**Unique interactions:**
+
+- Lost Vikings: Most boons and curses apply to each Viking.
+
+- Rexxar: Most boons and curses apply to both Rexxar and Misha.
+
+- Cho'Gall: Most boons and curses apply to both Cho and Gall.
+
 
 #### Disclaimer:
 This is a fan-made project and is not affiliated with or endorsed by Blizzard Entertainment. The mod runs locally and does not interact with Blizzard's servers. All original game assets, characters, and intellectual property belong to Blizzard Entertainment.
