@@ -364,6 +364,9 @@
             <String String="Medivh">
                 <Field Id="HeroTooltip"/>
             </String>
+            <String String="Abathur">
+                <Field Id="HeroTooltip" Index="1"/>
+            </String>
         </Instances>
         <Instances Id="ManyRituals">
             <Int>

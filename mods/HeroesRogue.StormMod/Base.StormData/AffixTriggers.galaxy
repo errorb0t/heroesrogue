@@ -183,7 +183,11 @@ bool libAffx_BuddyAI (bool testConds, bool runActions) {
         if (circleAngle >= 360) {
             circleAngle -= 360;
         }
-        if (libGame_gv_players[ownerPlayer].lv_activeVehicle != null && libNtve_gf_UnitIsInsideTransport(ownerUnit)) {
+        if (UnitGetType(ownerUnit) == "HeroAbathur" && UnitHasBehavior2(ownerUnit, "SymbioteCasterDummyBehavior")) { 
+            activeUnit = libGDHL_gv_heroAbathurSymbioteUnit[ownerPlayer];
+        } else if (UnitGetType(ownerUnit) == "HeroAbathur" && UnitHasBehavior2(ownerUnit, "AbathurUltimateEvolutionVehicleCasterBehavior")) { 
+            activeUnit = libGame_gv_players[ownerPlayer].lv_activeVehicle;
+        } else if (libGame_gv_players[ownerPlayer].lv_activeVehicle != null && libNtve_gf_UnitIsInsideTransport(ownerUnit)) {
             activeUnit = UnitTransport(ownerUnit);
         } else if (UnitGetType(ownerUnit) == "HeroDVaPilot" && libNtve_gf_UnitIsInsideTransport(ownerUnit)) {
             activeUnit = UnitTransport(ownerUnit);
@@ -206,6 +210,8 @@ bool libAffx_BuddyAI (bool testConds, bool runActions) {
                 UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), UnitGroupUnit(libGDHL_gv_heroChenStormEarthFireUnits[ownerPlayer].lv_stormEarthFireUnits, 3)), c_orderQueueReplace);
             } else if (ownerPlayer == libAffx_gallPlayer) {
                 UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), libGame_gv_players[libAffx_choPlayer].lv_heroUnit), c_orderQueueReplace);
+            } else if (UnitGetType(activeUnit) == "AbathurSymbiote" && UnitTypeTestAttribute(UnitGetType(libGDHL_gv_heroAbathurSymbioteHost[ownerPlayer]), c_unitAttributeHeroic)) {
+                UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), libGDHL_gv_heroAbathurSymbioteHost[ownerPlayer]), c_orderQueueReplace);
             } else {
                 UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), activeUnit), c_orderQueueReplace);
             }
@@ -3451,14 +3457,21 @@ bool libAffx_ShieldExecuteAffixAdded (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 fixed ringOfMagicModifier = 0.15;
 bool libAffx_RingOfMagicBehaviorChange (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    string cooldownLink;
     if (!runActions) {
         return true;
     }
-    while ((UnitHasBehavior2(EventUnit(), "AffixRingofMagic") == true)) {
-        while ((UnitHasBehaviorWithCategoryFlag(EventUnit(), c_behaviorCategoryTimeStop) == true) || libAffx_gamePaused) {
+    while ((UnitHasBehavior2(eventUnit, "AffixRingofMagic") == true)) {
+        while ((UnitHasBehaviorWithCategoryFlag(eventUnit, c_behaviorCategoryTimeStop) == true) || libAffx_gamePaused) {
             Wait(0.0625, c_timeGame);
         }
-        libGame_gf_StormUniversalModifyCooldownonUnitCDRforAbilities(EventUnit(), -(ringOfMagicModifier) / 16, true, true, false);
+        libGame_gf_StormUniversalModifyCooldownonUnitCDRforAbilities(eventUnit, -(ringOfMagicModifier) / 16, true, true, false);
+        if (UnitGetType(eventUnit) == "HeroAbathur") {
+            UnitModifyCooldown(eventUnit, CatalogFieldValueGet(c_gameCatalogAbil, "AbathurSpawnLocusts", "Cost[0].Cooldown.Link", UnitGetOwner(eventUnit)), -(ringOfMagicModifier) / 16, c_cooldownOperationAdd);
+            UnitModifyCooldown(eventUnit, CatalogFieldValueGet(c_gameCatalogAbil, "AbathurSpawnLocustsAssaultStrain", "Cost[0].Cooldown.Link", UnitGetOwner(eventUnit)), -(ringOfMagicModifier) / 16, c_cooldownOperationAdd);
+            UnitModifyCooldown(eventUnit, CatalogFieldValueGet(c_gameCatalogAbil, "AbathurSpawnLocustsBombardStrain", "Cost[0].Cooldown.Link", UnitGetOwner(eventUnit)), -(ringOfMagicModifier) / 16, c_cooldownOperationAdd);
+        }
         Wait(0.0625, c_timeGame);
     }
     return true;
