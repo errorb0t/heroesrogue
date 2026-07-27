@@ -1557,11 +1557,22 @@ int libAffx_EventAffixCount() {
 void libAffx_CopyFilter(structref<libAffx_Filter> original, structref<libAffx_Filter> copyTo) {
     int i;
     copyTo.unitFilter = original.unitFilter;
-    copyTo.requiredUnitType = original.requiredUnitType;
     copyTo.requiredPlayer = original.requiredPlayer;
+    for (i = 1; i <= libAffx_maxFilters; i += 1) {
+        libAffx_AddRequiredUnitTypeFilter(copyTo, original.requiredUnitTypes[i]);
+    }
     for (i = 1; i <= libAffx_maxFilters; i += 1) {
         libAffx_AddExcludedUnitTypeFilter(copyTo, original.excludedUnitTypes[i]);
     }
+}
+void libAffx_AddRequiredUnitTypeFilter(structref<libAffx_Filter> filter, string unitType) {
+    if (filter.requiredUnitTypeIndex >= libAffx_maxFilters) {
+        libAffx_DebugPrint("Warning: A filter reached maximum limit!");
+        return;
+    }
+    if (unitType == "") { return; }
+    filter.requiredUnitTypeIndex += 1;
+    filter.requiredUnitTypes[filter.requiredUnitTypeIndex] = unitType;
 }
 void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string unitType) {
     if (filter.excludedUnitTypeIndex >= libAffx_maxFilters) {
@@ -1574,13 +1585,20 @@ void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string 
 }
 bool libAffx_UnitMatchesCriteria(unit unitVar, structref<libAffx_Filter> filter) {
     int i;
+    bool matchesUnitType = false;
     if (filter.unitFilter != null && !UnitFilterMatch(unitVar, libAffx_player, filter.unitFilter)) {
         return false;
     }
     if (filter.requiredPlayer != 0 && filter.requiredPlayer != c_playerAny && UnitGetOwner(unitVar) != filter.requiredPlayer) {
         return false;
     }
-    if (filter.requiredUnitType != null && filter.requiredUnitType != "" && UnitGetType(unitVar) != filter.requiredUnitType) {
+    for (i = 1; i <= libAffx_maxFilters; i += 1) {
+        if (filter.requiredUnitTypes[i] != null && filter.requiredUnitTypes[i] != "" && UnitGetType(unitVar) == filter.requiredUnitTypes[i]) {
+            matchesUnitType = true;
+            break;
+        }
+    }
+    if (matchesUnitType == false) {
         return false;
     }
     for (i = 1; i <= libAffx_maxFilters; i += 1) {
@@ -1600,6 +1618,24 @@ void libAffx_UnitBehaviorAddOrRemoveCriteria(unit unitVar, string behavior, int 
         libAffx_UnitBehaviorAdd(unitVar, behavior, unitVar, stacks);
     } else {
         UnitBehaviorRemove(unitVar, behavior, stacks);
+    }
+}
+void libAffx_UnitSetPropertyCriteria(unit unitVar, int inProp, fixed value, structref<libAffx_Filter> filter) {
+    if (libAffx_UnitMatchesCriteria(unitVar, filter)) {
+        UnitSetPropertyFixed(unitVar, inProp, value);
+    }
+}
+void libAffx_UnitSetPropertyCriteriaAll (int inProp, fixed value, structref<libAffx_Filter> filter) {
+    unit unitVar;
+    unitgroup unitGroup = UnitGroup(null, c_playerAny, RegionEntireMap(), filter.unitFilter, 0);
+    int i = UnitGroupCount(unitGroup, c_unitCountAll);
+    for (;; i -= 1) {
+        if (i <= 0) { break; }
+        unitVar = UnitGroupUnitFromEnd(unitGroup, i);
+        if (unitVar == null) { continue; }
+        if (libAffx_UnitMatchesCriteria(unitVar, filter)) {
+            UnitSetPropertyFixed(unitVar, inProp, value);
+        }
     }
 }
 void libAffx_UnitBehaviorAddCriteriaAll (string behavior, int stacks, structref<libAffx_Filter> filter) {
@@ -3966,7 +4002,7 @@ void libAffx_InitVariables () {
     libAffx_AddExcludedUnitTypeFilter(libAffx_filterAlliedStructuresExcludingCore, "KingsCore");
 
     libAffx_CopyFilter(libAffx_filterAlliedStructures, libAffx_filterAlliedCore);
-    libAffx_filterAlliedCore.requiredUnitType = "KingsCore";
+    libAffx_AddRequiredUnitTypeFilter(libAffx_filterAlliedCore, "KingsCore");
 
     libAffx_filterAlliedMinions.unitFilter = libCore_gv_filtersMinionsTownMinions;
     libAffx_filterAlliedMinions.requiredPlayer = libAffx_teamOrder;
@@ -3988,7 +4024,7 @@ void libAffx_InitVariables () {
     libAffx_AddExcludedUnitTypeFilter(libAffx_filterEnemyStructuresExcludingCore, "KingsCore");
 
     libAffx_CopyFilter(libAffx_filterEnemyStructures, libAffx_filterEnemyCore);
-    libAffx_filterEnemyCore.requiredUnitType = "KingsCore";
+    libAffx_AddRequiredUnitTypeFilter(libAffx_filterEnemyCore, "KingsCore");
     
     libAffx_filterEnemyMinions.unitFilter = libCore_gv_filtersMinionsTownMinions;
     libAffx_filterEnemyMinions.requiredPlayer = libAffx_teamChaos;

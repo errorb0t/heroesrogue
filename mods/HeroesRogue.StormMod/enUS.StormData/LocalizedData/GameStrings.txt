@@ -603,7 +603,7 @@ Affix/Name/SgtHammerBlaster=Blaster
 Affix/Tooltip/SgtHammerBlaster=Increases Concussive Blast's maximum charges by <c val="#TooltipNumbers">1</c> and its damage by <c val="#TooltipNumbers">50%</c>.
 Affix/Tooltip/Append/SgtHammerBlaster=
 Affix/Name/SgtHammerRapidActuators=Rapid Actuators
-Affix/Tooltip/SgtHammerRapidActuators=Gain <c val="#TooltipNumbers">Ultra Capacitors</c>.<n/><n/>Reduces Siege Mode's cooldown to <c val="#TooltipNumbers">0.25</c> seconds. Enter Siege Mode and Tank More near instantly.
+Affix/Tooltip/SgtHammerRapidActuators=Gain <c val="#TooltipNumbers">Ultra Capacitors</c>.<n/><n/>Reduces Siege Mode's cooldown to <c val="#TooltipNumbers">0.25</c> seconds. Enter Siege Mode and Tank Mode near instantly.
 Affix/Tooltip/Append/SgtHammerRapidActuators=
 Affix/Name/SgtHammerFuelReserves=Fuel Reserves
 Affix/Tooltip/SgtHammerFuelReserves=Increases Thrusters's duration by <c val="#TooltipNumbers">4</c> seconds.
