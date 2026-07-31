@@ -5,7 +5,7 @@
 const int libAffx_maxHeroes = 90;
 const int libAffx_maxMaps = 7;
 const int libAffx_maxTalentsAdd = 10;
-const int libAffx_maxCatalogModification = 10;
+const int libAffx_maxCatalogModification = 20;
 const int libAffx_maxBehavior = 10;
 const int libAffx_maxTrigger = 10;
 const int libAffx_maxQuestRetain = 10;
@@ -127,7 +127,7 @@ int libAffx_affixSelectionMaxCurrent = 3;
 
 const fixed libAffx_gameStartDelay = 2.25; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.14.7";
+const string libAffx_version = "0.14.8";
 
 struct libAffx_Filter {
     unitfilter unitFilter;

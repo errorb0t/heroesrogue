@@ -45,7 +45,7 @@
         <Fields>
             <Id value="CatalogModification"/>
             <Type value="String"/>
-            <Count value="10"/>
+            <Count value="20"/>
             <EditorColumn value="3"/>
         </Fields>
         <Fields>

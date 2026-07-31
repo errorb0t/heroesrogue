@@ -88,7 +88,7 @@ bool libAffx_NanoBoostBehaviorChange (bool testConds, bool runActions) {
         while ((UnitHasBehaviorWithCategoryFlag(heroUnit, c_behaviorCategoryTimeStop) == true) || libAffx_gamePaused) {
             Wait(0.0625, c_timeGame);
         }
-        libGame_gf_StormUniversalModifyCooldownonUnitCDRforAbilities(heroUnit, -(libAffx_nanoBoostCDR / 16), false, false, false);
+        libAffx_ModifyAllCooldowns(heroUnit, -(libAffx_nanoBoostCDR / 16), false, false, false);
         Wait(0.0625, c_timeGame);
     }
     return true;
@@ -112,7 +112,7 @@ bool libAffx_BlessingoftheDragonsBehaviorChange (bool testConds, bool runActions
         while ((UnitHasBehaviorWithCategoryFlag(EventUnit(), c_behaviorCategoryTimeStop) == true) || libAffx_gamePaused) {
             Wait(0.0625, c_timeGame);
         }
-        libGame_gf_StormUniversalModifyCooldownonUnitCDRforAbilities(EventUnit(), -(libAffx_blessingoftheDragonsCDR / 16), false, false, false);
+        libAffx_ModifyAllCooldowns(EventUnit(), -(libAffx_blessingoftheDragonsCDR / 16), false, false, false);
         Wait(0.0625, c_timeGame);
     }
     return true;
@@ -744,7 +744,7 @@ bool libAffx_EnemySpeedBehaviorChange (bool testConds, bool runActions) {
         while ((UnitHasBehaviorWithCategoryFlag(EventUnit(), c_behaviorCategoryTimeStop) == true) || libAffx_gamePaused) {
             Wait(0.0625, c_timeGame);
         }
-        libGame_gf_StormUniversalModifyCooldownonUnitCDRforAbilities(EventUnit(), -(enemySpeedModifier) / 16, true, true, false);
+        libAffx_ModifyAllCooldowns(EventUnit(), -(enemySpeedModifier) / 16, true, true, false);
         Wait(0.0625, c_timeGame);
     }
     return true;
@@ -3049,7 +3049,7 @@ bool libAffx_AffixAllStatsSelfBehaviorChange (bool testConds, bool runActions) {
         while ((UnitHasBehaviorWithCategoryFlag(EventUnit(), c_behaviorCategoryTimeStop) == true) || libAffx_gamePaused) {
             Wait(0.0625, c_timeGame);
         }
-        libGame_gf_StormUniversalModifyCooldownonUnitCDRforAbilities(EventUnit(), -(0.5 / 16), false, false, false);
+        libAffx_ModifyAllCooldowns(EventUnit(), -(0.5 / 16), false, false, false);
         Wait(0.0625, c_timeGame);
     }
     return true;
@@ -3480,12 +3480,7 @@ bool libAffx_RingOfMagicBehaviorChange (bool testConds, bool runActions) {
         while ((UnitHasBehaviorWithCategoryFlag(eventUnit, c_behaviorCategoryTimeStop) == true) || libAffx_gamePaused) {
             Wait(0.0625, c_timeGame);
         }
-        libGame_gf_StormUniversalModifyCooldownonUnitCDRforAbilities(eventUnit, -(ringOfMagicModifier) / 16, true, true, false);
-        if (UnitGetType(eventUnit) == "HeroAbathur") {
-            UnitModifyCooldown(eventUnit, CatalogFieldValueGet(c_gameCatalogAbil, "AbathurSpawnLocusts", "Cost[0].Cooldown.Link", UnitGetOwner(eventUnit)), -(ringOfMagicModifier) / 16, c_cooldownOperationAdd);
-            UnitModifyCooldown(eventUnit, CatalogFieldValueGet(c_gameCatalogAbil, "AbathurSpawnLocustsAssaultStrain", "Cost[0].Cooldown.Link", UnitGetOwner(eventUnit)), -(ringOfMagicModifier) / 16, c_cooldownOperationAdd);
-            UnitModifyCooldown(eventUnit, CatalogFieldValueGet(c_gameCatalogAbil, "AbathurSpawnLocustsBombardStrain", "Cost[0].Cooldown.Link", UnitGetOwner(eventUnit)), -(ringOfMagicModifier) / 16, c_cooldownOperationAdd);
-        }
+        libAffx_ModifyAllCooldowns(eventUnit, -(ringOfMagicModifier) / 16, true, true, false);
         Wait(0.0625, c_timeGame);
     }
     return true;
