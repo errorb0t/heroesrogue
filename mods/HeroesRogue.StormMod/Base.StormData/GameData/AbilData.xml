@@ -97,6 +97,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <CmdButtonArray index="Execute" DefaultButtonFace="AfxSlivanImpale"/>
     <Flags index="RequireTargetVision" value="0"/>
     <Arc value="360"/>
-</CAbilEffectTarget>
+</CAbilEffectTarget>  
 
 </Catalog>

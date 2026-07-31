@@ -1330,6 +1330,9 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CEffectSet id="WitchDoctorVoodooRitualProcSet">
   <EffectArray value="WitchDoctorRitualofBoonsAddToken" />
 </CEffectSet>
+<CEffectSet id="WitchDoctorVoodooRitualProcSetNoValidate">
+  <EffectArray value="WitchDoctorRitualofBoonsAddToken" />
+</CEffectSet>
 
 <CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce1Search">
   <ImpactLocation Value="TargetPoint"/>
