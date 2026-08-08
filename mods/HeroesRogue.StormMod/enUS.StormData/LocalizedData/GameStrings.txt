@@ -163,6 +163,7 @@ Affix/Tooltip/Append/AASearing=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d 
 Affix/Name/Buddy=BUDDY
 Affix/Tooltip/Buddy=A friendly Drone follows you around, healing you for <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreateHealer,RechargeVitalRate" player="1" precision="0"/></c> Health every <c val="#TooltipNumbers">3</c> <c val="747A84">(-0.25s per stack)</c> seconds.<n/><n/>BUDDY shoots a missile every <c val="#TooltipNumbers">4</c> <c val="747A84">(-1s per stack)</c> seconds at the nearest enemy, dealing <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyDroneMissileDamage,Amount" player="1" precision="0"/></c> damage in the area.
 Affix/Tooltip/Buddy/Medivh=A friendly Drone follows you around, healing you for <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreateHealer,RechargeVitalRate" player="1" precision="0"/></c> Health every <c val="#TooltipNumbers">3</c> <c val="747A84">(-0.25s per stack)</c> seconds.<n/><n/>BUDDY shoots a missile every <c val="#TooltipNumbers">4</c> <c val="747A84">(-1s per stack)</c> seconds at the nearest enemy, dealing <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyDroneMissileDamage,Amount" player="1" precision="0"/></c> damage in the area.<n/><n/>BUDDY does not attack while you're in Raven Form. 
+Affix/Tooltip/Buddy/Abathur=A friendly Drone follows you around, healing you for <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreateHealer,RechargeVitalRate" player="1" precision="0"/></c> Health every <c val="#TooltipNumbers">3</c> <c val="747A84">(-0.25s per stack)</c> seconds.<n/><n/>BUDDY shoots a missile every <c val="#TooltipNumbers">4</c> <c val="747A84">(-1s per stack)</c> seconds at the nearest enemy, dealing <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyDroneMissileDamage,Amount" player="1" precision="0"/></c> damage in the area.<n/><n/>BUDDY will prioritize following Symbiote and heal Heroic hosts.
 Affix/Tooltip/Append/Buddy=<n/><n/>Healing Beam cooldown: <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreatePersistent,PeriodicPeriodArray[0]" precision="2"/></c> seconds<n/>Missile cooldown: <c val="#TooltipNumbers"><d ref="Behavior,AffixBuddyDroneController,Period" precision="2"/></c> seconds
 Affix/Name/BuddyAll=Army of BUDDYs
 Affix/Tooltip/BuddyAll=Gain <c val="#TooltipNumbers">1</c> <c val="747A84">(+1 per stack)</c> additional BUDDY and your AI teammates gain <c val="#TooltipNumbers">1</c> BUDDY each.<n/><n/>All BUDDYs have <c val="#TooltipNumbers">75%</c> damage and healing.
@@ -602,7 +603,7 @@ Affix/Name/SgtHammerBlaster=Blaster
 Affix/Tooltip/SgtHammerBlaster=Increases Concussive Blast's maximum charges by <c val="#TooltipNumbers">1</c> and its damage by <c val="#TooltipNumbers">50%</c>.
 Affix/Tooltip/Append/SgtHammerBlaster=
 Affix/Name/SgtHammerRapidActuators=Rapid Actuators
-Affix/Tooltip/SgtHammerRapidActuators=Gain <c val="#TooltipNumbers">Ultra Capacitors</c>.<n/><n/>Reduces Siege Mode's cooldown to <c val="#TooltipNumbers">0.25</c> seconds. Enter Siege Mode and Tank More near instantly.
+Affix/Tooltip/SgtHammerRapidActuators=Gain <c val="#TooltipNumbers">Ultra Capacitors</c>.<n/><n/>Reduces Siege Mode's cooldown to <c val="#TooltipNumbers">0.25</c> seconds. Enter Siege Mode and Tank Mode near instantly.
 Affix/Tooltip/Append/SgtHammerRapidActuators=
 Affix/Name/SgtHammerFuelReserves=Fuel Reserves
 Affix/Tooltip/SgtHammerFuelReserves=Increases Thrusters's duration by <c val="#TooltipNumbers">4</c> seconds.
@@ -841,7 +842,7 @@ Affix/Tooltip/BadMannerism=Enemy Heroes will spam Hearthstone, sprays, and voice
 Affix/Tooltip/Append/BadMannerism=
 Affix/Name/TowerShredder=Shredder
 Affix/Tooltip/TowerShredder=Increases the maximum Armor reduction from enemy Structures attacks by <c val="#TooltipNumbers">10</c> <c val="747A84">(+10 per stack)</c>.
-Affix/Tooltip/Append/TowerShredder=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="-(Behavior,TownRampingArmorShred,ArmorModification.AllArmorBonus+20)" player="12" precision="0"/></c>
+Affix/Tooltip/Append/TowerShredder=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="-(Behavior,TownRampingArmorShred,ArmorModification.AllArmorBonus+20)*2" player="12" precision="0"/></c>
 Affix/Name/TowerSlow=Debilitating Shots
 Affix/Tooltip/TowerSlow=Enemy Core, Fort, and Keep attacks reduce Attack Speed and Movement Speed by <c val="#TooltipNumbers">40%</c> for <c val="#TooltipNumbers">2.5</c> seconds.
 Affix/Tooltip/Append/TowerSlow=

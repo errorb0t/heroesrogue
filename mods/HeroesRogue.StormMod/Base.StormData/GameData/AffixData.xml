@@ -45,7 +45,7 @@
         <Fields>
             <Id value="CatalogModification"/>
             <Type value="String"/>
-            <Count value="10"/>
+            <Count value="20"/>
             <EditorColumn value="3"/>
         </Fields>
         <Fields>
@@ -148,6 +148,9 @@
             </String>
             <String String="1 0 AffixPowerRitual">
                 <Field Id="Behavior"/>
+            </String>
+            <String String="Scaling libAffx_PowerRitualScaling">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
         <Instances Id="ZombieHandler">
@@ -363,6 +366,9 @@
             </String>
             <String String="Medivh">
                 <Field Id="HeroTooltip"/>
+            </String>
+            <String String="Abathur">
+                <Field Id="HeroTooltip" Index="1"/>
             </String>
         </Instances>
         <Instances Id="ManyRituals">
@@ -815,8 +821,11 @@
             <String String="1 1 Multiply Abil,WitchDoctorZombieWall,CastIntroTime 0.5">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="1 1 Multiply Effect,WitchDoctorZombieWallDelayPersistent,InitialDelay 0.5">
+            <String String="1 1 Subtract Effect,WitchDoctorZombieWallDelayPersistent,InitialDelay 0.45">
                 <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="1 1 Subtract Effect,WitchDoctorZombieWallPersistent,ExpireDelay 0.45">
+                <Field Id="CatalogModification" Index="2"/>
             </String>
         </Instances>
         <Instances Id="JarofFrogs">
@@ -1768,6 +1777,9 @@
             <String String="Execute libAffx_StructureAmmoExecute">
                 <Field Id="Trigger"/>
             </String>
+            <String String="UC libAffx_StructureAmmoUnitCreated">
+                <Field Id="Trigger" Index="1"/>
+            </String>
             <String String="Epic">
                 <Field Id="Rarity"/>
             </String>
@@ -2100,6 +2112,9 @@
             <String String="IllidanFieryBrand">
                 <Field Id="TalentsAdd"/>
             </String>
+            <String String="Execute libAffx_IllidanTalentTier16">
+                <Field Id="Trigger"/>
+            </String>
         </Instances>
         <Instances Id="DeepDive">
             <String String="Assets/Textures/storm_ui_icon_illidan_dive_a.dds">
@@ -2131,6 +2146,9 @@
             </String>
             <String String="1 1 Set Effect,IllidanDiveDeepDiveDamage,Chance 1">
                 <Field Id="CatalogModification" Index="2"/>
+            </String>
+            <String String="Execute libAffx_IllidanTalentTier16">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
         <Instances Id="Evasive">
@@ -5315,6 +5333,9 @@
             </String>
             <String String="IllidanBladesOfAzzinoth">
                 <Field Id="TalentsAdd"/>
+            </String>
+            <String String="Execute libAffx_IllidanTalentTier16">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
         <Instances Id="MuradinDualHammer">

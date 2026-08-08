@@ -527,7 +527,7 @@ void libGDHL_gf_HeroAbathurIncrementHeroCountFunction () {
         TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityDeselectedHooktoAI, true);
         TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityUnhookAI, true);
         TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityKillInitialTarget, true);
-        TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityAddSymbioteStacks, true);
+        TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityQuestComplete, true);
         TriggerEnable(libGDHL_gt_HeroAbathurSymbiotedMonstrositySymbioted, true);
         TriggerEnable(libGDHL_gt_HeroAbathurDeepTunnelPing, true);
         TriggerEnable(libGDHL_gt_HeroAbathurSymbioteMinimapIcon, true);
@@ -565,7 +565,7 @@ void libGDHL_gf_HeroAbathurDecrementHeroCountFunction () {
         TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityDeselectedHooktoAI, false);
         TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityUnhookAI, false);
         TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityKillInitialTarget, false);
-        TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityAddSymbioteStacks, false);
+        TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityQuestComplete, false);
         TriggerEnable(libGDHL_gt_HeroAbathurSymbiotedMonstrositySymbioted, false);
         TriggerEnable(libGDHL_gt_HeroAbathurDeepTunnelPing, false);
         TriggerEnable(libGDHL_gt_HeroAbathurSymbioteMinimapIcon, false);
@@ -5228,6 +5228,7 @@ bool libGDHL_gt_HeroAbathurSymbiote_Func (bool testConds, bool runActions) {
         libGDHL_gv_heroAbathurSymbioteEventAdded[lv_abathurPlayer] = true;
         libGDHL_gv_heroAbathurSymbioteLookAt[lv_abathurPlayer] = UnitGetPosition(lv_symbioteHost);
         libGDHL_gv_heroAbathurSymbioteActive[lv_abathurPlayer] = true;
+        libGDHL_gv_heroAbathurSymbioteHost[lv_abathurPlayer] = lv_symbioteHost;
         libNtve_gf_MakeUnitFacePoint(libGDHL_gv_heroAbathurSymbioteUnit[lv_abathurPlayer], PointWithOffsetPolar(UnitGetPosition(lv_symbioteHost), 1.0, -90.0), 2.0);
         while ((UnitIsAlive(lv_symbioteHost) == true) && (UnitBehaviorCount(lv_symbioteHost, "AbathurSymbioteHostBehavior") >= 1) && (UnitGetOwner(lv_symbioteHost) == lv_symbioteHostPlayer)) {
             if ((DistanceBetweenPoints(UnitGetPosition(libGDHL_gv_heroAbathurSymbioteUnit[lv_abathurPlayer]), UnitGetPosition(lv_symbioteHost)) >= 4.0)) {
@@ -6065,35 +6066,13 @@ bool libGDHL_gt_HeroAbathurMonstrosityAddMinionKillStacks_Func (bool testConds, 
     }
 
     if ((UnitGetType(libGame_gv_players[lv_abathurPlayer].lv_heroUnit) == "HeroAbathur") && (PlayerHasTalent(lv_abathurPlayer, "AbathurHeroicAbilityEvolveMonstrosity") == true) && ((UnitTypeTestAttribute(UnitGetType(lv_minionUnit), c_unitAttributeMinion) == true) || (UnitTypeTestAttribute(UnitGetType(lv_minionUnit), c_unitAttributeMerc) == true))) {
-        if ((TechTreeUnitCount(lv_abathurPlayer, "AbathurSymbiote", c_techCountCompleteOnly) > 0)) {
-            auto2B15A152_g = UnitGroup("AbathurSymbiote", lv_abathurPlayer, RegionPlayableMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
-            auto2B15A152_u = UnitGroupCount(auto2B15A152_g, c_unitCountAll);
-            for (;; auto2B15A152_u -= 1) {
-                auto2B15A152_var = UnitGroupUnitFromEnd(auto2B15A152_g, auto2B15A152_u);
-                if (auto2B15A152_var == null) { break; }
-                UnitBehaviorAdd(auto2B15A152_var, "AbathurEvolveMonstrosityAbathurStack", auto2B15A152_var, 1);
-                lv_symbiote = auto2B15A152_var;
-            }
-        }
 
         auto7E23C28A_g = UnitGroupSearch("AbathurEvolvedMonstrosity", lv_abathurPlayer, UnitGetPosition(libGame_gf_SpecialCaseUnitParticipatedInNPCTakedownMinion()), libCore_gv_bALXPRadius, UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
         auto7E23C28A_u = UnitGroupCount(auto7E23C28A_g, c_unitCountAll);
         for (;; auto7E23C28A_u -= 1) {
             auto7E23C28A_var = UnitGroupUnitFromEnd(auto7E23C28A_g, auto7E23C28A_u);
             if (auto7E23C28A_var == null) { break; }
-            UnitBehaviorAdd(auto7E23C28A_var, "AbathurEvolveMonstrosityHealthStack", auto7E23C28A_var, 1);
-            lv_minionAbsorbedTokenCount = UnitBehaviorCount(auto7E23C28A_var, "AbathurEvolveMonstrosityMinionAbsorbedToken");
-            lv_minionAbsorbedTokenCount = (lv_minionAbsorbedTokenCount+1);
-            UnitSetTokenCount(auto7E23C28A_var, "AbathurEvolveMonstrosityMinionAbsorbedToken", lv_minionAbsorbedTokenCount, auto7E23C28A_var);
-            UnitCreateEffectUnit(auto7E23C28A_var, "EvolveMonstrosityHealthStackHealer", auto7E23C28A_var);
-            UnitBehaviorAdd(libGame_gv_players[lv_abathurPlayer].lv_heroUnit, "AbathurEvolveMonstrosityAbathurStack", libGame_gv_players[lv_abathurPlayer].lv_heroUnit, 1);
-            UnitBehaviorSetDurationRemaining(libGame_gv_players[lv_abathurPlayer].lv_heroUnit, "AbathurEvolveMonstrosityAbathurStack", UnitBehaviorDuration(auto7E23C28A_var, "AbathurEvolveMonstrosity"));
-            UnitBehaviorSetDurationRemaining(lv_symbiote, "AbathurEvolveMonstrosityAbathurStack", UnitBehaviorDuration(auto7E23C28A_var, "AbathurEvolveMonstrosity"));
-            if ((PlayerHasTalent(lv_abathurPlayer, "AbathurMasteryEvolutionComplete") == true)) {
-                lv_evolutionCompleteStacks = PlayerScoreValueGetAsInt(lv_abathurPlayer, "EvolutionCompleteStacks");
-                lv_evolutionCompleteStacks += 1;
-                PlayerScoreValueSetFromInt(lv_abathurPlayer, "EvolutionCompleteStacks", lv_evolutionCompleteStacks);
-            }
+            UnitCreateEffectUnit(libGame_gv_players[lv_abathurPlayer].lv_heroUnit, "AbathurEvolveMonstrosityIncreaseQuestStack", lv_minionUnit);
 
         }
     }
@@ -6282,6 +6261,39 @@ void libGDHL_gt_HeroAbathurMonstrosityAddSymbioteStacks_Init () {
     TriggerEnable(libGDHL_gt_HeroAbathurMonstrosityAddSymbioteStacks, false);
     TriggerAddEventUnitCreated(libGDHL_gt_HeroAbathurMonstrosityAddSymbioteStacks, null, null, null);
 }
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Hero - Abathur - Monstrosity - Quest Complete
+//--------------------------------------------------------------------------------------------------
+bool libGDHL_gt_HeroAbathurMonstrosityQuestComplete_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unit lv_hero;
+    string lv_quest;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_hero = EventUnit();
+    lv_quest = EventUnitTokenBehavior();
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((UnitTestState(lv_hero, c_unitStateHallucination) == true)) {
+        return true;
+    }
+
+    libUIUI_gf_KillLogAnnounceQuestCompletion(UnitGetOwner(lv_hero), lv_quest, 1.0);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libGDHL_gt_HeroAbathurMonstrosityQuestComplete_Init () {
+    libGDHL_gt_HeroAbathurMonstrosityQuestComplete = TriggerCreate("libGDHL_gt_HeroAbathurMonstrosityQuestComplete_Func");
+    TriggerAddEventUnitToken(libGDHL_gt_HeroAbathurMonstrosityQuestComplete, "MonstrosityQuestComplete", null, "");
+}
+
 
 //--------------------------------------------------------------------------------------------------
 // Trigger: Hero - Abathur - Symbioted Monstrosity Symbioted
@@ -10943,6 +10955,13 @@ bool libGDHL_gt_HeroJainaWaterElementalCreated_Func (bool testConds, bool runAct
     lv_player = UnitGetOwner(EventUnit());
     lv_waterElementalUnit = EventUnitCreatedUnit();
     lv_jainaUnit = libGame_gv_players[lv_player].lv_heroUnit;
+
+   // Conditions
+    if (testConds) {
+        if (!((UnitGetType(lv_waterElementalUnit) == "JainaWaterElemental"))) {
+            return false;
+        }
+    }
 
     // Actions
     if (!runActions) {

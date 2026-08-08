@@ -5,7 +5,7 @@
 const int libAffx_maxHeroes = 90;
 const int libAffx_maxMaps = 7;
 const int libAffx_maxTalentsAdd = 10;
-const int libAffx_maxCatalogModification = 10;
+const int libAffx_maxCatalogModification = 20;
 const int libAffx_maxBehavior = 10;
 const int libAffx_maxTrigger = 10;
 const int libAffx_maxQuestRetain = 10;
@@ -127,12 +127,13 @@ int libAffx_affixSelectionMaxCurrent = 3;
 
 const fixed libAffx_gameStartDelay = 2.25; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.14.5";
+const string libAffx_version = "0.14.8";
 
 struct libAffx_Filter {
     unitfilter unitFilter;
     int requiredPlayer;
-    string requiredUnitType;
+    string[libAffx_maxFilters + 1] requiredUnitTypes;
+    int requiredUnitTypeIndex;
     string[libAffx_maxFilters + 1] excludedUnitTypes;
     int excludedUnitTypeIndex;
 };
@@ -391,7 +392,7 @@ trigger libAffx_RexxarTrigger;
 bool libAffx_debug_enableTryMeMode2 = false; // Try mode 2.0
 bool libAffx_debug_enableCheatCommands = false; // Enables cheat/debug commands
 bool libAffx_debug_disableHeroSelection = false; // Skips the Hero selection.
-string libAffx_debug_playerHero = "Muradin"; // Player hero when hero selection is disabled.
+string libAffx_debug_playerHero = "WitchDoctor"; // Player hero when hero selection is disabled.
 bool libAffx_debug_enableDebugLogging = false; // Enables debug logging
 bool libAffx_debug_forcedHeroes = false; // Enemy heroes are forced to predetermined heroes
 bool libAffx_debug_ignoreMap = false; // Ignores the saved map.
@@ -400,6 +401,7 @@ bool libAffx_debug_disableAffixQueue = false; // Disables queueing affixes.
 bool libAffx_debugCommandsAddAll;
 
 void libAffx_CopyFilter(structref<libAffx_Filter> original, structref<libAffx_Filter> copyTo);
+void libAffx_AddRequiredUnitTypeFilter(structref<libAffx_Filter> filter, string unitType);
 void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string unitType);
 void libAffx_DebugPrint(string print);
 string libAffx_GetRarityString(int rarity); // Gets rarity name.

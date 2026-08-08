@@ -104,6 +104,37 @@ bool libAffx_HeroSelectionTrigger_Func (bool testConds, bool runActions) {
 void libAffx_HeroSelectionTrigger_Init () {
     libAffx_HeroSelectionTrigger = TriggerCreate("libAffx_HeroSelectionTrigger_Func");
 }
+// Cooldown reduction
+void libAffx_ModifyAllCooldowns (unit targetUnit, fixed cooldownChange, bool includeTrait, bool includeHeroic, bool includeMount) {
+    string abilLink;
+    string cooldownLink;
+    string chargeLink;
+    int heroIndex = libCore_gf_GetHeroIndexForUnitType(UnitGetType(targetUnit));
+    int player = UnitGetOwner(targetUnit);
+    int ability = 1;
+    int maxAbilities = libGame_gv_players[heroIndex].lv_heroData.lv_numberOfAbilities;
+    
+    for (; ability <= maxAbilities; ability += 1) {
+        if ((libGame_gv_players[heroIndex].lv_heroData.lv_abilities[ability].lv_isAffectedByCooldownReduction) ||
+            (libGame_gv_players[heroIndex].lv_heroData.lv_abilities[ability].lv_ability == "AbathurSpawnLocusts")) {
+            if ((libGame_gv_players[heroIndex].lv_heroData.lv_abilities[ability].lv_isHeroic && includeHeroic == false) ||
+                (libGame_gv_players[heroIndex].lv_heroData.lv_abilities[ability].lv_isTrait && includeTrait == false) ||
+                ((libGame_gv_players[heroIndex].lv_heroData.lv_abilities[ability].lv_isMountReplacement || 
+                libGame_gv_players[heroIndex].lv_heroData.lv_abilities[ability].lv_ability == "Mount") && includeTrait == false)) {
+                continue;
+            }
+            abilLink = libGame_gv_players[heroIndex].lv_heroData.lv_abilities[ability].lv_ability;
+            cooldownLink = CatalogFieldValueGet(c_gameCatalogAbil, abilLink, "Cost[0].Cooldown.Link", player);
+            chargeLink = CatalogFieldValueGet(c_gameCatalogAbil, abilLink, "Cost[0].Charge.Link", player);
+            UnitModifyCooldown(targetUnit, cooldownLink, cooldownChange, c_cooldownOperationAdd);
+            if (libGame_gv_players[heroIndex].lv_heroData.lv_abilities[ability].lv_usesCharges) {
+                UnitAddChargeRegenRemaining(targetUnit, chargeLink, cooldownChange);
+            } else if (chargeLink != "") {
+                UnitAddChargeRegenRemaining(targetUnit, chargeLink, cooldownChange);
+            }
+        }
+    }
+}
 
 //--------------------------------------------------------------------------------------------------
 bool libAffx_TalentGainedTrigger_Func (bool testConds, bool runActions) {
@@ -134,12 +165,15 @@ void libAffx_SyncBehaviors(unit sourceUnit, unit targetUnit) {
         behavior = libAffx_affixBehaviors[player][i];
         if (behavior == "") { break; }
         behaviorStacks = MinI(1, UnitBehaviorCount(sourceUnit, behavior));
+        if (behaviorStacks <= 0) { // Minimum Integer won't work in some cases, bandaid fix
+            behaviorStacks = 1;
+        }
         behaviorDuration = UnitBehaviorDuration(sourceUnit, behavior);
         UnitModifyCooldown(targetUnit, "Abil/" + behavior, UnitGetCooldown(sourceUnit, "Abil/" + behavior), c_cooldownOperationSet);
         if (UnitHasBehavior2(targetUnit, behavior) && UnitBehaviorCount(targetUnit, behavior) == UnitBehaviorCount(sourceUnit, behavior)) {
             continue;
         }
-        //libAffx_DebugPrint("Adding behavior " + behavior + " with " + IntToString(behaviorStacks) + " stacks and duration " + FixedToString(behaviorDuration, 2) + " to unit " + UnitGetType(targetUnit) + " for player " + IntToString(player));
+        libAffx_DebugPrint("Adding behavior " + behavior + " with " + IntToString(behaviorStacks) + " stacks and duration " + FixedToString(behaviorDuration, 2) + " to unit " + UnitGetType(targetUnit) + " for player " + IntToString(player));
         UnitBehaviorAdd(targetUnit, behavior, targetUnit, behaviorStacks);
         UnitBehaviorSetDuration(targetUnit, behavior, behaviorDuration);
     }
@@ -1557,11 +1591,22 @@ int libAffx_EventAffixCount() {
 void libAffx_CopyFilter(structref<libAffx_Filter> original, structref<libAffx_Filter> copyTo) {
     int i;
     copyTo.unitFilter = original.unitFilter;
-    copyTo.requiredUnitType = original.requiredUnitType;
     copyTo.requiredPlayer = original.requiredPlayer;
+    for (i = 1; i <= libAffx_maxFilters; i += 1) {
+        libAffx_AddRequiredUnitTypeFilter(copyTo, original.requiredUnitTypes[i]);
+    }
     for (i = 1; i <= libAffx_maxFilters; i += 1) {
         libAffx_AddExcludedUnitTypeFilter(copyTo, original.excludedUnitTypes[i]);
     }
+}
+void libAffx_AddRequiredUnitTypeFilter(structref<libAffx_Filter> filter, string unitType) {
+    if (filter.requiredUnitTypeIndex >= libAffx_maxFilters) {
+        libAffx_DebugPrint("Warning: A filter reached maximum limit!");
+        return;
+    }
+    if (unitType == "") { return; }
+    filter.requiredUnitTypeIndex += 1;
+    filter.requiredUnitTypes[filter.requiredUnitTypeIndex] = unitType;
 }
 void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string unitType) {
     if (filter.excludedUnitTypeIndex >= libAffx_maxFilters) {
@@ -1574,13 +1619,23 @@ void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string 
 }
 bool libAffx_UnitMatchesCriteria(unit unitVar, structref<libAffx_Filter> filter) {
     int i;
+    bool matchesUnitType = false;
     if (filter.unitFilter != null && !UnitFilterMatch(unitVar, libAffx_player, filter.unitFilter)) {
         return false;
     }
     if (filter.requiredPlayer != 0 && filter.requiredPlayer != c_playerAny && UnitGetOwner(unitVar) != filter.requiredPlayer) {
         return false;
     }
-    if (filter.requiredUnitType != null && filter.requiredUnitType != "" && UnitGetType(unitVar) != filter.requiredUnitType) {
+    for (i = 1; i <= libAffx_maxFilters; i += 1) {
+        if (filter.requiredUnitTypes[i] != null && filter.requiredUnitTypes[i] != "" && UnitGetType(unitVar) == filter.requiredUnitTypes[i]) {
+            matchesUnitType = true;
+            break;
+        } else if (i == 1 && filter.requiredUnitTypes[i] == "") {
+            matchesUnitType = true;
+            break;
+        }
+    }
+    if (matchesUnitType == false) {
         return false;
     }
     for (i = 1; i <= libAffx_maxFilters; i += 1) {
@@ -1600,6 +1655,24 @@ void libAffx_UnitBehaviorAddOrRemoveCriteria(unit unitVar, string behavior, int 
         libAffx_UnitBehaviorAdd(unitVar, behavior, unitVar, stacks);
     } else {
         UnitBehaviorRemove(unitVar, behavior, stacks);
+    }
+}
+void libAffx_UnitSetPropertyCriteria(unit unitVar, int inProp, fixed value, structref<libAffx_Filter> filter) {
+    if (libAffx_UnitMatchesCriteria(unitVar, filter)) {
+        UnitSetPropertyFixed(unitVar, inProp, value);
+    }
+}
+void libAffx_UnitSetPropertyCriteriaAll (int inProp, fixed value, structref<libAffx_Filter> filter) {
+    unit unitVar;
+    unitgroup unitGroup = UnitGroup(null, c_playerAny, RegionEntireMap(), filter.unitFilter, 0);
+    int i = UnitGroupCount(unitGroup, c_unitCountAll);
+    for (;; i -= 1) {
+        if (i <= 0) { break; }
+        unitVar = UnitGroupUnitFromEnd(unitGroup, i);
+        if (unitVar == null) { continue; }
+        if (libAffx_UnitMatchesCriteria(unitVar, filter)) {
+            UnitSetPropertyFixed(unitVar, inProp, value);
+        }
     }
 }
 void libAffx_UnitBehaviorAddCriteriaAll (string behavior, int stacks, structref<libAffx_Filter> filter) {
@@ -3072,7 +3145,7 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
 
     if (chatMessage == "help" || chatMessage == "h") {
         if (argument1 == "affixaddall" || argument1 == "afxaddall" || argument1 == "aaa") {
-            libAffx_Print("Adds every boon and curse.\nafxaddall [number of affixes] [optional arguments]\nOptional arguments: ignore (ignores requirements), hero (only adds hero-specific)");
+            libAffx_Print("Adds every boon and curse.\nafxaddall [number of affixes] [optional arguments]\nOptional arguments: ignore (ignores requirements), hero (only adds hero-specific)\nboons (boons only), curses (curses only)");
         } else if (argument1 == "nextmap" || argument1 == "nm") {
             libAffx_Print("Moves you to the specified round number. Defaults to the next map.\nnextmap [map number]");
         } else if (argument1 == "rerolls" || argument1 == "r") {
@@ -3146,6 +3219,9 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
         for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
             if (((libAffx_affixes[i].enabled && libAffx_affixes[i].allowedHero[libAffx_playersHeroIndex[libAffx_player]]) || argument2 == "ignore") && ((libAffx_affixes[i].max > 0 && libAffx_affixes[i].count <= libAffx_affixes[i].max) || (libAffx_affixes[i].max <= 0))) {
                 if (argument2 == "hero" && !libAffx_affixes[i].heroExclusive) {
+                    continue;
+                }
+                if ((argument2 == "boons" && libAffx_affixes[i].curse) || (argument2 == "curses" && !libAffx_affixes[i].curse)) {
                     continue;
                 }
                 if (libAffx_affixes[i].max <= 0) {
@@ -3966,7 +4042,7 @@ void libAffx_InitVariables () {
     libAffx_AddExcludedUnitTypeFilter(libAffx_filterAlliedStructuresExcludingCore, "KingsCore");
 
     libAffx_CopyFilter(libAffx_filterAlliedStructures, libAffx_filterAlliedCore);
-    libAffx_filterAlliedCore.requiredUnitType = "KingsCore";
+    libAffx_AddRequiredUnitTypeFilter(libAffx_filterAlliedCore, "KingsCore");
 
     libAffx_filterAlliedMinions.unitFilter = libCore_gv_filtersMinionsTownMinions;
     libAffx_filterAlliedMinions.requiredPlayer = libAffx_teamOrder;
@@ -3988,7 +4064,7 @@ void libAffx_InitVariables () {
     libAffx_AddExcludedUnitTypeFilter(libAffx_filterEnemyStructuresExcludingCore, "KingsCore");
 
     libAffx_CopyFilter(libAffx_filterEnemyStructures, libAffx_filterEnemyCore);
-    libAffx_filterEnemyCore.requiredUnitType = "KingsCore";
+    libAffx_AddRequiredUnitTypeFilter(libAffx_filterEnemyCore, "KingsCore");
     
     libAffx_filterEnemyMinions.unitFilter = libCore_gv_filtersMinionsTownMinions;
     libAffx_filterEnemyMinions.requiredPlayer = libAffx_teamChaos;
