@@ -1467,7 +1467,7 @@ bool libAffx_ChainedDownBehaviorChangeCategory (bool testConds, bool runActions)
     }
 
     behaviorDuration = UnitBehaviorDuration(unitVar, behavior);
-    percentIncrease = 0.25 * UnitBehaviorCount(unitVar, "ChainedDown");
+    percentIncrease = 0.25 * UnitBehaviorCount(unitVar, "AffixChainedDownBehavior");
 
     if ((behaviorDuration > 0.0 && percentIncrease > 0.0)) {
         newDuration = (behaviorDuration * (1.0 + percentIncrease));
@@ -3198,6 +3198,7 @@ bool libAffx_MythicCurseSabotageOncePerGame (bool testConds, bool runActions) {
     libAffx_CopyFilter(libAffx_filterAlliedStructures, libAffx_filterSabotage);
     libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "TownMoonwellL3");
     libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "TownMoonwellL2");
+    libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "ItemMULE");
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
         libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "KingsCore");
     }
@@ -4088,6 +4089,9 @@ bool libAffx_AutoMULEPeriodic (bool testConds, bool runActions) {
             return false;
         }
         if (libAffx_AutoMULEIndex == 0) {
+            return false;
+        }
+        if (!libAffx_GateIsOpen()) {
             return false;
         }
     }
