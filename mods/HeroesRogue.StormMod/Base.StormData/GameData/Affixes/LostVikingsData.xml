@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+  <CUnit id="HeroErik">
+    <AbilArray Link="LostVikingsNorseForcePassive" />
+    <CardLayouts index="0">
+      <LayoutButtons index="30" Face="LostVikingsNorseForce" Type="AbilCmd" AbilCmd="LostVikingsNorseForcePassive,Execute" Slot="Trait" />
+      <LayoutButtons index="36" Face="LostVikingsVikingHoardTalent" Type="Passive" Slot="Trait" />
+    </CardLayouts>
+  </CUnit>
+  <CUnit id="HeroBaleog" >
+    <AbilArray Link="LostVikingsNorseForcePassive" />
+    <CardLayouts index="0">
+      <LayoutButtons index="30" Face="LostVikingsNorseForce" Type="AbilCmd" AbilCmd="LostVikingsNorseForcePassive,Execute" Slot="Trait" />
+      <LayoutButtons index="36" Face="LostVikingsVikingHoardTalent" Type="Passive" Slot="Trait" />
+    </CardLayouts>
+  </CUnit>
+  <CUnit id="HeroOlaf" >
+    <AbilArray Link="LostVikingsNorseForcePassive" />
+    <CardLayouts index="0">
+      <LayoutButtons index="30" Face="LostVikingsNorseForce" Type="AbilCmd" AbilCmd="LostVikingsNorseForcePassive,Execute" Slot="Trait" />
+      <LayoutButtons index="36" Face="LostVikingsVikingHoardTalent" Type="Passive" Slot="Trait" />
+    </CardLayouts>
+  </CUnit>
+
+
+  <CAbilEffectInstant id="LostVikingsNorseForcePassive" parent="LostVikingsNorseForce" >
+    <ParentAbil value="LostVikingsNorseForce" />
+    <CmdButtonArray index="Execute" DefaultButtonFace="LostVikingsNorseForce" ShowValidator="CasterHasButtonMasher" />
+  </CAbilEffectInstant>
+
+  <CBehaviorBuff id="LostVikingsGreatVikingHoard" parent="CarryBehaviorParent">
+    <Modification>
+      <HealDealtAdditiveMultiplier index="Life" value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </HealDealtAdditiveMultiplier>
+      <HealDealtAdditiveMultiplier index="Shields" value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </HealDealtAdditiveMultiplier>
+      <UnifiedMoveSpeedFactor value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulatorSpeed" />
+      </UnifiedMoveSpeedFactor>
+      <DamageDealtFraction index="Ability" value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </DamageDealtFraction>
+      <DamageDealtFraction index="Basic" value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </DamageDealtFraction>
+      <VitalMaxFractionArray index="Life" value="0">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulator" />
+      </VitalMaxFractionArray>
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="LostVikingsGoGoGo">
+    <Alignment value="Positive" />
+    <InfoIcon value="Assets\Textures\storm_temp_war3_btnbootsofspeed.dds" />
+    <Duration value="4" />
+    <Modification>
+      <StateFlags index="SuppressFidgeting" value="1" />
+      <UnifiedMoveSpeedFactor value="0.3">
+        <AccumulatorArray value="LostVikingsGreatVikingHoardAccumulatorSpeedGoGoGo" />
+      </UnifiedMoveSpeedFactor>
+    </Modification>
+    <DisableValidatorArray value="DoesNotHaveLostVikingDowned" />
+  </CBehaviorBuff>
+
+<CAbilEffectInstant id="LostVikingsNorseForceAffix">
+  <PrepEffect value="LostVikingsAbilityUseDismountDecloakSet" />
+  <Effect value="LostVikingsNorseForceVikingSearch" />
+  <Cost>
+    <Cooldown Location="Player" TimeUse="15" />
+  </Cost>
+  <CmdButtonArray index="Execute" DefaultButtonFace="LostVikingsNorseForce" />
+</CAbilEffectInstant>
+
+  <CBehaviorBuff id="LostVikingsSpecializedOlafBehavior" parent="StormArmorPermanent">
+    <ArmorModification>
+      <AllArmorBonus value="40" />
+    </ArmorModification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="LostVikingsSpecializedBaleogBehavior" parent="CarryBehaviorParent">
+    <Modification>
+      <AdditiveAttackSpeedFactor value="0.4" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="LostVikingsSpecializedErikBehavior" parent="CarryBehaviorParent">
+    <Modification>
+      <WeaponRange value="5.5" />
+      <WeaponScanBonus value="5.5" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="LostVikingsButtonMasherController" parent="CarryBehaviorParent" />
+
+  <CValidatorUnitCompareBehaviorCount id="CasterHasButtonMasher">
+    <WhichUnit Value="Caster" />
+    <Value value="1" />
+    <Behavior value="LostVikingsButtonMasherController" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CAccumulatorToken id="LostVikingsGreatVikingHoardAccumulator" parent="BaseTokenAccumulator">
+    <ApplicationRule value="Add" />
+    <TokenId value="LostVikingsVikingHoardTokenCounter" />
+    <Scale value="0.005" />
+    <UnitSource Value="Source" />
+  </CAccumulatorToken>
+  <CAccumulatorToken id="LostVikingsGreatVikingHoardAccumulatorSpeed" parent="BaseTokenAccumulator">
+    <ApplicationRule value="Add" />
+    <TokenId value="LostVikingsVikingHoardTokenCounter" />
+    <Scale value="0.0025" />
+    <UnitSource Value="Source" />
+  </CAccumulatorToken>
+  <CAccumulatorToken id="LostVikingsGreatVikingHoardAccumulatorSpeedGoGoGo" parent="BaseTokenAccumulator">
+    <ApplicationRule value="Add" />
+    <TokenId value="LostVikingsVikingHoardTokenCounter" />
+    <Scale value="0.0075" />
+    <UnitSource Value="Source" />
+  </CAccumulatorToken>
+  <CRequirement id="LostVikingsAffixButtonMasher">
+    <NodeArray index="Use" Link="EqCountBehaviorDeadCompleteOnlyAtUnit0" />
+    <NodeArray index="Show" Link="EqCountBehaviorLostVikingsAffixButtonMasherCompleteOnlyAtUnit1" />
+  </CRequirement>
+  <CRequirementEq id="EqCountBehaviorLostVikingsAffixButtonMasherCompleteOnlyAtUnit1">
+    <Tooltip value="" />
+    <OperandArray index="0" value="CountBehaviorLostVikingsAffixButtonMasherCompleteOnlyAtUnit" />
+    <OperandArray index="1" value="1" />
+  </CRequirementEq>
+  <CRequirementCountBehavior id="CountBehaviorLostVikingsAffixButtonMasherCompleteOnlyAtUnit">
+    <Flags index="TechTreeCheat" value="0" />
+    <Tooltip value="" />
+    <Count Link="LostVikingsButtonMasherController" State="CompleteOnlyAtUnit" />
+  </CRequirementCountBehavior>
+
+</Catalog>

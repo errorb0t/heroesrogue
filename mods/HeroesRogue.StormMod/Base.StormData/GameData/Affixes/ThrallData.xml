@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+  <CUnit id="HeroThrall">
+    <WeaponArray Link="ThrallHeroWeaponRanged"/>
+  </CUnit>
+
+  <CHero id="Thrall">
+    <TalentTreeArray Talent="DoNothing" Tier="1" Column="4" />
+  </CHero>
+
+  <CEffectModifyUnit id="ThrallModifyWeaponCooldown">
+      <Weapon Weapon="ThrallHeroWeaponRanged" CooldownOperation="Max" CooldownAmount="0.25"/>
+  </CEffectModifyUnit>
+  <CEffectModifyUnit id="WindfuryAttackSwingReset">
+      <Weapon Weapon="ThrallHeroWeaponRanged" CooldownOperation="Multiply"/>
+  </CEffectModifyUnit>
+  <CEffectSet id="ThrallHeroWeaponImpactSet">
+    <EffectArray value="ThrallChainLightningDummyPersistent"/>
+    <EffectArray value="ThrallFrostwolfResilienceApplySwitchWeapon"/>
+  </CEffectSet>
+  <CEffectSet id="WindfuryTempestFuryInitialHitSet">
+    <EffectArray value="ThrallChainLightningDummyPersistent"/>
+    <EffectArray value="ThrallFrostwolfResilienceApplySwitchWeapon"/>
+  </CEffectSet>
+
+  <CEffectSet id="ThrallFrostwolfResilienceApplySwitchWeapon">
+    <Chance value="0" />
+    <EffectArray value="ThrallFrostwolfResilienceApplySwitch"/>
+  </CEffectSet>
+
+  <CEffectCreatePersistent id="ThrallChainLightningDummyPersistent">
+    <Chance value="0" />
+    <Marker>
+        <MatchFlags index="Id" value="1"/>
+    </Marker>
+    <WhichLocation Value="TargetUnit"/>
+    <InitialDelay value="0"/>
+    <InitialEffect value="ApplyAbilityImpactReveal"/>
+    <FinalEffect value=""/>
+    <ExpireDelay value="0.25"/>
+    <AINotifySettings AreaEffect="">
+        <Flags index="Disabled" value="1"/>
+    </AINotifySettings>
+  </CEffectCreatePersistent>
+
+  <CEffectModifyPlayer id="ThrallWindfuryMaelstromWeaponTalent1stQuestCompletionModifyPlayer">
+    <EffectArray index="0" Operation="Add" Reference="Behavior,WindfurySpeedBuff,Modification.UnifiedMoveSpeedFactor" Value=".1"/>
+  </CEffectModifyPlayer>
+
+  <CEffectSet id="ThrallEarthquakeDamageSet">
+    <EffectArray value="ApplyAbilityImpactReveal"/>
+  </CEffectSet>
+
+  <CEffectCreateHealer id="ThrallFrostwolfResilienceCreateHealer" parent="StormSelfOnlyHealingSpell">
+      <ImpactUnit Value="Caster"/>
+      <RechargeVitalRate value="$ThrallFrostwolfResilienceHealAmount"/>
+      <SourceButtonFace value="ThrallFrostwolfResilience"/>
+      <MultiplicativeModifierArray index="MaelstromWeaponComplete" Validator="ThrallMaelstromWeaponPinnacleRewardReached" Modifier="$ThrallMaelstromWeaponFrostwolfResilienceHealingModifierPinnacle"/>
+      <MultiplicativeModifierArray index="ThrallHealthyFrostwolf" Modifier="0"/>
+  </CEffectCreateHealer>
+
+  <CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce1Search">
+    <ImpactLocation Value="TargetPoint"/>
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+    <ExcludeArray Value="Target"/>
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+        <SortArray value="TSHeroic"/>
+        <SortArray value="TSNoLowBouncePriority"/>
+    </TargetSorts>
+    <AreaArray Effect="ThrallChainLightningBounce1ImpactSet">
+        <Radius value="6"/>
+    </AreaArray>
+    <MaxCount value="1"/>
+  </CEffectEnumArea>
+  <CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce2Search">
+    <ImpactLocation Value="TargetPoint"/>
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+    <ExcludeArray Value="Target"/>
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+        <SortArray value="TSHeroic"/>
+        <SortArray value="TSNoLowBouncePriority"/>
+    </TargetSorts>
+    <AreaArray Effect="ThrallChainLightningBounce2ImpactSet">
+        <Radius value="6"/>
+    </AreaArray>
+    <MaxCount value="1"/>
+  </CEffectEnumArea>
+  <CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce3Search">
+    <ImpactLocation Value="TargetPoint"/>
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+    <ExcludeArray Value="Target"/>
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+        <SortArray value="TSHeroic"/>
+        <SortArray value="TSNoLowBouncePriority"/>
+    </TargetSorts>
+    <AreaArray Effect="ThrallChainLightningBounce3ImpactSet">
+        <Radius value="6"/>
+    </AreaArray>
+    <MaxCount value="1"/>
+  </CEffectEnumArea>
+  <CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce4Search">
+    <ImpactLocation Value="TargetPoint"/>
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+    <ExcludeArray Value="Target"/>
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+        <SortArray value="TSHeroic"/>
+        <SortArray value="TSNoLowBouncePriority"/>
+    </TargetSorts>
+    <AreaArray Effect="ThrallChainLightningBounce4ImpactSet">
+        <Radius value="6"/>
+    </AreaArray>
+    <MaxCount value="1"/>
+  </CEffectEnumArea>
+
+  <CEffectSet id="ThrallChainLightningTalentProcSet">
+      <EffectArray value="ThrallChainLightningStunApplyBehavior"/>
+  </CEffectSet>
+  <CEffectApplyBehavior id="ThrallChainLightningStunApplyBehavior">
+    <Chance value="0" />
+    <Behavior value="ThrallChainLightningStun"/>
+  </CEffectApplyBehavior>
+
+  <CEffectSwitch id="ThrallFrostwolfResilienceApplySwitch">
+    <CaseArray Validator="Has4StacksFrostwolfResilience" Effect="ThrallFrostwolfResilienceProcSet"/>
+    <CaseDefault value="ThrallFrostwolfResilienceApplySwitchSet"/>
+  </CEffectSwitch>
+
+  <CEffectSet id="ThrallFrostwolfResilienceApplySwitchSet">
+    <EffectArray value="ThrallFrostwolfResilienceApplyStack"/>
+    <EffectArray value="ThrallFrostwolfResilienceApplySecondStack"/>
+  </CEffectSet>
+
+  <CEffectApplyBehavior id="ThrallFrostwolfResilienceApplySecondStack">
+    <Chance value="0" />
+    <WhichUnit Value="Caster"/>
+    <Behavior value="ThrallFrostwolfResilienceStack"/>
+  </CEffectApplyBehavior>
+  
+  <CActorUnit id="HeroThrall" parent="StormHeroStandard" unitName="HeroThrall">
+    <MinimapIcon value="Assets\Textures\storm_ui_minimapicon_thrall.dds"/>
+    <HeroIcon value="Assets\Textures\UI_targetportrait_Hero_Thrall.dds"/>
+    <On Terms="Abil.ThrallChainLightning.SourceCastStart" Send="AnimPlay Spell Spell,A 0 -1.000000 -1.000000 1.000000 AsTimeScale"/>
+    <On Terms="Abil.ThrallFeralSpirit.SourceCastStart" Send="AnimPlay Spell Spell,D 0 -1.000000 -1.000000 1.000000 AsTimeScale"/>
+    <On Terms="Abil.ThrallWindfury.SourceCastStart" Send="AnimPlay Spell Spell,B 0 -1.000000 -1.000000 1.000000 AsTimeScale"/>
+    <On Terms="Abil.ThrallSundering.SourceCastStart" Send="AnimPlay Spell Spell,C 0 -1.000000 -1.000000 1.000000 AsTimeScale"/>
+    <On Terms="Abil.ThrallEarthquake.SourceCastStart" Send="AnimPlay Spell Spell,E 0 -1.000000 -1.000000 1.000000 AsTimeScale"/>
+    <On Terms="ActorCreation" Send="StatusSet Windfury 0"/>
+    <On Terms="Effect.WindfuryStacksApplyStackBehavior.Start; At Caster" Send="StatusSet Windfury 3"/>
+    <On Terms="Effect.WindfuryStacksRemoveStack.Start; At Caster" Send="StatusDecrement Windfury"/>
+    <On Terms="Behavior.WindfuryStack.Off" Send="StatusSet Windfury 0"/>
+    <On Terms="Effect.ThrallFrostwolfResilienceManaTideTalentRestoreMana.Start" Send="Create Storm_Effect_GenericMana_Impact"/>
+    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 3; ValidateUnit CasterNotBlinded" Send="AnimPlay Attack Attack,Cover,00 0 0.050000 0.100000"/>
+    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 2; ValidateUnit CasterNotBlinded" Send="AnimPlay Attack Attack,Cover,01 0 0.050000 0.100000"/>
+    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 1; ValidateUnit CasterNotBlinded" Send="AnimPlay Attack Attack,Cover,02 0 0.050000 0.100000"/>
+    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 3; ValidateUnit CasterNotBlinded" Send="Create ThrallWeaponTrailVersion01"/>
+    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 2; ValidateUnit CasterNotBlinded" Send="Create ThrallWeaponTrailVersion02"/>
+    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 1; ValidateUnit CasterNotBlinded" Send="Create ThrallWeaponTrailVersion01"/>
+    <On Terms="WeaponStart.ThrallHeroWeaponRanged.AttackStart" Send="AnimPlay Spell Spell,A 0 -1.000000 -1.000000 1.000000 AsTimeScale" />
+    <On Terms="AnimPlay; AnimPlaying Attack Attack,00; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion01"/>
+    <On Terms="AnimPlay; AnimPlaying Attack Attack,01; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion01"/>
+    <On Terms="AnimPlay; AnimPlaying Attack Attack,02; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion01"/>
+    <On Terms="AnimPlay; AnimPlaying Attack Attack,03; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion01"/>
+    <On Terms="AnimPlay; AnimPlaying Attack Attack,04; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion00"/>
+    <On Terms="AnimPlay; AnimPlaying Attack Attack,05; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion00"/>
+    <On Terms="Abil.ThrallSundering.SourceCastStart" Send="StatusSet CataIncrement 0"/>
+    <On Terms="Effect.SunderingDummyPersistent.Start" Send="StatusIncrement CataIncrement"/>
+    <On Terms="Effect.SunderingDummyPersistent.Start; IsStatus CataIncrement 5" Send="StatusSet CataIncrement 1"/>
+    <On Terms="Effect.SunderingDummyPersistent.Start; IsStatus CataIncrement 1; ValidateUnit ThrallHasWorldbreaker" Send="Create ThrallSunderingWorldbreakerBirth"/>
+    <On Terms="Effect.SunderingDummyPersistent.Start; IsStatus CataIncrement 2; ValidateUnit ThrallHasWorldbreaker" Send="Create ThrallSunderingWorldbreakerBirth01"/>
+    <On Terms="Effect.SunderingDummyPersistent.Start; IsStatus CataIncrement 3; ValidateUnit ThrallHasWorldbreaker" Send="Create ThrallSunderingWorldbreakerBirth02"/>
+    <On Terms="Effect.SunderingDummyPersistent.Start; IsStatus CataIncrement 4; ValidateUnit ThrallHasWorldbreaker" Send="Create ThrallSunderingWorldbreakerBirth03"/>
+    <Remove Terms="AnimDone; AnimName Taunt" Send="Signal ApplyReady"/>
+    <PortraitModel value="ThrallPortrait"/>
+    <PortraitActor value="ThrallPortrait"/>
+    <DeathArray index="Normal" SoundLink="ThrallBase_Death"/>
+    <AbilSoundArray AbilCmd="ThrallChainLightning,Execute" Sound="ThrallBase_VOX_CastingA"/>
+    <AbilSoundArray AbilCmd="ThrallFeralSpirit,Execute" Sound="ThrallBase_VOX_CastingB"/>
+    <AbilSoundArray AbilCmd="ThrallWindfury,Execute" Sound="ThrallBase_VOX_CastingC"/>
+    <AbilSoundArray AbilCmd="ThrallSundering,Execute" Sound="ThrallBase_Ultimate1Used"/>
+    <AbilSoundArray AbilCmd="ThrallEarthquake,Execute" Sound="ThrallBase_Ultimate2Used"/>
+    <SoundArray index="Ready" value="ThrallBase_Revive"/>
+    <SoundArray index="Yes" value="ThrallBase_Yes"/>
+    <SoundArray index="Attack" value="ThrallBase_Attack"/>
+    <SoundArray index="Pissed" value="ThrallBase_Pissed"/>
+    <MinimapIconBackgroundScale value="0.950000"/>
+    <UnitIcon value="Assets\Textures\UI_targetportrait_Hero_Thrall.dds"/>
+    <GroupIcon>
+        <Image value="Assets\Textures\storm_ui_ingame_partyframe_thrall.dds"/>
+    </GroupIcon>
+  </CActorUnit>
+
+  <CActorSite id="ThrallChainLightning1LaunchSiteDummy" parent="SiteWeapon">
+    <On Terms="Effect.ThrallChainLightningDummyPersistent.Start; At Caster" Send="Create"/>
+  </CActorSite>
+  <CActorSite id="ThrallChainLightning1ImpactSiteDummy" parent="SiteCenter">
+    <On Terms="Effect.ThrallChainLightningDummyPersistent.Start; At Target" Send="Create"/>
+    <On Terms="ActorCreation" Send="SetOpacity 0.5"/>
+    <On Terms="ActorCreation" Send="RefSetFromRequest ::scope.Chain1Launch ThrallChainLightning1LaunchSiteDummy Implicit Find"/>
+    <On Terms="ActorCreation" Send="Create ThrallChainLightningLaunchSound"/>
+    <On Terms="ActorCreation" Send="Create ThrallChainLightningImpactSound"/>
+    <On Terms="ActorCreation" Send="Create ThrallChainLightning1Beam"/>
+  </CActorSite>
+
+  <CWeaponLegacy id="ThrallHeroWeaponRanged" parent="ThrallHeroWeapon">
+    <Options index="Melee" value="0"/>
+    <Options index="Disabled" value="1" />
+    <DisplayEffect value="ThrallWeaponAttackDamage"/>
+    <MinScanRange value="6"/>
+    <Range value="6"/>
+    <Period value="1.1"/>
+    <Effect value="ThrallHeroWeaponSwitch"/>
+    <Icon value="Assets\Textures\storm_temp_war3_btnorcmeleeuptwo.dds"/>
+  </CWeaponLegacy>
+
+  <CValidatorUnitCompareBehaviorCount id="CasterHasThrallRangedCarry">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="ThrallLightningRodController" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CBehaviorBuff id="ThrallLightningRodController">
+    <BehaviorFlags index="Permanent" value="1" />
+    <BehaviorFlags index="EnabledWhileDead" value="1" />
+    <Modification>
+      <WeaponEnableArray value="ThrallHeroWeaponRanged" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="ThrallChainLightningStun" parent="StormStun">
+      <Duration value="0.25"/>
+  </CBehaviorBuff>
+
+</Catalog>

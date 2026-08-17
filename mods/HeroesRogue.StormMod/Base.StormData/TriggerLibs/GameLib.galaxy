@@ -143,7 +143,7 @@ void libGame_InitVariables () {
     libGame_gv_gateTimerReady = true;
     libGame_gv_randomizeMountsAndSkins = true;
     libGame_gv_shufflePickEnabled = true;
-    libGame_gv_gameOver_CameraPanTime_C = 2.0;
+    libGame_gv_gameOver_CameraPanTime_C = 1.0;
     libGame_gv_dEBUG_PercentScalingEnabled = true;
     libGame_gv_heroDeathRespawnSetting = libGame_ge_HeroDeathRespawnOptions_NormalRespawn;
     libGame_gv_heroDeath_UpdateStats = true;
@@ -353,11 +353,8 @@ void libGame_InitVariables () {
     }
 }
 
-
-
-void libGame_MinionSpawnCycle_Wait(fixed duration, int inTimeType) {
+void libGame_Wait(fixed duration, int inTimeType) {
     fixed elapsed = 0.0;
-
     while (elapsed < duration) {
         if (libGame_paused) {
             Wait(0.0625, inTimeType);
@@ -5758,18 +5755,18 @@ void libGame_gf_GameOver (int lp_winningTeam) {
     libUIUI_gf_GameOverSplashDisplayForAllPlayers(lp_winningTeam);
     UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeStatusUI, false);
     if ((libGame_gv_endofMatchAwardsDisabled == true)) {
-        Wait(lv_endGameTimeDelay, c_timeGame);
+        libGame_Wait(lv_endGameTimeDelay, c_timeGame);
     }
 
     GameSetReplayKeyframesEnabled(false);
 
     if (((libCore_gv_sYSGameMode == libCore_ge_GameModes_TutorialVeteran) || (libCore_gv_sYSGameMode == libCore_ge_GameModes_Sandbox) || (libCore_gv_sYSGameMode == libCore_ge_GameModes_ModeC))) {
-        Wait(5.0, c_timeGame);
+        libGame_Wait(4.0, c_timeGame);
     }
     else {
         libGame_gf_AssignMVP(lp_winningTeam);
     }
-    
+    libGame_Wait(0.0625, c_timeGame);
     KickFromGame(PlayerGroupAll());
 }
 
@@ -8781,7 +8778,7 @@ void libGame_gf_MinionPauseUnpauseMinionSystemForTeam (bool lp_pauseUnpause, int
 
 }
 
-void libGame_gf_MinionSpawnMinion (int lp_lane, int lp_owner, int lp_type, point lp_spawnPoint) {
+void libGame_gf_MinionSpawnMinion (int lp_lane, int lp_owner, int lp_type, point lp_spawnPoint, bool suppressRegenGlobeCreation) {
     // Variable Declarations
     int lv_minionTeam;
     string lv_minionUnitType;
@@ -8796,8 +8793,11 @@ void libGame_gf_MinionSpawnMinion (int lp_lane, int lp_owner, int lp_type, point
         return ;
     }
 
-    if (((lp_type == libCore_ge_MinionTypes_Catapult) || (lp_type == libCore_ge_MinionTypes_CustomCatapult1) || (lp_type == libCore_ge_MinionTypes_CustomCatapult2)) && ((libGame_gv_minionMapNeverSpawnsCatapults == true) || ((libGame_gv_minion_CapCatapults == true) && (UnitGroupCount(libGame_gv_minion_CatapultGroup[lv_minionTeam], c_unitCountAlive) >= libGame_gv_minion_CatapultCap_C)) || (libGame_gf_TownsAliveinLane(libGame_gf_EnemyTeam(lv_minionTeam), lp_lane) >= 2) || ((libGame_gf_TownsAliveinLane(libGame_gf_EnemyTeam(lv_minionTeam), lp_lane) == 1) && (ModI((libGame_gv_minionWaveSpawnCounter - libGame_gv_minion_PeriodicCatapultsFirstWave), libGame_gv_minion_PeriodicCatapultsWavePeriod_C) != 0)))) {
-        return ;
+    if (!libGame_teamChaosAlwaysSpawnCatapults) {
+        if (((lp_type == libCore_ge_MinionTypes_Catapult) || (lp_type == libCore_ge_MinionTypes_CustomCatapult1) || (lp_type == libCore_ge_MinionTypes_CustomCatapult2)) && ((libGame_gv_minionMapNeverSpawnsCatapults == true) || ((libGame_gv_minion_CapCatapults == true) && (UnitGroupCount(libGame_gv_minion_CatapultGroup[lv_minionTeam], c_unitCountAlive) >= libGame_gv_minion_CatapultCap_C)) || (libGame_gf_TownsAliveinLane(libGame_gf_EnemyTeam(lv_minionTeam), lp_lane) >= 2) || ((libGame_gf_TownsAliveinLane(libGame_gf_EnemyTeam(lv_minionTeam), lp_lane) == 1) && (ModI((libGame_gv_minionWaveSpawnCounter - libGame_gv_minion_PeriodicCatapultsFirstWave), libGame_gv_minion_PeriodicCatapultsWavePeriod_C) != 0)))) {
+            
+            return ;
+        }
     }
 
     libNtve_gf_CreateUnitsAtPoint2(1, lv_minionUnitType, 0, lp_owner, lp_spawnPoint, null);
@@ -8807,6 +8807,10 @@ void libGame_gf_MinionSpawnMinion (int lp_lane, int lp_owner, int lp_type, point
 
     if ((libGame_gv_minionTakesReducedSpellDamage == true)) {
         UnitBehaviorAdd(UnitLastCreated(), "MinionSpellDamageReduction", UnitLastCreated(), 1);
+    }
+    if (suppressRegenGlobeCreation) {
+        UnitBehaviorAdd(UnitLastCreated(), "SuppressRegenGlobeCreation", UnitLastCreated(), 1);
+        UnitBehaviorRemove(UnitLastCreated(), "ExperienceGlobeSpawn", 1);
     }
 
     if ((libGame_gv_minionScalingEnabled == true)) {
@@ -8896,12 +8900,25 @@ bool auto_libGame_gf_MinionSpawnWave_TriggerFunc (bool testConds, bool runAction
             lv_spawnPoint = libNtve_gf_PointOffsetTowardsPoint(lv_basePoint, lv_currentOffsetAmount, lv_offsetPoint);
             PointSetFacing(lv_spawnPoint, PointGetFacing(lv_basePoint));
             autoEFB6C6D3_ae = libCore_gv_dataMinionWaveCompositions[(lp_composition)].lv_groupMinionCount[lv_itGroup];
+            if (lv_team == 2) {
+                if (lv_minionType == libCore_ge_MinionTypes_Footmen) {
+                    autoEFB6C6D3_ae += libGame_teamChaosExtraMeleeMinions;
+                } else if (lv_minionType == libCore_ge_MinionTypes_Wizard) {
+                    autoEFB6C6D3_ae += libGame_teamChaosExtraMageMinions;
+                } else if (lv_minionType == libCore_ge_MinionTypes_Ranged) {
+                    autoEFB6C6D3_ae += libGame_teamChaosExtraRangedMinions;
+                }
+            }
             lv_itMinion = 1;
             for ( ; ( (autoEFB6C6D3_ai >= 0 && lv_itMinion <= autoEFB6C6D3_ae) || (autoEFB6C6D3_ai < 0 && lv_itMinion >= autoEFB6C6D3_ae) ) ; lv_itMinion += autoEFB6C6D3_ai ) {
                 if (libGame_paused) {
-                    libGame_MinionSpawnCycle_Wait(0.0625, c_timeGame);
+                    libGame_Wait(0.0625, c_timeGame);
                 }
-                libGame_gf_MinionSpawnMinion(lp_lane, lp_owner, lv_minionType, lv_spawnPoint);
+                if (lv_itMinion > 3) {
+                    libGame_gf_MinionSpawnMinion(lp_lane, lp_owner, lv_minionType, lv_spawnPoint, true);
+                } else {
+                    libGame_gf_MinionSpawnMinion(lp_lane, lp_owner, lv_minionType, lv_spawnPoint, false);
+                }
             }
             lv_currentOffsetAmount -= lv_offsetChangePerGroup;
             Wait(0.0625, c_timeGame);
@@ -18841,11 +18858,10 @@ bool libGame_gt_MinionSpawnCycle_Func (bool testConds, bool runActions) {
                 }
 
             }
-            libGame_MinionSpawnCycle_Wait((TimerGetRemaining(lv_waveTimer) - 0.0625 // Pause minion spawning
-), c_timeGame);
+            libGame_Wait((TimerGetRemaining(lv_waveTimer) - 0.0625), c_timeGame);
         }
         else {
-            libGame_MinionSpawnCycle_Wait(TimerGetRemaining(lv_waveTimer), c_timeGame);
+            libGame_Wait(TimerGetRemaining(lv_waveTimer), c_timeGame);
         }
     }
     return true;

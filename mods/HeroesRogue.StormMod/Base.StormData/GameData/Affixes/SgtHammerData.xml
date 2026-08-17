@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+  
+  <CEffectDamage id="SgtHammerSpiderMinesDamage">
+    <LeechFraction index="Life" value="0" />
+    <MultiplicativeModifierArray index="SgtHammerExplosiveMine" Modifier="0" />
+  </CEffectDamage>
+
+  <CEffectSet id="SiegeWeaponImpactSet">
+    <EffectArray value="SiegeWeaponSplashAllySearch" />
+  </CEffectSet>
+
+  <CEffectDamage id="ConcussiveBlastDamage" parent="StormSpell">
+    <Amount value="141" />
+    <MultiplicativeModifierArray index="Entrenched" Validator="SgtHammerHasSgtHammerEntrenchedANDCasterHasSiegeMode" Modifier="0.75" Crit="1" />
+    <MultiplicativeModifierArray index="SgtHammerBlaster" Modifier="0" />
+  </CEffectDamage>
+
+  <CEffectSet id="SgtHammerTankAttackImpactSet">
+    <EffectArray value="SgtHammerShredderRoundsApplyBehavior" />
+    <EffectArray value="SgtHammerDebilitatingRoundsApplyBehavior" />
+    <EffectArray value="SgtHammerTrojanMinesSwitch" />
+    <EffectArray value="SgtHammerRubberBulletsSwitch" />
+    <EffectArray value="SgtHammerExplosiveShellsSplashSearch" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="SgtHammerShredderRoundsApplyBehavior">
+    <Chance value="0" />
+    <Behavior value="SgtHammerShredderRoundsArmorDebuff" />
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="SgtHammerDebilitatingRoundsApplyBehavior">
+    <Chance value="0" />
+    <Behavior value="SgtHammerDebilitatingRoundsSlow" />
+    <ValidatorArray value="NotStructureTarget" />
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+  </CEffectApplyBehavior>
+
+  <CEffectApplyBehavior id="SgtHammerTrojanMinesApplyBehavior">
+    <Behavior value="SgtHammerTrojanMinesStack" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="SgtHammerTrojanMinesProcSet">
+    <EffectArray value="SgtHammerSpiderMinesCreateUnit" />
+    <EffectArray value="SgtHammerTrojanMinesRemoveStackBehavior" />
+  </CEffectSet>
+  <CEffectRemoveBehavior id="SgtHammerTrojanMinesRemoveStackBehavior">
+    <BehaviorLink value="SgtHammerTrojanMinesStack" />
+    <Count value="8" />
+  </CEffectRemoveBehavior>
+  <CEffectSwitch id="SgtHammerTrojanMinesSwitch">
+    <Chance value="0" />
+    <CaseArray Validator="Has8StackSgtHammerTrojanMines" Effect="SgtHammerTrojanMinesProcSet" />
+    <CaseDefault value="SgtHammerTrojanMinesApplyBehavior" />
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+  </CEffectSwitch>
+
+  <CEffectApplyBehavior id="SgtHammerRubberBulletsApplyBehavior">
+    <Behavior value="SgtHammerRubberBulletsStack" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="SgtHammerRubberBulletsApplyStun">
+    <Behavior value="SgtHammerRubberBulletsStun" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="SgtHammerRubberBulletsProcSet">
+    <EffectArray value="SgtHammerRubberBulletsApplyStun" />
+    <EffectArray value="SgtHammerRubberBulletsRemoveStackBehavior" />
+  </CEffectSet>
+  <CEffectRemoveBehavior id="SgtHammerRubberBulletsRemoveStackBehavior">
+    <BehaviorLink value="SgtHammerRubberBulletsStack" />
+    <Count value="8" />
+  </CEffectRemoveBehavior>
+  <CEffectSwitch id="SgtHammerRubberBulletsSwitch">
+    <Chance value="0" />
+    <CaseArray Validator="Has8StackSgtHammerRubberBullets" Effect="SgtHammerRubberBulletsProcSet" />
+    <CaseDefault value="SgtHammerRubberBulletsApplyBehavior" />
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+  </CEffectSwitch>
+
+
+  <CEffectEnumArea id="SgtHammerExplosiveShellsSplashSearch">
+    <ValidatorArray value="TargetNotEvading" />
+    <ExcludeArray Effect="SgtHammerTankAttackImpactSet" Value="Target" />
+    <SearchFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="SgtHammerExplosiveShellsSplashSet">
+      <Radius value="1.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.75" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+
+  <CEffectSet id="SgtHammerExplosiveShellsSplashSet">
+    <Chance value="0" />
+    <EffectArray value="UniversalWeaponImpact" />
+    <EffectArray value="SgtHammerTankWeaponPreImpactSet" />
+    <EffectArray value="SgtHammerTankAttackDamage" />
+    <EffectArray value="SgtHammerTankWeaponPostImpactSet" />
+    <EffectArray value="UniversalWeaponPostImpactSet" />
+    <EffectArray value="SgtHammerShredderRoundsApplyBehavior" />
+    <EffectArray value="SgtHammerDebilitatingRoundsApplyBehavior" />
+  </CEffectSet>
+
+  <CBehaviorBuff id="AffixSgtHammerMachineGunner" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="CasterNoSiegeMode" />
+    <Modification>
+      <WeaponRange value="1.5" />
+      <WeaponScanBonus value="1.5" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="SgtHammerShredderRoundsArmorDebuff" parent="StormArmor">
+    <BehaviorCategories index="DebuffVulnerable" value="1" />
+    <MaxStackCount value="50" />
+    <Duration value="4" />
+    <BuffFlags index="RefreshStack" value="1" />
+    <ArmorModification StackCount="50">
+      <ArmorSet index="Hero">
+        <ArmorMitigationTable index="Basic" value="-1" />
+      </ArmorSet>
+      <ArmorSet index="Merc">
+        <ArmorMitigationTable index="Basic" value="-1" />
+      </ArmorSet>
+      <ArmorSet index="Monster">
+        <ArmorMitigationTable index="Basic" value="-1" />
+      </ArmorSet>
+      <ArmorSet index="Summon">
+        <ArmorMitigationTable index="Basic" value="-1" />
+      </ArmorSet>
+      <ArmorSet index="Structure">
+        <ArmorMitigationTable index="Basic" value="-1" />
+      </ArmorSet>
+      <ArmorSet index="Minion">
+        <ArmorMitigationTable index="Basic" value="-1" />
+      </ArmorSet>
+    </ArmorModification>
+  </CBehaviorBuff>
+
+  <CEffectCreatePersistent id="SgtHammerSpiderMinesInitialPersistent">
+    <InitialEffect value="SgtHammerAmbushHoldFireRemoveSet" />
+    <InitialOffset Y="1" />
+    <ExpireEffect value="SgtHammerSpiderMinesCreateUnitExtraMine" />
+    <ExpireOffset Y="1" />
+    <PeriodCount value="4" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesRotateTurretModifyUnit" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnitSwitch" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
+    <PeriodicOffsetArray X="2.4" Y="0.6" />
+    <PeriodicOffsetArray X="1.2" Y="0.1" />
+    <PeriodicOffsetArray Y="-0.4" />
+    <PeriodicOffsetArray X="-1.2" Y="0.1" />
+    <PeriodicOffsetArray X="-2.4" Y="0.6" />
+    <PeriodicPeriodArray value="0" />
+    <PeriodicPeriodArray value="0.1" />
+    <PeriodicPeriodArray value="0.1" />
+    <PeriodicPeriodArray value="0.1" />
+    <PeriodicPeriodArray value="0.1" />
+    <PeriodicPeriodArray value="0.1" />
+  </CEffectCreatePersistent>
+
+  <CBehaviorAbility id="AffixBFGBehaviorAbility">
+    <Buttons Face="SgtHammerBluntForceGun" Type="AbilCmd" AbilCmd="SgtHammerBluntForceGun,Execute" />
+  </CBehaviorAbility>
+  
+  <CBehaviorBuff id="SgtHammerDebilitatingRoundsSlow" parent="StormSlowParent">
+    <MaxStackCount value="50" />
+    <BuffFlags index="RefreshStack" value="1" />
+    <Duration value="4" />
+    <Modification>
+      <UnifiedMoveSpeedFactor value="-0.01" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="SgtHammerTrojanMinesStack">
+    <BuffFlags index="RefreshStack" value="1" />
+    <MaxStackCount value="7" />
+    <Duration value="3" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="SgtHammerLightTankBehavior" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="CasterNoSiegeMode" />
+    <Modification>
+      <UnifiedMoveSpeedFactor value="0.2" />
+      <MoveSpeedMinimum value="5.808" />
+      <WeaponRange value="1.5" />
+      <WeaponScanBonus value="1.5" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="SgtHammerRubberBulletsStack">
+    <BuffFlags index="RefreshStack" value="1" />
+    <MaxStackCount value="7" />
+    <Duration value="3" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="SgtHammerRubberBulletsStun" parent="StormStun">
+    <Duration value="0.25" />
+  </CBehaviorBuff>
+
+  <CEffectEnumArea id="SiegeWeaponSplashAllySearch">
+    <Chance value="0" />
+    <ValidatorArray value="TargetNotEvading" />
+    <ExcludeArray Effect="SiegeWeaponImpactSet" Value="Target" />
+    <SearchFilters value="Ally;Self,Player,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="SiegeWeaponSplashDamageSet">
+      <Radius value="2" />
+    </AreaArray>
+    <RevealerParams Duration="0.75" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+
+  <CTalent id="SgtHammerSiegeModeAdvancedArtillery">
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="SiegeWeaponSplashAllySearch" />
+        <Field value="AreaArray[0].Radius" />
+        <Value value="0.500000" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
+
+  <CValidatorUnitCompareBehaviorCount id="Has8StackSgtHammerTrojanMines">
+    <Value value="7" />
+    <Behavior value="SgtHammerTrojanMinesStack" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorPlayerTalent id="SgtHammerHasTrojanMines">
+    <WhichPlayer Value="Caster" />
+    <Find value="1" />
+    <Value value="SgtHammerTrojanMines" />
+  </CValidatorPlayerTalent>
+
+  <CValidatorUnitCompareBehaviorCount id="Has8StackSgtHammerRubberBullets">
+    <Value value="7" />
+    <Behavior value="SgtHammerRubberBulletsStack" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CActorModel id="SgtHammerSiegeAttackSplashImpactFX2" parent="StormModelAnimationStyleOneShotUnit">
+    <On Terms="Effect.SgtHammerExplosiveShellsSplashSet; At Target" Send="Create" />
+    <HostSiteOps Ops="SOpAttachCenter" HoldPosition="1" HoldRotation="1" />
+    <Model value="SgtHammerSiegeAttackSplashImpact" />
+  </CActorModel>
+
+
+</Catalog>

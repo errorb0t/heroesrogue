@@ -2,37 +2,6 @@
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
 
-
-  <CActorModel id="WitchDoctorHeroWeaponDamageSplashFX" parent="StormModelAnimationStyleOneShotUnit">
-    <On Terms="Effect.WitchDoctorHeroWeaponDamage; At Target; ValidateEffect CasterHasAffixPowerRitual" Send="Create" />
-    <On Terms="ActorCreation" Send="SetOpacity 0.250000" />
-    <HostSiteOps Ops="SOpAttachCenter" />
-    <Model value="WitchDoctorHeroWeaponDamageSplashFXModel" />
-  </CActorModel>
-
-  <CModel id="WitchDoctorHeroWeaponDamageSplashFXModel" parent="ImpactFX">
-    <Model value="Assets\Effects\Storm_FX_Dryad_Base_FullBloom_Impact\Storm_FX_Dryad_Base_FullBloom_Impact.m3" />
-    <RadiusLoose value="0.5" />
-    <ScaleMax X="1.10000" Y="1.10000" Z="1.25000" />
-    <ScaleMin X="1.10000" Y="1.10000" Z="1.25000" />
-    <AnimSpeed value="6"/>
-  </CModel>
-  <CActorModel id="WitchDoctorZombieWallWarningModelZombieHandler" parent="StormModelNoAnims">
-    <Flags index="VisionTestCenterOnly" value="1" />
-    <Inherits index="TeamColor" value="1" />
-    <Inherits index="WarpGroup" value="1" />
-    <On Terms="ActorCreation" Send="AnimPlay Spell Stand,Burrow PlayForever 0.000000 0.000000" />
-    <On Terms="ActorCreation" Send="SetOpacity 0.500000" />
-    <On Terms="Effect.WitchDoctorZombieWallDelayPersistentZombieHandler.Start" Send="Create" />
-    <On Terms="Effect.WitchDoctorZombieWallDelayPersistentZombieHandler.Stop" Send="Destroy" />
-    <HostSiteOps Ops="SOpTargetPointStationary SOpForwardVectorPoint SOpWading" />
-    <Model value="WitchDoctorZombieWallUnit" />
-  </CActorModel>
-  <CActorSound id="WitchDoctorZombieWallWarningSoundZombieHandler" parent="SoundOneShot">
-    <On Terms="Effect.WitchDoctorZombieWallDelayPersistentZombieHandler.Start; At Effect" Send="Create" />
-    <Sound value="WitchDoctor_Zombie_Warning" />
-  </CActorSound>
-
   <CActorUnit id="AffixBuddyDrone" parent="StormUnitBase" unitName="AffixBuddyDrone">
     <On Terms="UnitBirth" Send="Create TalentScoutingDroneLaunch" />
     <On Terms="UnitBirth" Send="Create TalentScoutingDroneLoop" />
@@ -144,10 +113,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
   
   <CActorSound id="TalentCleanseSound">
-    <On Terms="Effect.AffixMedallionApplyCleanse.Start" Send="Create" />
+    <On Terms="Effect.AffixGladiatorsMedallionCleanseApplyBehavior.Start" Send="Create" />
   </CActorSound>
   <CActorModel id="TalentCleanseImpactModel">
-    <On Terms="Effect.AffixMedallionApplyCleanse.Start" Send="Create" />
+    <On Terms="Effect.AffixGladiatorsMedallionCleanseApplyBehavior.Start" Send="Create" />
   </CActorModel>
 
   <CActorAction id="ZaryaParticleGrenadeAttackAffix" parent="GenericAttackPointStorm" effectImpact="ZaryaParticleGrenadeTargetSearchAffix" effectLaunch="ZaryaParticleGrenadeLaunchMissileAffix">
@@ -180,191 +149,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <On Terms="Effect.ZaryaParticleGrenadeDamageAffix.Start; At Target" Send="Create" />
   </CActorModel>
 
-  
-  <CActorSound id="TyrandeLunarFlareTargetSound3" parent="SoundOneShot">
-    <On Terms="Effect.LunarFlareInitialPersistent3.Start" Send="Create" />
-    <Sound value="Tyrande_LunarFlare_TargetEffect" />
-  </CActorSound>
-  <CActorSound id="TyrandeLunarFlareFlybySound3" parent="SoundContinuous">
-    <Sound value="Tyrande_SearingArrow_FlyBy" />
-    <On Terms="Effect.LunarFlareInitialPersistent3.Start" Send="Create" />
-    <On Terms="Effect.LunarFlareInitialPersistent3.Stop" Send="Destroy" />
-  </CActorSound>
-  <CActorModel id="TyrandeLunarFlareImpact3" parent="StormModelNoAnims">
-    <On Terms="ActorCreation" Send="AnimPlay Birth Birth NonLooping" />
-    <On Terms="ActorOrphan" Send="Destroy" />
-    <On Terms="ActorCreation" Send="TimerSet 0.500000 Impact" />
-    <On Terms="TimerExpired; TimerName Impact" Send="AnimClear Birth" />
-    <On Terms="TimerExpired; TimerName Impact" Send="AnimPlay Death Death" />
-    <On Terms="Effect.LunarFlareInitialPersistent3.Start; At Effect" Send="Create" />
-    <On Terms="AnimDone; AnimName Death" Send="Destroy" />
-    <HostSiteOps Ops="SOpShadow" />
-    <Scale value="1.200000" />
-    <ModelFlags index="AutomateGlobalLoops" value="1" />
-  </CActorModel>
-  <CModel id="TyrandeLunarFlareImpact3" parent="PersistentSpellFX">
-      <Model value="Assets\Effects\Storm_Effect_Tyrande_Base_LunarFlare_Impact\Storm_Effect_Tyrande_Base_LunarFlare_Impact.m3"/>
-      <RadiusLoose value="1.000000"/>
-  </CModel>
-
-  <CSound id="MaievWheresIllidanWarning" parent="HeroVO_3D_Intro">
-    <AssetArray TemplateParam="MaievBase_VOX_TimeStopIllidan00"/>
-    <AssetArray TemplateParam="MaievBase_Pissed03"/>
-    <AssetArray TemplateParam="MaievBase_VoiceLineOne00"/>
-    <AssetArray TemplateParam="MaievBase_VoiceLineTwo00"/>
-    <AssetArray TemplateParam="MaievBase_VoiceLineThree00"/>
-    <AssetArray TemplateParam="MaievBase_VoiceLineFour00"/>
-    <AssetArray TemplateParam="MaievBase_Attack05"/>
-    <AssetArray TemplateParam="MaievBase_UI_Purchase00"/>
-    <AssetArray TemplateParam="MaievBase_UI_Lockin00"/>
-    <AssetArray TemplateParam="MaievBase_Resurrected00"/>
-    <Volume value="2.000000,2.000000"/>
-    <Category value="User9"/>
-    <CategoryDuckingLocal value="Explosions"/>
-    <CategoryDuckingNonLocal value="Explosions"/>
-    <Exclusivity value="HeroVO_3D_Critical"/>
-    <StopActionArray Sound="MaievBase_Ultimate1Used" UseSustainFadeTime="0"/>
-</CSound>
-
-  <CActorSound id="MaievWheresIllidanWarningVO" parent="SoundOneShot">
-    <Inherits index="Visibility" value="0" />
-    <FogVisibility value="Visible" />
-    <Host Scope="Target" />
-    <Sound value="MaievWheresIllidanWarning" />
-  </CActorSound>
-  
-  <CActorUnit id="HeroThrall" parent="StormHeroStandard" unitName="HeroThrall">
-    <MinimapIcon value="Assets\Textures\storm_ui_minimapicon_thrall.dds"/>
-    <HeroIcon value="Assets\Textures\UI_targetportrait_Hero_Thrall.dds"/>
-    <On Terms="Abil.ThrallChainLightning.SourceCastStart" Send="AnimPlay Spell Spell,A 0 -1.000000 -1.000000 1.000000 AsTimeScale"/>
-    <On Terms="Abil.ThrallFeralSpirit.SourceCastStart" Send="AnimPlay Spell Spell,D 0 -1.000000 -1.000000 1.000000 AsTimeScale"/>
-    <On Terms="Abil.ThrallWindfury.SourceCastStart" Send="AnimPlay Spell Spell,B 0 -1.000000 -1.000000 1.000000 AsTimeScale"/>
-    <On Terms="Abil.ThrallSundering.SourceCastStart" Send="AnimPlay Spell Spell,C 0 -1.000000 -1.000000 1.000000 AsTimeScale"/>
-    <On Terms="Abil.ThrallEarthquake.SourceCastStart" Send="AnimPlay Spell Spell,E 0 -1.000000 -1.000000 1.000000 AsTimeScale"/>
-    <On Terms="ActorCreation" Send="StatusSet Windfury 0"/>
-    <On Terms="Effect.WindfuryStacksApplyStackBehavior.Start; At Caster" Send="StatusSet Windfury 3"/>
-    <On Terms="Effect.WindfuryStacksRemoveStack.Start; At Caster" Send="StatusDecrement Windfury"/>
-    <On Terms="Behavior.WindfuryStack.Off" Send="StatusSet Windfury 0"/>
-    <On Terms="Effect.ThrallFrostwolfResilienceManaTideTalentRestoreMana.Start" Send="Create Storm_Effect_GenericMana_Impact"/>
-    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 3; ValidateUnit CasterNotBlinded" Send="AnimPlay Attack Attack,Cover,00 0 0.050000 0.100000"/>
-    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 2; ValidateUnit CasterNotBlinded" Send="AnimPlay Attack Attack,Cover,01 0 0.050000 0.100000"/>
-    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 1; ValidateUnit CasterNotBlinded" Send="AnimPlay Attack Attack,Cover,02 0 0.050000 0.100000"/>
-    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 3; ValidateUnit CasterNotBlinded" Send="Create ThrallWeaponTrailVersion01"/>
-    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 2; ValidateUnit CasterNotBlinded" Send="Create ThrallWeaponTrailVersion02"/>
-    <On Terms="WeaponStart.ThrallHeroWeapon.AttackStart; IsStatus Windfury 1; ValidateUnit CasterNotBlinded" Send="Create ThrallWeaponTrailVersion01"/>
-    <On Terms="WeaponStart.ThrallHeroWeaponRanged.AttackStart" Send="AnimPlay Spell Spell,A 0 -1.000000 -1.000000 1.000000 AsTimeScale" />
-    <On Terms="AnimPlay; AnimPlaying Attack Attack,00; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion01"/>
-    <On Terms="AnimPlay; AnimPlaying Attack Attack,01; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion01"/>
-    <On Terms="AnimPlay; AnimPlaying Attack Attack,02; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion01"/>
-    <On Terms="AnimPlay; AnimPlaying Attack Attack,03; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion01"/>
-    <On Terms="AnimPlay; AnimPlaying Attack Attack,04; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion00"/>
-    <On Terms="AnimPlay; AnimPlaying Attack Attack,05; IsStatus Windfury 0" Send="Create ThrallWeaponTrailVersion00"/>
-    <On Terms="Abil.ThrallSundering.SourceCastStart" Send="StatusSet CataIncrement 0"/>
-    <On Terms="Effect.SunderingDummyPersistent.Start" Send="StatusIncrement CataIncrement"/>
-    <On Terms="Effect.SunderingDummyPersistent.Start; IsStatus CataIncrement 5" Send="StatusSet CataIncrement 1"/>
-    <On Terms="Effect.SunderingDummyPersistent.Start; IsStatus CataIncrement 1; ValidateUnit ThrallHasWorldbreaker" Send="Create ThrallSunderingWorldbreakerBirth"/>
-    <On Terms="Effect.SunderingDummyPersistent.Start; IsStatus CataIncrement 2; ValidateUnit ThrallHasWorldbreaker" Send="Create ThrallSunderingWorldbreakerBirth01"/>
-    <On Terms="Effect.SunderingDummyPersistent.Start; IsStatus CataIncrement 3; ValidateUnit ThrallHasWorldbreaker" Send="Create ThrallSunderingWorldbreakerBirth02"/>
-    <On Terms="Effect.SunderingDummyPersistent.Start; IsStatus CataIncrement 4; ValidateUnit ThrallHasWorldbreaker" Send="Create ThrallSunderingWorldbreakerBirth03"/>
-    <Remove Terms="AnimDone; AnimName Taunt" Send="Signal ApplyReady"/>
-    <PortraitModel value="ThrallPortrait"/>
-    <PortraitActor value="ThrallPortrait"/>
-    <DeathArray index="Normal" SoundLink="ThrallBase_Death"/>
-    <AbilSoundArray AbilCmd="ThrallChainLightning,Execute" Sound="ThrallBase_VOX_CastingA"/>
-    <AbilSoundArray AbilCmd="ThrallFeralSpirit,Execute" Sound="ThrallBase_VOX_CastingB"/>
-    <AbilSoundArray AbilCmd="ThrallWindfury,Execute" Sound="ThrallBase_VOX_CastingC"/>
-    <AbilSoundArray AbilCmd="ThrallSundering,Execute" Sound="ThrallBase_Ultimate1Used"/>
-    <AbilSoundArray AbilCmd="ThrallEarthquake,Execute" Sound="ThrallBase_Ultimate2Used"/>
-    <SoundArray index="Ready" value="ThrallBase_Revive"/>
-    <SoundArray index="Yes" value="ThrallBase_Yes"/>
-    <SoundArray index="Attack" value="ThrallBase_Attack"/>
-    <SoundArray index="Pissed" value="ThrallBase_Pissed"/>
-    <MinimapIconBackgroundScale value="0.950000"/>
-    <UnitIcon value="Assets\Textures\UI_targetportrait_Hero_Thrall.dds"/>
-    <GroupIcon>
-        <Image value="Assets\Textures\storm_ui_ingame_partyframe_thrall.dds"/>
-    </GroupIcon>
-</CActorUnit>
-
-<CActorSite id="ThrallChainLightning1LaunchSiteDummy" parent="SiteWeapon">
-  <On Terms="Effect.ThrallChainLightningDummyPersistent.Start; At Caster" Send="Create"/>
-</CActorSite>
-<CActorSite id="ThrallChainLightning1ImpactSiteDummy" parent="SiteCenter">
-  <On Terms="Effect.ThrallChainLightningDummyPersistent.Start; At Target" Send="Create"/>
-  <On Terms="ActorCreation" Send="SetOpacity 0.5"/>
-  <On Terms="ActorCreation" Send="RefSetFromRequest ::scope.Chain1Launch ThrallChainLightning1LaunchSiteDummy Implicit Find"/>
-  <On Terms="ActorCreation" Send="Create ThrallChainLightningLaunchSound"/>
-  <On Terms="ActorCreation" Send="Create ThrallChainLightningImpactSound"/>
-  <On Terms="ActorCreation" Send="Create ThrallChainLightning1Beam"/>
-</CActorSite>
-
-<CActorSound id="WizardTeleportCalamityImpactSound2" parent="SoundOneShot">
-  <On Terms="Effect.WizardTeleportCalamitySearch2.Start; At Caster" Send="Create" />
-  <Host Subject="_Unit" />
-  <Sound value="Wizard_TeleportCalamity_Impact" />
-</CActorSound>
-
-<CActorAction id="WizardAoEShieldImpactActor2" parent="StormAoEShieldImpactBase">
-  <On Terms="Effect.WizardTeleportCalamityDamage2.Start" Send="Create" />
-  <On Terms="Effect.WizardTeleportCalamityDamage2.Start" Send="ActionDamage" />
-  <On Terms="Effect.WizardTeleportCalamityDamage2.Stop" Send="Destroy" />
-</CActorAction>
-
-<CActorAction id="WizardMagicMissilesAttackCenter2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesCenterLM2">
-  <LaunchSiteOps Ops="SOpAttachHarness SOpMoveUpBy1 SOpAttachWeapon" />
-  <Missile value="WizardMagicMissilesMissile" />
-  <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
-  <ShieldFlashType value="None" />
-  <ImpactSound value="WizardMagicMissilesImpactSound" />
-  <LaunchAssets Sound="WizardMagicMissileProjectileSound" />
-</CActorAction>
-<CActorAction id="WizardMagicMissilesAttackLeft2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesLeftLM2">
-  <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveLeftBy3" />
-  <Missile value="WizardMagicMissilesMissileLeft" />
-  <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
-  <ShieldFlashType value="None" />
-  <LaunchAssets Sound="WizardMagicMissileProjectileSound" />
-  <ImpactSound value="WizardMagicMissilesImpactSound" />
-</CActorAction>
-<CActorAction id="WizardMagicMissilesAttackRight2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesRightLM2">
-  <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveRightBy3" />
-  <Missile value="WizardMagicMissilesMissileRight" />
-  <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
-  <ShieldFlashType value="None" />
-  <LaunchAssets Sound="WizardMagicMissileProjectileSound" />
-  <ImpactSound value="WizardMagicMissilesImpactSound" />
-</CActorAction>
-<CActorAction id="WizardMagicMissilesAttackLeftMirrorBall2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesMirrorballLeftLM2">
-  <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveLeftBy3 SOpMoveLeftBy3" />
-  <Missile value="WizardMagicMissilesMissileLeftTA" />
-  <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
-  <ShieldFlashType value="None" />
-  <ImpactSound value="WizardMagicMissilesImpactSound" />
-</CActorAction>
-<CActorAction id="WizardMagicMissilesAttackRightMirrorBall2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesMirrorballRightLM2">
-  <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveRightBy3 SOpMoveRightBy3" />
-  <Missile value="WizardMagicMissilesMissileRightTA" />
-  <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
-  <ShieldFlashType value="None" />
-  <ImpactSound value="WizardMagicMissilesImpactSound" />
-</CActorAction>
-<CActorSound id="WizardMagicMissilesImpactSound2" parent="SoundOneShot">
-  <On Terms="Effect.WizardMagicMissilesDamage2.Start" Send="Create" />
-  <Host Subject="_Unit" />
-  <Sound value="Wizard_MagicMissiles_Impact" />
-</CActorSound>
-<CActorSound id="WizardMagicMissilesImpactSound2Structure" parent="SoundOneShot">
-  <On Terms="Effect.WizardMagicMissilesDamage2Structure.Start" Send="Create" />
-  <Host Subject="_Unit" />
-  <Sound value="Wizard_MagicMissiles_Impact" />
-</CActorSound>
-
-  <CActorModel id="SgtHammerSiegeAttackSplashImpactFX2" parent="StormModelAnimationStyleOneShotUnit">
-    <On Terms="Effect.SgtHammerExplosiveShellsSplashSet; At Target" Send="Create" />
-    <HostSiteOps Ops="SOpAttachCenter" HoldPosition="1" HoldRotation="1" />
-    <Model value="SgtHammerSiegeAttackSplashImpact" />
-  </CActorModel>
-
   <CActorSimple id="MercLordSizeScaling2">
     <On Terms="ActorCreation" Send="TimerSet 0.600000 PhysicsRestart" />
     <On Terms="ActorCreation" Target="_Unit" Send="PhysicsTerminate" />
@@ -387,32 +171,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <HostSiteOps Ops="SOpShadow" />
     <AutoScaleFactor value="1.500000" />
   </CActorModel>
-
-  <CActorSite id="LiMingStormArmorImpactSiteActive" parent="SiteCenter">
-    <On Terms="Effect.LiMingStormArmorDamage.Start; At Target" Send="Create" />
-    <On Terms="ActorCreation" Send="RefSetFromRequest ::scope.Chain1Launch LiMingStormArmorLaunchSiteActive Implicit Find" />
-    <On Terms="ActorCreation" Send="Create LiMingStormArmorImpactSound" />
-    <On Terms="ActorCreation" Send="Create LiMingStormArmorStrike" />
-  </CActorSite>
-  <CActorSound id="LiMingStormArmorImpactSound" parent="HeroAttackImpactSoundOneShot">
-    <Sound value="Falstad_Thunderstorm_Impact" />
-  </CActorSound>
-  <CActorSite id="LiMingStormArmorLaunchSiteActive" parent="SiteWeapon">
-    <On Terms="Effect.LiMingStormArmorSearch.Start" Send="Create" />
-    <Host Subject="_Unit" Scope="Caster" Actor="Find" />
-  </CActorSite>
-  <CActorBeamSimple id="LiMingStormArmorStrike">
-    <Flags index="SuppressSaveLoad" value="1" />
-    <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death ContentPlayOnce" />
-    <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy" />
-    <HostLaunch Subject="::Creator" />
-    <HostImpact Subject="::scope.Chain1Launch" />
-  </CActorBeamSimple>
-  <CModel id="LiMingStormArmorStrike" parent="PersistentSpellFX">
-    <Model value="Assets\Effects\Storm_FX_Falstad_Base_LightningRod_Strike\Storm_FX_Falstad_Base_LightningRod_Strike.m3" />
-    <ScaleMax X="2.000000" Y="2.000000" Z="2.000000" />
-    <ScaleMin X="2.000000" Y="2.000000" Z="2.000000" />
-  </CModel>
 
   
   <CActorModel id="SlivanBossMovetoCenterMovingFX" parent="StormModelAnimationStyleOneShotUnit">
@@ -779,6 +537,42 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <On Terms="Effect.SlivanBossSpawnPodsLaunch5CreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
     <On Terms="Effect.SlivanBossSpawnPodsLaunch6CreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
     <On Terms="Effect.SlivanBossSpawnPodsImpactSet.Start; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+  </CActorModel>
+  
+  <CActorModel id="AffixSpellShieldPrimedBuff" parent="StormModelAddition">
+    <Preload index="0" value="SpellShieldActiveBuff" />
+    <Preload index="1" value="SpellShieldActiveBuff" />
+    <On Terms="Behavior.AffixSpellShieldPrimed.On" Send="Create" />
+    <On Terms="Behavior.AffixSpellShieldPrimed.Off" Send="AnimBracketStop BSD" />
+    <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand" />
+    <Remove Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death" />
+    <Host Subject="_Unit" />
+    <HostSiteOps Ops="SOpAttachCenterSoft SOp2DRotation" HoldRotation="1" />
+    <AutoScaleFactor value="1.000000" />
+    <Inherits index="Visibility" value="1" />
+    <ModelFlags index="AllowHitTest" value="0" />
+  </CActorModel>
+  <CActorModel id="AffixTalentSpellShieldImpact" parent="StormModelAnimationStyleOneShot">
+    <On Terms="Effect.AffixSpellShieldImpactDummySet.Start; At Source" Send="Create" />
+    <Host Subject="_Unit" />
+    <HostSiteOps Ops="SOpAttachCenter SOpForwardTargetPoint" HoldRotation="1" />
+    <AutoScaleFactor value="1.000000" />
+    <Flags index="VisionTestCenterOnly" value="1" />
+  </CActorModel>
+  
+  <CActorModel id="AffixAncientBlessingsAoEImpact" parent="StormModelAnimationStyleOneShot">
+    <On Terms="Effect.AffixAncientBlessingsAoESearch.Start" Send="Create" />
+    <HostSiteOps Ops="SOpAttachCenter" />
+  </CActorModel>
+  <CActorSound id="AffixAncientBlessingsAoEImpactSound" parent="SoundOneShot">
+    <On Terms="Effect.AffixAncientBlessingsAoESearch.Start; At Effect" Send="Create" />
+    <Layers Sound="DeckardAncientBlessingsAoEImpactMagicSound" />
+    <Layers Sound="DeckardAncientBlessingsAoEImpactHealSound" />
+  </CActorSound>
+  <CActorModel id="AffixAncientBlessingsHealImpact" parent="StormModelAnimationStyleOneShotUnit">
+    <On Terms="Effect.AffixAncientBlessingsCreateHealer.Start; At Caster" Send="Create" />
+    <AutoScaleFactor value="1.000000" />
+    <HostSiteOps Ops="SOpAttachCenter" />
   </CActorModel>
 
 </Catalog>

@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
-<CHero id="Thrall">
-  <TalentTreeArray Talent="DoNothing" Tier="1" Column="4" />
-</CHero>
-<CHero id="Illidan">
-  <TalentTreeArray index="21" Talent="DoNothing" Tier="6" Column="4" />
-</CHero>
-<CHero id="WitchDoctor">
-  <TalentTreeArray index="21" Talent="WitchDoctorWidowmakers2" Tier="1" Column="4" />
-  <TalentTreeArray index="22" Talent="WitchDoctorHexedCrawlers2" Tier="2" Column="4" />
-  <TalentTreeArray index="23" Talent="WitchDoctorSpiritofArachyr2" Tier="3" Column="4" />
-  <TalentTreeArray index="24" Talent="WitchDoctorSpiderColony2" Tier="6" Column="4" />
-</CHero>
-  <CHero id="SgtHammer">
-    <TalentTreeArray Talent="SgtHammerShredderRounds" Tier="1" Column="4" />
-    <TalentTreeArray Talent="SgtHammerDebilitatingRounds" Tier="1" Column="5" />
-    <TalentTreeArray Talent="SgtHammerTrojanMines" Tier="2" Column="4" />
-    <TalentTreeArray Talent="SgtHammerLightTank" Tier="3" Column="4" />
-    <TalentTreeArray Talent="SgtHammerRubberBullets" Tier="5" Column="4" />
-    <TalentTreeArray Talent="SgtHammerExplosiveShells" Tier="7" Column="5" />
-  </CHero>
+
 </Catalog>
