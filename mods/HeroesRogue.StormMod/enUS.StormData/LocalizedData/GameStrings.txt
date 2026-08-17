@@ -823,7 +823,7 @@ Affix/Name/Strength=Strength
 Affix/Tooltip/Strength=Increases damage dealt by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
 Affix/Tooltip/Append/Strength=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixStrength,Modification.DamageDealtFraction[Basic]*100" player="1" precision="0" />%</c>
 Affix/Name/AutoMULE=Auto MULE
-Affix/Tooltip/AutoMULE=Automatically drop down a MULE near a damaged allied Structures that repairs <c val="#TooltipNumbers">10%</c> of the Structure's maximum Health per second.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">40</c> seconds.
+Affix/Tooltip/AutoMULE=Automatically drop down a MULE near a damaged allied Structure that repairs <c val="#TooltipNumbers">10%</c> of the Structure's maximum Health per second.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">40</c> seconds.
 Affix/Tooltip/Append/AutoMULE=
 Affix/Name/SecondWind=Second Wind
 Affix/Tooltip/SecondWind=On fatal damage, become Unkillable for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">300</c> seconds.

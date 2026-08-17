@@ -216,12 +216,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Behavior value="AffixSecondWindBehavior" />
   </CEffectApplyBehavior>
   
-  <CEffectModifyUnit id="JungleCreepSoftLeashingHealing1">
-    <ImpactUnit Value="Source" />
-    <VitalArray index="Life">
-      <ChangeFraction value="0.025" />
-    </VitalArray>
-  
   <CEffectSet id="BribeSetAffix">
     <EffectArray value="BribeKillEffect" />
   </CEffectSet>
