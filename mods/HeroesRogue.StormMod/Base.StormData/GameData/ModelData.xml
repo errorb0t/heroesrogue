@@ -258,4 +258,11 @@
       <Payload value="SlivanBoss_Death" />
     </Events>
   </CModel>
+  <CModel id="AffixAncientBlessingsHealImpact" parent="ImpactFX">
+      <Model value="Assets\Effects\Storm_FX_Deckard_Base_HealingPotion_Impact_TB\Storm_FX_Deckard_Base_HealingPotion_Impact_TB.m3"/>
+  </CModel>
+  <CModel id="AffixAncientBlessingsAoEImpact" parent="OneShotSpellFX">
+      <Model value="Assets\Effects\Storm_FX_Deckard_Base_AngelicConduit_Impact\Storm_FX_Deckard_Base_AngelicConduit_Impact.m3"/>
+  </CModel>
+
 </Catalog>

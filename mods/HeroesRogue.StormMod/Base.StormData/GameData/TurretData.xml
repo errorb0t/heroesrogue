@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+    <CTurret id="Immortal" parent="FreeRotate">
+        <Idle value="FollowMovement"/>
+        <YawIdleRate value="360"/>
+    </CTurret>
+
+</Catalog>

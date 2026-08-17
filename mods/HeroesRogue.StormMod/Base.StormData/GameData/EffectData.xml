@@ -2,127 +2,51 @@
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
 
-<CEffectEnumArea id="CheatRevealerSearch">
-  <SearchFilters value="-;Player,Ally,ImmuneToAOE,Structure,Item,Stasis,Dead" />
-  <AreaArray Effect="ScoutingDroneImpactSet">
-    <Radius value="500" />
-  </AreaArray>
-  <RevealerParams Duration="0.25" ShapeExpansion="0.5">
-    <RevealFlags index="Unfog" value="1" />
-  </RevealerParams>
-  <SearchFlags index="ExtendByUnitRadius" value="1" />
-</CEffectEnumArea>
+  <CEffectSet id="EmptySetDummy" />
 
-  <CEffectEnumArea id="AffixConversionSearch">
-    <ValidatorArray value="AffixConversionValidator" />
+  <CEffectEnumArea id="CheatRevealerSearch">
+    <SearchFilters value="-;Player,Ally,ImmuneToAOE,Structure,Item,Stasis,Dead" />
+    <AreaArray Effect="ScoutingDroneImpactSet">
+      <Radius value="500" />
+    </AreaArray>
+    <RevealerParams Duration="0.25" ShapeExpansion="0.5">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="ExtendByUnitRadius" value="1" />
+  </CEffectEnumArea>
+
+  <!-- Possession -->
+  <CEffectEnumArea id="AffixPossessionSearch">
+    <ValidatorArray value="AffixPossessionValidatorCombine" />
     <SearchFilters value="-;Player,Self,Ally,Neutral,Creep,ImmuneToAOE,MapCreature,ImmuneToSkillshots,Structure,ImmuneToFriendlyAbilities,Heroic,Worker,Missile,Item,Stasis,Dead,Hidden,Summoned" />
-    <AreaArray MaxCount="1" Effect="AffixConversionSet">
+    <AreaArray MaxCount="1" Effect="AffixPossessionSet">
       <Radius value="8" />
     </AreaArray>
     <SearchFlags index="ExtendByUnitRadius" value="1" />
   </CEffectEnumArea>
-  <CEffectSet id="AffixConversionSet">
-    <ValidatorArray value="AffixConversionValidator" />
-    <EffectArray value="AffixConversionApplySupressRegenGlobeCreation" />
-    <EffectArray value="AffixConversionFullHeal" />
-    <EffectArray value="AffixConversionRemoveReady" />
+  <CEffectSet id="AffixPossessionSet">
+    <ValidatorArray value="AffixPossessionValidatorCombine" />
+    <EffectArray value="AffixPossessionSupressRegenGlobeCreationApplyBehavior" />
+    <EffectArray value="AffixPossessionHealModifyUnit" />
+    <EffectArray value="AffixPossessionReadyRemoveBehavior" />
     <EffectArray value="SylvanasPossessionApplyTargetBehavior" />
   </CEffectSet>
-  <CEffectModifyUnit id="AffixConversionFullHeal">
+  <CEffectModifyUnit id="AffixPossessionHealModifyUnit">
     <VitalArray index="Life">
       <ChangeFraction value="1" />
     </VitalArray>
   </CEffectModifyUnit>
-  <CEffectApplyBehavior id="AffixConversionApplySupressRegenGlobeCreation">
+  <CEffectApplyBehavior id="AffixPossessionSupressRegenGlobeCreationApplyBehavior">
     <Behavior value="SuppressRegenGlobeCreation" />
   </CEffectApplyBehavior>
-  <CEffectApplyBehavior id="AffixConversionApplyReady">
+  <CEffectApplyBehavior id="AffixPossessionReadyApplyBehavior">
     <WhichUnit Value="Caster" />
-    <Behavior value="AffixConversionReady" />
+    <Behavior value="AffixPossessionReadyBehavior" />
   </CEffectApplyBehavior>
-  <CEffectRemoveBehavior id="AffixConversionRemoveReady">
+  <CEffectRemoveBehavior id="AffixPossessionReadyRemoveBehavior">
     <WhichUnit Value="Caster" />
-    <BehaviorLink value="AffixConversionReady" />
+    <BehaviorLink value="AffixPossessionReadyBehavior" />
   </CEffectRemoveBehavior>
-
-  <CEffectEnumArea id="AffixPowerRitualSplashSearch">
-    <ValidatorArray value="TargetNotEvading" />
-    <ExcludeArray Effect="WitchDoctorHeroWeaponImpactSet" Value="Target" />
-    <SearchFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
-    <AreaArray Effect="AffixPowerRitualSplashSet">
-      <Radius value="2" />
-    </AreaArray>
-    <RevealerParams Duration="0.75" ShapeExpansion="1">
-      <RevealFlags index="Unfog" value="1" />
-    </RevealerParams>
-  </CEffectEnumArea>
-  <CEffectSet id="WitchDoctorHeroWeaponImpactSet">
-    <EffectArray value="AffixPowerRitualSplashSearch" />
-  </CEffectSet>
-  <CEffectSet id="AffixPowerRitualSplashSet">
-    <Chance value="0" />
-    <EffectArray value="UniversalWeaponImpact" />
-    <EffectArray value="WitchDoctorVoodooRitualApplyDoTSwitchHeroWeapon" />
-    <EffectArray value="WitchDoctorWeaponPreImpactSet" />
-    <EffectArray value="WitchDoctorHeroWeaponDamageSplash" />
-    <EffectArray value="WitchDoctorWeaponPostImpactSet" />
-    <EffectArray value="UniversalWeaponPostImpactSet" />
-  </CEffectSet>
-  <CEffectDamage id="WitchDoctorHeroWeaponDamage" parent="StormWeapon">
-    <FlatModifierArray index="AffixPowerRitual" Validator="CasterHasAffixPowerRitual" Accumulator="AffixPowerRitualAccumulator" />
-    <Amount value="88" />
-  </CEffectDamage>
-  <CEffectDamage id="WitchDoctorHeroWeaponDamageSplash" parent="StormWeapon">
-    <FlatModifierArray index="AffixPowerRitual" Validator="CasterHasAffixPowerRitual" Accumulator="AffixPowerRitualSplashAccumulator" />
-    <Amount value="44" />
-  </CEffectDamage>
-  <CEffectCreatePersistent id="AffixZombieHandlerCreationPersistent">
-    <InitialEffect value="WitchDoctorZombieWallPersistentInitialSet" />
-    <ExpireEffect value="AffixZombieHandlerEndPreparationSet" />
-    <ExpireDelay value="0.5" />
-    <PeriodCount value="1" />
-    <PeriodicEffectArray value="WitchDoctorZombieWallDelayPersistentZombieHandler" />
-    <PeriodicPeriodArray value="0" />
-  </CEffectCreatePersistent>
-  <CEffectCreatePersistent id="WitchDoctorZombieWallDelayPersistentZombieHandler">
-    <OffsetFacingFallback Value="TargetPoint" />
-    <InitialDelay value="0.25" />
-    <PeriodCount value="1" />
-    <PeriodicEffectArray value="WitchDoctorZombieWallCreateUnitZombieHandler" />
-    <RevealRadius value="0.5" />
-    <RevealFlags index="Unfog" value="1" />
-  </CEffectCreatePersistent> 
-  <CEffectCreateUnit id="WitchDoctorZombieWallCreateUnitZombieHandler">
-    <WhichLocation Value="TargetPoint" />
-    <CreateFlags index="Placement" value="0" />
-    <CreateFlags index="PlacementIgnoreBlockers" value="1" />
-    <CreateFlags index="PlacementIgnoreCliffTest" value="1" />
-    <SpawnEffect value="WitchDoctorZombieWallSpawnSetZombieHandler" />
-    <SpawnUnit value="WitchDoctorZombieWallUnit" />
-    <SpawnRange value="0.5" />
-  </CEffectCreateUnit> 
-  <CEffectSet id="WitchDoctorZombieWallSpawnSetZombieHandler">
-    <EffectArray value="WitchDoctorZombieWallApplyTimedLifeBehaviorZombieHandler" />
-    <EffectArray value="WitchDoctorZombieWallDeadRushApplyBuffBehavior" />
-    <EffectArray value="WitchDoctorSoulHarvestApplyCarry" />
-    <EffectArray value="WitchDoctorVoodooRitualApplyDeathRitualTalentSummonCarry" />
-    <EffectArray value="WitchDoctorZombieWallSetFacing" />
-    <EffectArray value="WitchDoctorZombieWallAddAbilityController" />
-  </CEffectSet>
-  <CEffectApplyBehavior id="WitchDoctorZombieWallApplyTimedLifeBehaviorZombieHandler">
-    <Behavior value="WitchDoctorZombieWallTimedLifeZombieHandler" />
-  </CEffectApplyBehavior>
-  <CEffectSet id="AffixZombieHandlerEndPreparationSet">
-    <EffectArray value="WitchDoctorZombieWallDeathSoundSearch" />
-  </CEffectSet>  
-  <CEffectSet id="WitchDoctorZombieWallTimedLifeFinishZombieHandler">
-    <EffectArray value="WitchDoctorZombieWallIssueMorphOrderZombieHandler" />
-  </CEffectSet>  
-  <CEffectIssueOrder id="WitchDoctorZombieWallIssueMorphOrderZombieHandler">
-    <WhichUnit Value="Source" />
-    <Abil value="WitchDoctorZombieWallMorph" />
-    <CmdFlags index="Preempt" value="1" />
-  </CEffectIssueOrder>
 
   <CEffectEnumArea id="AffixBuddyDroneControllerSearchEnemy">
     <SearchFilters value="Visible;Self,Benign,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
@@ -248,18 +172,18 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectSet id="AffixKillContractQuestComplete" />
 
 
-  <CEffectModifyTokenCount id="AffixStructureQuestIncrementTokenNoQuest" parent="BaseEffectModifyTokenCount">
-    <TokenId value="AffixStructureQuestToken" />
+  <CEffectModifyTokenCount id="AffixDestructionIncrementTokenNoQuest" parent="BaseEffectModifyTokenCount">
+    <TokenId value="AffixDestructionToken" />
   </CEffectModifyTokenCount>
-  <CEffectModifyTokenCount id="AffixStructureQuestIncrementToken" parent="BaseEffectModifyTokenCount">
-    <TokenId value="AffixStructureQuestToken" />
+  <CEffectModifyTokenCount id="AffixDestructionIncrementToken" parent="BaseEffectModifyTokenCount">
+    <TokenId value="AffixDestructionToken" />
     <EffectCategory index="Quest" value="1" />
   </CEffectModifyTokenCount>
-  <CEffectSet id="AffixStructureQuest6" />
-  <CEffectSet id="AffixStructureQuest12" />
-  <CEffectSet id="AffixStructureQuestComplete" />
+  <CEffectSet id="AffixDestruction6StacksComplete" />
+  <CEffectSet id="AffixDestruction12StacksComplete" />
+  <CEffectSet id="AffixDestructionQuestComplete" />
 
-  <CEffectApplyBehavior id="AffixMedallionApplyCleanse">
+  <CEffectApplyBehavior id="AffixGladiatorsMedallionCleanseApplyBehavior">
     <WhichUnit Value="Caster" />
     <Behavior value="TalentCleanseBuff" />
     <Duration value="2" />
@@ -267,16 +191,29 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectApplyBehavior>
   
   <CEffectSet id="AffixEmergencyMeasureSet">
-    <EffectArray value="AffixEmergencyMeasureApplyShield" />
-    <EffectArray value="AffixEmergencyMeasureApplyCooldown" />
+    <EffectArray value="AffixEmergencyMeasureShieldApplyBehavior" />
+    <EffectArray value="AffixEmergencyMeasureCooldownApplyBehavior" />
   </CEffectSet>
-  <CEffectApplyBehavior id="AffixEmergencyMeasureApplyCooldown">
+  <CEffectApplyBehavior id="AffixEmergencyMeasureCooldownApplyBehavior">
     <WhichUnit Value="Source" />
     <Behavior value="AffixEmergencyMeasureCooldown" />
   </CEffectApplyBehavior>
-  <CEffectApplyBehavior id="AffixEmergencyMeasureApplyShield">
+  <CEffectApplyBehavior id="AffixEmergencyMeasureShieldApplyBehavior">
     <WhichUnit Value="Source" />
     <Behavior value="AffixEmergencyMeasureShield" />
+  </CEffectApplyBehavior>
+  
+  <CEffectSet id="AffixSecondWindSet">
+    <EffectArray value="AffixSecondWindApplyBehavior" />
+    <EffectArray value="AffixSecondWindCooldownApplyBehavior" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="AffixSecondWindCooldownApplyBehavior">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixSecondWindCooldown" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="AffixSecondWindApplyBehavior">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixSecondWindBehavior" />
   </CEffectApplyBehavior>
   
   <CEffectSet id="BribeSetAffix">
@@ -338,11 +275,11 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ValidatorArray index="0" value="TownHallTargetNotEvadingWithExclusions" />
   </CEffectApplyBehavior>
   
-  <CEffectApplyBehavior id="AffixGrenadierApplyReady">
+  <CEffectApplyBehavior id="AffixGrenadierReadyApplyBehavior">
     <WhichUnit Value="Caster" />
     <Behavior value="AffixGrenadierReady" />
   </CEffectApplyBehavior>
-  <CEffectRemoveBehavior id="AffixGrenadierRemoveReady">
+  <CEffectRemoveBehavior id="AffixGrenadierReadyRemoveBehavior">
     <WhichUnit Value="Caster" />
     <BehaviorLink value="AffixGrenadierReady" />
   </CEffectRemoveBehavior>
@@ -358,10 +295,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </TargetSorts>
   </CEffectEnumArea>
   <CEffectSet id="AffixGrenadierSearchSet">
-    <EffectArray value="AffixGrenadierRemoveReady" />
-    <EffectArray value="AffixGrenadierGrenadeEffect" />
+    <EffectArray value="AffixGrenadierReadyRemoveBehavior" />
+    <EffectArray value="AffixGrenadierGrenadeDummySet" />
   </CEffectSet>
-  <CEffectSet id="AffixGrenadierGrenadeEffect" />
+  <CEffectSet id="AffixGrenadierGrenadeDummySet" />
 
   <CEffectLaunchMissile id="ZaryaParticleGrenadeLaunchMissileAffix">
     <ImpactLocation Value="TargetPoint" />
@@ -400,386 +337,17 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <AttributeFactor index="Structure" value="-0.5" />
   </CEffectDamage>
 
-  <CEffectSet id="IllidanWeaponPostImpactSet">
-    <EffectArray value="IllidanApplyAffixBurningBlades" />
-  </CEffectSet>
-  <CEffectSet id="IllidanEvasionInitialSet">
-    <EffectArray value="IllidanEvasionEvasiveApplyBehavior" />
-  </CEffectSet>
-
-  <CEffectApplyBehavior id="IllidanEvasionEvasiveApplyBehavior">
-    <WhichUnit Value="Caster" />
-    <Behavior value="IllidanEvasionSpellArmor" />
-    <Chance value="0" />
-  </CEffectApplyBehavior>
-
-  <CEffectApplyBehavior id="IllidanApplyAffixBurningBlades">
-    <ValidatorArray index="0" value="CasterNotBlindedAndTargetNotEvading" />
-    <WhichUnit Value="Caster" />
-    <Behavior value="AffixBurningBlades" />
-    <Chance value="0" />
-  </CEffectApplyBehavior>
-  <CEffectSet id="AffixBurningBladesRefreshSet">
-    <EffectArray value="IllidanRemoveBurningBladesDecay" />
-    <EffectArray value="AffixBurningBladesTokenCounterModify" />
-  </CEffectSet>
-  <CEffectModifyTokenCount id="AffixBurningBladesTokenCounterModify" parent="BaseEffectModifyTokenCount">
-    <TokenId value="AffixBurningBladesTokenCounter" />
-  </CEffectModifyTokenCount>
-  <CEffectModifyTokenCount id="AffixBurningBladesTokenCounterReset" parent="BaseEffectModifyTokenCount">
-    <TokenId value="AffixBurningBladesTokenCounter" />
-    <Operation value="Set" />
-    <Value value="0" />
-  </CEffectModifyTokenCount>
-  <CEffectSet id="AffixBurningBladesDecaySet">
-    <EffectArray value="IllidanApplyBurningBladesDecay" />
-    <EffectArray value="AffixBurningBladesDecaySwitch" />
-  </CEffectSet>
-  <CEffectSwitch id="AffixBurningBladesDecaySwitch">
-    <CaseArray Validator="HasBurningBladesTokens" Effect="AffixBurningBladesTokenCounterDecay" />
-    <CaseDefault value="IllidanRemoveBurningBladesDecay" />
-  </CEffectSwitch>
-  <CEffectModifyTokenCount id="AffixBurningBladesTokenCounterDecay" parent="BaseEffectModifyTokenCount">
-    <TokenId value="AffixBurningBladesTokenCounter" />
-    <Operation value="Add" />
-    <Value value="-5" />
-  </CEffectModifyTokenCount>
-  <CEffectApplyBehavior id="IllidanApplyBurningBladesDecay">
-    <WhichUnit Value="Caster" />
-    <Behavior value="AffixBurningBladesDecay" />
-  </CEffectApplyBehavior>
-  <CEffectRemoveBehavior id="IllidanRemoveBurningBladesDecay">
-    <WhichUnit Value="Caster" />
-    <BehaviorLink value="AffixBurningBladesDecay" />
-  </CEffectRemoveBehavior>
-  
-  <CEffectSet id="SentinelShotImpactSet">
-    <EffectArray value="SentinelShotDamageModifyTokenCount" />
-  </CEffectSet>
-  <CEffectDamage id="SentinelShotDamage" parent="StormSpell">
-    <Visibility value="Hidden" />
-    <Amount value="120" />
-    <MultiplicativeModifierArray index="SentinelShotDamage" Accumulator="SentinelShotDamageAccumulator" />
-    <MultiplicativeModifierArray index="Ranger" Validator="HasTyrandeSentinelRanger" Accumulator="TyrandeSentinelShotRangerAccumulator" />
-  </CEffectDamage>
-  <CEffectDamage id="SentinelShotDamagePvE" parent="StormSpell">
-    <Visibility value="Hidden" />
-    <Amount value="60" />
-    <MultiplicativeModifierArray index="SentinelShotDamage" Accumulator="SentinelShotDamageAccumulator" />
-    <MultiplicativeModifierArray index="Ranger" Validator="HasTyrandeSentinelRanger" Accumulator="TyrandeSentinelShotRangerAccumulator" />
-  </CEffectDamage>
-  <CEffectModifyTokenCount id="SentinelShotDamageModifyTokenCount" parent="BaseEffectModifyTokenCount">
-    <Chance value="0" />
-    <ValidatorArray value="TargetIsHero" />
-    <EffectCategory index="Quest" value="1" />
-    <TokenId value="SentinelShotDamageTokenCounter" />
-  </CEffectModifyTokenCount>
-  <CEffectDamage id="TyrandeHeroWeaponDamage" parent="StormWeapon">
-    <MultiplicativeModifierArray index="NockedandLoaded" Validator="TargetIsHero" Accumulator="TyrandeDarnassianArcheryTalentDamageAccumulator" />
-    <Amount value="55">
-      <AccumulatorArray value="TheMarkAccumulator" />
-    </Amount>
-  </CEffectDamage>
-  <CEffectDamage id="TyrandeHuntressFuryDamage" parent="StormWeapon">
-    <Amount value="55">
-      <AccumulatorArray value="TheMarkAccumulator" />
-    </Amount>
-  </CEffectDamage>
-  <CEffectModifyTokenCount id="TheMarkModifyTokenCount" parent="BaseEffectModifyTokenCount">
-    <Chance value="0" />
-    <ValidatorArray value="TargetIsHero" />
-    <EffectCategory index="Quest" value="1" />
-    <TokenId value="TheMarkTokenCounter" />
-  </CEffectModifyTokenCount>
-  <CEffectSet id="TyrandeHeroWeaponImpactSet">
-    <EffectArray value="TheMarkModifyTokenCount" />
-    <EffectArray value="TyrandeShootingStarProcSearchAffix" />
-  </CEffectSet>
-  <CEffectSet id="TyrandeHeroWeaponHuntressFuryTalentMissileImpactSet">
-    <EffectArray value="TheMarkModifyTokenCount" />
-  </CEffectSet>
-  <CEffectEnumArea id="TyrandeShootingStarProcSearchAffix">
-    <ValidatorArray value="CasterDoesNotHaveTyrandeShootingStarCooldown" />
-    <Chance value="0" />
-    <SearchFilters value="Visible;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable,Benign" />
-    <TargetSorts RequestCount="1" RequestPercentage="1">
-      <SortArray value="TSHeroic" />
-      <SortArray value="TSRandom" />
-    </TargetSorts>
-    <AreaArray MaxCount="1" Effect="TyrandeShootingStarProcSet">
-      <Radius value="$TyrandeLunarFlareRange" />
-    </AreaArray>
-  </CEffectEnumArea>
-  <CEffectSet id="TyrandeShootingStarProcSet">
-    <EffectArray value="TyrandeShootingStarApplyCooldown" />
-    <EffectArray value="TyrandeShootingStarLunarFlareInitialPersistent" />
-  </CEffectSet>
-  <CEffectCreatePersistent id="TyrandeShootingStarLunarFlareInitialPersistent">
-    <PeriodicPeriodArray value="0" />
-    <PeriodicValidator value="CasterDoesNotHaveTyrandeShootingStarCooldown" />
-    <PeriodicEffectArray value="LunarFlareInitialPersistent" />
-    <PeriodCount value="1" />
-  </CEffectCreatePersistent>
-  <CEffectApplyBehavior id="TyrandeShootingStarApplyCooldown">
-    <WhichUnit Value="Caster" />
-    <Behavior value="TyrandeShootingStarCooldown" />
-  </CEffectApplyBehavior>
-  <CEffectModifyPlayer id="LunarFlareQuestRangeUpgrade">
-    <EffectArray Reference="Effect,TyrandeShootingStarProcSearchAffix,AreaArray[0].Radius" Value="$TyrandeLunarBlazeRangeIncrease" />
-  </CEffectModifyPlayer>
-  <CEffectSet id="TyrandeLunarFlareSearchSet">
-    <EffectArray value="LunarFlareInitialPersistent2" />
-  </CEffectSet>
-  <CEffectCreatePersistent id="LunarFlareInitialPersistent2">
-    <Chance value="0" />
-    <ExpireDelay value="1.75" />
-    <ExpireEffect value="LunarFlareInitialPersistent3" />
-  </CEffectCreatePersistent>
-  <CEffectCreatePersistent id="LunarFlareInitialPersistent3">
-    <ExpireDelay value="0.75" />
-    <ExpireEffect value="TyrandeLunarFlareSearchSet2" />
-    <RevealRadius value="1.5" />
-    <RevealFlags index="Unfog" value="1" />
-  </CEffectCreatePersistent>
-  <CEffectSet id="TyrandeLunarFlareSearchSet2">
-    <EffectArray value="LunarFlareImpactSearchArea" />
-    <EffectArray value="TyrandeLunarFlareCreatePersistentReveal" />
-  </CEffectSet>
-  
-  <CEffectApplyBehavior id="TyrandeShadowstalkApplyUnrevealable">
-    <Behavior value="ShadowstalkerUnrevealable" />
-    <Chance value="0" />
-    <ValidatorArray index="0" value="TargetNotDead" />
-  </CEffectApplyBehavior>
-  <CEffectSet id="TyrandeShadowstalkInitialSet">
-    <EffectArray value="TyrandeShadowstalkApplyUnrevealable" />
-  </CEffectSet>
-  
-  <CEffectSet id="MuradinDwarfTossNoDistanceLaunchSet">
-    <EffectArray value="MuradinDwarfTossApplyUnstoppable" />
-  </CEffectSet>
-  <CEffectSet id="MuradinDwarfTossLaunchSet">
-    <EffectArray value="MuradinDwarfTossApplyUnstoppable" />
-  </CEffectSet>
-  <CEffectSet id="MuradinDwarfTossLandSet">
-    <EffectArray value="MuradinDwarfTossRemoveUnstoppable" />
-  </CEffectSet>
-  <CEffectSet id="MuradinDwarfTossDamageSet">
-    <EffectArray value="MuradinDwarfTossModifyTokenCount" />
-    <EffectArray value="MuradinDwarfTossVeryHeavyImpactApplyBehavior" />
-  </CEffectSet>
-  <CEffectApplyBehavior id="MuradinDwarfTossVeryHeavyImpactApplyBehavior">
-    <Chance value="0" />
-    <Behavior value="MuradinDwarfTossVeryHeavyImpactStun" />
-  </CEffectApplyBehavior>
-
-  <CEffectModifyTokenCount id="MuradinDwarfTossModifyTokenCount" parent="BaseEffectModifyTokenCount">
-    <Chance value="0" />
-    <ValidatorArray value="TargetIsHero" />
-    <EffectCategory index="Quest" value="1" />
-    <TokenId value="MuradinDwarfTossTokenCounter" />
-  </CEffectModifyTokenCount>
-  <CEffectApplyBehavior id="MuradinDwarfTossApplyUnstoppable">
-    <Chance value="0" />
-    <WhichUnit Value="Caster" />
-    <Behavior value="MuradinDwarfTossUnstoppable" />
-  </CEffectApplyBehavior>
-  <CEffectRemoveBehavior id="MuradinDwarfTossRemoveUnstoppable">
-    <Chance value="0" />
-    <WhichUnit Value="Caster" />
-    <BehaviorLink value="MuradinDwarfTossUnstoppable" />
-  </CEffectRemoveBehavior>
-  <CEffectDamage id="MuradinDwarfTossDamage" parent="StormSpell">
-    <Amount value="59" />
-    <MultiplicativeModifierArray index="LunarBlaze" Accumulator="MuradinDwarfTossAccumulator" />
-  </CEffectDamage>
-  
-  <CEffectCreateHealer id="MuradinSecondWindImprovedCreateHealerPermanent" parent="StormSelfOnlyHealingSpell">
-    <ValidatorArray value="TargetLifeNotFull" />
-    <ImpactUnit Value="Caster" />
-    <RechargeVitalRate value="90" />
-  </CEffectCreateHealer>
-  <CEffectCreateHealer id="MuradinSecondWindImprovedCriticalCreateHealerPermanent" parent="StormSelfOnlyHealingSpell">
-    <ValidatorArray value="TargetLifeNotFull" />
-    <ImpactUnit Value="Caster" />
-    <RechargeVitalRate value="180" />
-  </CEffectCreateHealer>
-  
-  <CEffectSet id="MuradinHeroWeaponImpactSet">
-    <EffectArray value="MuradinWeaponHealthDamage" />
-  </CEffectSet>
-  <CEffectDamage id="MuradinWeaponHealthDamage" parent="StormSpellPercentDamage">
-    <Chance value="0" />
-    <FlatModifierArray index="MuradinWeaponHealthDamage" Accumulator="MuradinCurrentHealthAccumulator" />
-  </CEffectDamage>
-  <CEffectDamage id="StormBoltHammererDamage" parent="StormSpellPercentDamage">
-    <ValidatorArray value="TargetIsHero" />
-    <Chance value="0" />
-    <VitalFractionMax index="Life" value="0.07" />
-  </CEffectDamage>
-  <CEffectSet id="StormBoltImpactSet">
-    <EffectArray value="StormBoltHammererDamage" />
-  </CEffectSet>
-
-  <CEffectSet id="MuradinStormBoltInitialSet">
-    <EffectArray value="MuradinStormBoltInitialSetCreatePersistent" />
-  </CEffectSet>
-  <CEffectCreatePersistent id="MuradinStormBoltInitialSetCreatePersistent">
-    <Chance value="0" />
-    <WhichLocation Effect="MuradinStormBoltInitialSet" />
-    <PeriodCount value="1" />
-    <PeriodicEffectArray value="StormBoltLaunchMissile" />
-    <PeriodicPeriodArray value="0.25" />
-  </CEffectCreatePersistent>
-
-  <CEffectDamage id="IllidanDiveDeepDiveDamage" parent="StormSpell">
-    <ValidatorArray value="TargetIsHero" />
-    <Chance value="0" />
-    <VitalFractionMax index="Life" value="0.05" />
-    <LeechValidator index="Life" value="HasIllidanCombatStyleHuntersOnslaught" />
-    <LeechFraction index="Life" value="0.35" />
-    <LeechFlatModifierArray index="Hero" Validator="IllidanHuntersOnslaughtEmpowered" Modifier="0.35" />
-  </CEffectDamage>
-  <CEffectSet id="IllidanDiveRangedImpactSet">
-    <EffectArray value="IllidanDiveDeepDiveDamage" />
-    <EffectArray value="IllidanDiveHardImpactApplyStun" />
-    <EffectArray value="IllidanApplyAffixBurningBlades" />
-  </CEffectSet>
-  <CEffectSet id="IllidanDiveMeleeImpactSet">
-    <EffectArray value="IllidanDiveDeepDiveDamage" />
-    <EffectArray value="IllidanDiveHardImpactApplyStun" />
-    <EffectArray value="IllidanApplyAffixBurningBlades" />
-  </CEffectSet>
-  <CEffectSet id="IllidanSweepingStrikeImpactSet">
-    <EffectArray value="IllidanApplyAffixBurningBlades" />
-  </CEffectSet>
-  <CEffectSet id="IllidanDiveInitialSet">
-    <EffectArray value="IllidanDiveApplyUnstoppable" />
-  </CEffectSet>
-  <CEffectApplyBehavior id="IllidanDiveApplyUnstoppable">
-    <Chance value="0" />
-    <WhichUnit Value="Caster" />
-    <Behavior value="IllidanDiveUnstoppable" />
-  </CEffectApplyBehavior>
-  <CEffectApplyBehavior id="IllidanDiveHardImpactApplyStun">
-    <Chance value="0" />
-    <WhichUnit Value="Target" />
-    <Behavior value="IllidanDiveHardImpactStun" />
-  </CEffectApplyBehavior>
-
   <CEffectSet id="AffixLavaWave">
     <TargetLocationType value="Point"/>
   </CEffectSet>
 
-  <CEffectSet id="AffixAutoPalmSet">
-    <EffectArray value="AffixAutoPalmPersistent" />
-  </CEffectSet>
-  <CEffectCreatePersistent id="AffixAutoPalmPersistent">
-    <WhichLocation Value="SourceUnit" />
-    <!--<InitialEffect value="MonkDivinePalmInitialSet" />-->
-  </CEffectCreatePersistent>
-  
-  <CEffectApplyBehavior id="ApplyNightElfBondMalfurion">
-    <Behavior value="NightElfBondMalfurion" />
-  </CEffectApplyBehavior>
-  <CEffectSet id="NightElfBondMalfurionOrderSet">
-    <EffectArray value="NightElfBondMalfurionOrderAttack" />
-    <EffectArray value="NightElfBondMalfurionMalfurionSearchEnemiesMoonfire" />
-    <EffectArray value="NightElfBondMalfurionMalfurionSearchEnemiesRoot" />
-    <EffectArray value="NightElfBondMalfurionOrderMalfurionInnervate" />
-    <EffectArray value="NightElfBondMalfurionOrderMalfurionRegrowth" />
-    <EffectArray value="NightElfBondMalfurionOrderMove" />
-  </CEffectSet>
-  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionMoonfire">
-    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
-    <WhichUnit Value="Source" />
-    <Abil value="MalfurionMoonfire" />
-    <Target Value="TargetUnit" />
-  </CEffectIssueOrder>
-  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionEntanglingRoots">
-    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
-    <WhichUnit Value="Source" />
-    <Abil value="MalfurionEntanglingRoots" />
-    <Target Value="TargetUnit" />
-  </CEffectIssueOrder>
-  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionInnervate">
-    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
-    <WhichUnit Value="Source" />
-    <Abil value="MalfurionInnervate" />
-    <Target Value="CasterUnit" />
-  </CEffectIssueOrder>
-  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionRegrowth">
-    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
-    <WhichUnit Value="Source" />
-    <Abil value="MalfurionRegrowth" />
-    <Target Value="CasterUnit" />
-  </CEffectIssueOrder>
-  <CEffectIssueOrder id="NightElfBondMalfurionOrderAttack">
-    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrandeAndGT4" />
-    <WhichUnit Value="Source" />
-    <Abil value="attack" />
-    <Target Value="CasterPoint" />
-  </CEffectIssueOrder>
-  <CEffectIssueOrder id="NightElfBondMalfurionOrderMove">
-    <ValidatorArray value="NightElfBondMalfurionGT6RangeOfTyrande" />
-    <WhichUnit Value="Source" />
-    <Abil value="move" />
-    <Target Value="CasterPoint" />
-  </CEffectIssueOrder>
-  <CEffectEnumArea id="NightElfBondMalfurionMalfurionSearchEnemiesMoonfire">
-    <SearchFilters value="Visible;Self,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
-    <AreaArray MaxCount="1" Effect="NightElfBondMalfurionOrderMalfurionMoonfire">
-      <Radius value="9" />
-    </AreaArray>
-    <TargetSorts>
-      <SortArray value="TSHeroic" />
-      <SortArray value="TSMerc" />
-      <SortArray value="TSMinion" />
-      <SortArray value="TSDistance" />
-    </TargetSorts>
-  </CEffectEnumArea>
-  <CEffectEnumArea id="NightElfBondMalfurionMalfurionSearchEnemiesRoot">
-    <SearchFilters value="Visible,Heroic;Self,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
-    <AreaArray MaxCount="1" Effect="NightElfBondMalfurionOrderMalfurionEntanglingRoots">
-      <Radius value="8" />
-    </AreaArray>
-    <TargetSorts>
-      <SortArray value="TSHeroic" />
-    </TargetSorts>
-  </CEffectEnumArea>
-  <CEffectDamage id="NightElfBondDamage" parent="StormSpellPercentDamage">
-    <VitalFractionMax index="Life" value="10" />
-  </CEffectDamage>
-  <CEffectSet id="WitchDoctorPlagueofToadsExplodeImpactSet1">
-    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
-  </CEffectSet>
-  <CEffectSet id="WitchDoctorPlagueofToadsExplodeImpactSet2">
-    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
-  </CEffectSet>
-  <CEffectSet id="WitchDoctorPlagueofToadsExplodeImpactSet3">
-    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
-  </CEffectSet>
-  <CEffectSet id="WitchDoctorPlagueofToadsExplodeImpactSet4">
-    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
-  </CEffectSet>
-  <CEffectSet id="WitchDoctorPlagueofToadsExplodeImpactSet5">
-    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
-  </CEffectSet>
-  <CEffectSet id="WitchDoctorPlagueofToadsExpireSet">
-    <EffectArray value="NazeeboCorpseSpidersSpawnImpactSetToads" />
-  </CEffectSet>
-
-  <CEffectCreatePersistent id="NazeeboCorpseSpidersSpawnImpactSetToads">
-    <Chance value="0" />
-    <InitialEffect value="CorpseSpidersSpawnSpider"/>
-  </CEffectCreatePersistent>
-
+  <CEffectSet id="AffixDivineInterventionProcSet" />
   
   <CEffectCreateHealer id="AffixFirstAidCreateHealer" parent="StormSelfOnlyHealingSpellPercent">
     <FloaterCreation value="Suppress" />
     <ImpactUnit Value="Caster" />
     <RechargeVitalFraction value="0.01" />
-    <SourceButtonFace value="AffixFirstAid" />
+    <SourceButtonFace value="AffixFirstAidBehavior" />
   </CEffectCreateHealer>
 
   <CEffectSet id="AffixExpensiveAttacksSet">
@@ -795,597 +363,18 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </VitalArray>
   </CEffectModifyUnit>
   
-  <CEffectApplyBehavior id="AffixShieldApplyStack">
+  <CEffectApplyBehavior id="AffixStormShieldApplyBehavior">
     <WhichUnit Value="Caster" />
-    <Behavior value="AffixShield" />
+    <Behavior value="AffixStormShieldBehavior" />
   </CEffectApplyBehavior>
   
-  <CEffectSet id="AffixLastMomentsSet">
+  <CEffectSet id="AffixLastMomentsProcSet">
     <ValidatorArray value="CasterIsHero" />
-    <EffectArray value="AffixLastMomentsPersistent" />
+    <EffectArray value="AffixLastMomentsCreatePersistent" />
   </CEffectSet>
-  <CEffectCreatePersistent id="AffixLastMomentsPersistent">
+  <CEffectCreatePersistent id="AffixLastMomentsCreatePersistent">
     <WhichLocation Value="SourceUnit" />
   </CEffectCreatePersistent>
-
-
-  <CEffectModifyUnit id="ThrallModifyWeaponCooldown">
-      <Weapon Weapon="ThrallHeroWeaponRanged" CooldownOperation="Max" CooldownAmount="0.25"/>
-  </CEffectModifyUnit>
-  <CEffectModifyUnit id="WindfuryAttackSwingReset">
-      <Weapon Weapon="ThrallHeroWeaponRanged" CooldownOperation="Multiply"/>
-  </CEffectModifyUnit>
-  <CEffectSet id="ThrallHeroWeaponImpactSet">
-    <EffectArray value="ThrallChainLightningDummyPersistent"/>
-    <EffectArray value="ThrallFrostwolfResilienceApplySwitchWeapon"/>
-  </CEffectSet>
-  <CEffectSet id="WindfuryTempestFuryInitialHitSet">
-    <EffectArray value="ThrallChainLightningDummyPersistent"/>
-    <EffectArray value="ThrallFrostwolfResilienceApplySwitchWeapon"/>
-  </CEffectSet>
-
-  <CEffectSet id="ThrallFrostwolfResilienceApplySwitchWeapon">
-    <Chance value="0" />
-    <EffectArray value="ThrallFrostwolfResilienceApplySwitch"/>
-  </CEffectSet>
-
-  <CEffectCreatePersistent id="ThrallChainLightningDummyPersistent">
-    <Chance value="0" />
-    <Marker>
-        <MatchFlags index="Id" value="1"/>
-    </Marker>
-    <WhichLocation Value="TargetUnit"/>
-    <InitialDelay value="0"/>
-    <InitialEffect value="ApplyAbilityImpactReveal"/>
-    <FinalEffect value=""/>
-    <ExpireDelay value="0.25"/>
-    <AINotifySettings AreaEffect="">
-        <Flags index="Disabled" value="1"/>
-    </AINotifySettings>
-</CEffectCreatePersistent>
-
-<CEffectSet id="ThrallChainLightningTalentProcSet">
-    <EffectArray value="ThrallChainLightningApplyStun"/>
-</CEffectSet>
-<CEffectApplyBehavior id="ThrallChainLightningApplyStun">
-  <Chance value="0" />
-  <Behavior value="ThrallChainLightningStun"/>
-</CEffectApplyBehavior>
-
-<CEffectSwitch id="ThrallFrostwolfResilienceApplySwitch">
-  <CaseArray Validator="Has4StacksFrostwolfResilience" Effect="ThrallFrostwolfResilienceProcSet"/>
-  <CaseDefault value="ThrallFrostwolfResilienceApplySwitchSet"/>
-</CEffectSwitch>
-
-<CEffectSet id="ThrallFrostwolfResilienceApplySwitchSet">
-  <EffectArray value="ThrallFrostwolfResilienceApplyStack"/>
-  <EffectArray value="ThrallFrostwolfResilienceApplyStack2"/>
-</CEffectSet>
-
-<CEffectApplyBehavior id="ThrallFrostwolfResilienceApplyStack2">
-  <Chance value="0" />
-  <WhichUnit Value="Caster"/>
-  <Behavior value="ThrallFrostwolfResilienceStack"/>
-</CEffectApplyBehavior>
-
-<CEffectSet id="WizardTeleportSet">
-  <EffectArray value="WizardArcaneLoopMissiles" />
-  <EffectArray value="WizardArcaneLoopOrb" />
-</CEffectSet>
-<CEffectApplyBehavior id="WizardApplyMoveSpeed">
-  <Chance value="0" />
-  <WhichUnit Value="Caster" />
-  <Behavior value="WizardMoveSpeedBuff" />
-</CEffectApplyBehavior>
-
-<CEffectSet id="WizardArcaneOrbInitialSet2">
-  <Chance value="0" />
-  <EffectArray value="WizardArcaneOrbLaunchMissile" />
-</CEffectSet>
-<CEffectSet id="WizardArcaneOrbInitialSet">
-  <EffectArray value="WizardArcaneLoopMissiles" />
-  <EffectArray value="WizardArcaneLoopTeleport" />
-</CEffectSet>
-<CEffectSet id="WizardMagicMissilesInitialSet">
-  <EffectArray value="WizardArcaneLoopOrb" />
-  <EffectArray value="WizardArcaneLoopTeleport" />
-</CEffectSet>
-
-<CEffectCreatePersistent id="WizardArcaneOrbCreatePersistent">
-  <InitialEffect value="WizardArcaneOrbInitialSet" />
-  <InitialOffset Y="-12" />
-  <PeriodCount value="2"/>
-  <PeriodicEffectArray value="WizardArcaneOrbInitialSet2"/>
-  <PeriodicPeriodArray value="0"/>
-  <PeriodicPeriodArray value="0"/>
-  <PeriodicOffsetArray value="5,-14,0"/>
-  <PeriodicOffsetArray value="-5,-14,0"/>
-  <WhichLocation Value="CasterPoint" />
-</CEffectCreatePersistent>
-
-<CEffectSet id="WizardTeleportCalamitySet">
-  <EffectArray value="WizardTeleportCalamitySearch2" />
-</CEffectSet>
-<CEffectEnumArea id="WizardTeleportCalamitySearch2">
-  <Chance value="0" />
-  <ImpactLocation Value="CasterUnit" />
-  <SearchFilters value="-;Heroic,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden" />
-  <SearchFlags index="DoActorSearch" value="1" />
-  <AreaArray Effect="WizardTeleportCalamityImpactSet2">
-    <Radius value="2.5" />
-  </AreaArray>
-  <RevealerParams Duration="0.5" ShapeExpansion="1">
-    <RevealFlags index="Unfog" value="1" />
-  </RevealerParams>
-</CEffectEnumArea>
-<CEffectSet id="WizardTeleportCalamityImpactSet2">
-  <EffectArray value="WizardTeleportCalamityDamage2" />
-  <EffectArray value="ApplyAbilityImpactReveal" />
-</CEffectSet>
-<CEffectDamage id="WizardTeleportCalamityDamage2" parent="StormSpell">
-  <Amount value="150" />
-  <MultiplicativeModifierArray index="0" Accumulator="WizardTalrashasElementsCasterAccumulator" />
-  <SourceButtonFace value="WizardTeleportCalamityTalent" />
-</CEffectDamage>
-
-<CEffectCreatePersistent id="WizardMagicMissilesCreatePersistents">
-  <WhichLocation Value="CasterPoint" />
-  <PeriodCount value="3" />
-  <PeriodicEffectArray value="WizardMagicMissilesLeftOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesCenterOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesRightOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesMirrorballLeftOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesMirrorballRightOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesLeftOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesCenterOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesRightOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesMirrorballLeftOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesMirrorballRightOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesLeftOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesCenterOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesRightOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesMirrorballLeftOffsetCP2" />
-  <PeriodicEffectArray value="WizardMagicMissilesMirrorballRightOffsetCP2" />
-  <PeriodicOffsetArray X="3" />
-  <PeriodicOffsetArray />
-  <PeriodicOffsetArray X="-3" />
-  <PeriodicOffsetArray X="6" />
-  <PeriodicOffsetArray X="-6" />
-  <PeriodicOffsetArray X="3" />
-  <PeriodicOffsetArray />
-  <PeriodicOffsetArray X="-3" />
-  <PeriodicOffsetArray X="6" />
-  <PeriodicOffsetArray X="-6" />
-  <PeriodicOffsetArray X="3" />
-  <PeriodicOffsetArray />
-  <PeriodicOffsetArray X="-3" />
-  <PeriodicOffsetArray X="6" />
-  <PeriodicOffsetArray X="-6" />
-  <PeriodicOffsetArray X="3" />
-  <PeriodicOffsetArray />
-  <PeriodicOffsetArray X="-3" />
-  <PeriodicOffsetArray X="6" />
-  <PeriodicOffsetArray X="-6" />
-  <PeriodicPeriodArray value="0"/>
-  <PeriodicPeriodArray value="0"/>
-  <PeriodicPeriodArray value="0"/>
-  <PeriodicPeriodArray value="0"/>
-  <PeriodicPeriodArray value="0"/>
-  <PeriodicPeriodArray value="0.125"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <PeriodicPeriodArray value="0.0625"/>
-  <Marker Duration="5">
-    <MatchFlags index="Id" value="1" />
-  </Marker>
-  <FinalEffect value="WizardMagicMissilesTalrashasElementsSwitch" />
-</CEffectCreatePersistent>
-
-
-<CEffectCreatePersistent id="WizardMagicMissilesLeftOffsetCP2">
-  <OffsetVectorStartLocation Effect="WizardMagicMissilesLeftOffsetCP2" Value="TargetPoint" />
-  <OffsetVectorEndLocation Effect="WizardMagicMissilesInitialSet" />
-  <InitialEffect value="WizardMagicMissilesLeftLM2" />
-  <InitialOffset Y="-12" />
-</CEffectCreatePersistent>
-<CEffectCreatePersistent id="WizardMagicMissilesCenterOffsetCP2">
-  <OffsetVectorStartLocation Effect="WizardMagicMissilesCenterOffsetCP2" Value="TargetPoint" />
-  <OffsetVectorEndLocation Effect="WizardMagicMissilesInitialSet" />
-  <InitialEffect value="WizardMagicMissilesCenterLM2" />
-  <InitialOffset Y="-12" />
-</CEffectCreatePersistent>
-<CEffectCreatePersistent id="WizardMagicMissilesRightOffsetCP2">
-  <OffsetVectorStartLocation Effect="WizardMagicMissilesRightOffsetCP2" Value="TargetPoint" />
-  <OffsetVectorEndLocation Effect="WizardMagicMissilesInitialSet" />
-  <InitialEffect value="WizardMagicMissilesRightLM2" />
-  <InitialOffset Y="-12" />
-</CEffectCreatePersistent>
-<CEffectCreatePersistent id="WizardMagicMissilesMirrorballLeftOffsetCP2">
-  <OffsetVectorStartLocation Effect="WizardMagicMissilesMirrorballLeftOffsetCP2" Value="TargetPoint" />
-  <OffsetVectorEndLocation Effect="WizardMagicMissilesInitialSet" />
-  <InitialEffect value="WizardMagicMissilesMirrorballLeftLM2" />
-  <InitialOffset Y="-12" />
-</CEffectCreatePersistent>
-<CEffectCreatePersistent id="WizardMagicMissilesMirrorballRightOffsetCP2">
-  <OffsetVectorStartLocation Effect="WizardMagicMissilesMirrorballRightOffsetCP2" Value="TargetPoint" />
-  <OffsetVectorEndLocation Effect="WizardMagicMissilesInitialSet" />
-  <InitialEffect value="WizardMagicMissilesMirrorballRightLM2" />
-  <InitialOffset Y="-12" />
-</CEffectCreatePersistent>
-<CEffectLaunchMissile id="WizardMagicMissilesLeftLM2">
-  <LaunchLocation Effect="WizardMagicMissilesLeftOffsetCP2" Value="TargetPoint" />
-  <ImpactLocation Value="TargetPoint" />
-  <LaunchOffset Y="-1" />
-  <LaunchEffect value="WizardMagicMissilesLeftSearchSet2" />
-  <ImpactEffect value="WizardMagicMissilesLeftSearchDP2" />
-  <AmmoUnit value="WizardMagicMissilesMissileLeft" />
-</CEffectLaunchMissile>
-<CEffectLaunchMissile id="WizardMagicMissilesCenterLM2">
-  <LaunchLocation Effect="WizardMagicMissilesCenterOffsetCP2" Value="TargetPoint" />
-  <ImpactLocation Value="TargetPoint" />
-  <LaunchOffset Y="-1" />
-  <LaunchEffect value="WizardMagicMissilesCenterSearchSet2" />
-  <ImpactEffect value="WizardMagicMissilesCenterSearchDP2" />
-  <AmmoUnit value="WizardMagicMissilesMissile" />
-</CEffectLaunchMissile>
-<CEffectLaunchMissile id="WizardMagicMissilesRightLM2">
-  <LaunchLocation Effect="WizardMagicMissilesRightOffsetCP2" Value="TargetPoint" />
-  <ImpactLocation Value="TargetPoint" />
-  <LaunchOffset Y="-1" />
-  <LaunchEffect value="WizardMagicMissilesRightSearchSet2" />
-  <ImpactEffect value="WizardMagicMissilesRightSearchDP2" />
-  <AmmoUnit value="WizardMagicMissilesMissileRight" />
-</CEffectLaunchMissile>
-<CEffectLaunchMissile id="WizardMagicMissilesMirrorballLeftLM2">
-  <LaunchLocation Effect="WizardMagicMissilesMirrorballLeftOffsetCP2" Value="TargetPoint" />
-  <ImpactLocation Value="TargetPoint" />
-  <LaunchOffset Y="-1" />
-  <LaunchEffect value="WizardMagicMissilesMirrorballLeftSearchSet2" />
-  <ImpactEffect value="WizardMagicMissilesMirrorballLeftSearchDP2" />
-  <AmmoUnit value="WizardMagicMissilesMissileLeftTA" />
-</CEffectLaunchMissile>
-<CEffectLaunchMissile id="WizardMagicMissilesMirrorballRightLM2">
-  <LaunchLocation Effect="WizardMagicMissilesMirrorballRightOffsetCP2" Value="TargetPoint" />
-  <ImpactLocation Value="TargetPoint" />
-  <LaunchOffset Y="-1" />
-  <LaunchEffect value="WizardMagicMissilesMirrorballRightSearchSet2" />
-  <ImpactEffect value="WizardMagicMissilesMirrorballRightSearchDP2" />
-  <AmmoUnit value="WizardMagicMissilesMissileRightTA" />
-</CEffectLaunchMissile>
-<CEffectDestroyPersistent id="WizardMagicMissilesLeftSearchDP2">
-  <WhichLocation Value="SourceUnit" />
-  <Effect value="WizardMagicMissilesLeftSearchCP2" />
-  <Count value="1" />
-</CEffectDestroyPersistent>
-<CEffectDestroyPersistent id="WizardMagicMissilesCenterSearchDP2">
-  <WhichLocation Value="SourceUnit" />
-  <Effect value="WizardMagicMissilesCenterSearchCP2" />
-  <Count value="1" />
-</CEffectDestroyPersistent>
-<CEffectDestroyPersistent id="WizardMagicMissilesRightSearchDP2">
-  <WhichLocation Value="SourceUnit" />
-  <Effect value="WizardMagicMissilesRightSearchCP2" />
-  <Count value="1" />
-</CEffectDestroyPersistent>
-<CEffectDestroyPersistent id="WizardMagicMissilesMirrorballLeftSearchDP2">
-  <WhichLocation Value="SourceUnit" />
-  <Effect value="WizardMagicMissilesMirrorballLeftSearchCP2" />
-  <Count value="1" />
-</CEffectDestroyPersistent>
-<CEffectDestroyPersistent id="WizardMagicMissilesMirrorballRightSearchDP2">
-  <WhichLocation Value="SourceUnit" />
-  <Effect value="WizardMagicMissilesMirrorballRightSearchCP2" />
-  <Count value="1" />
-</CEffectDestroyPersistent>
-<CEffectSet id="WizardMagicMissilesRightSearchSet2">
-  <EffectArray value="WizardTeleportMagicMissilesBonusDamageBuffAetherWalkerApplyBehavior" />
-  <EffectArray value="WizardTalrashaElementsForwardStacksSet" />
-  <EffectArray value="WizardMagicMissilesRightSearchCP2" />
-</CEffectSet>
-<CEffectSet id="WizardMagicMissilesCenterSearchSet2">
-  <EffectArray value="WizardTeleportMagicMissilesBonusDamageBuffAetherWalkerApplyBehavior" />
-  <EffectArray value="WizardTalrashaElementsForwardStacksSet" />
-  <EffectArray value="WizardMagicMissilesCenterSearchCP2" />
-</CEffectSet>
-<CEffectSet id="WizardMagicMissilesLeftSearchSet2">
-  <EffectArray value="WizardTeleportMagicMissilesBonusDamageBuffAetherWalkerApplyBehavior" />
-  <EffectArray value="WizardTalrashaElementsForwardStacksSet" />
-  <EffectArray value="WizardMagicMissilesLeftSearchCP2" />
-</CEffectSet>
-<CEffectSet id="WizardMagicMissilesMirrorballLeftSearchSet2">
-  <EffectArray value="WizardTeleportMagicMissilesBonusDamageBuffAetherWalkerApplyBehavior" />
-  <EffectArray value="WizardTalrashaElementsForwardStacksSet" />
-  <EffectArray value="WizardMagicMissilesMirrorballLeftSearchCP2" />
-</CEffectSet>
-<CEffectSet id="WizardMagicMissilesMirrorballRightSearchSet2">
-  <EffectArray value="WizardTeleportMagicMissilesBonusDamageBuffAetherWalkerApplyBehavior" />
-  <EffectArray value="WizardTalrashaElementsForwardStacksSet" />
-  <EffectArray value="WizardMagicMissilesMirrorballRightSearchCP2" />
-</CEffectSet>
-<CEffectCreatePersistent id="WizardMagicMissilesRightSearchCP2">
-  <WhichLocation Value="SourceUnit" />
-  <Flags index="PersistUntilDestroyed" value="1" />
-  <PeriodicValidator value="SourceNotDead" />
-  <PeriodicEffectArray value="WizardMagicMissilesRightSearch2" />
-  <PeriodicPeriodArray value="0.0625" />
-  <InitialDelay value="0.1875" />
-</CEffectCreatePersistent>
-<CEffectCreatePersistent id="WizardMagicMissilesCenterSearchCP2">
-  <WhichLocation Value="SourceUnit" />
-  <Flags index="PersistUntilDestroyed" value="1" />
-  <PeriodicValidator value="SourceNotDead" />
-  <PeriodicEffectArray value="WizardMagicMissilesCenterSearch2" />
-  <PeriodicPeriodArray value="0.0625" />
-  <InitialDelay value="0.1875" />
-</CEffectCreatePersistent>
-<CEffectCreatePersistent id="WizardMagicMissilesLeftSearchCP2">
-  <WhichLocation Value="SourceUnit" />
-  <Flags index="PersistUntilDestroyed" value="1" />
-  <PeriodicValidator value="SourceNotDead" />
-  <PeriodicEffectArray value="WizardMagicMissilesLeftSearch2" />
-  <PeriodicPeriodArray value="0.0625" />
-  <InitialDelay value="0.1875" />
-</CEffectCreatePersistent>
-<CEffectCreatePersistent id="WizardMagicMissilesMirrorballLeftSearchCP2">
-  <WhichLocation Value="SourceUnit" />
-  <Flags index="PersistUntilDestroyed" value="1" />
-  <PeriodicValidator value="SourceNotDead" />
-  <PeriodicEffectArray value="WizardMagicMissilesMirrorballLeftSearch2" />
-  <PeriodicPeriodArray value="0.0625" />
-  <InitialDelay value="0.1875" />
-</CEffectCreatePersistent>
-<CEffectCreatePersistent id="WizardMagicMissilesMirrorballRightSearchCP2">
-  <WhichLocation Value="SourceUnit" />
-  <Flags index="PersistUntilDestroyed" value="1" />
-  <PeriodicValidator value="SourceNotDead" />
-  <PeriodicEffectArray value="WizardMagicMissilesMirrorballRightSearch2" />
-  <PeriodicPeriodArray value="0.0625" />
-  <InitialDelay value="0.1875" />
-</CEffectCreatePersistent>
-<CEffectEnumArea id="WizardMagicMissilesLeftSearch2">
-  <LaunchLocation Effect="WizardMagicMissilesLeftOffsetCP2" Value="TargetPoint" />
-  <ImpactLocation Value="SourceUnit" />
-  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
-  <SearchFlags index="DoActorSearch" value="1" />
-  <AreaArray MaxCount="1" Effect="WizardMagicMissilesImpactSet2">
-    <RectangleWidth value="0.5" />
-    <RectangleHeight value="1.6" />
-  </AreaArray>
-  <RevealerParams Duration="0.5" ShapeExpansion="1">
-    <RevealFlags index="Unfog" value="1" />
-  </RevealerParams>
-</CEffectEnumArea>
-<CEffectEnumArea id="WizardMagicMissilesCenterSearch2">
-  <LaunchLocation Effect="WizardMagicMissilesCenterOffsetCP2" Value="OriginPoint" />
-  <ImpactLocation Value="SourceUnit" />
-  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
-  <SearchFlags index="DoActorSearch" value="1" />
-  <AreaArray MaxCount="1" Effect="WizardMagicMissilesImpactSet2">
-    <RectangleWidth value="0.5" />
-    <RectangleHeight value="1.6" />
-  </AreaArray>
-  <RevealerParams Duration="0.5" ShapeExpansion="1">
-    <RevealFlags index="Unfog" value="1" />
-  </RevealerParams>
-</CEffectEnumArea>
-<CEffectEnumArea id="WizardMagicMissilesRightSearch2">
-  <LaunchLocation Effect="WizardMagicMissilesRightOffsetCP2" Value="TargetPoint" />
-  <ImpactLocation Value="SourceUnit" />
-  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
-  <SearchFlags index="DoActorSearch" value="1" />
-  <AreaArray MaxCount="1" Effect="WizardMagicMissilesImpactSet2">
-    <RectangleWidth value="0.5" />
-    <RectangleHeight value="1.6" />
-  </AreaArray>
-  <RevealerParams Duration="0.5" ShapeExpansion="1">
-    <RevealFlags index="Unfog" value="1" />
-  </RevealerParams>
-</CEffectEnumArea>
-<CEffectEnumArea id="WizardMagicMissilesMirrorballLeftSearch2">
-  <LaunchLocation Effect="WizardMagicMissilesMirrorballLeftOffsetCP2" Value="TargetPoint" />
-  <ImpactLocation Value="SourceUnit" />
-  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
-  <SearchFlags index="DoActorSearch" value="1" />
-  <AreaArray MaxCount="1" Effect="WizardMagicMissilesImpactSet2">
-    <RectangleWidth value="0.5" />
-    <RectangleHeight value="1.6" />
-  </AreaArray>
-  <RevealerParams Duration="0.5" ShapeExpansion="1">
-    <RevealFlags index="Unfog" value="1" />
-  </RevealerParams>
-</CEffectEnumArea>
-<CEffectEnumArea id="WizardMagicMissilesMirrorballRightSearch2">
-  <LaunchLocation Effect="WizardMagicMissilesMirrorballRightOffsetCP2" Value="TargetPoint" />
-  <ImpactLocation Value="SourceUnit" />
-  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
-  <SearchFlags index="DoActorSearch" value="1" />
-  <AreaArray MaxCount="1" Effect="WizardMagicMissilesImpactSet2">
-    <RectangleWidth value="0.5" />
-    <RectangleHeight value="1.6" />
-  </AreaArray>
-  <RevealerParams Duration="0.5" ShapeExpansion="1">
-    <RevealFlags index="Unfog" value="1" />
-  </RevealerParams>
-</CEffectEnumArea>
-<CEffectSet id="WizardMagicMissilesImpactSet2">
-  <EffectArray value="WizardForceArmorBlockApplyBehavior" />
-  <EffectArray value="WizardMagicMissilesDamageImpactSet2" />
-  <EffectArray value="WizardMagicMissilesDamageImpactSet2Structure" />
-  <EffectArray value="WizardMagicMissilesChargedBlastDebuffAB" />
-  <EffectArray value="WizardMagicMissilesSuicide" />
-</CEffectSet>
-<CEffectSet id="WizardMagicMissilesDamageImpactSet2">
-  <ValidatorArray value="NotStructureTarget" />
-  <EffectArray value="WizardMagicMissilesDamage2" />
-  <EffectArray value="ApplyAbilityImpactReveal" />
-</CEffectSet>
-<CEffectSet id="WizardMagicMissilesDamageImpactSet2Structure">
-  <ValidatorArray value="IsStructureTarget" />
-  <EffectArray value="WizardMagicMissilesDamage2Structure" />
-  <EffectArray value="ApplyAbilityImpactReveal" />
-</CEffectSet>
-<CEffectDamage id="WizardMagicMissilesDamage2" parent="StormSpell">
-  <Amount value="73.5" />
-  <MultiplicativeModifierArray index="0" Accumulator="WizardTalrashasElementsSourceMissileAccumulator" />
-  <MultiplicativeModifierArray index="AetherWalker" Validator="WizardSourceHasTeleportMagicMissilesBonusDamageBuffAndAetherWalkerTalent" Modifier="0.1" />
-</CEffectDamage>
-<CEffectDamage id="WizardMagicMissilesDamage2Structure" parent="StormSpell">
-  <Amount value="36.75" />
-  <MultiplicativeModifierArray index="0" Accumulator="WizardTalrashasElementsSourceMissileAccumulator" />
-  <MultiplicativeModifierArray index="AetherWalker" Validator="WizardSourceHasTeleportMagicMissilesBonusDamageBuffAndAetherWalkerTalent" Modifier="0.1" />
-</CEffectDamage>
-
-
-<CEffectModifyTokenCount id="LiMingCriticalPowerIncrementToken" parent="BaseEffectModifyTokenCount">
-  <TokenId value="LiMingCriticalPowerTokenCounter" />
-  <EffectCategory index="Quest" value="1" />
-</CEffectModifyTokenCount>
-
-<CEffectSet id="WizardWaveOfForceSearchImpactSet">
-  <EffectArray value="WizardWaveOfForceWaveofDoomSet" />
-</CEffectSet>
-
-<CEffectSet id="WizardWaveOfForceWaveofDoomSet">
-  <Chance value="0" />
-  <ValidatorArray value="TargetIsHero" />
-  <EffectArray value="WizardWaveOfForceWaveofDoomApplyBehavior" />
-</CEffectSet>
-<CEffectApplyBehavior id="WizardWaveOfForceWaveofDoomApplyBehavior">
-  <Behavior value="LiMingWaveofDoomSpellArmor" />
-</CEffectApplyBehavior>
-
-
-<CEffectCreateHealer id="WizardDominanceManaHealerAffix" parent="StormManaRestore">
-  <RechargeVitalFraction value="0.3" />
-</CEffectCreateHealer>
-
-<CEffectModifyUnit id="WizardArcaneLoopMissiles">
-  <Cost Abil="WizardMagicMissiles,Execute" CooldownOperation="Add" CooldownTimeUse="-0.5" />
-  <Chance value="0" />
-  <ImpactUnit Value="Caster" />
-</CEffectModifyUnit>
-<CEffectModifyUnit id="WizardArcaneLoopOrb">
-  <Cost Abil="WizardArcaneOrb,Execute" CooldownOperation="Add" CooldownTimeUse="-0.5" />
-  <Chance value="0" />
-  <ImpactUnit Value="Caster" />
-</CEffectModifyUnit>
-<CEffectModifyUnit id="WizardArcaneLoopTeleport">
-  <Cost Abil="WizardTeleport,Execute" CooldownOperation="Add" CooldownTimeUse="-0.5" />
-  <Chance value="0" />
-  <ImpactUnit Value="Caster" />
-</CEffectModifyUnit>
-
-<CEffectModifyPlayer id="WizardAetherWalkerInitialModifyPlayerTeleporter">
-  <Chance value="0" />
-  <EffectArray Operation="Subtract" Reference="Abil,WizardTeleport,Cost[0].Charge.TimeUse" Value="2.000000" />
-</CEffectModifyPlayer>
-<CEffectModifyPlayer id="WizardAetherWalkerExpirationModifyPlayerTeleporter">
-  <Chance value="0" />
-  <EffectArray Reference="Abil,WizardTeleport,Cost[0].Charge.TimeUse" Value="2.000000" />
-</CEffectModifyPlayer>
-
-<CEffectSet id="WizardAetherWalkerSet">
-  <EffectArray value="WizardAetherWalkerInitialModifyPlayerTeleporter" />
-</CEffectSet>
-<CEffectSet id="WizardAetherWalkerExpirationSet">
-  <EffectArray value="WizardAetherWalkerExpirationModifyPlayer" />
-  <EffectArray value="WizardAetherWalkerExpirationModifyPlayerTeleporter" />
-</CEffectSet>
-
-<CEffectModifyPlayer id="ThrallWindfuryMaelstromWeaponTalent1stQuestCompletionModifyPlayer">
-  <EffectArray index="0" Operation="Add" Reference="Behavior,WindfurySpeedBuff,Modification.UnifiedMoveSpeedFactor" Value=".1"/>
-</CEffectModifyPlayer>
-
-<CEffectSet id="ThrallEarthquakeDamageSet">
-  <EffectArray value="ApplyAbilityImpactReveal"/>
-</CEffectSet>
-<CEffectApplyBehavior id="TyrandeSentinelApplyPierceBuff">
-  <WhichUnit Value="Source" />
-  <Behavior value="TyrandeSentinelPierceBuff" />
-  <ValidatorArray index="0" value="HasPierceQuestCompleteOrHasPierceQuestCompleteAffix" />
-</CEffectApplyBehavior>
-
-<CEffectModifyPlayer id="MuradinDwarfTossTokenCounterUpgrade">
-  <EffectArray Reference="Abil,MuradinDwarfToss,Cost[0].Charge.TimeUse" Value="-4" />
-</CEffectModifyPlayer>
-
-<CEffectSet id="WitchDoctorRitualofBoonsQuestComplete" />
-
-<CEffectModifyTokenCount id="WitchDoctorRitualofBoonsAddToken" parent="BaseEffectModifyTokenCount">
-  <Chance value="0" />
-  <TokenId value="WitchDoctorRitualofBoonsQuestToken" />
-</CEffectModifyTokenCount>
-
-<CEffectSet id="WitchDoctorVoodooRitualProcSet">
-  <EffectArray value="WitchDoctorRitualofBoonsAddToken" />
-</CEffectSet>
-<CEffectSet id="WitchDoctorVoodooRitualProcSetNoValidate">
-  <EffectArray value="WitchDoctorRitualofBoonsAddToken" />
-</CEffectSet>
-
-<CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce1Search">
-  <ImpactLocation Value="TargetPoint"/>
-  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
-  <ExcludeArray Value="Target"/>
-  <TargetSorts RequestCount="1" RequestPercentage="1">
-      <SortArray value="TSHeroic"/>
-      <SortArray value="TSNoLowBouncePriority"/>
-  </TargetSorts>
-  <AreaArray Effect="ThrallChainLightningBounce1ImpactSet">
-      <Radius value="6"/>
-  </AreaArray>
-  <MaxCount value="1"/>
-</CEffectEnumArea>
-<CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce2Search">
-  <ImpactLocation Value="TargetPoint"/>
-  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
-  <ExcludeArray Value="Target"/>
-  <TargetSorts RequestCount="1" RequestPercentage="1">
-      <SortArray value="TSHeroic"/>
-      <SortArray value="TSNoLowBouncePriority"/>
-  </TargetSorts>
-  <AreaArray Effect="ThrallChainLightningBounce2ImpactSet">
-      <Radius value="6"/>
-  </AreaArray>
-  <MaxCount value="1"/>
-</CEffectEnumArea>
-<CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce3Search">
-  <ImpactLocation Value="TargetPoint"/>
-  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
-  <ExcludeArray Value="Target"/>
-  <TargetSorts RequestCount="1" RequestPercentage="1">
-      <SortArray value="TSHeroic"/>
-      <SortArray value="TSNoLowBouncePriority"/>
-  </TargetSorts>
-  <AreaArray Effect="ThrallChainLightningBounce3ImpactSet">
-      <Radius value="6"/>
-  </AreaArray>
-  <MaxCount value="1"/>
-</CEffectEnumArea>
-<CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce4Search">
-  <ImpactLocation Value="TargetPoint"/>
-  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
-  <ExcludeArray Value="Target"/>
-  <TargetSorts RequestCount="1" RequestPercentage="1">
-      <SortArray value="TSHeroic"/>
-      <SortArray value="TSNoLowBouncePriority"/>
-  </TargetSorts>
-  <AreaArray Effect="ThrallChainLightningBounce4ImpactSet">
-      <Radius value="6"/>
-  </AreaArray>
-  <MaxCount value="1"/>
-</CEffectEnumArea>
 
 <CEffectDamage id="AffixGiantKillerDamage" parent="StormSpellPercentDamage">
   <Visibility value="Hidden" />
@@ -1393,94 +382,46 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CritValidatorArray value="CritAliasSpellPower" />
 </CEffectDamage>
 
-<CEffectSet id="AffixAncientBlessingsAoEProcDummy">
-  <EffectArray value="DeckardAncientBlessingsHealAoESearch" />
-  <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
-</CEffectSet>
-
-<CEffectSet id="EmptySetDummy" />
-
-<CEffectSet id="SgtHammerTankAttackImpactSet">
-  <EffectArray value="SgtHammerShredderRoundsApplyBehavior" />
-  <EffectArray value="SgtHammerDebilitatingRoundsApplyBehavior" />
-  <EffectArray value="SgtHammerTrojanMinesSwitch" />
-  <EffectArray value="SgtHammerRubberBulletsSwitch" />
-  <EffectArray value="SgtHammerExplosiveShellsSplashSearch" />
-</CEffectSet>
-<CEffectApplyBehavior id="SgtHammerShredderRoundsApplyBehavior">
-  <Chance value="0" />
-  <Behavior value="SgtHammerShredderRoundsArmorDebuff" />
-  <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
-</CEffectApplyBehavior>
-<CEffectApplyBehavior id="SgtHammerDebilitatingRoundsApplyBehavior">
-  <Chance value="0" />
-  <Behavior value="SgtHammerDebilitatingRoundsSlow" />
-  <ValidatorArray value="NotStructureTarget" />
-  <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
-</CEffectApplyBehavior>
-
-<CEffectApplyBehavior id="SgtHammerTrojanMinesApplyBehavior">
-  <Behavior value="SgtHammerTrojanMinesStack" />
-</CEffectApplyBehavior>
-<CEffectSet id="SgtHammerTrojanMinesProcSet">
-  <EffectArray value="SgtHammerSpiderMinesCreateUnit" />
-  <EffectArray value="SgtHammerTrojanMinesRemoveStackBehavior" />
-</CEffectSet>
-<CEffectRemoveBehavior id="SgtHammerTrojanMinesRemoveStackBehavior">
-  <BehaviorLink value="SgtHammerTrojanMinesStack" />
-  <Count value="8" />
-</CEffectRemoveBehavior>
-<CEffectSwitch id="SgtHammerTrojanMinesSwitch">
-  <Chance value="0" />
-  <CaseArray Validator="Has8StackSgtHammerTrojanMines" Effect="SgtHammerTrojanMinesProcSet" />
-  <CaseDefault value="SgtHammerTrojanMinesApplyBehavior" />
-  <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
-</CEffectSwitch>
-
-<CEffectApplyBehavior id="SgtHammerRubberBulletsApplyBehavior">
-  <Behavior value="SgtHammerRubberBulletsStack" />
-</CEffectApplyBehavior>
-<CEffectApplyBehavior id="SgtHammerRubberBulletsApplyStun">
-  <Behavior value="SgtHammerRubberBulletsStun" />
-</CEffectApplyBehavior>
-<CEffectSet id="SgtHammerRubberBulletsProcSet">
-  <EffectArray value="SgtHammerRubberBulletsApplyStun" />
-  <EffectArray value="SgtHammerRubberBulletsRemoveStackBehavior" />
-</CEffectSet>
-<CEffectRemoveBehavior id="SgtHammerRubberBulletsRemoveStackBehavior">
-  <BehaviorLink value="SgtHammerRubberBulletsStack" />
-  <Count value="8" />
-</CEffectRemoveBehavior>
-<CEffectSwitch id="SgtHammerRubberBulletsSwitch">
-  <Chance value="0" />
-  <CaseArray Validator="Has8StackSgtHammerRubberBullets" Effect="SgtHammerRubberBulletsProcSet" />
-  <CaseDefault value="SgtHammerRubberBulletsApplyBehavior" />
-  <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
-</CEffectSwitch>
-
-
-<CEffectEnumArea id="SgtHammerExplosiveShellsSplashSearch">
-  <ValidatorArray value="TargetNotEvading" />
-  <ExcludeArray Effect="SgtHammerTankAttackImpactSet" Value="Target" />
-  <SearchFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
-  <AreaArray Effect="SgtHammerExplosiveShellsSplashSet">
-    <Radius value="1.5" />
-  </AreaArray>
-  <RevealerParams Duration="0.75" ShapeExpansion="1">
-    <RevealFlags index="Unfog" value="1" />
-  </RevealerParams>
-</CEffectEnumArea>
-
-  <CEffectSet id="SgtHammerExplosiveShellsSplashSet">
-    <Chance value="0" />
-    <EffectArray value="UniversalWeaponImpact" />
-    <EffectArray value="SgtHammerTankWeaponPreImpactSet" />
-    <EffectArray value="SgtHammerTankAttackDamage" />
-    <EffectArray value="SgtHammerTankWeaponPostImpactSet" />
-    <EffectArray value="UniversalWeaponPostImpactSet" />
-    <EffectArray value="SgtHammerShredderRoundsApplyBehavior" />
-    <EffectArray value="SgtHammerDebilitatingRoundsApplyBehavior" />
+  <CEffectSet id="AffixAncientBlessingsProcSet">
+    <EffectArray value="AffixAncientBlessingsHealAoESearch" />
+    <EffectArray value="AffixAncientBlessingsAoESearch" />
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
   </CEffectSet>
+  <CEffectEnumArea id="AffixAncientBlessingsHealAoESearch">
+    <ImpactLocation Value="TargetPoint" />
+    <SearchFilters value="Heroic;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="AffixAncientBlessingsCreateHealer">
+      <Radius value="2.5" />
+    </AreaArray>
+    <RevealerParams Duration="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="DoActorSearch" value="1" />
+  </CEffectEnumArea>
+  <CEffectCreateHealer id="AffixAncientBlessingsCreateHealer" parent="StormHealingSpell">
+    <LaunchUnit Value="Source" />
+    <ImpactUnit Value="Source" />
+    <RechargeVitalRate value="90" />
+    <SourceButtonFace value="DeckardAncientBlessings" />
+  </CEffectCreateHealer>
+  <CEffectEnumArea id="AffixAncientBlessingsAoESearch">
+    <ImpactLocation Value="TargetPoint" />
+    <SearchFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="AffixAncientBlessingsAoEImpactSet">
+      <Radius value="2.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.75" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="DoActorSearch" value="1" />
+  </CEffectEnumArea>
+  <CEffectSet id="AffixAncientBlessingsAoEImpactSet">
+    <EffectArray value="AffixAncientBlessingsAoEDamage" />
+  </CEffectSet>
+  <CEffectDamage id="AffixAncientBlessingsAoEDamage" parent="StormSpell">
+    <Amount value="62" />
+    <SourceButtonFace value="DeckardAncientBlessings" />
+  </CEffectDamage>
 
   <CEffectCreateHealer id="DoomedRegenCreateHealer" parent="StormHealingSpell">
     <FloaterCreation value="Suppress" />
@@ -1500,68 +441,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ValidatorArray index="0" value="TargetIsNotABossUnitOrMonsterMinorCombine" />
     <Behavior value="AffixMercenaryLordDamageBuff" />
   </CEffectApplyBehavior>
-
-  <CEffectCreatePersistent id="SgtHammerSpiderMinesInitialPersistent">
-    <InitialEffect value="SgtHammerAmbushHoldFireRemoveSet" />
-    <InitialOffset Y="1" />
-    <ExpireEffect value="SgtHammerSpiderMinesCreateUnitExtraMine" />
-    <ExpireOffset Y="1" />
-    <PeriodCount value="4" />
-    <PeriodicEffectArray value="SgtHammerSpiderMinesRotateTurretModifyUnit" />
-    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
-    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnitSwitch" />
-    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
-    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
-    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
-    <PeriodicOffsetArray X="2.4" Y="0.6" />
-    <PeriodicOffsetArray X="1.2" Y="0.1" />
-    <PeriodicOffsetArray Y="-0.4" />
-    <PeriodicOffsetArray X="-1.2" Y="0.1" />
-    <PeriodicOffsetArray X="-2.4" Y="0.6" />
-    <PeriodicPeriodArray value="0" />
-    <PeriodicPeriodArray value="0.1" />
-    <PeriodicPeriodArray value="0.1" />
-    <PeriodicPeriodArray value="0.1" />
-    <PeriodicPeriodArray value="0.1" />
-    <PeriodicPeriodArray value="0.1" />
-  </CEffectCreatePersistent>
-
-  <CEffectDamage id="SgtHammerSpiderMinesDamage" parent="StormSpell">
-    <Visibility value="Hidden" />
-    <Amount value="96" />
-    <LeechFraction index="Life" value="0.75" />
-    <LeechValidator index="Life" value="SgtHammerHasTrojanMines" />
-    <MultiplicativeModifierArray index="SgtHammerExplosiveMine" Modifier="0" />
-  </CEffectDamage>
-
-  <CEffectDamage id="WitchDoctorGargantuanStompDamage" parent="StormSpell">
-    <Amount value="240" />
-    <Visibility value="Hidden" />
-    <MultiplicativeModifierArray index="Tantrum" Modifier="0" />
-  </CEffectDamage>
-
-  <CEffectDamage id="ConcussiveBlastDamage" parent="StormSpell">
-    <Amount value="141" />
-    <MultiplicativeModifierArray index="Entrenched" Validator="SgtHammerHasSgtHammerEntrenchedANDCasterHasSiegeMode" Modifier="0.75" Crit="1" />
-    <MultiplicativeModifierArray index="SgtHammerBlaster" Modifier="0" />
-  </CEffectDamage>
-
-  <CEffectSet id="SiegeWeaponImpactSet">
-    <EffectArray value="SiegeWeaponSplashSearch2" />
-  </CEffectSet>
-
-  <CEffectEnumArea id="SiegeWeaponSplashSearch2">
-    <Chance value="0" />
-    <ValidatorArray value="TargetNotEvading" />
-    <ExcludeArray Effect="SiegeWeaponImpactSet" Value="Target" />
-    <SearchFilters value="Ally;Self,Player,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
-    <AreaArray Effect="SiegeWeaponSplashDamageSet">
-      <Radius value="2" />
-    </AreaArray>
-    <RevealerParams Duration="0.75" ShapeExpansion="1">
-      <RevealFlags index="Unfog" value="1" />
-    </RevealerParams>
-  </CEffectEnumArea>
 
   <CEffectSet id="RegenGlobeSearchSet">
     <EffectArray value="RegenGlobeSearch2" />
@@ -1624,85 +503,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <EffectArray value="RegenGlobeNeutralDummySet" />
     <ValidatorArray value="TargetHasGlobeCollector" />
   </CEffectSet>
-
-  <CEffectEnumArea id="SentinelShotMissileSearchPvE">
-    <Chance value="0" />
-    <SearchFilters value="-;Heroic,Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
-    <AreaArray Effect="SentinelShotImpactSetPvE">
-      <RectangleWidth value="1.25" />
-      <RectangleHeight value="2.25" />
-    </AreaArray>
-    <RevealerParams Duration="4" ShapeExpansion="7">
-      <RevealFlags index="Unfog" value="1" />
-    </RevealerParams>
-    <LaunchLocation Value="OriginPoint" />
-  </CEffectEnumArea>
-
-  <CEffectSet id="SentinelShotImpactSetPvE">
-    <EffectArray value="SentinelShotRevealerPersistent" />
-    <EffectArray value="SentinelShotDamagePvE" />
-    <EffectArray value="TyrandeSentinelHarshMoonlightTalentProcSetPvE" />
-    <EffectArray value="ApplyTyrandeSentinelPvEHit" />
-    <EffectArray value="CameraShakeLightTauntingTotemSet" />
-    <ValidatorArray value="noMarkers" />
-    <ValidatorArray value="SourceNotDead" />
-    <ValidatorArray value="TargetDoesNotHaveTyrandeSentinelPvEHit" />
-  </CEffectSet>
-
-  <CEffectApplyBehavior id="ApplyTyrandeSentinelPvEHit">
-    <Behavior value="TyrandeSentinelPvEHit" />
-  </CEffectApplyBehavior>
-
-  <CEffectApplyBehavior id="TyrandeSentinelHarshMoonlightTalentApplyDamageReductionPvE">
-    <ValidatorArray index="0" value="TyrandeHasHarshMoonlightTalent" />
-    <Behavior value="TyrandeSentinelHarshMoonlightTalentDamageReductionPvE" />
-  </CEffectApplyBehavior>
-  <CEffectApplyBehavior id="TyrandeSentinelHarshMoonlightTalentApplySlowPvE" parent="StormSlowApply">
-    <ValidatorArray index="0" value="TyrandeHasHarshMoonlightTalent" />
-    <Behavior value="TyrandeSentinelHarshMoonlightTalentSlowPvE" />
-  </CEffectApplyBehavior>
-  <CEffectSet id="TyrandeSentinelHarshMoonlightTalentProcSetPvE">
-    <ValidatorArray value="TyrandeHasHarshMoonlightTalent" />
-    <EffectArray value="TyrandeSentinelHarshMoonlightTalentApplyDamageReductionPvE" />
-    <EffectArray value="TyrandeSentinelHarshMoonlightTalentApplySlowPvE" />
-  </CEffectSet>
-
-  <CEffectEnumArea id="LiMingStormArmorSearch">
-    <SearchFilters value="-;Player,Ally,Neutral,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
-    <AreaArray MaxCount="1" Effect="LiMingStormArmorImpactSet">
-      <Radius value="9" />
-    </AreaArray>
-    <TargetSorts RequestCount="1" RequestPercentage="1">
-      <SortArray value="TSHeroic" />
-      <SortArray value="TSRandom" />
-    </TargetSorts>
-    <SearchFlags index="CenterAtLaunch" value="1" />
-    <SearchFlags index="OffsetAreaByAngle" value="0" />
-    <ValidatorArray value="CasterNotStasis" />
-  </CEffectEnumArea>
-  <CEffectSet id="LiMingStormArmorImpactSet">
-    <EffectArray value="ApplyAbilityImpactReveal" />
-    <EffectArray value="LiMingStormArmorDamage" />
-    <EffectArray value="LiMingStormArmorPersistentRevealer" />
-  </CEffectSet>
-  <CEffectCreatePersistent id="LiMingStormArmorPersistentRevealer">
-    <WhichLocation Value="TargetUnit" />
-    <ExpireDelay value="0.5" />
-    <RevealRadius value="0.75" />
-    <RevealFlags index="Unfog" value="1" />
-  </CEffectCreatePersistent>
-
-  <CEffectDamage id="LiMingStormArmorDamage" parent="StormSpell">
-    <Amount value="147" />
-  </CEffectDamage>
-
-  <CEffectCreateHealer id="ThrallFrostwolfResilienceCreateHealer" parent="StormSelfOnlyHealingSpell">
-      <ImpactUnit Value="Caster"/>
-      <RechargeVitalRate value="$ThrallFrostwolfResilienceHealAmount"/>
-      <SourceButtonFace value="ThrallFrostwolfResilience"/>
-      <MultiplicativeModifierArray index="MaelstromWeaponComplete" Validator="ThrallMaelstromWeaponPinnacleRewardReached" Modifier="$ThrallMaelstromWeaponFrostwolfResilienceHealingModifierPinnacle"/>
-      <MultiplicativeModifierArray index="ThrallHealthyFrostwolf" Modifier="0"/>
-  </CEffectCreateHealer>
 
 
   <CEffectSet id="SlivanBossSlimeSpitInitialSet">
@@ -2138,6 +938,55 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectDamage id="SlivanBossDrawInStunDamage" parent="StormSpell">
     <Amount value="300" />
   </CEffectDamage>
+
+  <CEffectSet id="AffixSpellShieldImpactDummySet" />
+  <CEffectSet id="AffixSpellShieldProcSet">
+    <EffectArray value="ApplyAffixSpellShieldActiveApplyBehavior" />
+    <EffectArray value="ApplyAffixSpellShieldCooldownApplyBehavior" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="ApplyAffixSpellShieldActiveApplyBehavior">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixSpellShieldActive" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="ApplyAffixSpellShieldCooldownApplyBehavior">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixSpellShieldCooldown" />
+  </CEffectApplyBehavior>
   
+  <CEffectApplyBehavior id="AffixBlockChargedApplyBlockCountdown">
+    <ValidatorArray index="0" value="AffixBlockChargedApplyBlockCombine" />
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixBlockChargedCountdown" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="AffixBlockChargedRemoveSet">
+    <EffectArray value="AffixBlockDummyDamage" />
+    <EffectArray value="AffixBlockChargedDummyDamageTarget" />
+    <EffectArray value="AffixBlockChargedRemoveArmor" />
+  </CEffectSet>
+  <CEffectDamage id="AffixBlockDummyDamage">
+    <ImpactLocation Value="TargetUnit" />
+    <Flags index="NoScaledDealtBonus" value="1" />
+    <Flags index="NoFractionDealtBonus" value="1" />
+    <Flags index="NoBehaviorResponse" value="1" />
+    <Flags index="NoDamageTimerReset" value="1" />
+  </CEffectDamage>
+  <CEffectDamage id="AffixBlockChargedDummyDamageTarget">
+    <LaunchLocation Effect="AffixBlockChargedRemoveSet" Value="CasterUnit" />
+    <ImpactLocation Value="TargetUnit" />
+    <Flags index="NoScaledDealtBonus" value="1" />
+    <Flags index="NoFractionDealtBonus" value="1" />
+    <Flags index="NoBehaviorResponse" value="1" />
+    <Flags index="NoDamageTimerReset" value="1" />
+  </CEffectDamage>
+  <CEffectRemoveBehavior id="AffixBlockChargedRemoveArmor">
+    <WhichUnit Value="Source" />
+    <BehaviorLink value="AffixBlockChargedArmorBehavior" />
+    <Count value="1" />
+  </CEffectRemoveBehavior>
+  <CEffectApplyBehavior id="AffixBlockChargedApplyArmor">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixBlockChargedArmorBehavior" />
+  </CEffectApplyBehavior>
+
 
 </Catalog>

@@ -64,7 +64,7 @@ void libCore_InitVariables () {
     libCore_gv_cOLORNeutralColor = Color(0,0,0);
     libCore_gv_cOLORJungleCreepColor = Color(0,0,0);
     libCore_gv_bALFaerieDragonFaerieDustHealPercentage = 0.2;
-    libCore_gv_bALOpenTheGatesDelay = 35.0;
+    libCore_gv_bALOpenTheGatesDelay = 10.0;
     libCore_gv_heroes_RandomSkinID = "Random";
     libCore_gv_heroes_RandomMountID = "Random";
     for (init_i = 0; init_i <= libCore_gv_dataHeroVOMaxNumberOfHeroVOEvents; init_i += 1) {

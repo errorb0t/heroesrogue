@@ -7,16 +7,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Value value="0" />
   <Behavior value="HeroGenericUnusedBehavior" />
 </CValidatorUnitCompareBehaviorCount>
-<CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveAffixConversionReady">
+<CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveAffixPossessionReadyBehavior">
   <WhichUnit Value="Caster" />
   <Value value="0" />
-  <Behavior value="AffixConversionReady" />
-</CValidatorUnitCompareBehaviorCount>
-
-<CValidatorUnitCompareBehaviorCount id="CasterHasAffixPowerRitual">
-  <WhichUnit Value="Caster" />
-  <Value value="1" />
-  <Behavior value="AffixPowerRitual" />
+  <Behavior value="AffixPossessionReadyBehavior" />
 </CValidatorUnitCompareBehaviorCount>
 
 <CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveAffixBuddyDroneOwner">
@@ -41,7 +35,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CombineArray value="TargetIsNotEnemy" />
   <CombineArray value="AffixBuddyHealTargetIsTracked" />
 </CValidatorCombine>
-<CValidatorCombine id="AffixConversionValidator">
+<CValidatorCombine id="AffixPossessionValidatorCombine">
   <Type value="And" />
   <CombineArray value="TargetIsNotABossUnitOrMonsterMinorCombine" />
   <CombineArray value="CasterNotDeadAndTargetNotDead" />
@@ -72,10 +66,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Value value="25" />
   <TokenId value="AffixKillContractQuestToken" />
 </CValidatorUnitCompareTokenCount>
-<CValidatorUnitCompareTokenCount id="AffixStructureQuestNotComplete">
+<CValidatorUnitCompareTokenCount id="AffixDestructionNotComplete">
   <Compare value="LT" />
   <Value value="24" />
-  <TokenId value="AffixStructureQuestToken" />
+  <TokenId value="AffixDestructionToken" />
 </CValidatorUnitCompareTokenCount>
 
 <CValidatorUnitCompareBehaviorCount id="IsMounted">
@@ -88,27 +82,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Behavior value="Mounted" />
   <Compare value="GT" />
 </CValidatorUnitCompareBehaviorCount>
-
-<CValidatorLocationCompareRange id="NightElfBondMalfurionGT4RangeOfTyrande">
-  <WhichLocation Value="TargetUnit" />
-  <Compare value="GT" />
-  <Range value="4" />
-</CValidatorLocationCompareRange>
-<CValidatorLocationCompareRange id="NightElfBondMalfurionGT6RangeOfTyrande">
-  <WhichLocation Value="TargetUnit" />
-  <Compare value="GT" />
-  <Range value="6" />
-</CValidatorLocationCompareRange>
-<CValidatorLocationCompareRange id="NightElfBondMalfurionLT6RangeOfTyrande">
-  <WhichLocation Value="TargetUnit" />
-  <Compare value="LT" />
-  <Range value="6" />
-</CValidatorLocationCompareRange>
-<CValidatorCombine id="NightElfBondMalfurionLT6RangeOfTyrandeAndGT4">
-  <Type value="And" />
-  <CombineArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
-  <CombineArray value="NightElfBondMalfurionGT4RangeOfTyrande" />
-</CValidatorCombine>
 
 <CValidatorUnitCompareVital id="CasterShieldGT0Percent">
   <WhichUnit Value="Caster" />
@@ -124,51 +97,23 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Behavior value="AffixGrenadierReady" />
 </CValidatorUnitCompareBehaviorCount>
 
-<CValidatorCombine id="CasterNotInCombat4AndDoesNotHavePermanentSecondWind">
-  <Type value="And" />
-  <CombineArray value="CasterNotInCombat4" />
-  <CombineArray value="CasterDoesNotHavePermanentSecondWind" />
-</CValidatorCombine>
-<CValidatorCombine id="CasterNotInCombat4OrHasPermanentSecondWind">
-  <CombineArray value="CasterNotInCombat4" />
-  <CombineArray value="CasterHasPermanentSecondWind" />
-</CValidatorCombine>
-<CValidatorUnitCompareBehaviorCount id="CasterHasPermanentSecondWind">
-  <WhichUnit Value="Caster" />
-  <Compare value="GT" />
-  <Behavior value="MuradinPermanentSecondWind" />
-</CValidatorUnitCompareBehaviorCount>
-<CValidatorUnitCompareBehaviorCount id="CasterDoesNotHavePermanentSecondWind">
-  <WhichUnit Value="Caster" />
-  <Behavior value="MuradinPermanentSecondWind" />
-</CValidatorUnitCompareBehaviorCount>
-<CValidatorUnitCompareBehaviorCount id="MuradinDoesNotHaveImprovedSecondWindActivePermanent">
-  <WhichUnit Value="Caster" />
-  <Behavior value="MuradinSecondWindActiveImprovedPermanent" />
-</CValidatorUnitCompareBehaviorCount>
-
-<CValidatorUnitCompareTokenCount id="HasBurningBladesTokens">
-  <Compare value="GT" />
-  <TokenId value="AffixBurningBladesTokenCounter" />
-</CValidatorUnitCompareTokenCount>
-
 
 <CValidatorUnitCompareBehaviorCount id="CasterHasExpensiveAttacks">
   <WhichUnit Value="Caster" />
   <Compare value="GT" />
-  <Behavior value="AffixExpensiveAttacks" />
+  <Behavior value="AffixExpensiveAttacksController" />
 </CValidatorUnitCompareBehaviorCount>
 
-<CValidatorCombine id="CasterNotInCombat5AndAffixShieldNotFull">
+<CValidatorCombine id="CasterNotInCombat5AndAffixStormShieldNotFull">
   <Type value="And" />
   <CombineArray value="CasterNotInCombat5" />
-  <CombineArray value="AffixShieldNotFull" />
+  <CombineArray value="AffixStormShieldNotFull" />
 </CValidatorCombine>
-<CValidatorUnitCompareBehaviorCount id="AffixShieldNotFull">
+<CValidatorUnitCompareBehaviorCount id="AffixStormShieldNotFull">
   <WhichUnit Value="Caster" />
   <Compare value="LT" />
   <Value value="5" />
-  <Behavior value="AffixShield" />
+  <Behavior value="AffixStormShieldBehavior" />
 </CValidatorUnitCompareBehaviorCount>
 
 
@@ -179,29 +124,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Value value="0.35" />
 </CValidatorUnitCompareVital>
 
-<CValidatorUnitCompareBehaviorCount id="CasterHasThrallRangedCarry">
-  <WhichUnit Value="Caster" />
-  <Compare value="GT" />
-  <Behavior value="ThrallRangedCarry" />
-</CValidatorUnitCompareBehaviorCount>
-
-<CValidatorCombine id="HasPierceQuestCompleteOrHasPierceQuestCompleteAffix">
-  <CombineArray value="HasPierceQuestComplete" />
-  <CombineArray value="HasPierceQuestCompleteAffix" />
-</CValidatorCombine>
-<CValidatorUnitCompareTokenCount id="HasPierceQuestCompleteAffix">
-  <Compare value="GE" />
-  <Value value="20" />
-  <TokenId value="SentinelShotDamageTokenCounter" />
-  <WhichUnit Value="Caster" />
-</CValidatorUnitCompareTokenCount>
-
-
-<CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveTyrandeShootingStarCooldown">
-  <WhichUnit Value="Caster" />
-  <Value value="0" />
-  <Behavior value="TyrandeShootingStarCooldown" />
-</CValidatorUnitCompareBehaviorCount>
 
 
 <CValidatorUnitType id="NotGreymane">
@@ -268,21 +190,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CombineArray value="NotDVa" />
 </CValidatorCombine>
 
-<CValidatorUnitCompareBehaviorCount id="Has8StackSgtHammerTrojanMines">
-  <Value value="7" />
-  <Behavior value="SgtHammerTrojanMinesStack" />
-</CValidatorUnitCompareBehaviorCount>
-<CValidatorPlayerTalent id="SgtHammerHasTrojanMines">
-  <WhichPlayer Value="Caster" />
-  <Find value="1" />
-  <Value value="SgtHammerTrojanMines" />
-</CValidatorPlayerTalent>
-
-<CValidatorUnitCompareBehaviorCount id="Has8StackSgtHammerRubberBullets">
-  <Value value="7" />
-  <Behavior value="SgtHammerRubberBulletsStack" />
-</CValidatorUnitCompareBehaviorCount>
-
 <CValidatorUnitType id="CreatorIsNotMedivhRaven">
   <WhichUnit Value="Creator" />
   <Value value="HeroMedivhRaven" />
@@ -291,20 +198,11 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveGlobeCollector">
   <Compare value="LE" />
-  <Behavior value="GlobeCollector" />
+  <Behavior value="GlobeCollectorController" />
 </CValidatorUnitCompareBehaviorCount>
 <CValidatorUnitCompareBehaviorCount id="TargetHasGlobeCollector">
   <Compare value="GT" />
-  <Behavior value="GlobeCollector" />
-</CValidatorUnitCompareBehaviorCount>
-
-<CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveTyrandeSentinelPvEHit">
-  <Compare value="LE" />
-  <Behavior value="TyrandeSentinelPvEHit" />
-</CValidatorUnitCompareBehaviorCount>
-<CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveLegallyBlind">
-  <Compare value="LE" />
-  <Behavior value="LegallyBlind" />
+  <Behavior value="GlobeCollectorController" />
 </CValidatorUnitCompareBehaviorCount>
 
   <CValidatorUnitCompareCooldown id="SlivanInfestedDropNotOnCooldown">
@@ -342,5 +240,26 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
         <Value value="1"/>
         <Behavior value="SlivanBossDrawInPullBehavior"/>
     </CValidatorUnitCompareBehaviorCount>
+
+  <CValidatorUnitCompareBehaviorCount id="DoesNotHaveAffixSpellShieldCooldownBehavior">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixSpellShieldCooldown" />
+  </CValidatorUnitCompareBehaviorCount>
+  
+  <CValidatorCombine id="AffixBlockChargedApplyBlockCombine">
+    <Type value="And" />
+    <CombineArray value="SourceDoesNotHaveAffixBlockChargedCountdownBehavior" />
+    <CombineArray value="SourceHasLessThan2AffixBlockChargedArmorBehavior" />
+  </CValidatorCombine>
+  <CValidatorUnitCompareBehaviorCount id="SourceDoesNotHaveAffixBlockChargedCountdownBehavior">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixBlockChargedCountdown" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorUnitCompareBehaviorCount id="SourceHasLessThan2AffixBlockChargedArmorBehavior">
+    <WhichUnit Value="Source" />
+    <Compare value="LT" />
+    <Value value="2" />
+    <Behavior value="AffixBlockChargedArmorBehavior" />
+  </CValidatorUnitCompareBehaviorCount>
 
 </Catalog>

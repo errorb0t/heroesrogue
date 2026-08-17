@@ -1,0 +1,106 @@
+include "AffixTriggers"
+
+// ---------------------------------------------------------------
+// Button Masher
+// ---------------------------------------------------------------
+bool libAffx_LostVikingsButtonMasher (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    return true;
+}
+
+// ---------------------------------------------------------------
+// Great Viking Hoard
+// ---------------------------------------------------------------
+bool libAffx_LostVikingsGreatVikingHoardHeroKilled (bool testConds, bool runActions) {
+    int i;
+    unit deadUnit = libGame_gf_HeroKilledUnit();
+    int deadPlayer = libGame_gf_HeroKilledPlayer();
+    if (testConds) {
+        if (deadPlayer < 6 || deadPlayer > 10) {
+            return false;
+        }
+        if (!UnitTypeTestAttribute(UnitGetType(deadUnit), c_unitAttributeHeroic)) {
+            return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    for (i = 1; i <= 3; i += 1) {
+        UnitCreate(1, "RegenGlobe", 0, libAffx_teamOrder, PointWithOffsetPolar(UnitGetPosition(deadUnit), 1.5, 120 * i), 0, null);
+        UnitBehaviorRemove(UnitLastCreated(), "RegenGlobeTimedLifeInitial", 1);
+        UnitBehaviorAdd(UnitLastCreated(), "RegenGlobeTimedLife", UnitLastCreated(), 1);
+        UnitBehaviorSetDuration(UnitLastCreated(), "RegenGlobeTimedLife", 6);
+    }
+              
+    return true;
+}
+bool libAffx_LostVikingsGreatVikingHoardUnitDiedStructure (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    if (testConds) {
+        if (UnitGetOwner(deadUnit) != 12) {
+            return false;
+        }
+        if (!UnitTypeTestAttribute(UnitGetType(deadUnit), c_unitAttributeStructure)) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    UnitCreate(1, "RegenGlobe", 0, libAffx_teamOrder, UnitGetPosition(deadUnit), 0, null);
+    UnitBehaviorRemove(UnitLastCreated(), "RegenGlobeTimedLifeInitial", 1);
+    UnitBehaviorAdd(UnitLastCreated(), "RegenGlobeTimedLife", UnitLastCreated(), 1);
+    UnitBehaviorSetDuration(UnitLastCreated(), "RegenGlobeTimedLife", 6);
+              
+    return true;
+}
+// ---------------------------------------------------------------
+// Specialized Vikings
+// ---------------------------------------------------------------
+bool libAffx_LostVikingsSpecializedVikings (bool testConds, bool runActions) {
+    int i;
+    unitgroup unitGroup;
+    int unitGroupCount;
+    if (!runActions) {
+        return true;
+    }
+    unitGroup = libGame_gv_players[libAffx_player].lv_heroUnitGroup;
+    unitGroupCount = UnitGroupCount(unitGroup, c_unitCountAll);
+    for (i = unitGroupCount; i > 0; i -= 1) {
+        if (UnitGetType(UnitGroupUnitFromEnd(unitGroup, i)) == "HeroErik") {
+            UnitBehaviorAdd(UnitGroupUnitFromEnd(unitGroup, i), "LostVikingsSpecializedErikBehavior", UnitGroupUnitFromEnd(unitGroup, i), 1);
+        } else if (UnitGetType(UnitGroupUnitFromEnd(unitGroup, i)) == "HeroBaleog") {
+            UnitBehaviorAdd(UnitGroupUnitFromEnd(unitGroup, i), "LostVikingsSpecializedBaleogBehavior", UnitGroupUnitFromEnd(unitGroup, i), 1);
+        } else if (UnitGetType(UnitGroupUnitFromEnd(unitGroup, i)) == "HeroOlaf") {
+            UnitBehaviorAdd(UnitGroupUnitFromEnd(unitGroup, i), "LostVikingsSpecializedOlafBehavior", UnitGroupUnitFromEnd(unitGroup, i), 1);
+        }
+    }
+    
+    return true;
+}
+
+// ---------------------------------------------------------------
+// Truly Lost
+// ---------------------------------------------------------------
+bool libAffx_LostVikingsTrulyLostPeriodic (bool testConds, bool runActions) {
+    int i;
+    if (!runActions) {
+        return true;
+    }
+    libGame_gf_ShareUnshareVisionOfAlliesForPlayer(false, libAffx_player);
+    for (i = 2; i <= 5; i += 1) {
+        PlayerSetAlliance(i, c_allianceIdSeekHelp, libAffx_player, false);
+        PlayerSetAlliance(i, c_allianceIdGiveHelp, libAffx_player, false);
+    }
+    PlayerSetAlliance(11, c_allianceIdSeekHelp, libAffx_player, false);
+    PlayerSetAlliance(11, c_allianceIdGiveHelp, libAffx_player, false);
+    VisRevealerEnable(libGame_gv_baseRevealers[libAffx_player], false);
+
+    return true;
+}

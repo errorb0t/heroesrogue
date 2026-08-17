@@ -1,0 +1,1754 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+    
+  <CEffectDamage id="ProbiusDisruptionPulseDamage">
+    <MultiplicativeModifierArray index="ProbiusDisruptor" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="ProbiusDisruptionPulseParticleAcceleratorDamage">
+    <MultiplicativeModifierArray index="ProbiusDisruptor" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="ProbiusPhotonCannonWeaponDamage">
+    <MultiplicativeModifierArray index="ProbiusFirepower" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="ProbiusWarpRiftDetonationDamage">
+    <MultiplicativeModifierArray index="ProbiusExplosiveRift" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="ProbiusWarpRiftRiftShockDamage">
+    <MultiplicativeModifierArray index="ProbiusExplosiveRift" Modifier="0" />
+  </CEffectDamage>
+  <CEffectSet id="ProbiusPhotonCannonWeaponImpactSet">
+    <EffectArray value="ProbiusPhotonCannonSplashSearch" />
+  </CEffectSet>
+  <CEffectSet id="ProbiusPhotonCannonSplashImpactSet">
+    <EffectArray value="ProbiusPhotonCannonWeaponDamage" />
+    <EffectArray value="ProbiusPhotonCannonAttackDamagedUnitTrackerAdd" />
+    <EffectArray value="ProbiusPhotonCannonCreatePersistentRevealDummy" />
+  </CEffectSet>
+  <CEffectEnumArea id="ProbiusPhotonCannonSplashSearch">
+    <Chance value="0" />
+    <ValidatorArray value="TargetNotEvading" />
+    <ExcludeArray Effect="ProbiusPhotonCannonWeaponImpactSet" Value="Target" />
+    <LaunchLocation Value="TargetUnit" />
+    <SearchFilters value="-;Player,Ally,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="ProbiusPhotonCannonSplashImpactSet">
+      <Radius value="2" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectSet id="ProbiusWarpInPylonInitialSet">
+    <ValidatorArray value="ProbiusCasterKhalaiIngenuityCombine" />
+  </CEffectSet>
+  <CEffectSet id="ProbiusPhotonCannonInitialSet">
+    <ValidatorArray value="ProbiusCasterKhalaiIngenuityCombine" />
+  </CEffectSet>
+  <CValidatorCombine id="ProbiusCasterKhalaiIngenuityCombine">
+    <CombineArray value="ProbiusCasterDoesNotHaveKhalaiIngenuity" />
+    <CombineArray value="ProbiusCasterHasKhalaiIngenuityAndTargetPointNearbyOrHasVisionOfTarget" />
+  </CValidatorCombine>
+  <CValidatorCombine id="ProbiusCasterHasKhalaiIngenuityAndTargetPointNearbyOrHasVisionOfTarget">
+    <Type value="And" />
+    <CombineArray value="ProbiusCasterHasKhalaiIngenuity" />
+    <CombineArray value="ProbiusTargetPointNearbyOrHasVisionOfTarget" />
+  </CValidatorCombine>
+  <CValidatorCombine id="ProbiusTargetPointNearbyOrHasVisionOfTarget">
+    <CombineArray value="ProbiusTargetPointNearby" />
+    <CombineArray value="HasVisionOfTarget" />
+  </CValidatorCombine>
+  <CValidatorLocationCompareRange id="ProbiusTargetPointNearby">
+    <WhichLocation Value="TargetPoint" />
+    <Compare value="LT" />
+    <Range value="6" />
+  </CValidatorLocationCompareRange>
+
+  <CAbilEffectTarget id="ProbiusWarpInZealots">
+    <Effect value="ProbiusWarpInZealotsInitialSet" />
+    <Cost>
+      <Charge>
+        <CountMax value="3" />
+        <CountStart value="3" />
+        <CountUse value="1" />
+        <TimeUse value="6" />
+      </Charge>
+      <Cooldown TimeUse="0" />
+    </Cost>
+    <Range value="500" />
+    <Arc value="360" />
+    <CmdButtonArray index="Execute" DefaultButtonFace="ProbiusWarpInZealots" />
+    <ProducedUnitArray value="ProbiusZealot" />
+  </CAbilEffectTarget>
+  <CAbilEffectTarget id="ProbiusWarpInStalkers">
+    <Effect value="ProbiusWarpInStalkersInitialSet" />
+    <Cost>
+      <Charge>
+        <CountMax value="3" />
+        <CountStart value="3" />
+        <CountUse value="1" />
+        <TimeUse value="12" />
+      </Charge>
+      <Cooldown TimeUse="0" />
+    </Cost>
+    <Range value="500" />
+    <Arc value="360" />
+    <CmdButtonArray index="Execute" DefaultButtonFace="ProbiusWarpInStalkers" />
+    <ProducedUnitArray value="ProbiusZealot" />
+  </CAbilEffectTarget>
+  <CAbilEffectTarget id="ProbiusWarpInImmortals">
+    <Effect value="ProbiusWarpInImmortalsInitialSet" />
+    <Cost>
+      <Charge>
+        <CountMax value="1" />
+        <CountStart value="1" />
+        <CountUse value="1" />
+        <HideCount value="1" />
+        <TimeUse value="24" />
+      </Charge>
+      <Cooldown TimeUse="0" />
+    </Cost>
+    <Range value="500" />
+    <Arc value="360" />
+    <CmdButtonArray index="Execute" DefaultButtonFace="ProbiusWarpInImmortals" />
+    <ProducedUnitArray value="ProbiusZealot" />
+  </CAbilEffectTarget>
+
+  <CUnit id="ProbiusInvisibleWarpIn" parent="StormSummonFigment">
+    <FlagArray index="Unselectable" value="1" />
+    <FlagArray index="Untargetable" value="1" />
+    <FlagArray index="Undetectable" value="1" />
+    <FlagArray index="AIForceTactical" value="1" />
+    <PlaneArray index="Air" value="1" />
+    <Mover value="Fly" />
+  </CUnit>
+  <CUnit id="ProbiusZealot" parent="StormSummonActive">
+    <LifeStart value="660" />
+    <LifeMax value="660" />
+    <ShieldsStart value="330"/>
+    <ShieldsMax value="330"/>
+    <ShieldRegenRate value="33"/>
+    <ShieldRegenDelay value="5"/>
+    <Speed value="3.25" />
+    <Sight value="8" />
+    <AbilArray Link="stop" />
+    <AbilArray Link="attack" />
+    <AbilArray Link="move" />
+    <Radius value="0.6875" />
+    <InnerRadius value="0.6875" />
+    <AbilArray Link="stop"/>
+    <AbilArray Link="attack"/>
+    <AbilArray Link="move"/>
+    <AbilArray Link="Warpable"/>
+    <AbilArray Link="ProgressRally"/>
+    <AbilArray Link="Charge"/>
+    <WeaponArray Link="PsiBlades"/>
+    <CardLayouts>
+        <LayoutButtons Face="Move" Type="AbilCmd" AbilCmd="move,Move" Row="0" Column="0"/>
+        <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
+        <LayoutButtons Face="MoveHoldPosition" Type="AbilCmd" AbilCmd="move,HoldPos" Row="0" Column="2"/>
+        <LayoutButtons Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Row="0" Column="4"/>
+        <LayoutButtons Face="MovePatrol" Type="AbilCmd" AbilCmd="move,Patrol" Row="0" Column="3"/>
+        <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+        <LayoutButtons Face="Charge" Type="AbilCmd" AbilCmd="Charge,Execute" Row="2" Column="0"/>
+    </CardLayouts>
+    <StationaryTurningRate value="999.8437"/>
+    <TurningRate value="999.8437"/>
+    <Acceleration value="1000"/>
+    <LateralAcceleration value="46.0625"/>
+    <AIThinkTree value="AI/MinionMap.aitree" />
+    <FlagArray index="CreateAITreeOnSpawn" value="1" />
+  </CUnit>
+  <CUnit id="ProbiusStalker" parent="StormSummonActive">
+      <DeathRevealRadius value="3"/>
+      <Race value="Prot"/>
+      <Mob value="Multiplayer"/>
+      <LifeStart value="528"/>
+      <LifeMax value="528"/>
+      <ShieldsStart value="528"/>
+      <ShieldsMax value="528"/>
+      <ShieldRegenDelay value="5"/>
+      <ShieldRegenRate value="52"/>
+      <Speed value="3.25"/>
+      <Acceleration value="1000"/>
+      <LateralAcceleration value="46"/>
+      <StationaryTurningRate value="999.8437"/>
+      <TurningRate value="999.8437"/>
+      <AttackTargetPriority value="20"/>
+      <Radius value="1"/>
+      <SeparationRadius value="1"/>
+      <InnerRadius value="1"/>
+      <SubgroupPriority value="11"/>
+      <FlagArray index="PreventDestroy" value="1"/>
+      <FlagArray index="UseLineOfSight" value="1"/>
+      <FlagArray index="ArmySelect" value="1"/>
+      <PlaneArray index="Ground" value="1"/>
+      <Collide index="Ground" value="1"/>
+      <Collide index="ForceField" value="1"/>
+      <Collide index="Small" value="1"/>
+      <Sight value="10"/>
+      <AbilArray Link="stop"/>
+      <AbilArray Link="move"/>
+      <AbilArray Link="attack"/>
+      <AbilArray Link="Warpable"/>
+      <AbilArray Link="ProgressRally"/>
+      <AbilArray Link="Blink"/>
+      <CardLayouts>
+          <LayoutButtons Face="Move" Type="AbilCmd" AbilCmd="move,Move" Row="0" Column="0"/>
+          <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
+          <LayoutButtons Face="MoveHoldPosition" Type="AbilCmd" AbilCmd="move,HoldPos" Row="0" Column="2"/>
+          <LayoutButtons Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Row="0" Column="4"/>
+          <LayoutButtons Face="MovePatrol" Type="AbilCmd" AbilCmd="move,Patrol" Row="0" Column="3"/>
+          <LayoutButtons Face="Rally" Type="AbilCmd" AbilCmd="ProgressRally,Rally1" Row="2" Column="4"/>
+          <LayoutButtons Face="Blink" Type="AbilCmd" AbilCmd="Blink,Execute" Row="2" Column="0"/>
+      </CardLayouts>
+      <GlossaryStrongArray value="Reaper"/>
+      <GlossaryStrongArray value="VoidRay"/>
+      <GlossaryStrongArray value="Mutalisk"/>
+      <GlossaryWeakArray value="Marauder"/>
+      <GlossaryWeakArray value="Immortal"/>
+      <GlossaryWeakArray value="Zergling"/>
+      <MinimapRadius value="0.625"/>
+      <WeaponArray Link="ParticleDisruptors"/>
+      <Fidget>
+          <ChanceArray index="Anim" value="5"/>
+          <ChanceArray index="Idle" value="90"/>
+          <ChanceArray index="Turn" value="5"/>
+      </Fidget>
+    <AIThinkTree value="AI/MinionMap.aitree" />
+    <FlagArray index="CreateAITreeOnSpawn" value="1" />
+  </CUnit>
+  <CUnit id="StalkerWeapon" parent="MISSILE">
+      <Race value="Prot"/>
+      <EditorCategories value="ObjectType:Projectile,ObjectFamily:Melee"/>
+  </CUnit>
+  <CUnit id="ProbiusInvisibleWarpInStalker" parent="ProbiusInvisibleWarpIn" />
+  <CUnit id="ProbiusImmortal" parent="StormSummonActive">
+      <DeathRevealRadius value="3"/>
+      <Race value="Prot"/>
+      <Mob value="Multiplayer"/>
+      <LifeStart value="1350"/>
+      <LifeMax value="1350"/>
+      <ShieldsStart value="675"/>
+      <ShieldsMax value="675"/>
+      <ShieldRegenDelay value="5"/>
+      <ShieldRegenRate value="90"/>
+      <Speed value="3.25"/>
+      <Acceleration value="1000"/>
+      <AttackTargetPriority value="20"/>
+      <Radius value="0.75"/>
+      <SeparationRadius value="0.625"/>
+      <InnerRadius value="0.5"/>
+      <ScoreResult value="BuildOrder"/>
+      <SubgroupPriority value="7"/>
+      <FlagArray index="Turnable" value="0"/>
+      <FlagArray index="PreventDestroy" value="1"/>
+      <FlagArray index="UseLineOfSight" value="1"/>
+      <FlagArray index="ArmySelect" value="1"/>
+      <PlaneArray index="Ground" value="1"/>
+      <Collide index="Ground" value="1"/>
+      <Collide index="ForceField" value="1"/>
+      <Collide index="Small" value="1"/>
+      <Sight value="11"/>
+      <AbilArray Link="stop"/>
+      <AbilArray Link="attack"/>
+      <AbilArray Link="move"/>
+      <AbilArray Link="Warpable"/>
+      <CardLayouts>
+          <LayoutButtons Face="Move" Type="AbilCmd" AbilCmd="move,Move" Row="0" Column="0"/>
+          <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
+          <LayoutButtons Face="MoveHoldPosition" Type="AbilCmd" AbilCmd="move,HoldPos" Row="0" Column="2"/>
+          <LayoutButtons Face="Attack" Type="AbilCmd" AbilCmd="attack,Execute" Row="0" Column="4"/>
+          <LayoutButtons Face="MovePatrol" Type="AbilCmd" AbilCmd="move,Patrol" Row="0" Column="3"/>
+          <LayoutButtons Face="ImmortalHardenedShield" Type="Passive" Row="2" Column="0"/>
+      </CardLayouts>
+      <EditorCategories value="ObjectType:Unit,ObjectFamily:Melee"/>
+      <GlossaryCategory value="Unit/Category/ProtossUnits"/>
+      <HotkeyCategory value="Unit/Category/ProtossUnits"/>
+      <GlossaryPriority value="50"/>
+      <GlossaryStrongArray value="SiegeTankSieged"/>
+      <GlossaryStrongArray value="Stalker"/>
+      <GlossaryStrongArray value="Roach"/>
+      <GlossaryWeakArray value="Marine"/>
+      <GlossaryWeakArray value="Zealot"/>
+      <GlossaryWeakArray value="Zergling"/>
+      <CostCategory value="Army"/>
+      <MinimapRadius value="0.625"/>
+      <WeaponArray Link="PhaseDisruptors" Turret="Immortal"/>
+      <Fidget>
+          <ChanceArray index="Anim" value="5"/>
+          <ChanceArray index="Idle" value="90"/>
+      </Fidget>
+    <AIThinkTree value="AI/MinionMap.aitree" />
+    <FlagArray index="CreateAITreeOnSpawn" value="1" />
+  </CUnit>
+  <CUnit id="ProbiusInvisibleWarpInImmortal" parent="ProbiusInvisibleWarpIn" />
+
+  <CBehaviorBuff id="ImmortalHardenedShield" parent="CarryBehaviorParent">
+    <Alignment value="Positive"/>
+    <InfoIcon value="Assets\Textures\BTN-Ability-Protoss-HardenedShields.dds"/>
+    <EditorCategories value="Race:Protoss,AbilityorEffectType:Units"/>
+    <Cost>
+        <Cooldown Link="Immortal Shield"/>
+    </Cost>
+    <InfoFlags index="Hidden" value="1"/>
+    <DisableValidatorArray value="CasterShieldsGE1"/>
+    <DamageResponse ClampMaximum="45" Minimum="45">
+      <Kind index="Spell" value="0"/>
+      <Chance value="1"/>
+    </DamageResponse>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="ProbiusKhalaiIngenuityController" parent="CarryBehaviorParent" />
+  <CValidatorUnitCompareBehaviorCount id="ProbiusCasterHasKhalaiIngenuity">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="ProbiusKhalaiIngenuityController" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorUnitCompareBehaviorCount id="ProbiusCasterDoesNotHaveKhalaiIngenuity">
+    <WhichUnit Value="Caster" />
+    <Value value="0" />
+    <Behavior value="ProbiusKhalaiIngenuityController" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CBehaviorBuff id="ProbiusPlasmaShieldsController" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="CasterNotInCombat5AndPlasmaShieldsNotFull" />
+    <Period value="0.25" />
+    <PeriodicEffect value="ProbiusPlasmaShieldsApplyBehavior" />
+    <EnableEffect value="ProbiusPlasmaShieldsApplyBehavior" />
+  </CBehaviorBuff>
+  <CEffectApplyBehavior id="ProbiusPlasmaShieldsApplyBehavior">
+    <WhichUnit Value="Caster" />
+    <Behavior value="ProbiusPlasmaShieldsBehavior" />
+  </CEffectApplyBehavior>
+  <CBehaviorBuff id="ProbiusPlasmaShieldsBehavior" parent="StormShield">
+    <BehaviorFlags index="Permanent" value="1" />
+    <BehaviorFlags index="EnabledWhileDead" value="1" />
+    <MaxStackCount value="8" />
+    <DamageResponse Priority="40">
+      <ModifyLimitVitalMaxFractionArray index="Life" value="0.0625" />
+    </DamageResponse>
+  </CBehaviorBuff>
+  <CValidatorCombine id="CasterNotInCombat5AndPlasmaShieldsNotFull">
+    <Type value="And" />
+    <CombineArray value="CasterNotInCombat5" />
+    <CombineArray value="ProbiusPlasmaShieldsNotFull" />
+  </CValidatorCombine>
+  <CValidatorUnitCompareBehaviorCount id="ProbiusPlasmaShieldsNotFull">
+    <WhichUnit Value="Caster" />
+    <Compare value="LT" />
+    <Value value="8" />
+    <Behavior value="ProbiusPlasmaShieldsBehavior" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CEffectCreateUnit id="ProbiusWarpInPylonCreateUnit">
+    <SpawnEffect value="ProbiusPylonSpawnSet" />
+  </CEffectCreateUnit>
+  <CEffectSet id="ProbiusPylonSpawnSet">
+    <Chance value="0" />
+    <EffectArray value="ProbiusPhotonCannonGatherMineralsTransferTokenCount" />
+    <EffectArray value="ProbiusPhotonCannonGatherMineralsApplyBonusHealth" />
+  </CEffectSet>
+
+  <CEffectModifyUnit id="ProbiusPhotonCannonModifyUnit">
+    <ImpactUnit Value="Caster" />
+    <Cost Abil="ProbiusPhotonCannon,Execute" ChargeCountUse="-2" CooldownOperation="Add" />
+  </CEffectModifyUnit>
+
+  <CEffectApplyBehavior id="ProbiusPhotonCannonApplyPhotonCannonCooldown">
+    <Behavior value="ProbiusPhotonCannonCooldown" />
+  </CEffectApplyBehavior>
+
+  <CEffectSet id="ProbiusWarpRiftPullPeriodicSet">
+    <EffectArray value="ProbiusWarpRiftPullPeriodicSearchPersistent" />
+    <ValidatorArray value="ProbiusTargetDoesNotHaveWarpRiftBuildInProgressBehavior" />
+  </CEffectSet>
+  
+  <CEffectSet id="ProbiusWarpRiftCreationSet">
+    <EffectArray value="ProbiusWarpRiftApplyPullBehavior" />
+    <EffectArray value="ProbiusWarpRiftApplySplitBehavior" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="ProbiusWarpRiftApplySplitBehavior">
+    <Chance value="0" />
+    <Behavior value="ProbiusWarpRiftSplit" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="ProbiusWarpRiftApplyPullBehavior">
+    <Chance value="0" />
+    <Behavior value="ProbiusWarpRiftPullController" />
+  </CEffectApplyBehavior>
+  <!-- Stolen Tassadar tech-->
+  <CEffectCreatePersistent id="ProbiusWarpRiftPullPeriodicSearchPersistent">
+    <PeriodCount value="8" />
+    <PeriodicEffectArray value="ProbiusWarpRiftPullSearchNE" />
+    <PeriodicEffectArray value="ProbiusWarpRiftPullSearchWN" />
+    <PeriodicEffectArray value="ProbiusWarpRiftPullSearchWS" />
+    <PeriodicEffectArray value="ProbiusWarpRiftPullSearchSE" />
+    <PeriodicEffectArray value="ProbiusWarpRiftPullSearchSW" />
+    <PeriodicEffectArray value="ProbiusWarpRiftPullSearchES" />
+    <PeriodicEffectArray value="ProbiusWarpRiftPullSearchEN" />
+    <PeriodicEffectArray value="ProbiusWarpRiftPullSearchNW" />
+    <PeriodicOffsetArray X="0.5" Y="0.5" />
+    <PeriodicOffsetArray X="0.5" />
+    <PeriodicOffsetArray X="0.5" Y="-0.5" />
+    <PeriodicOffsetArray Y="-0.5" />
+    <PeriodicOffsetArray X="-0.5" Y="-0.5" />
+    <PeriodicOffsetArray X="-0.5" />
+    <PeriodicOffsetArray X="-0.5" Y="0.5" />
+    <PeriodicOffsetArray Y="0.5" />
+  </CEffectCreatePersistent>
+  <CEffectEnumArea id="ProbiusWarpRiftPullSearchNE">
+    <SearchFilters value="-;Unstoppable,Structure,MapBoss,Player,Ally,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Arc="45" Effect="TassadarBlackHolePeriodicOuterSearchNEImpactSet">
+      <Radius value="4.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.675" ShapeExpansion="0.25">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="CenterAtLaunch" value="1" />
+  </CEffectEnumArea>
+  <CEffectEnumArea id="ProbiusWarpRiftPullSearchWN">
+    <SearchFilters value="-;Unstoppable,Structure,MapBoss,Player,Ally,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Arc="45" Effect="TassadarBlackHolePeriodicOuterSearchWNImpactSet">
+      <Radius value="4.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.675" ShapeExpansion="0.25">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="CenterAtLaunch" value="1" />
+  </CEffectEnumArea>
+  <CEffectEnumArea id="ProbiusWarpRiftPullSearchWS">
+    <SearchFilters value="-;Unstoppable,Structure,MapBoss,Player,Ally,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Arc="45" Effect="TassadarBlackHolePeriodicOuterSearchWSImpactSet">
+      <Radius value="4.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.675" ShapeExpansion="0.25">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="CenterAtLaunch" value="1" />
+  </CEffectEnumArea>
+  <CEffectEnumArea id="ProbiusWarpRiftPullSearchSE">
+    <SearchFilters value="-;Unstoppable,Structure,MapBoss,Player,Ally,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Arc="45" Effect="TassadarBlackHolePeriodicOuterSearchSEImpactSet">
+      <Radius value="4.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.675" ShapeExpansion="0.25">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="CenterAtLaunch" value="1" />
+  </CEffectEnumArea>
+  <CEffectEnumArea id="ProbiusWarpRiftPullSearchSW">
+    <SearchFilters value="-;Unstoppable,Structure,MapBoss,Player,Ally,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Arc="45" Effect="TassadarBlackHolePeriodicOuterSearchSWImpactSet">
+      <Radius value="4.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.675" ShapeExpansion="0.25">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="CenterAtLaunch" value="1" />
+  </CEffectEnumArea>
+  <CEffectEnumArea id="ProbiusWarpRiftPullSearchES">
+    <SearchFilters value="-;Unstoppable,Structure,MapBoss,Player,Ally,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Arc="45" Effect="TassadarBlackHolePeriodicOuterSearchESImpactSet">
+      <Radius value="4.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.675" ShapeExpansion="0.25">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="CenterAtLaunch" value="1" />
+  </CEffectEnumArea>
+  <CEffectEnumArea id="ProbiusWarpRiftPullSearchEN">
+    <SearchFilters value="-;Unstoppable,Structure,MapBoss,Player,Ally,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Arc="45" Effect="TassadarBlackHolePeriodicOuterSearchENImpactSet">
+      <Radius value="4.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.675" ShapeExpansion="0.25">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="CenterAtLaunch" value="1" />
+  </CEffectEnumArea>
+  <CEffectEnumArea id="ProbiusWarpRiftPullSearchNW">
+    <SearchFilters value="-;Unstoppable,Structure,MapBoss,Player,Ally,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Arc="45" Effect="TassadarBlackHolePeriodicOuterSearchNWImpactSet">
+      <Radius value="4.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.675" ShapeExpansion="0.25">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="CenterAtLaunch" value="1" />
+  </CEffectEnumArea>
+
+  <CBehaviorBuff id="ProbiusSolaritePoweredBehavior" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="ProbiusNotNearPylonAndNotNearOverchargedPylon" />
+    <DisableValidatorArray value="TargetNotStasis" />
+    <Modification>
+      <VitalRegenArray index="Energy" value="25" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ProbiusOptimizedOrdnanceAttackSpeedBehavior">
+    <Modification>
+      <AdditiveAttackSpeedFactor value="0.25" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ProbiusRapidDisruptorsAttackSpeedBehavior">
+    <Modification>
+      <AdditiveAttackSpeedFactor value="0.25" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ProbiusZealotArmorBehavior" parent="StormArmor">
+    <ArmorModification>
+      <ArmorSet index="Hero">
+        <ArmorMitigationTable index="Basic" value="35" />
+      </ArmorSet>
+      <ArmorSet index="Merc">
+        <ArmorMitigationTable index="Basic" value="35" />
+      </ArmorSet>
+      <ArmorSet index="Monster">
+        <ArmorMitigationTable index="Basic" value="35" />
+      </ArmorSet>
+      <ArmorSet index="Summon">
+        <ArmorMitigationTable index="Basic" value="35" />
+      </ArmorSet>
+      <ArmorSet index="Structure">
+        <ArmorMitigationTable index="Basic" value="35" />
+      </ArmorSet>
+      <ArmorSet index="Minion">
+        <ArmorMitigationTable index="Basic" value="35" />
+      </ArmorSet>
+    </ArmorModification>
+  </CBehaviorBuff>
+
+  <CEffectCreatePersistent id="ProbiusDisruptionPulseShootEmUpCreatePersistent">
+    <ValidatorArray index="0" value="ProbiusCasterHasDisruptionPulseParticleAccelerator3TokensOrCasterHasPulsarBehavior" />
+  </CEffectCreatePersistent>
+  <CValidatorCombine id="ProbiusCasterHasDisruptionPulseParticleAccelerator3TokensOrCasterHasPulsarBehavior">
+    <CombineArray value="ProbiusCasterHasDisruptionPulseParticleAccelerator3Tokens" />
+    <CombineArray value="ProbiusCasterHasPulsarBehavior" />
+  </CValidatorCombine>
+  <CValidatorUnitCompareBehaviorCount id="ProbiusCasterHasPulsarBehavior">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="ProbiusPulsarBehavior" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CBehaviorBuff id="ProbiusPulsarBehavior" parent="CarryBehaviorParent" />
+
+
+  <CEffectCreatePersistent id="ProbiusWarpRiftCreateDetonationPersistent">
+    <PeriodicEffectArray value="ProbiusWarpRiftSplitSet" />
+  </CEffectCreatePersistent>
+  <CEffectSet id="ProbiusWarpRiftSplitSet">
+    <ValidatorArray value="WarpRiftHasProbiusWarpRiftSplit" />
+    <EffectArray value="ProbiusWarpRiftInitialPersistentSplit" />
+  </CEffectSet>
+
+  <CEffectCreatePersistent id="ProbiusWarpRiftInitialPersistentSplit">
+    <WhichLocation Value="TargetPoint" />
+    <PeriodCount value="2" />
+    <PeriodicEffectArray value="ProbiusWarpRiftCreateUnitSplit" />
+    <PeriodicPeriodArray value="0" />
+    <PeriodicOffsetArray X="2" Y="0" />
+    <PeriodicOffsetArray X="-2" Y="0" />
+  </CEffectCreatePersistent>
+  <CEffectCreateUnit id="ProbiusWarpRiftCreateUnitSplit">
+    <WhichLocation Value="TargetPoint" />
+    <SpawnEffect value="ProbiusWarpRiftCreationSetNoSplit" />
+    <SpawnUnit value="ProbiusWarpRift" />
+    <SpawnRange value="1" />
+    <CreateFlags index="Placement" value="0" />
+  </CEffectCreateUnit>
+  <CEffectSet id="ProbiusWarpRiftCreationSetNoSplit">
+    <EffectArray value="ProbiusWarpRiftApplyBuildInProgressBehavior" />
+    <EffectArray value="ProbiusWarpRiftApplyTimedLifeBehavior" />
+    <EffectArray value="ProbiusWarpRiftRiftShockApplyTimerBehavior" />
+    <EffectArray value="ProbiusWarpRiftApplyPullBehavior" />
+  </CEffectSet>
+
+  <CEffectCreatePersistent id="PsiBladesBurst">
+    <EditorCategories value="Race:Protoss"/>
+    <PeriodCount value="2"/>
+    <WhichLocation Value="TargetUnit"/>
+    <TimeScaleSource Value="Caster"/>
+    <Flags index="Channeled" value="1"/>
+    <PeriodicEffectArray value="PsiBlades"/>
+    <PeriodicPeriodArray value="0"/>
+    <PeriodicPeriodArray value="0.28"/>
+  </CEffectCreatePersistent>
+  <CEffectDamage id="PsiBlades" parent="StormSummonedUnitWeapon">
+    <EditorCategories value="Race:Protoss"/>
+    <Amount value="35"/>
+    <Death value="Eviscerate"/>
+    <ValidatorArray value="NotHidden"/>
+    <MultiplicativeModifierArray index="ProtossWeapons" Modifier="0" />
+    <MultiplicativeModifierArray index="MercMinion" Validator="IsMercorMinion" Modifier="1" />
+  </CEffectDamage>
+
+  <CEffectSet id="ProbiusWarpInZealotsInitialSet">
+    <EffectArray value="ProbiusWarpInZealotsWarpInPersistent" />
+    <TargetLocationType value="Point" />
+    <ValidatorArray value="TargetPointWalkable" />
+    <ValidatorArray value="ProbiusTargetPointIsNearPylonOrOverchargedPylon" />
+    <ValidatorArray value="ProbiusHas5MineralsOrHasEfficientWarpAnd4Minerals" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="ProbiusWarpInZealotsWarpInPersistent">
+    <WhichLocation Value="TargetPoint" />
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="ProbiusWarpInZealotsWarpIn" />
+    <PeriodicPeriodArray value="0" />
+  </CEffectCreatePersistent>
+  <CEffectCreateUnit id="ProbiusWarpInZealotsWarpIn">
+    <WhichLocation Value="TargetPoint" />
+    <SpawnEffect value="ProbiusWarpInZealotsWarpInSpawnSet" />
+    <SpawnUnit value="ProbiusInvisibleWarpIn" />
+    <SpawnRange value="3" />
+    <SpawnCount value="1" />
+    <CreateFlags index="OffsetByRadius" value="0" />
+    <CreateFlags index="NormalizeSpawnOffset" value="0" />
+  </CEffectCreateUnit>
+  <CEffectSet id="ProbiusWarpInZealotsWarpInSpawnSet">
+    <EffectArray value="ProbiusWarpInZealotsApplyBuildInProgressBehavior" />
+    <EffectArray value="ProbiusWarpTechnologyRemoveZealotsMinerals" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="ProbiusWarpInZealotsApplyBuildInProgressBehavior">
+    <Behavior value="ProbiusZealotBuildInProgressBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="ProbiusWarpInZealotsExpireSet">
+    <EffectArray value="TimedLifeFate" />
+    <EffectArray value="ProbiusWarpInZealotsCreateUnit" />
+  </CEffectSet>
+  <CEffectCreateUnit id="ProbiusWarpInZealotsCreateUnit">
+    <WhichLocation Value="TargetPoint" />
+    <SpawnEffect value="ProbiusWarpInZealotsSpawnSet" />
+    <SpawnUnit value="ProbiusZealot" />
+    <SpawnRange value="3" />
+    <SpawnCount value="1" />
+    <CreateFlags index="OffsetByRadius" value="0" />
+    <CreateFlags index="NormalizeSpawnOffset" value="0" />
+  </CEffectCreateUnit>
+  <CEffectSet id="ProbiusWarpInZealotsSpawnSet" />
+
+  <CEffectCreatePersistent id="ProbiusPassiveIncomeCreatePersistent">
+    <WhichLocation Value="SourceUnit" />
+    <PeriodCount value="0" />
+    <PeriodicEffectArray value="ProbiusPhotonCannonGatherMineralsNoSuicideImpactSet" />
+    <PeriodicPeriodArray value="0" />
+  </CEffectCreatePersistent>
+  <CEffectSet id="ProbiusPhotonCannonGatherMineralsNoSuicideImpactSet">
+    <EffectArray value="ProbiusWarpTechnologyAddToken" />
+    <EffectArray value="ProbiusPhotonCannonGatherMineralsModifyQuestToken" />
+    <EffectArray value="ProbiusPhotonCannonGatherMineralsModifyQuestTokenFX" />
+    <EffectArray value="ProbiusWarpInPylonReduceCooldown" />
+  </CEffectSet>
+  <CBehaviorBuff id="ProbiusPassiveIncomeController" parent="CarryBehaviorParent">
+    <Period value="8" />
+    <PeriodicEffect value="ProbiusPassiveIncomeCreatePersistent" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ProbiusEfficientWarpController" parent="CarryBehaviorParent" />
+
+  <CEffectSet id="ProbiusPhotonCannonGatherMineralsImpactSet">
+    <EffectArray value="ProbiusWarpTechnologyAddToken" />
+  </CEffectSet>
+  <CEffectModifyTokenCount id="ProbiusWarpTechnologyAddToken" parent="BaseEffectModifyTokenCount">
+    <Chance value="0" />
+    <WhichUnit Value="Target" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+  </CEffectModifyTokenCount>
+  <CEffectModifyTokenCount id="ProbiusWarpTechnologyRemoveZealotsMinerals" parent="BaseEffectModifyTokenCount">
+    <WhichUnit Value="Caster" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+    <Value value="-5" />
+  </CEffectModifyTokenCount>
+
+  <CEffectLaunchMissile id="ParticleDisruptors">
+    <EditorCategories value="Race:Protoss"/>
+    <ImpactEffect value="ParticleDisruptorsU"/>
+    <ValidatorArray index="0" value="StalkerTargetFilters"/>
+    <ValidatorArray value=""/>
+    <AmmoUnit value="StalkerWeapon"/>
+  </CEffectLaunchMissile>
+  <CEffectDamage id="ParticleDisruptorsU" parent="StormSummonedUnitWeapon">
+    <EditorCategories value="Race:Protoss"/>
+    <Amount value="70"/>
+    <MultiplicativeModifierArray index="ProtossWeapons" Modifier="0" />
+    <MultiplicativeModifierArray index="MercMinion" Validator="IsMercorMinion" Modifier="1" />
+  </CEffectDamage>
+
+  <CEffectSet id="ProbiusWarpInStalkersInitialSet">
+    <EffectArray value="ProbiusWarpInStalkersWarpInPersistent" />
+    <TargetLocationType value="Point" />
+    <ValidatorArray value="TargetPointWalkable" />
+    <ValidatorArray value="ProbiusTargetPointIsNearPylonOrOverchargedPylon" />
+    <ValidatorArray value="ProbiusHas10MineralsOrHasEfficientWarpAnd8Minerals" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="ProbiusWarpInStalkersWarpInPersistent">
+    <WhichLocation Value="TargetPoint" />
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="ProbiusWarpInStalkersWarpIn" />
+    <PeriodicPeriodArray value="0" />
+  </CEffectCreatePersistent>
+  <CEffectCreateUnit id="ProbiusWarpInStalkersWarpIn">
+    <WhichLocation Value="TargetPoint" />
+    <SpawnEffect value="ProbiusWarpInStalkersWarpInSpawnSet" />
+    <SpawnUnit value="ProbiusInvisibleWarpInStalker" />
+    <SpawnRange value="3" />
+    <SpawnCount value="1" />
+    <CreateFlags index="OffsetByRadius" value="0" />
+    <CreateFlags index="NormalizeSpawnOffset" value="0" />
+  </CEffectCreateUnit>
+  <CEffectSet id="ProbiusWarpInStalkersWarpInSpawnSet">
+    <EffectArray value="ProbiusWarpInStalkersApplyBuildInProgressBehavior" />
+    <EffectArray value="ProbiusWarpTechnologyRemoveStalkersMinerals" />
+  </CEffectSet>
+  <CEffectModifyTokenCount id="ProbiusWarpTechnologyRemoveStalkersMinerals" parent="BaseEffectModifyTokenCount">
+    <WhichUnit Value="Caster" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+    <Value value="-10" />
+  </CEffectModifyTokenCount>
+  <CEffectApplyBehavior id="ProbiusWarpInStalkersApplyBuildInProgressBehavior">
+    <Behavior value="ProbiusStalkerBuildInProgressBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="ProbiusWarpInStalkersExpireSet">
+    <EffectArray value="TimedLifeFate" />
+    <EffectArray value="ProbiusWarpInStalkersCreateUnit" />
+  </CEffectSet>
+  <CEffectCreateUnit id="ProbiusWarpInStalkersCreateUnit">
+    <WhichLocation Value="TargetPoint" />
+    <SpawnEffect value="ProbiusWarpInStalkersSpawnSet" />
+    <SpawnUnit value="ProbiusStalker" />
+    <SpawnRange value="3" />
+    <SpawnCount value="1" />
+    <CreateFlags index="OffsetByRadius" value="0" />
+    <CreateFlags index="NormalizeSpawnOffset" value="0" />
+  </CEffectCreateUnit>
+  <CEffectSet id="ProbiusWarpInStalkersSpawnSet" />
+
+  <CEffectDamage id="PhaseDisruptors" parent="StormSummonedUnitWeapon">
+    <Amount value="115"/>
+    <MultiplicativeModifierArray index="ProtossWeapons" Modifier="0" />
+    <MultiplicativeModifierArray index="Merc/Minion" Validator="IsMercorMinion" Modifier="1" />
+    <MultiplicativeModifierArray index="Structure" Validator="IsStructureTarget" Modifier="2" />
+  </CEffectDamage>
+  <CEffectSet id="ProbiusWarpInImmortalsInitialSet">
+    <EffectArray value="ProbiusWarpInImmortalsWarpInPersistent" />
+    <TargetLocationType value="Point" />
+    <ValidatorArray value="TargetPointWalkable" />
+    <ValidatorArray value="ProbiusTargetPointIsNearPylonOrOverchargedPylon" />
+    <ValidatorArray value="ProbiusHas30MineralsOrHasEfficientWarpAnd24Minerals" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="ProbiusWarpInImmortalsWarpInPersistent">
+    <WhichLocation Value="TargetPoint" />
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="ProbiusWarpInImmortalsWarpIn" />
+    <PeriodicPeriodArray value="0" />
+  </CEffectCreatePersistent>
+  <CEffectCreateUnit id="ProbiusWarpInImmortalsWarpIn">
+    <WhichLocation Value="TargetPoint" />
+    <SpawnEffect value="ProbiusWarpInImmortalsWarpInSpawnSet" />
+    <SpawnUnit value="ProbiusInvisibleWarpInImmortal" />
+    <SpawnRange value="3" />
+    <SpawnCount value="1" />
+    <CreateFlags index="OffsetByRadius" value="0" />
+    <CreateFlags index="NormalizeSpawnOffset" value="0" />
+  </CEffectCreateUnit>
+  <CEffectSet id="ProbiusWarpInImmortalsWarpInSpawnSet">
+    <EffectArray value="ProbiusWarpInImmortalsApplyBuildInProgressBehavior" />
+    <EffectArray value="ProbiusWarpTechnologyRemoveImmortalsMinerals" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="ProbiusWarpInImmortalsApplyBuildInProgressBehavior">
+    <Behavior value="ProbiusImmortalBuildInProgressBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="ProbiusWarpInImmortalsExpireSet">
+    <EffectArray value="TimedLifeFate" />
+    <EffectArray value="ProbiusWarpInImmortalsCreateUnit" />
+  </CEffectSet>
+  <CEffectCreateUnit id="ProbiusWarpInImmortalsCreateUnit">
+    <WhichLocation Value="TargetPoint" />
+    <SpawnEffect value="ProbiusWarpInImmortalsSpawnSet" />
+    <SpawnUnit value="ProbiusImmortal" />
+    <SpawnRange value="3" />
+    <SpawnCount value="1" />
+    <CreateFlags index="OffsetByRadius" value="0" />
+    <CreateFlags index="NormalizeSpawnOffset" value="0" />
+  </CEffectCreateUnit>
+  <CEffectSet id="ProbiusWarpInImmortalsSpawnSet" />
+  <CEffectModifyTokenCount id="ProbiusWarpTechnologyRemoveImmortalsMinerals" parent="BaseEffectModifyTokenCount">
+    <WhichUnit Value="Caster" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+    <Value value="-40" />
+  </CEffectModifyTokenCount>
+
+  <CButton id="ProbiusWarpInZealots" parent="StormButtonParent">
+    <Icon value="Assets\Textures\affix_icon_zealot.dds" />
+  </CButton>
+  <CButton id="ProbiusWarpInStalkers" parent="StormButtonParent">
+    <Icon value="Assets\Textures\affix_icon_stalker.dds" />
+  </CButton>
+  <CButton id="ProbiusWarpInImmortals" parent="StormButtonParent">
+    <Icon value="Assets\Textures\affix_icon_immortal.dds" />
+    <TooltipCooldownOverrideText value="Abil/ProbiusWarpInImmortals" />
+  </CButton>
+  <CButton id="ProbiusWarpTechnologyCounterToken" parent="StormButtonParent">
+    <Icon value="Assets\Textures\affix_icon_probius_minerals.dds" />
+  </CButton>
+
+  <CBehaviorBuff id="ProbiusPhotonCannonCooldownController" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="ProbiusHasNoPhotonCannonCharges" />
+    <Period value="0.125" />
+    <PeriodicEffect value="ProbiusPhotonCannonApplyPhotonCannonCooldown" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ProbiusPhotonCannonCooldown">
+    <RemoveValidatorArray value="ProbiusHasNoPhotonCannonCharges" />
+    <FinalEffect value="ProbiusPhotonCannonModifyUnit" />
+    <Modification>
+      <BehaviorLinkDisableArray value="ProbiusPhotonCannonCooldownController" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CEffectSet id="ProbiusWeaponImpactSet">
+    <EffectArray value="ProbiusZAPSet" />
+  </CEffectSet>
+  <CEffectDamage id="ProbiusWeaponDamage" parent="StormWeapon">
+    <Amount value="33" />
+    <MultiplicativeModifierArray Validator="TargetDoesNotHaveProbiusZAPCooldownAndIsHero" index="ProbiusZAP" Modifier="0" Crit="0" />
+  </CEffectDamage>
+  
+  <CEffectSet id="ProbiusZAPSet">
+    <Chance value="0" />
+    <ValidatorArray value="TargetDoesNotHaveProbiusZAPCooldown" />
+    <ValidatorArray value="TargetIsHero" />
+    <EffectArray value="ProbiusZAPSlowApplyBehavior" />
+    <EffectArray value="ProbiusZAPCooldownApplyBehavior" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="ProbiusZAPSlowApplyBehavior">
+    <WhichUnit Value="Target" />
+    <Behavior value="ProbiusZAPSlowBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="ProbiusZAPStunApplyBehavior">
+    <WhichUnit Value="Target" />
+    <Behavior value="ProbiusZAPStunBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="ProbiusZAPCooldownApplyBehavior">
+    <WhichUnit Value="Target" />
+    <Behavior value="ProbiusZAPCooldown" />
+  </CEffectApplyBehavior>
+  <CBehaviorBuff id="ProbiusZAPStunBehavior" parent="StormStun">
+    <Duration value="2" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ProbiusZAPSlowBehavior" parent="StormSlowParent">
+    <Duration value="4" />
+    <Modification>
+      <UnifiedMoveSpeedFactor value="-0.9" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ProbiusZAPCooldown">
+    <Duration value="12"/>
+  </CBehaviorBuff>
+  <CValidatorCombine id="TargetDoesNotHaveProbiusZAPCooldownAndIsHero">
+    <Type value="And" />
+    <CombineArray value="TargetDoesNotHaveProbiusZAPCooldown" />
+    <CombineArray value="TargetIsHero" />
+  </CValidatorCombine>
+  <CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveProbiusZAPCooldown">
+    <WhichUnit Value="Target" />
+    <Value value="0" />
+    <Behavior value="ProbiusZAPCooldown" />
+  </CValidatorUnitCompareBehaviorCount>
+  
+  <CBehaviorBuff id="ProbiusWarpRiftPullController">
+    <PeriodicEffect value="ProbiusWarpRiftPullPeriodicSet" />
+    <Period value="0.0625" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ProbiusWarpRiftSplit" />
+  
+  <CBehaviorBuff id="ProbiusZealotBuildInProgressBehavior" parent="StormTimedLife">
+    <Duration value="2" />
+    <ExpireEffect value="ProbiusWarpInZealotsExpireSet" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ProbiusStalkerBuildInProgressBehavior" parent="StormTimedLife">
+    <Duration value="2" />
+    <ExpireEffect value="ProbiusWarpInStalkersExpireSet" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="ProbiusImmortalBuildInProgressBehavior" parent="StormTimedLife">
+    <Duration value="2" />
+    <ExpireEffect value="ProbiusWarpInImmortalsExpireSet" />
+  </CBehaviorBuff>
+  <CBehaviorAbility id="AffixWarpInZealotsBehaviorAbility">
+    <Buttons Face="ProbiusWarpInZealots" Type="AbilCmd" AbilCmd="ProbiusWarpInZealots,Execute" />
+  </CBehaviorAbility>
+  <CBehaviorAbility id="AffixWarpInStalkersBehaviorAbility">
+    <Buttons Face="ProbiusWarpInStalkers" Type="AbilCmd" AbilCmd="ProbiusWarpInStalkers,Execute" />
+  </CBehaviorAbility>
+  <CBehaviorAbility id="AffixWarpInImmortalsBehaviorAbility">
+    <Buttons Face="ProbiusWarpInImmortals" Type="AbilCmd" AbilCmd="ProbiusWarpInImmortals,Execute" />
+  </CBehaviorAbility>
+  <CBehaviorTokenCounter id="ProbiusWarpTechnologyCounterToken" parent="StormQuestToken">
+    <Face value="ProbiusWarpTechnologyCounterToken" />
+    <InfoIcon value="Assets\Textures\affix_icon_probius_minerals.dds" />
+    <Max value="99999" />
+    <IncreaseEvents index="0" EventId="" />
+    <DecreaseEvents index="0" EventId="" />
+    <AtMinEvents index="0" EventId="" />
+  </CBehaviorTokenCounter>
+
+  <CBehaviorBuff id="ProbiusPhotonCannonExtenderBehavior">
+    <Period value="0.0625" />
+    <PeriodicEffect value="ProbiusPhotonCannonExtendDuration" />
+    <DisableValidatorArray value="ProbiusTargetNearPylonOrOverchargedPylon" />
+  </CBehaviorBuff>
+  <CEffectModifyBehaviorBuffDuration id="ProbiusPhotonCannonExtendDuration">
+    <Behavior value="ProbiusPhotonCannonTimedLifeBehavior" />
+    <Value value="0.0625" />
+  </CEffectModifyBehaviorBuffDuration>
+  
+    
+  <CValidatorUnitCompareChargeUsed id="ProbiusHasNoPhotonCannonCharges">
+    <WhichUnit Value="Target" />
+    <ChargeLink value="Abil/ProbiusPhotonCannon" />
+    <Location value="Unit" />
+    <Ability value="ProbiusPhotonCannon" />
+    <Value value="3" />
+  </CValidatorUnitCompareChargeUsed>
+
+  <CValidatorCombine id="ProbiusHas5MineralsOrHasEfficientWarpAnd4Minerals">
+    <CombineArray value="ProbiusHas5Minerals" />
+    <CombineArray value="ProbiusHasEfficientWarpAndProbiusHas4Minerals" />
+  </CValidatorCombine>
+  <CValidatorCombine id="ProbiusHasEfficientWarpAndProbiusHas4Minerals">
+    <Type value="And" />
+    <CombineArray value="ProbiusHasEfficientWarp" />
+    <CombineArray value="ProbiusHas4Minerals" />
+  </CValidatorCombine>
+
+  <CValidatorCombine id="ProbiusHas10MineralsOrHasEfficientWarpAnd8Minerals">
+    <CombineArray value="ProbiusHas10Minerals" />
+    <CombineArray value="ProbiusHasEfficientWarpAndProbiusHas8Minerals" />
+  </CValidatorCombine>
+  <CValidatorCombine id="ProbiusHasEfficientWarpAndProbiusHas8Minerals">
+    <Type value="And" />
+    <CombineArray value="ProbiusHasEfficientWarp" />
+    <CombineArray value="ProbiusHas8Minerals" />
+  </CValidatorCombine>
+
+  <CValidatorCombine id="ProbiusHas30MineralsOrHasEfficientWarpAnd24Minerals">
+    <CombineArray value="ProbiusHas30Minerals" />
+    <CombineArray value="ProbiusHasEfficientWarpAndProbiusHas24Minerals" />
+  </CValidatorCombine>
+  <CValidatorCombine id="ProbiusHasEfficientWarpAndProbiusHas24Minerals">
+    <Type value="And" />
+    <CombineArray value="ProbiusHasEfficientWarp" />
+    <CombineArray value="ProbiusHas24Minerals" />
+  </CValidatorCombine>
+
+  <CValidatorUnitCompareTokenCount id="ProbiusHas4Minerals">
+    <WhichUnit Value="Caster" />
+    <Compare value="GE" />
+    <Value value="4" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+  </CValidatorUnitCompareTokenCount>
+  <CValidatorUnitCompareTokenCount id="ProbiusHas5Minerals">
+    <WhichUnit Value="Caster" />
+    <Compare value="GE" />
+    <Value value="5" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+  </CValidatorUnitCompareTokenCount>
+  <CValidatorUnitCompareTokenCount id="ProbiusHas8Minerals">
+    <WhichUnit Value="Caster" />
+    <Compare value="GE" />
+    <Value value="8" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+  </CValidatorUnitCompareTokenCount>
+  <CValidatorUnitCompareTokenCount id="ProbiusHas10Minerals">
+    <WhichUnit Value="Caster" />
+    <Compare value="GE" />
+    <Value value="10" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+  </CValidatorUnitCompareTokenCount>
+  <CValidatorUnitCompareTokenCount id="ProbiusHas15Minerals">
+    <WhichUnit Value="Caster" />
+    <Compare value="GE" />
+    <Value value="15" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+  </CValidatorUnitCompareTokenCount>
+  <CValidatorUnitCompareTokenCount id="ProbiusHas24Minerals">
+    <WhichUnit Value="Caster" />
+    <Compare value="GE" />
+    <Value value="24" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+  </CValidatorUnitCompareTokenCount>
+  <CValidatorUnitCompareTokenCount id="ProbiusHas30Minerals">
+    <WhichUnit Value="Caster" />
+    <Compare value="GE" />
+    <Value value="30" />
+    <TokenId value="ProbiusWarpTechnologyCounterToken" />
+  </CValidatorUnitCompareTokenCount>
+
+  <CValidatorUnitCompareVital id="CasterShieldsGE1">
+    <WhichUnit Value="Caster"/>
+    <Compare value="GE"/>
+    <Value value="1"/>
+    <Vital value="Shields"/>
+  </CValidatorUnitCompareVital>
+
+  <CValidatorUnitCompareBehaviorCount id="WarpRiftHasProbiusWarpRiftSplit">
+    <Value value="1" />
+    <Behavior value="ProbiusWarpRiftSplit" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorUnitCompareBehaviorCount id="ProbiusHasEfficientWarp">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="ProbiusEfficientWarpController" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CWeaponLegacy id="PsiBlades">
+    <EditorCategories value="Race:Protoss"/>
+    <Icon value="Assets\Textures\btn-upgrade-protoss-groundweaponslevel0.dds"/>
+    <TargetFilters value="Visible;Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+    <Range value="0.9"/>
+    <Period value="1.2"/>
+    <DamagePoint value="0"/>
+    <Effect value="PsiBladesBurst"/>
+    <Options index="Melee" value="1"/>
+    <DisplayAttackCount value="2"/>
+  </CWeaponLegacy>
+  <CWeaponLegacy id="ParticleDisruptors">
+    <EditorCategories value="Race:Protoss"/>
+    <Icon value="Assets\Textures\btn-upgrade-protoss-groundweaponslevel0.dds"/>
+    <DisplayEffect value="ParticleDisruptorsU"/>
+    <TargetFilters value="Visible;Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+    <Range value="6"/>
+    <Period value="1.44"/>
+  </CWeaponLegacy>
+  <CWeaponLegacy id="PhaseDisruptors">
+    <EditorCategories value="Race:Protoss"/>
+    <Icon value="Assets\Textures\btn-upgrade-protoss-groundweaponslevel0.dds"/>
+    <TargetFilters value="Visible;Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+    <Period value="1.45"/>
+    <Range value="11"/>
+  </CWeaponLegacy>
+
+  <!-- Zealot -->
+  <CActorUnit id="ProbiusZealot" parent="StormMinionStandard" unitName="ProbiusZealot">
+    <ModelFlags index="OutlineEmitter" value="1"/>
+    <DeathArray index="Normal" ModelLink="ZealotDeath" SoundLink="Zealot_Death"/>
+    <BuildModel value="ZealotWarpIn"/>
+    <PortraitModel value="ZealotPortrait"/>
+    <PlacementModel value="ZealotPlacement"/>
+    <PlacementSound value="Protoss_BuildingPlacementSmall"/>
+    <Macros value="ChargingAnim"/>
+    <WalkAnimMoveSpeed value="3"/>
+    <GroupIcon>
+        <Image value="Assets\Textures\storm_ui_ingame_targetinfopanel_unit_probiuszealot.dds"/>
+    </GroupIcon>
+  </CActorUnit>
+  <CActorAction id="ZealotAttack" parent="GenericAttack" effectAttack="PsiBlades">
+      <!-- Only using 1 attach point to prevent 2 launch sounds each attack-->
+      <LaunchAttachQuery Methods="AMFilterWeaponLeft"/>
+      <LaunchAssets Sound="Zealot_AttackLaunch"/>
+      <ImpactMap index="None" Sound="Zealot_AttackImpact"/>
+      <ShieldFlashType value="Header"/>
+  </CActorAction>
+  <CActorSound id="Zealot_Death" parent="SoundOneShot">
+      <On Terms="UnitDeathCustomize.Zealot; ValidateUnit IsNotHallucination; PassChance 25.000000" Send="Create"/>
+  </CActorSound>
+  <!-- -->
+  <CActorUnit id="ProbiusInvisibleWarpIn" parent="StormMinionStandard" unitName="ProbiusInvisibleWarpIn">
+    <On Terms="ActorCreation" Send="Create ProbiusWarpInPylonBirthSound" />
+    <On Terms="ActorCreation" Send="AnimPlay Birth Birth" />
+    <On Terms="ActorOrphan" Send="Destroy" />
+    <Model value="ZealotWarpIn" />
+  </CActorUnit>
+  <CActorSplat id="ProbiusWarpInZealotsCursorSplat" parent="StormGuideVisualCircle" abil="ProbiusWarpInZealots">
+    <Model value="ProbiusWarpInZealotsCursorSplat" />
+    <Scale value="1,1,1" />
+  </CActorSplat>
+  <!--                                                                                         -->
+  <!-- Stalker ............................................................................... -->
+  <!--                                                                                         -->
+  <CActorUnit id="ProbiusStalker" parent="StormMinionStandard" unitName="ProbiusStalker">
+      <ModelFlags index="OutlineEmitter" value="1"/>
+      <DeathArray index="Normal" ModelLink="StalkerDeath"/>
+      <BuildModel value="StalkerWarpIn"/>
+      <PortraitModel value="StalkerPortrait"/>
+      <WalkAnimMoveSpeed value="3.1328"/>
+      <PlacementModel value="StalkerPlacement"/>
+      <PlacementSound value="Protoss_BuildingPlacementSmall"/>
+      <On Terms="Behavior.Hallucination.On" Send="Create HallucinationBirthSoundMedium"/>
+      <On Terms="UnitDeathCustomize; ValidateUnit IsHallucination" Send="DeathCustomize Hallucination"/>
+      <On Terms="Abil.attack.ReadyStart" Send="AnimGroupApply Ready"/>
+      <On Terms="WeaponStart.*.AttackStart; WeaponTargetElevation GE 20.000000" Send="AnimBracketStart Attack Attack,Superior"/>
+      <On Terms="WeaponStart.*.AttackStart; WeaponTargetElevation LE -20.000000" Send="AnimBracketStart Attack Attack,Inferior"/>
+      <On Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Attack"/>
+      <On Terms="WeaponStart.ParticleDisruptors.AttackStart" Send="AnimBracketStart Attack Attack"/>
+      <On Terms="WeaponStop.ParticleDisruptors.AttackStop" Send="AnimBracketStop Attack"/>
+      <On Terms="WeaponStop.*.AttackStop" Send="AnimBracketStop Attack"/>
+      <On Terms="Effect.ParticleDisruptors.Start" Send="AnimPlay Attack Attack" />
+      <On Terms="Abil.attack.ReadyStop" Send="AnimGroupRemove Ready"/>
+      <DeathCustoms ModelLink="HallucinationDeath" SoundLink="Sentry_HallucinationDeathMedium" Name="Hallucination"/>
+      <UnitIcon value="Assets\Textures\btn-unit-protoss-stalker.dds"/>
+      <HeroIcon value="Assets\Textures\btn-unit-protoss-stalker.dds"/>
+      <WireframeShield>
+          <Image value="Assets\Textures\Wireframe-Protoss-Stalker-Shield01.dds"/>
+          <Image value="Assets\Textures\Wireframe-Protoss-Stalker-Shield02.dds"/>
+          <Image value="Assets\Textures\Wireframe-Protoss-Stalker-Shield03.dds"/>
+      </WireframeShield>
+      <GroupIcon>
+          <Image value="Assets\Textures\storm_ui_ingame_targetinfopanel_unit_probiusstalker.dds"/>
+      </GroupIcon>
+      <Aliases value="_UnitMedium"/>
+  </CActorUnit>
+  <CActorMissile id="StalkerAttackMissile" parent="GenericAttackMissile" unitName="StalkerWeapon"/>
+  <CActorAction id="StalkerAttack" parent="GenericAttack" effectImpact="ParticleDisruptorsU" effectLaunch="ParticleDisruptors">
+      <LaunchAssets Sound="Stalker_AttackLaunch"/>
+      <ImpactMap index="None" Sound="Stalker_AttackImpact"/>
+      <ImpactMap index="Flesh" ModelReaction="BloodTargetImpact"/>
+      <AcquisitionYawHalfArc value="7.500000"/>
+      <AcquisitionPitchHalfArc value="15.000000"/>
+      <AccuracyHalfArc value="10.000000"/>
+  </CActorAction>
+  <CActorUnit id="ProbiusInvisibleWarpInStalker" parent="StormMinionStandard" unitName="ProbiusInvisibleWarpInStalker">
+    <On Terms="ActorCreation" Send="Create ProbiusWarpInPylonBirthSound" />
+    <On Terms="ActorCreation" Send="AnimPlay Birth Birth" />
+    <On Terms="ActorOrphan" Send="Destroy" />
+    <Model value="StalkerWarpIn" />
+  </CActorUnit>
+  <CActorSplat id="ProbiusWarpInStalkersCursorSplat" parent="StormGuideVisualCircle" abil="ProbiusWarpInStalkers">
+    <Model value="ProbiusWarpInZealotsCursorSplat" />
+    <Scale value="1.000000,1.00000,1.00000" />
+  </CActorSplat>
+  <!--                                                                                         -->
+  <!-- Immortal ............................................................................... -->
+  <!--                                                                                         -->       
+  <CActorUnit id="ProbiusImmortal" parent="StormMinionStandard" unitName="ProbiusImmortal">
+      <DeathArray index="Normal" ModelLink="ImmortalDeath"/>
+      <PortraitModel value="ImmortalPortrait"/>
+      <PlacementModel value="ImmortalPlacement"/>
+      <PlacementSound value="Protoss_BuildingPlacementSmall"/>
+      <BuildModel value="ImmortalWarpIn"/>
+      <WalkAnimMoveSpeed value="1.25"/>
+      <On Terms="Behavior.Hallucination.On" Send="Create HallucinationBirthSoundMedium"/>
+      <On Terms="UnitDeathCustomize; ValidateUnit IsHallucination" Send="DeathCustomize Hallucination"/>
+      <On Terms="Abil.attack.ReadyStart" Send="AnimGroupApply Ready"/>
+      <On Terms="WeaponStart.*.AttackStart; WeaponTargetElevation GE 20.000000" Send="AnimBracketStart Attack Attack,Superior"/>
+      <On Terms="WeaponStart.*.AttackStart; WeaponTargetElevation LE -20.000000" Send="AnimBracketStart Attack Attack,Inferior"/>
+      <On Terms="WeaponStart.*.AttackStart" Send="AnimBracketStart Attack Attack"/>
+      <On Terms="WeaponStop.*.AttackStop" Send="AnimBracketStop Attack"/>
+      <On Terms="Abil.attack.ReadyStop" Send="AnimGroupRemove Ready"/>
+      <On Terms="Effect.PhaseDisruptors.Start" Send="AnimPlay Attack Attack" />
+      <DeathCustoms ModelLink="HallucinationDeath" SoundLink="Sentry_HallucinationDeathMedium" Name="Hallucination"/>
+      <DeathCustoms ModelLink="ProtossLargeUnitDeathLow" Name="AntiGravProtoss"/>
+      <BarWidth value="90"/>
+      <BarOffset value="80"/>
+      <UnitIcon value="Assets\Textures\BTN-Unit-Protoss-Immortal.dds"/>
+      <HeroIcon value="Assets\Textures\BTN-Unit-Protoss-Immortal.dds"/>
+      <WireframeShield>
+          <Image value="Assets\Textures\Wireframe-Protoss-Immortal-Shield01.dds"/>
+          <Image value="Assets\Textures\Wireframe-Protoss-Immortal-Shield02.dds"/>
+          <Image value="Assets\Textures\Wireframe-Protoss-Immortal-Shield03.dds"/>
+      </WireframeShield>
+      <GroupIcon>
+          <Image value="Assets\Textures\storm_ui_ingame_targetinfopanel_unit_probiusimmortal.dds"/>
+      </GroupIcon>
+      <Wireframe>
+          <Image value="Assets\Textures\Wireframe-Protoss-Immortal.dds"/>
+      </Wireframe>
+      <LifeArmorIcon value="Assets\Textures\btn-upgrade-protoss-groundarmorlevel0.dds"/>
+      <Aliases value="_UnitLarge"/>
+  </CActorUnit>
+  <CActorAction id="ImmortalAttack" parent="GenericAttack" effectAttack="PhaseDisruptors">
+    <LaunchAssets Sound="Immortal_AttackLaunch"/>
+    <LaunchAttachQuery Methods="AMFilterWeaponLeft"/>
+    <ImpactMap index="None" Sound="Immortal_AttackImpact"/>
+  </CActorAction>
+  <CActorModel id="ShieldAbsorbImmortalViz" parent="ModelAnimationStyleOneShot">
+      <Terms value="Cap 1"/>
+      <On Terms="Behavior.ImmortalHardenedShield.DamageHandled" Send="Create"/>
+      <On Terms="AnimDone" Send="Destroy"/>
+      <Host Subject="_Selectable"/>
+      <HostSiteOps Ops="SOpAttachCenter"/>
+  </CActorModel>
+  <CActorSound id="ShieldAbsorbImmortalSound" parent="SoundOneShot">
+      <On Terms="Behavior.ImmortalHardenedShield.DamageHandled" Send="Create"/>
+      <Sound value="Immortal_HardenedShieldImpact"/>
+  </CActorSound>
+  <CActorTurret id="ImmortalTurret">
+      <On Terms="TurretEnable.Immortal" Send="Create"/>
+  </CActorTurret>
+  <CActorUnit id="ProbiusInvisibleWarpInImmortal" parent="StormMinionStandard" unitName="ProbiusInvisibleWarpInImmortal">
+    <On Terms="ActorCreation" Send="Create ProbiusWarpInPylonBirthSound" />
+    <On Terms="ActorCreation" Send="AnimPlay Birth Birth" />
+    <On Terms="ActorOrphan" Send="Destroy" />
+    <Model value="ImmortalWarpIn" />
+  </CActorUnit>
+  <CActorSplat id="ProbiusWarpInImmortalsCursorSplat" parent="StormGuideVisualCircle" abil="ProbiusWarpInImmortals">
+    <Model value="ProbiusWarpInZealotsCursorSplat" />
+    <Scale value="1.000000,1.00000,1.00000" />
+  </CActorSplat>
+
+
+  <!-- Zealot -->
+  <CModel id="ProbiusInvisibleWarpIn" parent="Unit">
+    <Model value="Assets\Models\Zealot_Ex2.m3"/>
+    <RequiredAnims value="Assets\Anims\Zealot_SwarmAnims.m3a"/>
+    <Occlusion value="Show"/>
+    <ScaleMax value="1.350000,1.350000,1.350000"/>
+    <ScaleMin value="1.350000,1.350000,1.350000"/>
+    <SelectionRadius value="0.416500"/>
+    <SquibTypeDefault value="Metal"/>
+    <Radius value="0.375000"/>
+    <TechPurchaseCamera value="Star2CameraMid05"/>
+    <UnitGlossaryCamera value="Star2CameraMid05"/>
+    <PlanetPanelCamera value="Star2CameraMid05"/>
+    <ShadowRadius value="0.416500"/>
+  </CModel>
+  <CModel id="ProbiusZealot" parent="Unit">
+    <Model value="Assets\Models\Zealot_Ex2.m3"/>
+    <RequiredAnims value="Assets\Anims\Zealot_SwarmAnims.m3a"/>
+    <Occlusion value="Show"/>
+    <ScaleMax value="1.350000,1.350000,1.350000"/>
+    <ScaleMin value="1.350000,1.350000,1.350000"/>
+    <SelectionRadius value="0.416500"/>
+    <SquibTypeDefault value="Metal"/>
+    <Radius value="0.375000"/>
+    <TechPurchaseCamera value="Star2CameraMid05"/>
+    <UnitGlossaryCamera value="Star2CameraMid05"/>
+    <PlanetPanelCamera value="Star2CameraMid05"/>
+    <ShadowRadius value="0.416500"/>
+  </CModel>
+  <CModel default="1" id="ZealotWarpInBase" parent="Unit">
+    <Model value="Assets\Models\ZealotWarpIn.m3"/>
+      <?token id="Race" value="Protoss"?>
+      <LowQualityModel value="ProtossUnitBirth"/>
+      <Occlusion value="Show"/>
+      <ScaleMax value="0.900000,0.900000,0.900000"/>
+      <ScaleMin value="0.900000,0.900000,0.900000"/>
+      <SelectionRadius value="0.555400"/>
+      <ShadowRadius value="0.555400"/>
+  </CModel>
+  <CModel default="1" id="ZealotDeathBase" parent="UnitDeath">
+    <Model value="Assets\Models\ZealotDeath.m3"/>
+      <?token id="Race" value="Protoss"?>
+      <Occlusion value="Show"/>
+      <LowQualityModel value="ProtossSpiritDeathLow"/>
+      <SelectionRadius value="0.555400"/>
+      <ShadowRadius value="0.555400"/>
+  </CModel>
+  <CModel default="1" id="ZealotPortraitBase" parent="Portrait">
+      <?token id="Race" value="Protoss"?>
+  </CModel>
+  <CModel default="1" id="ZealotDeathRagdollBase" parent="UnitDeathRagdoll">
+    <Model value="Assets\Models\ZealotDeathRagdoll.m3"/>
+      <?token id="Race" value="Protoss"?>
+      <!-- We can totally throttle his physics, b\c he fades out, so it'll make his death look
+            more violent w\out his ragdoll flying across the screen in a visible way. -->
+      <PhysicsForceFactor value="2.000000"/>
+  </CModel>
+  <CModel id="ZealotDeath" parent="ZealotDeathBase"/>
+  <CModel id="ZealotDeathRagdoll" parent="ZealotDeathRagdollBase"/>
+  <CModel id="ZealotPortrait" parent="ZealotPortraitBase"/>
+  <CModel id="ZealotWarpIn" parent="ZealotWarpInBase"/>
+  <!--  -->
+  <CModel id="ProbiusWarpInZealotsCursorSplat" parent="Splat">
+    <Model value="Assets\UI\Cursors\Storm_UI_AOECursor_Fantasy\Storm_UI_AOECursor_Fantasy.m3" />
+  </CModel>
+  <!-- Stalker -->
+    <CModel default="1" id="StalkerDeathBase" parent="UnitDeath">
+    <Model value="Assets\Models\StalkerDeath.m3" />
+        <?token id="Race" value="Protoss"?>
+        <Occlusion value="Show"/>
+        <LowQualityModel value="ProtossMediumUnitDeathLowAndSound"/>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Uni_DeathFXincidentallFire"/>
+            <Type value="Sound"/>
+            <Time value="0.250000"/>
+            <Payload value="Uni_DeathFXincidentallFire"/>
+        </Events>
+        <Events>
+            <Anim value="Death,01"/>
+            <Name value="Uni_DeathFXincidentallFire"/>
+            <Type value="Sound"/>
+            <Time value="0.250000"/>
+            <Payload value="Uni_DeathFXincidentallFire"/>
+        </Events>
+        <Events>
+            <Anim value="Death,02"/>
+            <Name value="Uni_DeathFXincidentallFire"/>
+            <Type value="Sound"/>
+            <Time value="0.250000"/>
+            <Payload value="Uni_DeathFXincidentallFire"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Uni_DeathFXincidentallFire"/>
+            <Type value="Sound"/>
+            <Time value="0.250000"/>
+            <Payload value="Uni_DeathFXincidentallFire"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Stalker_Explode_Legs_Start"/>
+            <Type value="Sound"/>
+            <Time value="0.193000"/>
+            <Payload value="Stalker_Explode_Legs_Start"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Stalker_Explode_Legs_Impact"/>
+            <Type value="Sound"/>
+            <Time value="0.692000"/>
+            <Payload value="Stalker_Explode_Legs_Impact"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Stalker_Explode_Var"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Stalker_Explode_Var"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Stalker_Explode_Var"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Stalker_Explode_Var"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Stalker_Explode_Fall_Start"/>
+            <Type value="Sound"/>
+            <Payload value="Stalker_Explode_Fall_Start"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Stalker_Explode_Fall_Body"/>
+            <Type value="Sound"/>
+            <Time value="0.206000"/>
+            <Payload value="Stalker_Explode_Fall_Body"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Stalker_Explode_Fall_Impact"/>
+            <Type value="Sound"/>
+            <Time value="0.602000"/>
+            <Payload value="Stalker_Explode_Fall_Impact"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Stalker_Explode_Var"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Stalker_Explode_Var"/>
+        </Events>
+        <Events>
+            <Anim value="Death,01"/>
+            <Name value="Stalker_Explode"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Stalker_Explode"/>
+        </Events>
+        <Events>
+            <Anim value="Death,02"/>
+            <Name value="Stalker_Explode"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Stalker_Explode"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="1.286000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="1.496000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="2.210000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="2.382000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="3.401000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="3.744000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="3.916000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="4.716000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="5.183000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="6.050000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="6.956000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="1.841000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="2.405000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="3.142000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="3.706000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="4.317000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="4.965000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="5.283000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="6.203000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="6.572000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="7.206000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="7.349000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Protoss_Death_Spark"/>
+            <Type value="Sound"/>
+            <Time value="5.340000"/>
+            <Payload value="Protoss_Death_Spark"/>
+        </Events>
+    </CModel>
+    <CModel default="1" id="StalkerWarpInBase" parent="Unit">
+      <Model value="Assets\Models\StalkerWarpIn.m3"/>
+        <?token id="Race" value="Protoss"?>
+        <LowQualityModel value="ProtossUnitBirth"/>
+        <ScaleMax value="0.690000,0.690000,0.690000"/>
+        <ScaleMin value="0.690000,0.690000,0.690000"/>
+        <SelectionRadius value="0.724600"/>
+        <ShadowRadius value="0.724600"/>
+    </CModel>
+    <CModel default="1" id="StalkerDeathRagdollBase" parent="UnitDeathRagdoll">
+      <Model value="Assets\Models\StalkerDeathRagdoll.m3"/>
+        <?token id="Race" value="Protoss"?>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Stalker_Explode_Ragdoll_Fall_Body"/>
+            <Type value="Sound"/>
+            <Time value="0.600000"/>
+            <Payload value="Stalker_Explode_Ragdoll_Fall_Body"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Stalker_Explode_Ragdoll_Fall_Impact"/>
+            <Type value="Sound"/>
+            <Time value="0.600000"/>
+            <Payload value="Stalker_Explode_Ragdoll_Fall_Impact"/>
+        </Events>
+    </CModel>
+    <CModel default="1" id="StalkerBase" parent="Unit">
+        <?token id="Race" value="Protoss"?>
+        <Model value="Assets\Models\Stalker.m3"/>
+        <RequiredAnims value="Assets\Anims\Stalker_SwarmAnims.m3a"/>
+        <Occlusion value="Show"/>
+        <ScaleMax value="1,1,1"/>
+        <ScaleMin value="1,1,1"/>
+        <SelectionRadius value="1.087000"/>
+        <Tipability value="0.750000"/>
+        <TipabilityWidth value="0.800000"/>
+        <TipabilityLength value="0.800000"/>
+        <SquibTypeDefault value="Metal"/>
+        <Radius value="0.850000"/>
+        <TechPurchaseCamera value="Star2CameraHigh10"/>
+        <UnitGlossaryCamera value="Star2CameraHigh10"/>
+        <PlanetPanelCamera value="Star2CameraHigh10"/>
+        <ShadowRadius value="1.087000"/>
+    </CModel>
+    <CModel id="StalkerWeapon" parent="MissileFX">
+        <Model value="Assets\Models\StalkerMissile.m3"/>
+        <ScaleMax value="0.700000,0.700000,0.700000"/>
+        <ScaleMin value="0.700000,0.700000,0.700000"/>
+        <EditorCategories value="Race:Protoss"/>
+        <SelectionRadius value="0.714000"/>
+        <ShadowRadius value="0.714000"/>
+    </CModel>
+    <CModel id="StalkerAttackImpact" parent="ImpactFX">
+        <Model value="Assets\Models\StalkerMissileImpact.m3"/>
+        <EditorCategories value="Race:Protoss"/>
+    </CModel>
+    <CModel id="ProbiusStalker" parent="StalkerBase"/>
+    <CModel id="StalkerDeath" parent="StalkerDeathBase">
+        <Model value="Assets\Models\StalkerDeathEx1.m3"/>
+    </CModel>
+    <CModel id="StalkerDeathRagdoll" parent="StalkerDeathRagdollBase"/>
+    <CModel id="StalkerWarpIn" parent="StalkerWarpInBase"/>
+
+  <!-- Immortal -->
+
+    <CModel default="1" id="ImmortalBase" parent="Unit">
+        <?token id="Race" value="Protoss"?>
+        <Occlusion value="Show"/>
+        <Tipability value="0.750000"/>
+        <TipabilityWidth value="0.800000"/>
+        <TipabilityLength value="0.800000"/>
+        <ScaleMax value="1.15,1.15,1.15"/>
+        <ScaleMin value="1.15,1.15,1.15"/>
+        <SelectionRadius value="0.866400"/>
+        <SquibTypeDefault value="Metal"/>
+        <AttachProps Id="Ref_Hardpoint">
+            <Keys index="Turret" value="0"/>
+        </AttachProps>
+        <Radius value="0.650000"/>
+        <TechPurchaseCamera value="Star2CameraHigh08"/>
+        <UnitGlossaryCamera value="Star2CameraHigh08"/>
+        <PlanetPanelCamera value="Star2CameraHigh08"/>
+        <ShadowRadius value="0.866400"/>
+        <RequiredAnims value="Assets\Anims\Immortal_SwarmAnims.m3a"/>
+    </CModel>
+    <CModel id="ProbiusImmortal" parent="ImmortalBase">
+        <Model value="Assets\Models\Immortal_EX2.m3"/>
+    </CModel>
+    <CModel id="ImmortalAttackImpact" parent="ImpactFX">
+        <Model value="Assets\Models\ImmortalMissileImpact.m3"/>
+        <EditorCategories value="Race:Protoss"/>
+        <LowQualityModel value="ImmortalAttackImpactLow"/>
+    </CModel>
+    <CModel id="ImmortalAttackImpactLow" parent="ImpactFX">
+        <Model value="Assets\Models\ImmortalMissileImpact_Low.m3"/>
+        <EditorCategories value="Race:Protoss"/>
+    </CModel>
+
+    <CModel default="1" id="ImmortalDeathBase" parent="UnitDeath">
+        <?token id="Race" value="Protoss"?>
+        <Occlusion value="Show"/>
+        <LowQualityModel value="ProtossMediumUnitDeathLowAndSound"/>
+        <VariationCount value="2"/>
+        <Events>
+            <Variation value="0"/>
+            <Anim value="Death,00"/>
+            <Name value="Uni_DeathFXincidentallFire"/>
+            <Type value="Sound"/>
+            <Time value="0.450000"/>
+            <Payload value="Uni_DeathFXincidentallFire"/>
+        </Events>
+        <Events>
+            <Variation value="0"/>
+            <Anim value="Death,02"/>
+            <Name value="Uni_DeathFXincidentallFire"/>
+            <Type value="Sound"/>
+            <Time value="0.450000"/>
+            <Payload value="Uni_DeathFXincidentallFire"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Immortal_Explode_Legs_Start"/>
+            <Type value="Sound"/>
+            <Time value="0.160000"/>
+            <Payload value="Immortal_Explode_Legs_Start"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Immortal_Explode_Ducked_Ex0"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Immortal_Explode_Ducked_Ex0"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Immortal_Explode_Legs_Mech"/>
+            <Type value="Sound"/>
+            <Time value="0.703000"/>
+            <Payload value="Immortal_Explode_Legs_Mech"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Immortal_Explode_Legs_Impact"/>
+            <Type value="Sound"/>
+            <Time value="1.050000"/>
+            <Payload value="Immortal_Explode_Legs_Impact"/>
+        </Events>
+        <Events>
+            <Anim value="Death,00"/>
+            <Name value="Immortal_Explode_Var"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Immortal_Explode_Var"/>
+        </Events>
+        <Events>
+            <Anim value="Death,02"/>
+            <Name value="Immortal_Explode_Legs_Impact"/>
+            <Type value="Sound"/>
+            <Time value="0.800000"/>
+            <Payload value="Immortal_Explode_Legs_Impact"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Immortal_Explode_Body_Start"/>
+            <Type value="Sound"/>
+            <Time value="0.187000"/>
+            <Payload value="Immortal_Explode_Body_Start"/>
+        </Events>
+        <Events>
+            <Variation value="1"/>
+            <Anim value="Death,03"/>
+            <Name value="Immortal_Explode_Ducked_Ex1"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Immortal_Explode_Ducked_Ex1"/>
+        </Events>
+        <Events>
+            <Anim value="Death,03"/>
+            <Name value="Immortal_Explode_Body_Impact"/>
+            <Type value="Sound"/>
+            <Time value="0.887000"/>
+            <Payload value="Immortal_Explode_Body_Impact"/>
+        </Events>
+        <Events>
+            <Variation value="1"/>
+            <Anim value="Death,03"/>
+            <Name value="Immortal_Explode_Var"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Immortal_Explode_Var"/>
+        </Events>
+        <Events>
+            <Variation value="1"/>
+            <Anim value="Death,00"/>
+            <Name value="Uni_DeathFXincidentallFire"/>
+            <Type value="Sound"/>
+            <Time value="0.450000"/>
+            <Payload value="Uni_DeathFXincidentallFire"/>
+        </Events>
+        <Events>
+            <Variation value="1"/>
+            <Anim value="Death,03"/>
+            <Name value="Uni_DeathFXincidentallFire"/>
+            <Type value="Sound"/>
+            <Time value="0.450000"/>
+            <Payload value="Uni_DeathFXincidentallFire"/>
+        </Events>
+        <Events>
+            <Anim value="Death,01"/>
+            <Name value="Immortal_Explode"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Immortal_Explode"/>
+        </Events>
+        <Events>
+            <Anim value="Death,02"/>
+            <Name value="Immortal_Explode"/>
+            <Type value="Sound"/>
+            <Time value="0.010000"/>
+            <Payload value="Immortal_Explode"/>
+        </Events>
+    </CModel>
+    <CModel id="ImmortalDeath" parent="ImmortalDeathBase">
+        <Model value="Assets\Models\ImmortalDeathEx1.m3"/>
+    </CModel>
+    <CModel id="ImmortalWarpIn" parent="OneShotSpellFX">
+        <Model value="Assets\Models\ImmortalWarpIn.m3"/>
+        <EditorCategories value="Race:Protoss"/>
+        <Occlusion value="Show"/>
+        <ScaleMax value="0.750000,0.750000,0.750000"/>
+        <ScaleMin value="0.750000,0.750000,0.750000"/>
+        <LowQualityModel value="ProtossUnitBirth"/>
+        <SelectionRadius value="0.666500"/>
+        <ShadowRadius value="0.666500"/>
+    </CModel>
+  <CModel id="ShieldAbsorbImmortalViz" parent="OneShotSpellFX">
+      <Model value="Assets\Models\DragoonForceShield.m3"/>
+      <EditorCategories value="Race:Protoss"/>
+  </CModel>
+
+</Catalog>

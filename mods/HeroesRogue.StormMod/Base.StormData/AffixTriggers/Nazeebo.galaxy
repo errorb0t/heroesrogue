@@ -1,0 +1,198 @@
+include "AffixTriggers"
+
+int[8] libAffx_NazeeboTalents;
+fixed libAffx_NazeeboZombieHandlerRange = 12;
+fixed libAffx_NazeeboZombieHandlerChance = 0.5;
+fixed libAffx_NazeeboZombieHandlerAdditionalChance = 0;
+fixed libAffx_NazeeboHardyBonesModifier;
+int libAffx_NazeeboManyRitualsTotal;
+int libAffx_NazeeboRitualOfBoonsIndex;
+// ---------------------------------------------------------------
+// Nazeebo - Add an empty talent when all talents on a tier are unavailable
+// ---------------------------------------------------------------
+bool libAffx_NazeeboTalent7 (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_NazeeboTalents[3] += 1;
+    if (libAffx_NazeeboTalents[3] == 3) {
+        libAffx_ShowTalent("DoNothing7", true);
+    }
+    return true;
+}
+// ---------------------------------------------------------------
+// Master Webweaver
+// ---------------------------------------------------------------
+bool libAffx_NazeeboMasterWebweaverUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int owner = UnitGetOwner(deadUnit);
+    if (testConds) {
+        if (owner != libAffx_player) {
+            return false;
+        }
+        if (UnitGetType(deadUnit) != "WitchDoctorZombieWallUnit" && UnitGetType(deadUnit) != "WitchDoctorZombieWallDeadRushTalentUnit"&& UnitGetType(deadUnit) != "WitchDoctorPlagueofToadsUnit") {
+            return false;
+        }
+        if (PlayerHasTalent(owner, "WitchDoctorDeadRush") && UnitGetType(deadUnit) == "WitchDoctorZombieWallUnit") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    } 
+    UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "NazeeboCorpseSpidersSpawnImpactSet", deadUnit);
+    return true;
+}
+
+// ---------------------------------------------------------------
+// Power Ritual
+// ---------------------------------------------------------------
+bool libAffx_NazeeboPowerRitualScaling (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_LevelUpScaling("Effect,WitchDoctorHeroWeaponDamageSplash,Amount", player);
+
+    return true;
+}
+
+// ---------------------------------------------------------------
+// Zombie Handler
+// ---------------------------------------------------------------
+bool libAffx_NazeeboZombieHandlerNPCTakedown (bool testConds, bool runActions) {
+    
+    int player = libGame_gf_HeroParticipatedInNPCTakedownKillingPlayer();
+    unit heroUnit = libGame_gv_players[player].lv_heroUnit;
+    unit deadUnit = libGame_gf_HeroParticipatedInNPCTakedownMinion();
+    point npcPosition = UnitGetPosition(deadUnit);
+    int random;
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+        if (!libAffx_IsMinion(deadUnit)) {
+            return false;
+        }
+        if (!UnitFilterMatch(deadUnit, libAffx_teamChaos, UnitFilter((1 << c_targetFilterMinion), 0, 0, 0))) {
+            return false;
+        }
+        if (!UnitIsAlive(heroUnit)) {
+            return false;
+        }
+        if (UnitFilterMatch(heroUnit, player, UnitFilter(0, (1 << (c_targetFilterStasis - 32)), 0, 0))) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    if ((DistanceBetweenPoints(UnitGetPosition(heroUnit), npcPosition) <= libAffx_NazeeboZombieHandlerRange)) {
+        random = RandomInt(1, 100);
+        if (random <= libAffx_NazeeboZombieHandlerChance * 100) {
+            UnitCreateEffectPoint(heroUnit, "NazeeboZombieHandlerCreatePersistent", npcPosition);
+        }
+        if (random <= libAffx_NazeeboZombieHandlerAdditionalChance * 100) {
+            UnitCreateEffectPoint(heroUnit, "NazeeboZombieHandlerCreatePersistent", npcPosition);
+        }
+    }
+    return true;
+}
+// ---------------------------------------------------------------
+// Hardy Bones
+// ---------------------------------------------------------------
+bool libAffx_NazeeboHardyBonesAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_NazeeboHardyBonesModifier = 0.3 * libAffx_EventAffixCount();
+    
+    return true;
+}
+// ---------------------------------------------------------------
+// Never Ending Swarm
+// ---------------------------------------------------------------
+bool libAffx_NazeeboNeverEndingSwarmAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_NazeeboZombieHandlerChance = 1;
+    libAffx_NazeeboZombieHandlerAdditionalChance = 0.5;
+    
+    return true;
+}
+// ---------------------------------------------------------------
+// Many Rituals
+// ---------------------------------------------------------------
+bool libAffx_NazeeboManyRitualsAffixAdded (bool testConds, bool runActions) {
+    unit heroUnit = libGame_gv_players[libAffx_player].lv_heroUnit;
+    int amount = 20 * libAffx_EventAffixCountAdded();
+    if (!runActions) {
+        return true;
+    }
+
+    if (libAffx_EventAffixCount() == libAffx_EventAffixCountAdded()) {
+        amount += 20;
+    }
+
+    libAffx_AddTokenCount(heroUnit, "WitchDoctorVoodooRitual", amount);
+    libAffx_AddTokenCount(heroUnit, "WitchDoctorVoodooRitualTokenCounter", amount);
+    libAffx_AddTokenCount(heroUnit, "WitchDoctorVoodooRitualVileInfectionTokenCounter", amount);
+    libAffx_AddTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken", amount);
+    libAffx_AddTokenCount(heroUnit, "WitchDoctorRitualofBoonsQuestToken", amount);
+
+    libAffx_NazeeboManyRitualsTotal += amount;
+    
+    return true;
+}
+// ---------------------------------------------------------------
+// Ritual of Boons
+// ---------------------------------------------------------------
+bool libAffx_NazeeboRitualofBoonsAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_NazeeboRitualOfBoonsIndex = libAffx_EventAffix();
+    
+    return true;
+}
+bool libAffx_NazeeboRitualofBoons (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_AddBehavior(libAffx_player, "WitchDoctorRitualofBoonsQuestToken", 1, false);
+    
+    return true;
+}
+bool libAffx_NazeeboRitualofBoonsQuestComplete (bool testConds, bool runActions) {
+    if (testConds) {
+        if (libAffx_NazeeboRitualOfBoonsIndex == 0) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_QueueBoon(libAffx_rarityUncommon, 1, false, true);
+    libAffx_QueueBoon(libAffx_rarityRare, 1, false, true);
+    libAffx_affixes[libAffx_NazeeboRitualOfBoonsIndex].quest.questDone = true;
+    
+    return true;
+}
+// ---------------------------------------------------------------
+// Toad Master
+// ---------------------------------------------------------------
+bool libAffx_NazeeboToadMasterMilestone (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify2("Effect,WitchDoctorPlagueofToadsInitialPersistent,PeriodCount", libAffx_player, "2", c_upgradeOperationAdd);
+    
+    return true;
+}

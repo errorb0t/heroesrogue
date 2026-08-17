@@ -446,11 +446,11 @@ const string libGame_gv_eventParam_UnitStopsOccupyingVehicle_PassengerHero_C = "
 const string libGame_gv_eventParam_UnitStopsOccupyingVehicle_HeroPlayer_C = "Hero Player";
 const int libGame_gv_waitBeforePlayingHeroCheer = 6;
 const int libGame_gv_mapMechanicHelpNumberOfGamesToDisplay_C = 1;
-const fixed libGame_gv_heroSpawnDelay_C = 3.0;
+const fixed libGame_gv_heroSpawnDelay_C = 1.0;
 const fixed libGame_gv_individualHeroSpawnMiniDelay_C = 0.5;
 const fixed libGame_gv_heroIntroLineTimeframe_C = 30.0;
 const fixed libGame_gv_mapMechanicHelpPanelDelayTime_C = 10.0;
-const fixed libGame_gv_gameOver_CoreAnimationWaitTime_C = 5.0;
+const fixed libGame_gv_gameOver_CoreAnimationWaitTime_C = 1;
 const fixed libGame_gv_heroDeathActionCamActivationDelay = 1.0;
 const fixed libGame_gv_heroDeathMultikillTimeoutDuration = 10.0;
 const fixed libGame_gv_heroDeathTeamKilledVODelay = 4.0;
@@ -1614,7 +1614,7 @@ void libGame_gf_MinionStartStopMinionSystem (bool lp_startStop);
 void libGame_gf_MinionStartStopMinionSpawnCycle (bool lp_startStop);
 void libGame_gf_MinionPauseUnpauseMinionSystem (bool lp_pauseUnpause);
 void libGame_gf_MinionPauseUnpauseMinionSystemForTeam (bool lp_pauseUnpause, int lp_team, int lp_lane);
-void libGame_gf_MinionSpawnMinion (int lp_lane, int lp_owner, int lp_type, point lp_spawnPoint);
+void libGame_gf_MinionSpawnMinion (int lp_lane, int lp_owner, int lp_type, point lp_spawnPoint, bool suppressRegenGlobeCreation);
 void libGame_gf_MinionSpawnWave (int lp_lane, int lp_owner, int lp_composition);
 void libGame_gf_MinionTurnMinionScalingOnOff (bool lp_onOff);
 void libGame_gf_MinionPauseUnpauseMinionScaling (bool lp_pauseUnpause);
@@ -1932,6 +1932,11 @@ bool[11] libGame_diabloUsedSouls;
 
 bool libGame_teamOrderSharedXPDisabled = false;
 bool libGame_teamOrderXPGlobesDisabled = false;
+
+int libGame_teamChaosExtraRangedMinions;
+int libGame_teamChaosExtraMageMinions;
+int libGame_teamChaosExtraMeleeMinions;
+int libGame_teamChaosAlwaysSpawnCatapults;
 
 // Library Initialization
 void libGame_InitVariables ();
