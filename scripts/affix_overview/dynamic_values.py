@@ -281,7 +281,7 @@ class DynamicValueResolver:
 
     def _load_catalog_entries(self) -> dict[str, dict[str, ET.Element]]:
         catalog_entries: dict[str, dict[str, ET.Element]] = {}
-        for xml_path in sorted(GAME_DATA_DIR.glob("*.xml")):
+        for xml_path in sorted(GAME_DATA_DIR.rglob("*.xml")):
             root = ET.parse(xml_path).getroot()
             for child in root:
                 entry_id = child.attrib.get("id")
