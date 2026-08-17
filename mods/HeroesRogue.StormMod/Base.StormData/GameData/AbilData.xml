@@ -22,34 +22,21 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Arc value="360" />
 </CAbilEffectTarget>
 
-<CAbilEffectInstant id="AffixMedallion">
+<CAbilEffectInstant id="AffixGladiatorsMedallion">
   <PrepEffect value="DismountDecloakCasterSet" />
-  <Effect value="AffixMedallionApplyCleanse" />
+  <Effect value="AffixGladiatorsMedallionCleanseApplyBehavior" />
   <Flags index="Transient" value="1" />
   <Cost>
     <Cooldown TimeUse="60" />
   </Cost>
-  <CmdButtonArray index="Execute" DefaultButtonFace="AffixMedallion">
+  <CmdButtonArray index="Execute" DefaultButtonFace="AffixGladiatorsMedallion">
     <Flags index="AllowMinimap" value="0" />
     <Flags index="Continuous" value="0" />
   </CmdButtonArray>
 </CAbilEffectInstant>
 
-<CAbilEffectInstant id="LostVikingsNorseForceAffix">
-  <PrepEffect value="LostVikingsAbilityUseDismountDecloakSet" />
-  <Effect value="LostVikingsNorseForceVikingSearch" />
-  <Cost>
-    <Cooldown Location="Player" TimeUse="15" />
-  </Cost>
-  <CmdButtonArray index="Execute" DefaultButtonFace="LostVikingsNorseForce" />
-</CAbilEffectInstant>
-
-<CAbilEffectInstant id="NightElfBond">
-  <CmdButtonArray index="Execute" DefaultButtonFace="NightElfBond" />
-</CAbilEffectInstant>
-
-<CAbilEffectInstant id="AffixFirstAid">
-  <CmdButtonArray index="Execute" DefaultButtonFace="AffixFirstAid" />
+<CAbilEffectInstant id="AffixFirstAidBehavior">
+  <CmdButtonArray index="Execute" DefaultButtonFace="AffixFirstAidBehavior" />
 </CAbilEffectInstant>
 
 <CAbilEffectInstant id="AfxSlivanBossDrawIn">

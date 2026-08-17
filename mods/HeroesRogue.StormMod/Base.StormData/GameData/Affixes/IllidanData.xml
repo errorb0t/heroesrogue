@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+  <CHero id="Illidan">
+    <TalentTreeArray index="21" Talent="DoNothing16" Tier="6" Column="4" />
+  </CHero>
+
+  <CEffectSet id="IllidanDiveInitialSet">
+    <EffectArray value="IllidanDiveUnstoppableApplyBehavior" />
+  </CEffectSet>
+  <CEffectSet id="IllidanWeaponPostImpactSet">
+    <EffectArray value="IllidanBurningBladesApplyBehavior" />
+  </CEffectSet>
+  <CEffectSet id="IllidanEvasionInitialSet">
+    <EffectArray value="IllidanEvasionEvasiveApplyBehavior" />
+  </CEffectSet>
+  <CEffectSet id="IllidanDiveRangedImpactSet">
+    <EffectArray value="IllidanDiveDeepDiveDamage" />
+    <EffectArray value="IllidanDiveHardImpactStunApplyBehavior" />
+    <EffectArray value="IllidanBurningBladesApplyBehavior" />
+  </CEffectSet>
+  <CEffectSet id="IllidanDiveMeleeImpactSet">
+    <EffectArray value="IllidanDiveDeepDiveDamage" />
+    <EffectArray value="IllidanDiveHardImpactStunApplyBehavior" />
+    <EffectArray value="IllidanBurningBladesApplyBehavior" />
+  </CEffectSet>
+  <CEffectSet id="IllidanSweepingStrikeImpactSet">
+    <EffectArray value="IllidanBurningBladesApplyBehavior" />
+  </CEffectSet>
+
+  <CEffectApplyBehavior id="IllidanEvasionEvasiveApplyBehavior">
+    <WhichUnit Value="Caster" />
+    <Behavior value="IllidanEvasionSpellArmor" />
+    <Chance value="0" />
+  </CEffectApplyBehavior>
+
+  <CEffectApplyBehavior id="IllidanBurningBladesApplyBehavior">
+    <ValidatorArray index="0" value="CasterNotBlindedAndTargetNotEvading" />
+    <WhichUnit Value="Caster" />
+    <Behavior value="IllidanBurningBladesBehavior" />
+    <Chance value="0" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="IllidanBurningBladesRefreshSet">
+    <EffectArray value="IllidanBurningBladesDecayRemoveBehavior" />
+    <EffectArray value="IllidanBurningBladesAddToken" />
+  </CEffectSet>
+  <CEffectModifyTokenCount id="IllidanBurningBladesAddToken" parent="BaseEffectModifyTokenCount">
+    <TokenId value="IllidanBurningBladesTokenCounter" />
+  </CEffectModifyTokenCount>
+  <CEffectModifyTokenCount id="IllidanBurningBladesRemoveTokens" parent="BaseEffectModifyTokenCount">
+    <TokenId value="IllidanBurningBladesTokenCounter" />
+    <Operation value="Set" />
+    <Value value="0" />
+  </CEffectModifyTokenCount>
+  <CEffectSet id="IllidanBurningBladesDecaySet">
+    <EffectArray value="IllidanBurningBladesDecayApplyBehavior" />
+    <EffectArray value="IllidanBurningBladesDecaySwitch" />
+  </CEffectSet>
+  <CEffectSwitch id="IllidanBurningBladesDecaySwitch">
+    <CaseArray Validator="IllidanHasAnyBurningBladesTokens" Effect="IllidanBurningBladesRemove5Tokens" />
+    <CaseDefault value="IllidanBurningBladesDecayRemoveBehavior" />
+  </CEffectSwitch>
+  <CEffectModifyTokenCount id="IllidanBurningBladesRemove5Tokens" parent="BaseEffectModifyTokenCount">
+    <TokenId value="IllidanBurningBladesTokenCounter" />
+    <Operation value="Add" />
+    <Value value="-5" />
+  </CEffectModifyTokenCount>
+  <CEffectApplyBehavior id="IllidanBurningBladesDecayApplyBehavior">
+    <WhichUnit Value="Caster" />
+    <Behavior value="IllidanBurningBladesDecayBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectRemoveBehavior id="IllidanBurningBladesDecayRemoveBehavior">
+    <WhichUnit Value="Caster" />
+    <BehaviorLink value="IllidanBurningBladesDecayBehavior" />
+  </CEffectRemoveBehavior>
+  <CAccumulatorToken id="IllidanBurningBladesAccumulator" parent="BaseTokenAccumulator">
+    <MaxAccumulation value="8" />
+    <ApplicationRule value="Add" />
+    <TokenId value="IllidanBurningBladesTokenCounter" />
+    <Scale value="0.005" />
+  </CAccumulatorToken>
+  <CBehaviorTokenCounter id="IllidanBurningBladesTokenCounter" parent="StormQuestToken">
+    <IncreaseEvents index="0" EventId="" />
+    <DecreaseEvents index="0" EventId="" />
+    <AtMinEvents index="0" EventId="" />
+    <SortIndex value="1" />
+    <Face value="IllidanBurningBladesTokenCounter" />
+    <Max value="1600" />
+    <DisplayDurationProxyBehavior value="IllidanBurningBladesBehavior" />
+  </CBehaviorTokenCounter>
+  <CButton id="IllidanBurningBladesTokenCounter" parent="StormButtonParent">
+    <Icon value="Assets\Textures\storm_ui_icon_illidan_sweepingstrike_b.dds" />
+  </CButton>
+  <CValidatorUnitCompareTokenCount id="IllidanHasAnyBurningBladesTokens">
+    <Compare value="GT" />
+    <TokenId value="IllidanBurningBladesTokenCounter" />
+  </CValidatorUnitCompareTokenCount>
+  <CBehaviorBuff id="IllidanBurningBladesBehavior" parent="CarryBehaviorParent">
+    <BuffFlags index="RefreshStack" value="1" />
+    <Duration value="2.5" />
+    <InitialEffect value="IllidanBurningBladesRefreshSet" />
+    <RefreshEffect value="IllidanBurningBladesRefreshSet" />
+    <FinalEffect value="IllidanBurningBladesDecaySet" />
+    <Modification>
+      <AdditiveAttackSpeedFactor value="0">
+        <AccumulatorArray value="IllidanBurningBladesAccumulator" />
+      </AdditiveAttackSpeedFactor>
+    </Modification>
+    <SortIndex value="100" />
+    <DisplayDuration index="Self" value="0" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="IllidanBurningBladesDecayBehavior" parent="CarryBehaviorParent">
+    <Period value="0.0625" />
+    <PeriodicEffect value="IllidanBurningBladesDecaySwitch" />
+  </CBehaviorBuff>
+
+  <CEffectApplyBehavior id="IllidanDiveUnstoppableApplyBehavior">
+    <Chance value="0" />
+    <WhichUnit Value="Caster" />
+    <Behavior value="IllidanDiveUnstoppable" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="IllidanDiveHardImpactStunApplyBehavior">
+    <Chance value="0" />
+    <WhichUnit Value="Target" />
+    <Behavior value="IllidanDiveHardImpactStun" />
+  </CEffectApplyBehavior>
+
+  <CEffectDamage id="IllidanDiveDeepDiveDamage" parent="StormSpell">
+    <ValidatorArray value="TargetIsHero" />
+    <Chance value="0" />
+    <VitalFractionMax index="Life" value="0.05" />
+    <LeechValidator index="Life" value="HasIllidanCombatStyleHuntersOnslaught" />
+    <LeechFraction index="Life" value="0.35" />
+    <LeechFlatModifierArray index="Hero" Validator="IllidanHuntersOnslaughtEmpowered" Modifier="0.35" />
+  </CEffectDamage>
+
+  <CBehaviorBuff id="IllidanLegallyBlindController" parent="CarryBehaviorParent">
+    <Modification>
+      <StateFlags index="SuppressDamageVisibilityDefender" value="1" />
+      <SightMinimum value="12" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveLegallyBlind">
+    <Compare value="LE" />
+    <Behavior value="IllidanLegallyBlind" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CBehaviorBuff id="IllidanEvasionSpellArmor" parent="StormArmor">
+    <ArmorModification>
+      <ArmorSet index="Hero">
+        <ArmorMitigationTable index="Ability" value="-100" />
+        <OverrideMinCap index="Splash" value="1"/>
+        <OverrideMinCap index="Basic" value="1"/>
+        <OverrideMinCap index="Ability" value="1"/>
+      </ArmorSet>
+      <ArmorSet index="Merc">
+        <ArmorMitigationTable index="Ability" value="-100" />
+        <OverrideMinCap index="Splash" value="1"/>
+        <OverrideMinCap index="Basic" value="1"/>
+        <OverrideMinCap index="Ability" value="1"/>
+      </ArmorSet>
+      <ArmorSet index="Monster">
+        <ArmorMitigationTable index="Ability" value="-100" />
+        <OverrideMinCap index="Splash" value="1"/>
+        <OverrideMinCap index="Basic" value="1"/>
+        <OverrideMinCap index="Ability" value="1"/>
+      </ArmorSet>
+      <ArmorSet index="Summon">
+        <ArmorMitigationTable index="Ability" value="-100" />
+        <OverrideMinCap index="Splash" value="1"/>
+        <OverrideMinCap index="Basic" value="1"/>
+        <OverrideMinCap index="Ability" value="1"/>
+      </ArmorSet>
+      <ArmorSet index="Structure">
+        <ArmorMitigationTable index="Ability" value="-100" />
+        <OverrideMinCap index="Splash" value="1"/>
+        <OverrideMinCap index="Basic" value="1"/>
+        <OverrideMinCap index="Ability" value="1"/>
+      </ArmorSet>
+      <ArmorSet index="Minion">
+        <ArmorMitigationTable index="Ability" value="-100" />
+        <OverrideMinCap index="Splash" value="1"/>
+        <OverrideMinCap index="Basic" value="1"/>
+        <OverrideMinCap index="Ability" value="1"/>
+      </ArmorSet>
+    </ArmorModification>
+    <DisplayDuration index="Self" value="0" />
+    <InfoFlags index="Hidden" value="1" />
+  </CBehaviorBuff>
+
+
+  <CBehaviorBuff id="IllidanDiveUnstoppable" parent="StormUnstoppableParent">
+    <RemoveValidatorArray value="IllidanDiveLaunchMissileTargetUnitDisablesAndTimeStopCombine" />
+    <BuffFlags index="UpdateDurationWhileDisabled" value="1" />
+    <Duration value="0.9" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="IllidanDiveHardImpactStun" parent="StormStun">
+    <Duration value="0.25" />
+  </CBehaviorBuff>
+
+  <CSound id="MaievWheresIllidanWarning" parent="HeroVO_3D_Intro">
+    <AssetArray TemplateParam="MaievBase_VOX_TimeStopIllidan00"/>
+    <AssetArray TemplateParam="MaievBase_Pissed03"/>
+    <AssetArray TemplateParam="MaievBase_VoiceLineOne00"/>
+    <AssetArray TemplateParam="MaievBase_VoiceLineTwo00"/>
+    <AssetArray TemplateParam="MaievBase_VoiceLineThree00"/>
+    <AssetArray TemplateParam="MaievBase_VoiceLineFour00"/>
+    <AssetArray TemplateParam="MaievBase_Attack05"/>
+    <AssetArray TemplateParam="MaievBase_UI_Purchase00"/>
+    <AssetArray TemplateParam="MaievBase_UI_Lockin00"/>
+    <AssetArray TemplateParam="MaievBase_Resurrected00"/>
+    <Volume value="2.000000,2.000000"/>
+    <Category value="User9"/>
+    <CategoryDuckingLocal value="Explosions"/>
+    <CategoryDuckingNonLocal value="Explosions"/>
+    <Exclusivity value="HeroVO_3D_Critical"/>
+    <StopActionArray Sound="MaievBase_Ultimate1Used" UseSustainFadeTime="0"/>
+  </CSound>
+
+  <CActorSound id="MaievWheresIllidanWarningVO" parent="SoundOneShot">
+    <Inherits index="Visibility" value="0" />
+    <FogVisibility value="Visible" />
+    <Host Scope="Target" />
+    <Sound value="MaievWheresIllidanWarning" />
+  </CActorSound>
+
+</Catalog>

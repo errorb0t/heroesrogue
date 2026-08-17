@@ -34,4 +34,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </MotionPhases>
   </CMoverMissile>
 
+  <CMoverMissile id="StalkerWeapon" parent="MissileDefault"/>
+
 </Catalog>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+
+  <CHero id="WitchDoctor">
+    <TalentTreeArray index="21" Talent="DoNothing7" Tier="3" Column="4" />
+  </CHero>
+
+  <CBehaviorBuff id="NazeeboArachnophileControllerBehavior" parent="CarryBehaviorParent">
+    <Period value="5" />
+    <PeriodicEffect value="NazeeboArachnophileControllerCreatePersistent" />
+  </CBehaviorBuff>
+  <CEffectCreatePersistent id="NazeeboArachnophileControllerCreatePersistent">
+    <WhichLocation Value="CasterPoint" />
+    <PeriodCount value="3" />
+    <PeriodicEffectArray value="NazeeboCorpseSpidersSpawnImpactSet" />
+    <PeriodicPeriodArray value="0" />
+  </CEffectCreatePersistent>
+
+  <CBehaviorBuff id="NazeeboHexAllBehavior" parent="CarryBehaviorParent" />
+  <CEffectSet id="WitchDoctorCorpseSpidersHexedCrawlersTalentProcSet">
+    <ValidatorArray index="1" value="TargetIsHeroOrCasterHasHexAll" />
+  </CEffectSet>
+  <CValidatorCombine id="TargetIsHeroOrCasterHasHexAll">
+    <CombineArray value="TargetIsHero" />
+    <CombineArray value="CasterHasHexAll" />
+  </CValidatorCombine>
+  <CValidatorUnitCompareBehaviorCount id="CasterHasHexAll">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="NazeeboHexAllBehavior" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CEffectDamage id="WitchDoctorCorpseSpidersWeaponDamage">
+    <MultiplicativeModifierArray index="NazeeboPowerfulSpiders" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="WitchDoctorZombieWallWeaponDamage">
+    <MultiplicativeModifierArray index="NazeeboHungryZombies" Modifier="0" />
+  </CEffectDamage>
+
+  <CEffectDamage id="WitchDoctorGargantuanStompDamage">
+    <MultiplicativeModifierArray index="NazeeboTantrum" Modifier="0" />
+  </CEffectDamage>
+
+  <CEffectCreatePersistent id="WitchDoctorPlagueofToadsInitialPersistent">
+    <PeriodicEffectArray index="5" value="WitchDoctorPlagueofToadsCreationPersistent4" />
+    <PeriodicEffectArray index="6" value="WitchDoctorPlagueofToadsCreationPersistent5" />
+    <PeriodicOffsetArray index="5" X="-4.5" Y="-4.5" />
+    <PeriodicOffsetArray index="6" X="4.5" Y="-4.5" />
+  </CEffectCreatePersistent>
+
+  <CEffectDamage id="WitchDoctorPlagueofToadsDamage" >
+    <MultiplicativeModifierArray index="NazeeboDeadlyToads" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="WitchDoctorPlagueofToadsToadsOfHugenessTalentDamage1">
+    <MultiplicativeModifierArray index="NazeeboDeadlyToads" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="WitchDoctorPlagueofToadsToadsOfHugenessTalentDamage2">
+    <MultiplicativeModifierArray index="NazeeboDeadlyToads" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="WitchDoctorPlagueofToadsToadsOfHugenessTalentDamage3" >
+    <MultiplicativeModifierArray index="NazeeboDeadlyToads" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="WitchDoctorPlagueofToadsToadsOfHugenessTalentDamage4">
+    <MultiplicativeModifierArray index="NazeeboDeadlyToads" Modifier="0" />
+  </CEffectDamage>
+
+  <CBehaviorBuff id="NazeeboPowerRitualBehavior" parent="CarryBehaviorParent" />
+  <CEffectSet id="WitchDoctorHeroWeaponImpactSet">
+    <EffectArray value="NazeeboTouchofPowerSwitch" />
+    <EffectArray value="NazeeboPowerRitualSearch" />
+  </CEffectSet>
+  <CEffectEnumArea id="NazeeboPowerRitualSearch">
+    <ValidatorArray value="TargetNotEvading" />
+    <ExcludeArray Effect="WitchDoctorHeroWeaponImpactSet" Value="Target" />
+    <SearchFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="NazeeboPowerRitualImpactSet">
+      <Radius value="2" />
+    </AreaArray>
+    <RevealerParams Duration="0.75" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+  <CEffectSet id="NazeeboPowerRitualImpactSet">
+    <Chance value="0" />
+    <EffectArray value="UniversalWeaponImpact" />
+    <EffectArray value="WitchDoctorVoodooRitualApplyDoTSwitchHeroWeapon" />
+    <EffectArray value="WitchDoctorWeaponPreImpactSet" />
+    <EffectArray value="NazeeboHeroWeaponDamageSplash" />
+    <EffectArray value="WitchDoctorWeaponPostImpactSet" />
+    <EffectArray value="UniversalWeaponPostImpactSet" />
+  </CEffectSet>
+  <CEffectDamage id="WitchDoctorHeroWeaponDamage">
+    <FlatModifierArray index="AffixPowerRitual" Validator="CasterHasPowerRitual" Accumulator="NazeeboPowerRitualAccumulator" />
+  </CEffectDamage>
+  <CEffectDamage id="NazeeboHeroWeaponDamageSplash" parent="StormWeapon">
+    <FlatModifierArray index="AffixPowerRitual" Validator="CasterHasPowerRitual" Accumulator="NazeeboPowerRitualSplashAccumulator" />
+    <Amount value="44" />
+  </CEffectDamage>
+  <CValidatorUnitCompareBehaviorCount id="CasterHasPowerRitual">
+    <WhichUnit Value="Caster" />
+    <Value value="1" />
+    <Behavior value="NazeeboPowerRitualBehavior" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CAccumulatorToken id="NazeeboPowerRitualAccumulator" parent="BaseAccumulator">
+    <MaxAccumulation value="390000" />
+    <ApplicationRule value="Add" />
+    <TokenId value="WitchDoctorVoodooRitual" />
+    <Scale value="1" />
+  </CAccumulatorToken>
+  <CAccumulatorToken id="NazeeboPowerRitualSplashAccumulator" parent="BaseAccumulator">
+    <MaxAccumulation value="390000" />
+    <ApplicationRule value="Add" />
+    <TokenId value="WitchDoctorVoodooRitual" />
+    <Scale value="0.5" />
+  </CAccumulatorToken>
+  <CActorModel id="NazeeboeroWeaponDamageSplashFX" parent="StormModelAnimationStyleOneShotUnit">
+    <On Terms="Effect.WitchDoctorHeroWeaponDamage; At Target; ValidateEffect CasterHasPowerRitual" Send="Create" />
+    <On Terms="ActorCreation" Send="SetOpacity 0.250000" />
+    <HostSiteOps Ops="SOpAttachCenter" />
+    <Model value="NazeeboHeroWeaponDamageSplashFXModel" />
+  </CActorModel>
+  <CModel id="NazeeboHeroWeaponDamageSplashFXModel" parent="ImpactFX">
+    <Model value="Assets\Effects\Storm_FX_Dryad_Base_FullBloom_Impact\Storm_FX_Dryad_Base_FullBloom_Impact.m3" />
+    <RadiusLoose value="0.5" />
+    <ScaleMax X="1.10000" Y="1.10000" Z="1.25000" />
+    <ScaleMin X="1.10000" Y="1.10000" Z="1.25000" />
+    <AnimSpeed value="6"/>
+  </CModel>
+
+  <CBehaviorBuff id="NazeeboLightningRitual" parent="CarryBehaviorParent">
+    <Modification>
+      <AdditiveAttackSpeedFactor value="0">
+        <AccumulatorArray value="NazeeboPowerRitualLightningRitualAccumulator" />
+      </AdditiveAttackSpeedFactor>
+    </Modification>
+  </CBehaviorBuff>
+  <CAccumulatorToken id="NazeeboPowerRitualLightningRitualAccumulator" parent="BaseAccumulator">
+    <MaxAccumulation value="390000" />
+    <ApplicationRule value="Add" />
+    <TokenId value="WitchDoctorVoodooRitual" />
+    <Scale value="0.003" />
+  </CAccumulatorToken>
+  
+  <CEffectCreatePersistent id="NazeeboZombieHandlerCreatePersistent">
+    <InitialEffect value="WitchDoctorZombieWallPersistentInitialSet" />
+    <ExpireEffect value="NazeeboZombieHandlerExpireSet" />
+    <ExpireDelay value="0.5" />
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="NazeeboZombieHandlerCreatePersistentZombieWall" />
+    <PeriodicPeriodArray value="0" />
+  </CEffectCreatePersistent>
+  <CEffectSet id="NazeeboZombieHandlerExpireSet">
+    <EffectArray value="WitchDoctorZombieWallDeathSoundSearch" />
+  </CEffectSet>  
+  <CEffectCreatePersistent id="NazeeboZombieHandlerCreatePersistentZombieWall">
+    <OffsetFacingFallback Value="TargetPoint" />
+    <InitialDelay value="0.25" />
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="NazeeboZombieHandlerCreateUnit" />
+    <RevealRadius value="0.5" />
+    <RevealFlags index="Unfog" value="1" />
+  </CEffectCreatePersistent> 
+  <CEffectCreateUnit id="NazeeboZombieHandlerCreateUnit">
+    <WhichLocation Value="TargetPoint" />
+    <CreateFlags index="Placement" value="0" />
+    <CreateFlags index="PlacementIgnoreBlockers" value="1" />
+    <CreateFlags index="PlacementIgnoreCliffTest" value="1" />
+    <SpawnEffect value="NazeeboZombieHandlerSpawnSet" />
+    <SpawnUnit value="WitchDoctorZombieWallUnit" />
+    <SpawnRange value="0.5" />
+  </CEffectCreateUnit> 
+  <CEffectSet id="NazeeboZombieHandlerSpawnSet">
+    <EffectArray value="NazeeboZombieHandlerApplyTimedLifeBehavior" />
+    <EffectArray value="WitchDoctorZombieWallDeadRushApplyBuffBehavior" />
+    <EffectArray value="WitchDoctorSoulHarvestApplyCarry" />
+    <EffectArray value="WitchDoctorVoodooRitualApplyDeathRitualTalentSummonCarry" />
+    <EffectArray value="WitchDoctorZombieWallSetFacing" />
+    <EffectArray value="WitchDoctorZombieWallAddAbilityController" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="NazeeboZombieHandlerApplyTimedLifeBehavior">
+    <Behavior value="NazeeboZombieHandlerZombieWallTimedLife" />
+  </CEffectApplyBehavior>
+  <CBehaviorBuff id="NazeeboZombieHandlerZombieWallTimedLife">
+    <Duration value="0.0625" />
+    <FinalEffect value="NazeeboZombieHandlerZombieWallTimedLifeFinish" />
+  </CBehaviorBuff>
+  <CEffectSet id="NazeeboZombieHandlerZombieWallTimedLifeFinish">
+    <EffectArray value="NazeeboZombieHandlerZombieWallIssueMorphOrder" />
+  </CEffectSet>  
+  <CEffectIssueOrder id="NazeeboZombieHandlerZombieWallIssueMorphOrder">
+    <WhichUnit Value="Source" />
+    <Abil value="WitchDoctorZombieWallMorph" />
+    <CmdFlags index="Preempt" value="1" />
+  </CEffectIssueOrder>
+  <CActorModel id="NazeeboZombieHandlerZombieWallWarningModel" parent="StormModelNoAnims">
+    <Flags index="VisionTestCenterOnly" value="1" />
+    <Inherits index="TeamColor" value="1" />
+    <Inherits index="WarpGroup" value="1" />
+    <On Terms="ActorCreation" Send="AnimPlay Spell Stand,Burrow PlayForever 0.000000 0.000000" />
+    <On Terms="ActorCreation" Send="SetOpacity 0.500000" />
+    <On Terms="Effect.NazeeboZombieHandlerCreatePersistentZombieWall.Start" Send="Create" />
+    <On Terms="Effect.NazeeboZombieHandlerCreatePersistentZombieWall.Stop" Send="Destroy" />
+    <HostSiteOps Ops="SOpTargetPointStationary SOpForwardVectorPoint SOpWading" />
+    <Model value="WitchDoctorZombieWallUnit" />
+  </CActorModel>
+  <CActorSound id="NazeeboZombieHandlerZombieWallWarningSound" parent="SoundOneShot">
+    <On Terms="Effect.NazeeboZombieHandlerCreatePersistentZombieWall.Start; At Effect" Send="Create" />
+    <Sound value="WitchDoctor_Zombie_Warning" />
+  </CActorSound>
+  
+  <CEffectCreatePersistent id="WitchDoctorZombieWallPoisonZombieTalentPersistent">
+    <PeriodicEffectArray value="WitchDoctorZombieWallPoisonZombieTalentSearch5" />
+    <PeriodicEffectArray value="WitchDoctorZombieWallPoisonZombieTalentSearch5" />
+    <PeriodicPeriodArray value="1" />
+    <PeriodicPeriodArray value="1" />
+  </CEffectCreatePersistent>
+
+  <CEffectSwitch id="NazeeboTouchofPowerSwitch">
+    <Chance value="0" />
+    <CaseArray Validator="Has3NazeeboTouchofPower" Effect="NazeeboTouchofPowerProcSet" />
+    <CaseDefault value="NazeeboTouchofPowerApplyBehavior" />
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+    <ValidatorArray value="TargetIsHero" />
+  </CEffectSwitch>
+  <CEffectSet id="NazeeboTouchofPowerProcSet">
+    <EffectArray value="NazeeboTouchofPowerProcPersistent" />
+    <EffectArray value="NazeeboTouchofPowerRemoveStackBehavior" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="NazeeboTouchofPowerProcPersistent">
+    <WhichLocation Value="TargetUnit" />
+    <PeriodCount value="2" />
+    <PeriodicEffectArray value="WitchDoctorVoodooRitualProcSetNoValidate" />
+    <PeriodicPeriodArray value="0" />
+  </CEffectCreatePersistent>
+  <CBehaviorBuff id="NazeeboTouchofPowerBehavior">
+    <BuffFlags index="RefreshStack" value="1" />
+    <MaxStackCount value="2" />
+    <Duration value="5" />
+  </CBehaviorBuff>
+  <CEffectApplyBehavior id="NazeeboTouchofPowerApplyBehavior">
+    <Behavior value="NazeeboTouchofPowerBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectRemoveBehavior id="NazeeboTouchofPowerRemoveStackBehavior">
+    <BehaviorLink value="NazeeboTouchofPowerBehavior" />
+    <Count value="3" />
+  </CEffectRemoveBehavior>
+  <CValidatorUnitCompareBehaviorCount id="Has3NazeeboTouchofPower">
+    <Value value="2" />
+    <Behavior value="NazeeboTouchofPowerBehavior" />
+  </CValidatorUnitCompareBehaviorCount>
+  
+  <CEffectSet id="WitchDoctorVoodooRitualProcSet">
+    <EffectArray value="WitchDoctorRitualofBoonsAddToken" />
+  </CEffectSet>
+  <CEffectSet id="WitchDoctorVoodooRitualProcSetNoValidate">
+    <EffectArray value="WitchDoctorRitualofBoonsAddToken" />
+  </CEffectSet>
+
+  <CEffectSet id="WitchDoctorRitualofBoonsQuestComplete" />
+
+  <CEffectModifyTokenCount id="WitchDoctorRitualofBoonsAddToken" parent="BaseEffectModifyTokenCount">
+    <Chance value="0" />
+    <TokenId value="WitchDoctorRitualofBoonsQuestToken" />
+  </CEffectModifyTokenCount>
+
+  <CBehaviorTokenCounter id="WitchDoctorRitualofBoonsQuestToken" parent="StormQuestToken">
+    <Max value="250" />
+    <AtMaxEvents index="0" EventId="QuestComplete" Effect="WitchDoctorRitualofBoonsQuestComplete" />
+    <Face value="WitchDoctorRitualofBoonsQuestToken" />
+    <InfoIcon value="Assets\Textures\storm_ui_icon_nazeebo_voodooritual.dds" />
+  </CBehaviorTokenCounter>
+
+  <CButton id="WitchDoctorRitualofBoonsQuestToken" parent="StormButtonParent">
+    <Icon value="Assets\Textures\storm_ui_icon_nazeebo_voodooritual.dds" />
+  </CButton>
+
+</Catalog>

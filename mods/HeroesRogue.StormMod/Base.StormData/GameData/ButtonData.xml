@@ -2,81 +2,26 @@
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
 
-<CButton id="WitchDoctorWidowmakers2" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_Nazeebo_CorpseSpider.dds" />
-</CButton>
-<CButton id="WitchDoctorHexedCrawlers2" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_Nazeebo_CorpseSpider.dds" />
-</CButton>
-<CButton id="WitchDoctorSpiritofArachyr2" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_Nazeebo_CorpseSpider.dds" />
-</CButton>
-<CButton id="WitchDoctorSpiderColony2" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_Nazeebo_CorpseSpider.dds" />
-</CButton>
 <CButton id="AffixBuddyHeal" parent="StormButtonParent">
   <Icon value="Assets\Textures\storm_ui_icon_talent_scoutingdrone.dds" />
 </CButton>
 <CButton id="AffixKillContractQuestToken" parent="StormButtonParent">
   <Icon value="Assets\Textures\affix_icon_kill_contract.dds" />
 </CButton>
-<CButton id="AffixStructureQuestToken" parent="StormButtonParent">
+<CButton id="AffixDestructionToken" parent="StormButtonParent">
   <Icon value="Assets\Textures\affix_icon_structure_quest.dds" />
 </CButton>
 
-<CButton id="AffixMedallion" parent="StormButtonParent">
+<CButton id="AffixGladiatorsMedallion" parent="StormButtonParent">
   <Icon value="Assets\Textures\storm_ui_icon_trinket_medallion.dds" />
 </CButton>
 
-<CButton id="AffixBurningBladesTokenCounter" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_illidan_sweepingstrike_b.dds" />
-</CButton>
-
-<CButton id="SentinelShotDamageToken" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_tyrande_sentinel.dds" />
-</CButton>
-<CButton id="TheMarkTokenCounter" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_talent_autoattack_damage.dds" />
-</CButton>
-<CButton id="MuradinDwarfTossTokenCounter" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_muradin_dwarftoss_a.dds" />
-</CButton>
-<CButton id="NightElfBond" parent="StormButtonParent">
-  <Icon value="Assets\Textures\affix_icon_night_elf_bond.dds" />
-</CButton>
-<CButton id="AffixFirstAid" parent="StormButtonParent">
+<CButton id="AffixFirstAidBehavior" parent="StormButtonParent">
   <Icon value="Assets\Textures\affix_icon_first_aid.dds" />
 </CButton>
 
 <CButton id="DoNothing" parent="StormButtonParent">
   <Icon value="Assets\Textures\affix_icon_question_mark.dds" />
-</CButton>
-
-<CButton id="LiMingCriticalPowerTokenCounter" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_wizard_criticalmass.dds" />
-</CButton>
-
-<CButton id="WitchDoctorRitualofBoonsQuestToken" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_nazeebo_voodooritual.dds" />
-</CButton>
-
-<CButton id="SgtHammerShredderRounds" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_sgthammer_tankmode.dds" />
-</CButton>
-<CButton id="SgtHammerDebilitatingRounds" parent="StormButtonParent">
-  <Icon value="Assets\Textures\affix_icon_sgthammer_tankmode_b.dds" />
-</CButton>
-<CButton id="SgtHammerTrojanMines" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_sgthammer_spidermines.dds" />
-</CButton>
-<CButton id="SgtHammerLightTank" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_sgthammer_tankmode.dds" />
-</CButton>
-<CButton id="SgtHammerRubberBullets" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_sgthammer_tankmode.dds" />
-</CButton>
-<CButton id="SgtHammerExplosiveShells" parent="StormButtonParent">
-  <Icon value="Assets\Textures\storm_ui_icon_sgthammer_tankmode.dds" />
 </CButton>
 
 <CButton id="SlivanQuest" parent="StormButtonParent">

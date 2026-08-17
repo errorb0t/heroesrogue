@@ -100,14 +100,21 @@ libPBU2_gs_CurateHeroSelectionSetting libPBU2_gv_curateHeroSelectionSetting;
 trigger libPBU2_gv_curateHeroSelectionUIHeroListInitCallback;
 
 trigger libPBU2_DifficultyDialogTrigger;
+trigger libPBU2_HowToPlayDialogTrigger;
 
 int libPBU2_Cho;
 int libPBU2_Gall;
 
 int libPBU2_difficultyDialogLabel;
-int libPBU2_difficultyDialogEasy;
 int libPBU2_difficultyDialogNormal;
-int libPBU2_difficultyDialogHard;
+int libPBU2_difficultyDialogHeroic;
+int libPBU2_difficultyDialogMythic;
+int libPBU2_dialogHowToPlay;
+int libPBU2_informationDialog;
+int libPBU2_informationDialogBG;
+int libPBU2_informationDialogText;
+int libPBU2_informationDialogClose;
+bool libPBU2_heroSelected;
 
 int libPBU2_difficulty = 1;
 

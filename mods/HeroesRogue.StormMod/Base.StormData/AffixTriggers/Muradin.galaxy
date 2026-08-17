@@ -1,0 +1,48 @@
+include "AffixTriggers"
+
+
+// ---------------------------------------------------------------
+// Unstoppable Avatar
+// ---------------------------------------------------------------
+bool libAffx_MuradinUnstoppableAvatarRespawn (bool testConds, bool runActions) {
+    unit respawnedUnit = libGame_gf_HeroRespawnUnit();
+    if (testConds) {
+        if (UnitGetOwner(respawnedUnit) != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, true);
+    UnitCreateEffectUnit(respawnedUnit, "MuradinAvatarApplyBehaviorsSet", respawnedUnit);
+    
+    libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, true);
+    return true;
+}
+bool libAffx_MuradinUnstoppableAvatar (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
+    
+    libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, true);
+    UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "MuradinAvatarApplyBehaviorsSet", libGame_gv_players[libAffx_player].lv_heroUnit);
+
+    libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, true);
+    return true;
+}
+bool libAffx_MuradinUnstoppableAvatarLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
+    return true;
+}

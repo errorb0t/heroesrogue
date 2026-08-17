@@ -23,18 +23,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Effect value="TownHallL3WeaponLaunchSetAffix" />
   </CWeaponLegacy>
 
-  
-  <CWeaponLegacy id="ThrallHeroWeaponRanged" parent="ThrallHeroWeapon">
-    <Options index="Melee" value="0"/>
-    <Options index="Disabled" value="1" />
-    <DisplayEffect value="ThrallWeaponAttackDamage"/>
-    <MinScanRange value="6"/>
-    <Range value="6"/>
-    <Period value="1.1"/>
-    <Effect value="ThrallHeroWeaponSwitch"/>
-    <Icon value="Assets\Textures\storm_temp_war3_btnorcmeleeuptwo.dds"/>
-  </CWeaponLegacy>
-
   <CWeaponLegacy id="BlankWeapon" />
 
   <CWeaponLegacy id="SlivanBoss">
