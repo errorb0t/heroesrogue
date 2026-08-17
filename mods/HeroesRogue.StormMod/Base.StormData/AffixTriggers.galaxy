@@ -3198,6 +3198,7 @@ bool libAffx_MythicCurseSabotageOncePerGame (bool testConds, bool runActions) {
     libAffx_CopyFilter(libAffx_filterAlliedStructures, libAffx_filterSabotage);
     libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "TownMoonwellL3");
     libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "TownMoonwellL2");
+    libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "ItemMULE");
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
         libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "KingsCore");
     }
