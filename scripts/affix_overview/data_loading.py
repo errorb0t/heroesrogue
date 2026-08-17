@@ -10,6 +10,7 @@ from .constants import (
     AFFIX_DATA_PATH,
     FIELD_VALUE_ATTRIBUTES,
     HERO_TAG_LABELS,
+    LIB_AFFX_HEADER_PATH,
     LIB_AFFX_SOURCE_PATH,
     RARITY_ALIASES,
     RARITY_ORDER,
@@ -148,7 +149,8 @@ def load_difficulties(
 ) -> list[DifficultyRecord]:
     body = extract_function_body(LIB_AFFX_SOURCE_PATH, "string libAffx_GetDifficulty()")
     matches = re.findall(
-        r"libAffx_difficulty\s*==\s*(\d+)\s*\)\s*\{\s*return\s+\" \(([^\"\r\n]+)\)\";",
+        r"libAffx_difficulty\s*==\s*([A-Za-z_]\w*|\d+)\s*\)\s*\{\s*"
+        r'return\s+" \(([^"\r\n]+)\)";',
         body,
         flags=re.MULTILINE,
     )
@@ -157,12 +159,28 @@ def load_difficulties(
             f"Unable to extract difficulty values from {LIB_AFFX_SOURCE_PATH}"
         )
 
+    integer_constants = {
+        name: int(value)
+        for name, value in re.findall(
+            r"\bconst\s+int\s+([A-Za-z_]\w*)\s*=\s*(\d+)\s*;",
+            LIB_AFFX_HEADER_PATH.read_text(encoding="utf-8"),
+        )
+    }
     name_key_by_value = {
         value: key for key, value in strings.items() if key.startswith("Button/Name/")
     }
 
     difficulties: list[DifficultyRecord] = []
-    for value_text, label in matches:
+    for value_expression, label in matches:
+        if value_expression.isdigit():
+            difficulty_value = int(value_expression)
+        elif value_expression in integer_constants:
+            difficulty_value = integer_constants[value_expression]
+        else:
+            raise RuntimeError(
+                f"Unable to resolve difficulty value {value_expression!r} "
+                f"from {LIB_AFFX_HEADER_PATH}"
+            )
         localized_name_key = name_key_by_value.get(label, "")
         localized_tooltip_key = (
             localized_name_key.replace("Button/Name/", "Button/Tooltip/")
@@ -175,7 +193,7 @@ def load_difficulties(
         )
         difficulties.append(
             DifficultyRecord(
-                difficulty_value=int(value_text),
+                difficulty_value=difficulty_value,
                 label=label,
                 localized_name_key=localized_name_key,
                 localized_tooltip_key=localized_tooltip_key,
