@@ -8793,13 +8793,11 @@ void libGame_gf_MinionSpawnMinion (int lp_lane, int lp_owner, int lp_type, point
         return ;
     }
 
-    if (!libGame_teamChaosAlwaysSpawnCatapults) {
-        if (((lp_type == libCore_ge_MinionTypes_Catapult) || (lp_type == libCore_ge_MinionTypes_CustomCatapult1) || (lp_type == libCore_ge_MinionTypes_CustomCatapult2)) && ((libGame_gv_minionMapNeverSpawnsCatapults == true) || ((libGame_gv_minion_CapCatapults == true) && (UnitGroupCount(libGame_gv_minion_CatapultGroup[lv_minionTeam], c_unitCountAlive) >= libGame_gv_minion_CatapultCap_C)) || (libGame_gf_TownsAliveinLane(libGame_gf_EnemyTeam(lv_minionTeam), lp_lane) >= 2) || ((libGame_gf_TownsAliveinLane(libGame_gf_EnemyTeam(lv_minionTeam), lp_lane) == 1) && (ModI((libGame_gv_minionWaveSpawnCounter - libGame_gv_minion_PeriodicCatapultsFirstWave), libGame_gv_minion_PeriodicCatapultsWavePeriod_C) != 0)))) {
-            
-            return ;
-        }
+    if (lv_minionTeam == libGame_gv_teamChaosIndex_C && libGame_teamChaosAlwaysSpawnCatapults) {
+    } else if (((lp_type == libCore_ge_MinionTypes_Catapult) || (lp_type == libCore_ge_MinionTypes_CustomCatapult1) || (lp_type == libCore_ge_MinionTypes_CustomCatapult2)) && ((libGame_gv_minionMapNeverSpawnsCatapults == true) || ((libGame_gv_minion_CapCatapults == true) && (UnitGroupCount(libGame_gv_minion_CatapultGroup[lv_minionTeam], c_unitCountAlive) >= libGame_gv_minion_CatapultCap_C)) || (libGame_gf_TownsAliveinLane(libGame_gf_EnemyTeam(lv_minionTeam), lp_lane) >= 2) || ((libGame_gf_TownsAliveinLane(libGame_gf_EnemyTeam(lv_minionTeam), lp_lane) == 1) && (ModI((libGame_gv_minionWaveSpawnCounter - libGame_gv_minion_PeriodicCatapultsFirstWave), libGame_gv_minion_PeriodicCatapultsWavePeriod_C) != 0)))) {
+        return ;
     }
-
+    
     libNtve_gf_CreateUnitsAtPoint2(1, lv_minionUnitType, 0, lp_owner, lp_spawnPoint, null);
     if ((libGame_gv_minion_CapCatapults == true) && ((lp_type == libCore_ge_MinionTypes_Catapult) || (lp_type == libCore_ge_MinionTypes_CustomCatapult1) || (lp_type == libCore_ge_MinionTypes_CustomCatapult2))) {
         UnitGroupAdd(libGame_gv_minion_CatapultGroup[lv_minionTeam], UnitLastCreated());

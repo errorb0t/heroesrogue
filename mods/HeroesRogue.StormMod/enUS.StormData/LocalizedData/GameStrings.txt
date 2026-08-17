@@ -590,7 +590,7 @@ Affix/Tooltip/GiantKiller/LostVikings=Olaf's Basic Attacks against enemy Heroes 
 Affix/Tooltip/GiantKiller/Rexxar=Misha's Basic Attacks against enemy Heroes deal bonus damage equal to <c val="#TooltipNumbers">2%</c> <c val="747A84">(+1% per stack)</c> of the Hero's maximum Health.
 Affix/Tooltip/Append/GiantKiller=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,AffixGiantKillerDamage,VitalFractionMax[Life]*100" precision="2"/>%</c>
 Affix/Name/AncientBlessings=Ancient Blessings
-Affix/Tooltip/AncientBlessings=Basic Attacks deal an additional <c val="#TooltipNumbers"><d ref="Effect,AffixAncientBlessingsAoEDamage,Amount"/></c> damage in an area and heal for <c val="#TooltipNumbers"><d ref="Effect,AffixAncientBlessingsCreateHealer,RechargeVitalRate"/></c> for each Hero hit.<n/><n/>This effect can only occur once per second.
+Affix/Tooltip/AncientBlessings=Basic Attacks deal an additional <c val="#TooltipNumbers"><d ref="Effect,AffixAncientBlessingsAoEDamage,Amount"/></c> damage in an area and heal for <c val="#TooltipNumbers"><d ref="Effect,AffixAncientBlessingsCreateHealer,RechargeVitalRate"/></c> for each Hero hit.<n/><n/>This effect can only occur every <c val="#TooltipNumbers">0.5</c> seconds.
 Affix/Tooltip/Append/AncientBlessings=
 Affix/Name/MacGuffin=MacGuffin
 Affix/Tooltip/MacGuffin=Reduces objective channel time of ALL allies by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.

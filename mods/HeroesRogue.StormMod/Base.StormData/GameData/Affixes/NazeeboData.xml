@@ -13,9 +13,26 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectCreatePersistent id="NazeeboArachnophileControllerCreatePersistent">
     <WhichLocation Value="CasterPoint" />
     <PeriodCount value="3" />
-    <PeriodicEffectArray value="NazeeboCorpseSpidersSpawnImpactSet" />
+    <PeriodicEffectArray value="NazeeboArachnophileSet" />
     <PeriodicPeriodArray value="0" />
   </CEffectCreatePersistent>
+  <CEffectSet id="NazeeboArachnophileSet">
+    <EffectArray value="NazeeboArachnophileSpawnSpider" />
+  </CEffectSet>
+  <CEffectCreateUnit id="NazeeboArachnophileSpawnSpider">
+    <WhichLocation Value="TargetPoint" />
+    <SpawnUnit value="WitchDoctorCorpseSpider" />
+    <SpawnRange value="3.75" />
+    <SpawnEffect value="NazeeboArachnophileSpawnSet" />
+  </CEffectCreateUnit>
+  <CEffectSet id="NazeeboArachnophileSpawnSet">
+    <EffectArray value="CorpseSpidersApplyTimedLifeBehavior" />
+    <EffectArray value="WitchDoctorCorpseSpidersApplyRelicLeapingBehavior" />
+    <EffectArray value="WitchDoctorSoulHarvestApplyCarry" />
+    <EffectArray value="WitchDoctorVoodooRitualApplyDeathRitualTalentSummonCarry" />
+    <EffectArray value="WitchDoctorCorpseSpidersApplyWidowmakersDamageBonusCarryBehavior" />
+    <EffectArray value="WitchDoctorCorpseSpiderAddAbilityController" />
+  </CEffectSet>
 
   <CBehaviorBuff id="NazeeboHexAllBehavior" parent="CarryBehaviorParent" />
   <CEffectSet id="WitchDoctorCorpseSpidersHexedCrawlersTalentProcSet">
