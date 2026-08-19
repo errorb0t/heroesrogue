@@ -1204,6 +1204,12 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Duration value="4.9375" />
     <FinalEffect value="AffixBlockChargedApplyArmor" />
   </CBehaviorBuff>
+
+  <CBehaviorBuff id="TowersOfDoomMax1DamageClampBehavior" parent="CarryBehaviorParent">
+    <DamageResponse ClampMaximum="1" Minimum="1">
+      <Chance value="1"/>
+    </DamageResponse>
+  </CBehaviorBuff>
   
 
 </Catalog>

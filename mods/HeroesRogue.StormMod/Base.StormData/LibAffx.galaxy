@@ -4152,6 +4152,14 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
             KickFromGame(PlayerGroupAll());
         }
     }
+    
+    while (!libAffx_playersFirstSpawnIn[libAffx_player]) {
+        libAffx_Wait(0.0625, c_timeGame);
+    }
+    if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
+        libAffx_UnitBehaviorAddCriteriaAll("TowersOfDoomMax1DamageClampBehavior", 1, libAffx_filterAlliedCore);
+        libAffx_UnitBehaviorAddCriteriaAll("TowersOfDoomMax1DamageClampBehavior", 1, libAffx_filterEnemyCore);
+    }
 
     return true;
 }

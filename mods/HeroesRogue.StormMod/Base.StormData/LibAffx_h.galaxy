@@ -140,7 +140,7 @@ int libAffx_affixSelectionMaxCurrent = 3; // Number of affixes the player can pi
 const fixed libAffx_gameStartDelay = 2.25; // Delay before loading affixes from the bank.
 const fixed libAffx_hotkeyDelay = 0.25;
 
-const string libAffx_version = "0.15.3";
+const string libAffx_version = "0.15.4";
 
 struct libAffx_Filter {
     unitfilter unitFilter;
