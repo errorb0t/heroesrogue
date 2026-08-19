@@ -1937,6 +1937,7 @@ int libGame_teamChaosExtraRangedMinions;
 int libGame_teamChaosExtraMageMinions;
 int libGame_teamChaosExtraMeleeMinions;
 bool libGame_teamChaosAlwaysSpawnCatapults;
+bool libGame_teamChaosDropsChaosGlobe;
 
 // Library Initialization
 void libGame_InitVariables ();
