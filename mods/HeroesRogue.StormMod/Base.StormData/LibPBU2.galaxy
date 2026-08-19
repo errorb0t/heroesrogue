@@ -549,7 +549,12 @@ void libPBU2_gf_CurateHSUIInitialize () {
     libNtve_gf_SetDialogItemText(libPBU2_difficultyDialogMythic, StringExternal("Button/Name/Mythic"), PlayerGroupAll());
     DialogControlSetPosition(libPBU2_difficultyDialogMythic, PlayerGroupAll(), c_anchorCenter, 660, -370);
     DialogControlSetSize(libPBU2_difficultyDialogMythic, PlayerGroupAll(), 190, 90);
-    libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogMythic, StringExternal("Button/Tooltip/Mythic"), PlayerGroupAll());
+    TextExpressionSetToken("Param/Expression/Mythic", "A", StringExternal("Affix/Tooltip/MythicCurseSabotage"));
+    TextExpressionSetToken("Param/Expression/Mythic", "B", StringExternal("Affix/Tooltip/MythicCurseLevelDisadvantage"));
+    TextExpressionSetToken("Param/Expression/Mythic", "C", StringExternal("Affix/Tooltip/MythicCurseBleeding"));
+    TextExpressionSetToken("Param/Expression/Mythic", "D", StringExternal("Affix/Tooltip/MythicCurseCursed"));
+    TextExpressionSetToken("Param/Expression/Mythic", "E", StringExternal("Affix/Tooltip/MythicCurseEternal"));
+    libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogMythic, StringExternal("Button/Tooltip/Mythic") + TextExpressionAssemble("Param/Expression/Mythic"), PlayerGroupAll());
 
     DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), false);
 

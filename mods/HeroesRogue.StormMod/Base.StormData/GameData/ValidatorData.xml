@@ -262,4 +262,48 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Behavior value="AffixBlockChargedArmorBehavior" />
   </CValidatorUnitCompareBehaviorCount>
 
+  <CValidatorCombine id="CasterHasActiveRegenGlobe">
+    <Type value="And" />
+    <CombineArray value="CasterHasHeroGenericRegenGlobeBarbarianPercentBuff" />
+    <CombineArray value="CasterHasRegenGlobePercentBuff" />
+  </CValidatorCombine>
+  <CValidatorUnitCompareBehaviorCount id="CasterHasHeroGenericRegenGlobeBarbarianPercentBuff">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="HeroGenericRegenGlobeBarbarianPercentBuff" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorUnitCompareBehaviorCount id="CasterHasRegenGlobePercentBuff">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="RegenGlobePercentBuff" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CValidatorCombine id="CasterDoesNotHaveActiveRegenGlobe">
+    <Type value="And" />
+    <CombineArray value="CasterDoesNotHaveHeroGenericRegenGlobeBarbarianPercentBuff" />
+    <CombineArray value="CasterDoesNotHaveRegenGlobePercentBuff" />
+  </CValidatorCombine>
+  <CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveHeroGenericRegenGlobeBarbarianPercentBuff">
+    <WhichUnit Value="Caster" />
+    <Value value="0" />
+    <Behavior value="HeroGenericRegenGlobeBarbarianPercentBuff" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveRegenGlobePercentBuff">
+    <WhichUnit Value="Caster" />
+    <Value value="0" />
+    <Behavior value="RegenGlobePercentBuff" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveHallOfStormsHealBuff">
+    <WhichUnit Value="Caster" />
+    <Value value="0" />
+    <Behavior value="HallOfStormsHealBuff" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveHealingFountainRestoreL2">
+    <WhichUnit Value="Caster" />
+    <Value value="0" />
+    <Behavior value="HealingFountainRestoreL2" />
+  </CValidatorUnitCompareBehaviorCount>
+
+
 </Catalog>

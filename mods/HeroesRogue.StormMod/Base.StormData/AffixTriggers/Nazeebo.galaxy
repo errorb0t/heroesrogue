@@ -4,9 +4,11 @@ int[8] libAffx_NazeeboTalents;
 fixed libAffx_NazeeboZombieHandlerRange = 12;
 fixed libAffx_NazeeboZombieHandlerChance = 0.5;
 fixed libAffx_NazeeboZombieHandlerAdditionalChance = 0;
+bool libAffx_NazeeboZombieHandlerAllowFriendlies = false;
 fixed libAffx_NazeeboHardyBonesModifier;
 int libAffx_NazeeboManyRitualsTotal;
 int libAffx_NazeeboRitualOfBoonsIndex;
+fixed libAffx_NazeeboMasterWebweaverChance = 1.0;
 // ---------------------------------------------------------------
 // Nazeebo - Add an empty talent when all talents on a tier are unavailable
 // ---------------------------------------------------------------
@@ -26,6 +28,7 @@ bool libAffx_NazeeboTalent7 (bool testConds, bool runActions) {
 bool libAffx_NazeeboMasterWebweaverUnitDied (bool testConds, bool runActions) {
     unit deadUnit = EventUnit();
     int owner = UnitGetOwner(deadUnit);
+    int random;
     if (testConds) {
         if (owner != libAffx_player) {
             return false;
@@ -40,7 +43,10 @@ bool libAffx_NazeeboMasterWebweaverUnitDied (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     } 
-    UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "NazeeboCorpseSpidersSpawnImpactSet", deadUnit);
+    random = RandomInt(1, 100);
+    if (random <= libAffx_NazeeboMasterWebweaverChance * 100) {
+        UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "NazeeboCorpseSpidersSpawnImpactSet", deadUnit);
+    }
     return true;
 }
 
@@ -66,34 +72,42 @@ bool libAffx_NazeeboPowerRitualScaling (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Zombie Handler
 // ---------------------------------------------------------------
-bool libAffx_NazeeboZombieHandlerNPCTakedown (bool testConds, bool runActions) {
+bool libAffx_NazeeboZombieHandlerAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify("Sound,WitchDoctor_Zombie_AttackLaunch,Volume", libAffx_player, "-20,-20");
+    libAffx_CatalogReferenceModify("Sound,WitchDoctor_Zombie_Attack_Impact,Volume", libAffx_player, "-20,-20");
+    libAffx_CatalogReferenceModify("Sound,WitchDoctor_Zombie_Birth,Volume", libAffx_player, "-8,-8");
+    libAffx_CatalogReferenceModify("Sound,WitchDoctor_Zombie_Chase_Vox,Volume", libAffx_player, "-20,-20");
+    libAffx_CatalogReferenceModify("Sound,WitchDoctor_Zombie_Death,Volume", libAffx_player, "-20,-20");
     
-    int player = libGame_gf_HeroParticipatedInNPCTakedownKillingPlayer();
-    unit heroUnit = libGame_gv_players[player].lv_heroUnit;
-    unit deadUnit = libGame_gf_HeroParticipatedInNPCTakedownMinion();
+    return true;
+}
+bool libAffx_NazeeboZombieHandlerUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
     point npcPosition = UnitGetPosition(deadUnit);
     int random;
+    unit heroUnit = libAffx_GetHeroUnit(libAffx_player);
+    int killingPlayer = libNtve_gf_KillingPlayer();
     if (testConds) {
-        if (player != libAffx_player) {
-            return false;
-        }
         if (!libAffx_IsMinion(deadUnit)) {
             return false;
         }
-        if (!UnitFilterMatch(deadUnit, libAffx_teamChaos, UnitFilter((1 << c_targetFilterMinion), 0, 0, 0))) {
+        if (!UnitFilterMatch(deadUnit, libAffx_teamChaos, UnitFilter((1 << c_targetFilterMinion), 0, 0, 0)) && !libAffx_NazeeboZombieHandlerAllowFriendlies) {
             return false;
         }
         if (!UnitIsAlive(heroUnit)) {
             return false;
         }
-        if (UnitFilterMatch(heroUnit, player, UnitFilter(0, (1 << (c_targetFilterStasis - 32)), 0, 0))) {
+        if (UnitFilterMatch(heroUnit, libAffx_player, UnitFilter(0, (1 << (c_targetFilterStasis - 32)), 0, 0))) {
             return false;
         }
     }
     if (!runActions) {
         return true;
     }
-    if ((DistanceBetweenPoints(UnitGetPosition(heroUnit), npcPosition) <= libAffx_NazeeboZombieHandlerRange)) {
+    if ((DistanceBetweenPoints(UnitGetPosition(heroUnit), npcPosition) <= libAffx_NazeeboZombieHandlerRange) || killingPlayer == libAffx_player) {
         random = RandomInt(1, 100);
         if (random <= libAffx_NazeeboZombieHandlerChance * 100) {
             UnitCreateEffectPoint(heroUnit, "NazeeboZombieHandlerCreatePersistent", npcPosition);
@@ -123,7 +137,7 @@ bool libAffx_NazeeboNeverEndingSwarmAffixAdded (bool testConds, bool runActions)
         return true;
     }
     libAffx_NazeeboZombieHandlerChance = 1;
-    libAffx_NazeeboZombieHandlerAdditionalChance = 0.5;
+    libAffx_NazeeboZombieHandlerAllowFriendlies = true;
     
     return true;
 }

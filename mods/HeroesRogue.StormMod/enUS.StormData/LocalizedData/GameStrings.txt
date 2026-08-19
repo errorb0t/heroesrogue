@@ -20,6 +20,7 @@ Param/Expression/AffixCurseSkips=<n/><n/><c val="FFDE36">Skips the next Curse.</
 Param/Expression/AffixCurseSkipsMultiple=<n/><n/><c val="FFDE36">Skips the next ~A~ Curses.</c>
 Param/Expression/AffixCurseSkipsEachStack=<n/><n/><c val="FFDE36">Each stack skips the next Curse.</c>
 Param/Expression/AffixCurseSkipsMultipleEachStack=<n/><n/><c val="FFDE36">Each stack skips the next ~A~ Curses.</c>
+Param/Expression/Mythic=<n/><n/><c val="A84987">Round 1</c>: ~A~<n/><n/><c val="A84987">Round 5</c>: ~B~<n/><n/><c val="A84987">Round 9</c>: ~C~<n/><n/><c val="A84987">Round 13</c>: ~D~<n/><n/><c val="A84987">Round 17</c> and beyond: ~E~
 
 LoadingScreen/Help00=You gain Boons at level 1, 4, 7, and 10, and Curses every enemy talent tier.
 LoadingScreen/Help01=Completing map objectives replaces a future Curse with a Boon, once per game.
@@ -28,8 +29,12 @@ LoadingScreen/Help03=Certain Boons and Curses appear only on specific maps or He
 LoadingScreen/Help04=Boons or Curses can stack its effect.
 LoadingScreen/Help05=Heroes with a golden border have unique Boons which only appear at the start of the run.
 LoadingScreen/Help06=You can reroll Boons or Curses you don't like.
-LoadingScreen/Help07=You gain a powerful legendary Boon every 4 games.
+LoadingScreen/Help07=You gain a powerful Legendary Boon every 4 games.
 LoadingScreen/Help08=You can ban Boons or Curses, preventing them from rolling again for the rest of the run.
+LoadingScreen/Help09=You gain a Milestone boon with unique effects on round 10. 
+LoadingScreen/Help10=Boons and curses up to level 10 are obtained next game when skipped.
+LoadingScreen/Help11=Challenge curses are difficult to deal with but offer great rewards.
+LoadingScreen/Help12=Enemy stats scale over time on Heroic difficulty or higher.
 
 UI/MapLoadingScreen/LibAffx/Description1=Gain powerful, permanent Boons throughout your run to increase your and your team's strength!
 UI/MapLoadingScreen/LibAffx/Description2=The game becomes more difficult over time as you obtain dangerous Curses.
@@ -40,7 +45,7 @@ UI/MapLoadingScreen/LibAffx/Title3=Endless
 
 Text/ExcludeChoGallForAIEffect=<n/><n/><c val="FFDE32">AI teammate effect does not apply to Cho'Gall.</c>
 Text/ExcludeChoGall=<n/><n/><c val="FFDE32">Does not apply to Cho'Gall.</c>
-Text/Information=Welcome to Heroes Rogue! This is a singleplayer rogue-like mod for Heroes of the Storm. Throughout the game, you will have to choose <c val="#TooltipNumbers">Boons</c> providing various permanent buffs and <c val="c52020">Curses</c> which make the game more difficult. Game progress is automatically saved after destroying the enemy Core, so boons and curses persist every game. The game can be quit and played at another time, and will resume from where you were left of. Try to get as far as possible! If your Core gets destroyed, all boons and curses are reset and you will have to start over.<n/><n/><c val="FFDE36">Golden Heroes:</c> These Heroes have access to unique boons and curses, in addition to the generic ones that all Heroes have access to.<n/><n/><c val="#TooltipNumbers">Boons:</c> Obtained when reaching level <c val="#TooltipNumbers">1</c>, <c val="#TooltipNumbers">4</c>, <c val="#TooltipNumbers">7</c>, and <c val="#TooltipNumbers">10</c>. Completing a map objective (for example getting three tributes on Cursed Hollow) also replaces a future curse with a boon, once per game. Boons can be <c val="ffffff">Common</c>, <c val="1eff00">Uncommon</c>, <c val="0070dd">Rare</c>, <c val="a335ee">Epic</c>, or <c val="ff8000">Legendary</c>, increasing in rarity and power. You are guaranteed at least a <c val="0070dd">Rare Boon</c> at the start of every game or a <c val="ff8000">Legendary Boon</c> every <c val="#TooltipNumbers">4</c> games.<n/><n/><c val="01ffff">Milestone Boons:</c> These are boons with unique effects that are obtained when reaching round <c val="#TooltipNumbers">10</c> on any difficulty as a milestone reward.<n/><n/><c val="e6cc80">Starter Boons:</c> These are potent boons that can only be obtained at the start of the game.<n/><n/><c val="c52020">Curses:</c> Obtained every time the enemy Team reaches a talent tier, as well as level <c val="#TooltipNumbers">24</c>, <c val="#TooltipNumbers">27</c>, and <c val="#TooltipNumbers">30</c>. Level <c val="#TooltipNumbers">4</c> and <c val="#TooltipNumbers">7</c> curses are obtained at the start of the game if they weren't obtained in the previous game.<n/><n/><c val="A84987">Mythic Curses:</c> These are powerful and unique curses that show up at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards on <c val="#TooltipNumbers">Mythic</c> difficulty.<n/><n/><c val="9B2400">Challenge Curses:</c> These are curses that can be difficult to deal with but offer great rewards.<n/><n/><c val="FFDE36">Rerolls:</c> Obtain <c val="#TooltipNumbers">3</c> rerolls at the start of the game and <c val="#TooltipNumbers">1</c> every game afterwards which can be used to reroll the selection of boons and curses. Boon rerolls and curse rerolls are separate.<n/><n/><c val="FC4747">Bans:</c> Obtain <c val="#TooltipNumbers">3</c> bans at the start of the game and <c val="#TooltipNumbers">1</c> every game afterwards which can be used to ban boons and curses, preventing them from showing up for the rest of the run. Infinite boons/curses, starter boons, mythic curses, and milestone boons cannot be banned.
+Text/Information=Welcome to Heroes Rogue! This is a singleplayer rogue-like mod for Heroes of the Storm. Throughout the game, you will have to choose <c val="#TooltipNumbers">Boons</c> providing various permanent buffs and <c val="c52020">Curses</c> which make the game more difficult. Game progress is automatically saved after destroying the enemy Core, so boons and curses persist every game. The game can be quit and played at another time, and will resume from where you were left of. Try to get as far as possible! If your Core gets destroyed, all boons and curses are reset and you will have to start over.<n/><n/><c val="FFDE36">Golden Heroes:</c> These Heroes have access to unique boons and curses, in addition to the generic ones that all Heroes have access to.<n/><n/><c val="#TooltipNumbers">Boons:</c> Obtained when reaching level <c val="#TooltipNumbers">1</c>, <c val="#TooltipNumbers">4</c>, <c val="#TooltipNumbers">7</c>, and <c val="#TooltipNumbers">10</c>. Obtain every boon up to level <c val="#TooltipNumbers">10</c> next game when they're skipped by winning early. Completing a map objective (for example getting three tributes on Cursed Hollow) also replaces a future curse with a boon, once per game. Boons can be <c val="ffffff">Common</c>, <c val="1eff00">Uncommon</c>, <c val="0070dd">Rare</c>, <c val="a335ee">Epic</c>, or <c val="ff8000">Legendary</c>, increasing in rarity and power. You are guaranteed at least a <c val="0070dd">Rare Boon</c> at the start of every game or a <c val="ff8000">Legendary Boon</c> every <c val="#TooltipNumbers">4</c> games.<n/><n/><c val="01ffff">Milestone Boons:</c> These are boons with unique effects that are obtained when reaching round <c val="#TooltipNumbers">10</c> on any difficulty as a milestone reward.<n/><n/><c val="e6cc80">Starter Boons:</c> These are potent boons that can only be obtained at the start of the game. Some boons only show up with specific starter boons.<n/><n/><c val="c52020">Curses:</c> Obtained every time the enemy Team reaches a talent tier, as well as level <c val="#TooltipNumbers">24</c>, <c val="#TooltipNumbers">27</c>, and <c val="#TooltipNumbers">30</c>. Curses up to level <c val="#TooltipNumbers">10</c> are obtained next game when skipped by winning early.<n/><n/><c val="A84987">Mythic Curses:</c> These are powerful and unique curses that show up at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards on <c val="#TooltipNumbers">Mythic</c> difficulty.<n/><n/><c val="9B2400">Challenge Curses:</c> These are curses that can be difficult to deal with but offer great rewards.<n/><n/><c val="FFDE36">Rerolls:</c> Obtain <c val="#TooltipNumbers">3</c> rerolls at the start of the game and <c val="#TooltipNumbers">1</c> every game afterwards which can be used to reroll the selection of boons and curses. Boon rerolls and curse rerolls are separate.<n/><n/><c val="FC4747">Bans:</c> Obtain <c val="#TooltipNumbers">3</c> bans at the start of the game and <c val="#TooltipNumbers">1</c> every game afterwards which can be used to ban boons and curses, preventing them from showing up for the rest of the run. Infinite boons/curses, starter boons, mythic curses, and milestone boons cannot be banned.
 
 Label/Name/RarityCommon=<c val="ffffff">Common
 Label/Name/RarityUncommon=<c val="1eff00">Uncommon
@@ -76,8 +81,12 @@ Label/Name/AffixNone=???
 Message/CurseToBoon=<c val="FFDE36">The next Curse you obtain will become a Boon!</c>
 Message/CurseSkipped=<c val="FFDE36">Curse skipped due to a previous Curse.</c>
 Message/CurseSwap=<c val="FFDE36">Curse swapped to a Boon due to winning the last Objective.</c>
-Message/CurseNextGame1=<c val="FC4747">Obtained a Curse for missing a Level 7 Curse last game.</c>
-Message/CurseNextGame2=<c val="FC4747">Obtained 2 Curses for missing the level 4 and level 7 Curses last game.</c>
+Message/CurseNextGame1=<c val="FC4747">Obtained a Curse for missing a level 10 Curse last game.</c>
+Message/CurseNextGame2=<c val="FC4747">Obtained 2 Curses for missing the level 7 and level 10 Curses last game.</c>
+Message/CurseNextGame3=<c val="FC4747">Obtained 3 Curses for missing the level 4, level 7, and level 10 Curses last game.</c>
+Message/BoonNextGame1=<c val="FFDE36">Obtained a Boon for missing a level 10 Boon last game.</c>
+Message/BoonNextGame2=<c val="FFDE36">Obtained 2 Boons for missing the level 7 and level 10 Boons last game.</c>
+Message/BoonNextGame3=<c val="FFDE36">Obtained 3 Boons for missing the level 4, level 7, and level 10 Boons last game.</c>
 Message/CurseCursed=<c val="FC4747">Obtained a Curse from dying 3 times.</c>
 Message/MilestoneReached=<c val="FFDE36">Obtained a Milestone Boon for reaching round 10!</c>
 Message/Pacifism=<c val="FFDE36">Obtained Boons from Pacifism!</c>
@@ -102,7 +111,7 @@ Button/Name/Heroic=Heroic
 Button/Name/Mythic=Mythic
 Button/Tooltip/Normal=No changes.
 Button/Tooltip/Heroic=Enemy Heroes gain increased stats over time:<n/>• <c val="#TooltipNumbers">+4%</c> damage, maximum Health, maximum Mana, Health regeneration, and Mana regeneration per round, stacking multiplicatively.
-Button/Tooltip/Mythic=Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards.<n/><n/>ALL enemies gain significantly increased stats over time:<n/>• <c val="#TooltipNumbers">+4%</c> (<c val="#TooltipNumbers">+1%</c> per round) damage, maximum Health, maximum Mana, Health regeneration, and Mana regeneration, multiplied by the number of rounds.<n/>• <c val="#TooltipNumbers">+1%</c> enemy Experience gain per round.
+Button/Tooltip/Mythic=ALL enemies gain significantly increased stats over time:<n/>• <c val="#TooltipNumbers">+4%</c> (<c val="#TooltipNumbers">+1%</c> per round) damage, maximum Health, maximum Mana, Health regeneration, and Mana regeneration, multiplied by the number of rounds.<n/>• <c val="#TooltipNumbers">+1%</c> enemy Experience gain per round.<n/><n/>Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards.
 Button/Name/DoNothing=Do Nothing
 Button/SimpleDisplayText/DoNothing=Does nothing.
 Button/Tooltip/DoNothing=Does nothing.
@@ -145,7 +154,7 @@ Affix/Name/NazeeboPowerfulSpiders=Powerful Spiders
 Affix/Tooltip/NazeeboPowerfulSpiders=Increases Corpse Spiders's damage by <c val="#TooltipNumbers">20%</c> <c val="747A84">(+20% per stack)</c>.
 Affix/Tooltip/Append/NazeeboPowerfulSpiders=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,WitchDoctorCorpseSpidersWeaponDamage,MultiplicativeModifierArray[NazeeboPowerfulSpiders].Modifier*100" player="1" precision="0"/>%</c>
 Affix/Name/NazeeboMasterWebweaver=Master Webweaver
-Affix/Tooltip/NazeeboMasterWebweaver=Zombies and Toads summon a Corpse Spider on death.<n/><n/><c val="#AbilityPassive">Passive:</c> Increases Corpse Spiders's duration by <c val="#TooltipNumbers">3</c> seconds.
+Affix/Tooltip/NazeeboMasterWebweaver=Zombies and Toads summon a Corpse Spider on death.
 Affix/Tooltip/Append/NazeeboMasterWebweaver=
 Affix/Name/NazeeboPowerRitual=Power Ritual
 Affix/Tooltip/NazeeboPowerRitual=Basic Attacks deal bonus damage equal to your Voodoo Ritual stacks and splash for <c val="#TooltipNumbers"><d ref="Accumulator,NazeeboPowerRitualSplashAccumulator,Scale*100"precision="1"/>%</c> damage.
@@ -154,7 +163,7 @@ Affix/Name/NazeeboLightningRitual=Lightning Ritual
 Affix/Tooltip/NazeeboLightningRitual=Each Voodoo Ritual stack increases Attack Speed by <c val="#TooltipNumbers">0.3%</c>.<n/><n/>Attack Speed bonus: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:WitchDoctorVoodooRitual$*(Accumulator,NazeeboPowerRitualLightningRitualAccumulator,Scale)*100" player="1" precision="0"/>%</c>
 Affix/Tooltip/Append/NazeeboLightningRitual=
 Affix/Name/NazeeboZombieHandler=Zombie Handler
-Affix/Tooltip/NazeeboZombieHandler=When a nearby enemy Minion dies, it has a <c val="#TooltipNumbers">50%</c> chance to summon a Zombie.<n/><n/>Zombies no longer lose Health over time.<n/><n/>Gain <c val="#TooltipNumbers">Dead Rush</c> and <c val="#TooltipNumbers">Ring of Poison</c>.
+Affix/Tooltip/NazeeboZombieHandler=When a nearby enemy Minion dies or is killed by you, it has a <c val="#TooltipNumbers">50%</c> chance to summon a Zombie.<n/><n/>Zombies no longer lose Health over time.<n/><n/>Gain <c val="#TooltipNumbers">Dead Rush</c> and <c val="#TooltipNumbers">Ring of Poison</c>.
 Affix/Tooltip/Append/NazeeboZombieHandler=
 Affix/Name/NazeeboFodder=Fodder
 Affix/Tooltip/NazeeboFodder=Reduces Zombie Wall's Mana cost by <c val="#TooltipNumbers">50</c>.
@@ -175,7 +184,7 @@ Affix/Name/NazeeboLastingPoison=Lasting Poison
 Affix/Tooltip/NazeeboLastingPoison=<c val="#TooltipNumbers">Ring of Poison</c> lasts <c val="#TooltipNumbers">2</c> seconds longer.
 Affix/Tooltip/Append/NazeeboLastingPoison=
 Affix/Name/NazeeboNeverEndingSwarm=Never Ending Swarm
-Affix/Tooltip/NazeeboNeverEndingSwarm=<c val="#TooltipNumbers">Zombie Handler</c> always summons a Zombie and has a <c val="#TooltipNumbers">50%</c> chance to summon an additional Zombie.
+Affix/Tooltip/NazeeboNeverEndingSwarm=<c val="#TooltipNumbers">Zombie Handler</c> always summons a Zombie and also triggers on allied Minions.
 Affix/Tooltip/Append/NazeeboNeverEndingSwarm=
 Affix/Name/NazeeboDeadlyToads=Deadly Toads
 Affix/Tooltip/NazeeboDeadlyToads=Increases Plague of Toads's damage by <c val="#TooltipNumbers">20%</c> <c val="747A84">(+20% per stack)</c>.
@@ -234,10 +243,10 @@ Affix/Name/RegenerativeCore=Regenerative Core
 Affix/Tooltip/RegenerativeCore=Your Core regenerates <c val="#TooltipNumbers">2%</c> of maximum Health per second while its Shield is active.
 Affix/Tooltip/Append/RegenerativeCore=
 Affix/Name/Powerful=Powerful
-Affix/Tooltip/Powerful=Increases Attack Damage of ALL allies by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.
+Affix/Tooltip/Powerful=Increases Attack Damage of ALL allies by <c val="#TooltipNumbers">6%</c> <c val="747A84">(+6% per stack)</c>.
 Affix/Tooltip/Append/Powerful=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixPowerfulBehavior,Modification.DamageDealtFraction[Basic]*100" precision="0"/>%</c>
 Affix/Name/Spellcasting=Spellcasting
-Affix/Tooltip/Spellcasting=Increases Spell Power of ALL allies by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.
+Affix/Tooltip/Spellcasting=Increases Spell Power of ALL allies by <c val="#TooltipNumbers">6%</c> <c val="747A84">(+6% per stack)</c>.
 Affix/Tooltip/Append/Spellcasting=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixSpellcastingBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 Affix/Name/Endurance=Endurance
 Affix/Tooltip/Endurance=Increases maximum Health of ALL allies by <c val="#TooltipNumbers">8%</c> <c val="747A84">(+8% per stack)</c>.
@@ -328,7 +337,7 @@ Affix/Name/ConvenientPortals=Convenient Portals
 Affix/Tooltip/ConvenientPortals=Creates a permanent Portal between the top lane and the bottom lane, only usable by your Team.
 Affix/Tooltip/Append/ConvenientPortals=
 Affix/Name/GlobeHuffer=Globe Huffer
-Affix/Tooltip/GlobeHuffer=Spawns a Regeneration Globe near a random allied Hero every <c val="#TooltipNumbers">12</c> <c val="747A84">(-4s per stack)</c> seconds, with you twice as likely to be chosen.<n/><n/><c val="#AbilityPassive">Passive: </c>Allied Regeneration Globes take <c val="#TooltipNumbers">100%</c> longer to turn Neutral.
+Affix/Tooltip/GlobeHuffer=Spawns a Regeneration Globe near a random allied Hero every <c val="#TooltipNumbers">12</c> <c val="747A84">(-4s per stack)</c> seconds, with you twice as likely to be chosen.<n/><n/><c val="#AbilityPassive">Passive: </c>Blue Regeneration Globes take <c val="#TooltipNumbers">100%</c> longer to turn Neutral.
 Affix/Tooltip/Append/GlobeHuffer=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_GlobeHufferCooldownCurrent$" precision="2"/></c> seconds
 Affix/Name/IllidanUnendingHatred=True Unending Hatred
 Affix/Tooltip/IllidanUnendingHatred=Gain <c val="#TooltipNumbers">Nexus Blades</c> and <c val="#TooltipNumbers">Unending Hatred</c>. Increases Unending Hatred's Quest stacks obtained from all sources by <c val="#TooltipNumbers">25%</c>.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
@@ -459,7 +468,7 @@ Affix/Name/NazeeboGreatRitual=Great Ritual
 Affix/Tooltip/NazeeboGreatRitual=Gain <c val="#TooltipNumbers">Vile Infection</c>.<n/><n/>Increases Voodoo Ritual stacks gained by <c val="#TooltipNumbers">100%</c>.
 Affix/Tooltip/Append/NazeeboGreatRitual=
 Affix/Name/Superiority=Superiority
-Affix/Tooltip/Superiority=Grants <c val="#TooltipNumbers">15</c> <c val="747A84">(+15 per stack)</c> Armor against non-Heroic enemies to ALL allied Heroes.
+Affix/Tooltip/Superiority=Grants <c val="#TooltipNumbers">30</c> <c val="747A84">(+15 per stack)</c> Armor against non-Heroic enemies to ALL allied Heroes.
 Affix/Tooltip/Append/Superiority=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixSuperiorityBehavior,ArmorModification.ArmorSet[Minion].ArmorMitigationTable[Basic]" precision="0"/></c>
 Affix/Name/MercenaryLord=Mercenary Lord
 Affix/Tooltip/MercenaryLord=Friendly non-Boss Mercenaries near you deal <c val="#TooltipNumbers">50%</c> <c val="747A84">(+50% per stack)</c> more damage.
@@ -471,8 +480,8 @@ Affix/Name/MinionKiller=Minion Killer
 Affix/Tooltip/MinionKiller=Increases damage dealt to Minions, Mercenaries, Monsters, and Summons of ALL allied Heroes by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
 Affix/Tooltip/Append/MinionKiller=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixMinionKillerBehavior,Modification.DamageDealtAttributeMultiplier[Minion]*100" precision="0"/>%</c>
 Affix/Name/FirstAid=First Aid
-Affix/Tooltip/FirstAid=Increases maximum Health by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c> and regenerate <c val="#TooltipNumbers">1%</c> <c val="747A84">(+1% per stack)</c> of your maximum Health per second.
-Affix/Tooltip/Append/FirstAid=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixFirstAidBehavior,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c><n/>Regeneration bonus: <c val="#TooltipNumbers"><d ref="Effect,AffixFirstAidCreateHealer,RechargeVitalFraction*100" precision="0"/>%</c>
+Affix/Tooltip/FirstAid=Increases maximum Health by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c> and regenerate <c val="#TooltipNumbers">1%</c> <c val="747A84">(+0.5% per stack)</c> of your maximum Health per second.
+Affix/Tooltip/Append/FirstAid=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixFirstAidBehavior,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c><n/>Regeneration bonus: <c val="#TooltipNumbers"><d ref="Effect,AffixFirstAidCreateHealer,RechargeVitalFraction*100" precision="1"/>%</c>
 Button/Name/AffixFirstAidBehavior=First Aid
 Button/SimpleDisplayText/AffixFirstAidBehavior=Regenerate health.
 Button/Tooltip/AffixFirstAidBehavior=Regenerate health.
@@ -665,8 +674,8 @@ Affix/Name/SgtHammerMechanicalExpert=Mechanical Expert
 Affix/Tooltip/SgtHammerMechanicalExpert=Gain <c val="#TooltipNumbers">Mechanical Know-how</c>.<n/><n/>Increases Mechanical Know-how's Shield duration by <c val="#TooltipNumbers">2</c> seconds and damage bonus duration by <c val="#TooltipNumbers">5</c> seconds.
 Affix/Tooltip/Append/SgtHammerMechanicalExpert=
 Affix/Name/GlobeCollector=Globe Collector
-Affix/Tooltip/GlobeCollector=Increases the collection range of Regeneration Globes for ALL allies by <c val="#TooltipNumbers">3</c> <c val="747A84">(+3 per stack)</c>.
-Affix/Tooltip/Append/GlobeCollector=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,RegenGlobeSearch2,AreaArray[0].Radius-1.25" precision="0"/></c>
+Affix/Tooltip/GlobeCollector=Increases the collection range of Regeneration Globes for ALL allies by <c val="#TooltipNumbers">5</c> <c val="747A84">(+5 per stack)</c> and their duration by <c val="#TooltipNumbers">2.5</c> <c val="747A84">(+2.5s per stack)</c> seconds.
+Affix/Tooltip/Append/GlobeCollector=<n/><n/>Range bonus: <c val="#TooltipNumbers"><d ref="Effect,RegenGlobeSearch2,AreaArray[0].Radius-1.25" precision="0"/></c><n/>Duration bonus: <c val="#TooltipNumbers"><d ref="Behavior,HeroGenericRegenGlobeBarbarianPercentBuff,Duration-5" player="1" precision="0"/></c> seconds
 Affix/Name/LostVikingsPowerofThree=Power of Three
 Affix/Tooltip/LostVikingsPowerofThree=Increases Olaf's maximum Health by <c val="#TooltipNumbers">7.5%</c> <c val="747A84">(+7.5% per stack)</c>.<n/><n/>Increases Baleog's Attack Damage and Attack Speed by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.<n/><n/>Increases Erik's Attack Damage by <c val="#TooltipNumbers">7</c> <c val="747A84">(+7 per stack)</c> and Movement Speed by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.
 Affix/Tooltip/Append/LostVikingsPowerofThree=<n/><n/>Olaf's bonus: <c val="#TooltipNumbers"><d ref="Behavior,PowerofThreeOlaf,Modification.VitalMaxFractionArray[Life]*100" precision="2"/>%</c><n/>Baleog's bonuses: <c val="#TooltipNumbers"><d ref="Behavior,PowerofThreeBaleog,Modification.AdditiveAttackSpeedFactor*100" precision="0"/>%</c><n/>Erik's Movement Speed bonus: <c val="#TooltipNumbers"><d ref="Behavior,PowerofThreeErik,Modification.UnifiedMoveSpeedFactor*100" precision="0"/>%</c><n/>Erik's damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,PowerofThreeErik,Modification.DamageDealtScaled[Basic]" precision="0"/></c>
@@ -718,14 +727,14 @@ Affix/Name/ProbiusWarpSplit=Warp Split
 Affix/Tooltip/ProbiusWarpSplit=Warp Rift splits into <c val="#TooltipNumbers">2</c> Warp Rifts after detonation. These do not split further.<n/><n/>Enemies are pulled toward Warp Rift's center.
 Affix/Tooltip/Append/ProbiusWarpSplit=
 Affix/Name/ProbiusWarpTechnology=Warp Technology
-Affix/Tooltip/ProbiusWarpTechnology=Gain the ability to warp in Zealots for <c val="#TooltipNumbers">5</c> Minerals, Stalkers for <c val="#TooltipNumbers">10</c> Minerals, and Immortals for <c val="#TooltipNumbers">30</c> Minerals near Pylons.
+Affix/Tooltip/ProbiusWarpTechnology=Gain the ability to warp in Zealots for <c val="#TooltipNumbers">5</c> Minerals, Stalkers for <c val="#TooltipNumbers">10</c> Minerals, and Immortals for <c val="#TooltipNumbers">30</c> Minerals near Pylons.<n/><n/>Start the game with <c val="#TooltipNumbers">50</c> Minerals.
 Affix/Tooltip/Append/ProbiusWarpTechnology=
 Button/Name/ProbiusWarpInZealots=Warp in Zealot
-Button/Tooltip/ProbiusWarpInZealots=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libAffx_ProbiusZealotCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Zealot near a Pylon.<n/><n/>Zealots deal <c val="#TooltipNumbers"><d ref="Effect,PsiBlades,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries and Minions.
+Button/Tooltip/ProbiusWarpInZealots=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libAffx_ProbiusZealotCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Zealot near a Pylon.<n/><n/>Zealots deal <c val="#TooltipNumbers"><d ref="Effect,PsiBlades,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries, Minions, and Structures.
 Button/Name/ProbiusWarpInStalkers=Warp in Stalker
-Button/Tooltip/ProbiusWarpInStalkers=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libAffx_ProbiusStalkerCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Stalker near a Pylon.<n/><n/>Stalkers deal <c val="#TooltipNumbers"><d ref="Effect,ParticleDisruptorsU,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries and Minions.
+Button/Tooltip/ProbiusWarpInStalkers=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libAffx_ProbiusStalkerCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Stalker near a Pylon.<n/><n/>Stalkers deal <c val="#TooltipNumbers"><d ref="Effect,ParticleDisruptorsU,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries, Minions, and Structures.
 Button/Name/ProbiusWarpInImmortals=Warp in Immortal
-Button/Tooltip/ProbiusWarpInImmortals=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libAffx_ProbiusImmortalCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Immortal near a Pylon.<n/><n/>Immortals deal <c val="#TooltipNumbers"><d ref="Effect,PhaseDisruptors,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries and Minions and <c val="#TooltipNumbers">200%</c> bonus damage to Structures.
+Button/Tooltip/ProbiusWarpInImmortals=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libAffx_ProbiusImmortalCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Immortal near a Pylon.<n/><n/>Immortals deal <c val="#TooltipNumbers"><d ref="Effect,PhaseDisruptors,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries and Minions, and <c val="#TooltipNumbers">200%</c> bonus damage to Structures.
 Abil/ProbiusWarpInImmortals=<d ref="Abil,ProbiusWarpInImmortals,Cost.Charge.TimeUse" player="0"/> seconds
 Button/Name/ProbiusWarpTechnologyCounterToken=Minerals
 Button/Tooltip/ProbiusWarpTechnologyCounterToken=Minerals: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:ProbiusWarpTechnologyCounterToken$" precision="0"/></c>
@@ -748,10 +757,10 @@ Affix/Name/ProbiusSolaritePowered=Solarite Powered
 Affix/Tooltip/ProbiusSolaritePowered=Regenerate <c val="#TooltipNumbers">25</c> Mana per second while outside a Pylon's Power Field.<n/><n/>Increases maximum Mana by <c val="#TooltipNumbers">400</c>.
 Affix/Tooltip/Append/ProbiusSolaritePowered=
 Affix/Name/ProbiusMineralMagnet=Mineral Magnet
-Affix/Tooltip/ProbiusMineralMagnet=Increases the collection range of Minerals by <c val="#TooltipNumbers">5</c>.
+Affix/Tooltip/ProbiusMineralMagnet=Increases the collection range of Minerals by <c val="#TooltipNumbers">10</c>.
 Affix/Tooltip/Append/ProbiusMineralMagnet=
 Affix/Name/ProbiusLastingRift=Lasting Rift
-Affix/Tooltip/ProbiusLastingRift=Increases Warp Rift's duration by <c val="#TooltipNumbers">3</c> seconds.
+Affix/Tooltip/ProbiusLastingRift=Increases Warp Rift's duration by <c val="#TooltipNumbers">6</c> seconds.
 Affix/Tooltip/Append/ProbiusLastingRift=<n/><n/>Bonus duration: <c val="#TooltipNumbers"><d ref="Behavior,ProbiusWarpRiftTimedLifeBehavior,Duration-3"/></c> seconds
 Affix/Name/ProbiusCondenser=Condenser
 Affix/Tooltip/ProbiusCondenser=Increases Warp Rift's maximum charges by <c val="#TooltipNumbers">1</c> and reduces its cooldown by <c val="#TooltipNumbers">1</c> second.
@@ -787,7 +796,7 @@ Affix/Name/ProbiusKhalaiIngenuity=Khalai Ingenuity
 Affix/Tooltip/ProbiusKhalaiIngenuity=Warp in Pylon and Photon Cannon gain unlimited cast range and warp in instantly.
 Affix/Tooltip/Append/ProbiusKhalaiIngenuity=
 Affix/Name/ProbiusZAP=ZAP!
-Affix/Tooltip/ProbiusZAP=Basic Attacks against Heroes deal <c val="#TooltipNumbers">1000%</c> increased damage and Slow by <c val="#TooltipNumbers">90%</c> for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>Has a cooldown of <c val="#TooltipNumbers">12</c> seconds per Hero.
+Affix/Tooltip/ProbiusZAP=Basic Attacks deal <c val="#TooltipNumbers">1000%</c> increased damage and Slow by <c val="#TooltipNumbers">90%</c> for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>Has a cooldown of <c val="#TooltipNumbers">10</c> seconds per target.
 Affix/Tooltip/Append/ProbiusZAP=
 Affix/Name/ProbiusTurbo=Turbo
 Affix/Tooltip/ProbiusTurbo=Gain <c val="#TooltipNumbers">Turbo Charged</c>.<n/><n/>Increases Worker Rush's Movement Speed by <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c> and duration by <c val="#TooltipNumbers">1</c> <c val="747A84">(+1s per stack)</c> seconds.
@@ -798,9 +807,12 @@ Affix/Tooltip/Append/ProbiusDelay=
 Affix/Name/ProbiusProtossWeapons=Protoss Weapons
 Affix/Tooltip/ProbiusProtossWeapons=Increases damage dealt of Zealots, Stalkers, and Immortals by <c val="#TooltipNumbers">20%</c> <c val="747A84">(+20% per stack)</c>.
 Affix/Tooltip/Append/ProbiusProtossWeapons=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,PhaseDisruptors,MultiplicativeModifierArray[ProtossWeapons].Modifier*100" player="1"  precision="0"/>%</c>
+Affix/Name/ProbiusProtossArmor=Protoss Armor
+Affix/Tooltip/ProbiusProtossArmor=Increases maximum Health and Shields of Zealots, Stalkers, and Immortals by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
+Affix/Tooltip/Append/ProbiusProtossArmor=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,ProbiusProtossArmorBehavior,Modification.VitalMaxFractionArray[Life]*100" player="1"  precision="0"/>%</c>
 Affix/Name/ProbiusPassiveIncome=Passive Income
 Affix/Tooltip/ProbiusPassiveIncome=Passively gain <c val="#TooltipNumbers">1</c> <c val="747A84">(+1 per stack)</c> Mineral every <c val="#TooltipNumbers">8</c> seconds.
-Affix/Tooltip/Append/ProbiusPassiveIncome=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,ProbiusPassiveIncomeCreatePersistent,PeriodCount" player="1" /></c> Minerals
+Affix/Tooltip/Append/ProbiusPassiveIncome=<n/><n/>Total passive income: <c val="#TooltipNumbers"><d ref="Effect,ProbiusPassiveIncomeCreatePersistent,PeriodCount" player="1" /></c> Minerals
 Affix/Name/ProbiusEfficientWarp=Efficient Warp
 Affix/Tooltip/ProbiusEfficientWarp=Reduces the Mineral cost of Zealots, Stalkers, and Immortals by <c val="#TooltipNumbers">20%</c> and the cooldowns by <c val="#TooltipNumbers">50%</c>.
 Affix/Tooltip/Append/ProbiusEfficientWarp=
@@ -808,14 +820,14 @@ Affix/Name/ProbiusHardenedShield=Hardened Shield
 Affix/Tooltip/ProbiusHardenedShield=While the Immortal has Shields remaining, incoming damage that would deal more than <c val="#TooltipNumbers"><d ref="Behavior,ImmortalHardenedShield,DamageResponse.ClampMaximum" player="1" precision="0" /></c> damage have the damage reduced to <c val="#TooltipNumbers"><d ref="Behavior,ImmortalHardenedShield,DamageResponse.ClampMaximum" player="1" precision="0" /></c>. Does not affect Spell Damage.
 Affix/Tooltip/Append/ProbiusHardenedShield=
 Affix/Name/ProbiusLongRangeDisruptors=Long Range Disruptors
-Affix/Tooltip/ProbiusLongRangeDisruptors=Increases Attack Range of Stalkers by <c val="#TooltipNumbers">1.5</c>.
+Affix/Tooltip/ProbiusLongRangeDisruptors=Increases Attack Range of Stalkers by <c val="#TooltipNumbers">2</c>.
 Affix/Tooltip/Append/ProbiusLongRangeDisruptors=
 Affix/Name/ProbiusRapidDisruptors=Rapid Disruptors
 Affix/Tooltip/ProbiusRapidDisruptors=Increases Attack Speed of Stalkers by <c val="#TooltipNumbers">25%</c>.
 Affix/Tooltip/Append/ProbiusRapidDisruptors=
-Affix/Name/ProbiusZealotArmor=Zealot Armor
-Affix/Tooltip/ProbiusZealotArmor=Zealots gain <c val="#TooltipNumbers">35</c> Physical Armor.
-Affix/Tooltip/Append/ProbiusZealotArmor=
+Affix/Name/ProbiusReinforcedPowerSuit=Reinforced Power Suit
+Affix/Tooltip/ProbiusReinforcedPowerSuit=Zealots gain <c val="#TooltipNumbers">35</c> Physical Armor.
+Affix/Tooltip/Append/ProbiusReinforcedPowerSuit=
 Affix/Name/ProbiusWarpConduit=Warp Conduit
 Affix/Tooltip/ProbiusWarpConduit=Reduces Warp in Pylon's cooldown by <c val="#TooltipNumbers">4</c> <c val="747A84">(+4s per stack)</c> seconds.
 Affix/Tooltip/Append/ProbiusWarpConduit=<n/><n/>Total reduction: <c val="#TooltipNumbers"><d ref="14-Abil,ProbiusWarpInPylon,Cost.Cooldown.TimeUse" player="1" /></c> seconds
@@ -823,8 +835,8 @@ Affix/Name/Strength=Strength
 Affix/Tooltip/Strength=Increases damage dealt by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
 Affix/Tooltip/Append/Strength=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixStrength,Modification.DamageDealtFraction[Basic]*100" player="1" precision="0" />%</c>
 Affix/Name/AutoMULE=Auto MULE
-Affix/Tooltip/AutoMULE=Automatically drop down a MULE near a damaged allied Structure that repairs <c val="#TooltipNumbers">10%</c> of the Structure's maximum Health per second.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">40</c> seconds.
-Affix/Tooltip/Append/AutoMULE=
+Affix/Tooltip/AutoMULE=Automatically drop down a MULE near a random damaged allied Structure that repairs <c val="#TooltipNumbers">10%</c> of the Structure's maximum Health per second.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">60</c> <c val="747A84">(-20s per stack)</c> seconds.
+Affix/Tooltip/Append/AutoMULE=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_AutoMULECooldownCurrent$"/></c> seconds
 Affix/Name/SecondWind=Second Wind
 Affix/Tooltip/SecondWind=On fatal damage, become Unkillable for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">300</c> seconds.
 Affix/Tooltip/Append/SecondWind=
@@ -847,13 +859,13 @@ Affix/Name/MythicCurseCitadel=Citadel
 Affix/Tooltip/MythicCurseCitadel=Increases enemy Structures maximum Health by <c val="#TooltipNumbers">150%</c> and their damage by <c val="#TooltipNumbers">50%</c>.<n/><n/>Enemy Heroes gain <c val="#TooltipNumbers">25</c> Armor.
 Affix/Tooltip/Append/MythicCurseCitadel=
 Affix/Name/MythicCurseBleeding=Bleeding
-Affix/Tooltip/MythicCurseBleeding=Reduces regeneration effects and all healing received by <c val="#TooltipNumbers">100%</c>.
+Affix/Tooltip/MythicCurseBleeding=Reduces regeneration effects and all healing received by <c val="#TooltipNumbers">100%</c>. This effect is inactive while in the Hall of Storms or while affected by a Healing Fountain.
 Affix/Tooltip/Append/MythicCurseBleeding=
 Affix/Name/MythicCurseLevelDisadvantage=Level Disadvantage
 Affix/Tooltip/MythicCurseLevelDisadvantage=Enemy Heroes start at Level <c val="#TooltipNumbers">4</c> and gain <c val="#TooltipNumbers">25%</c> increased Experience.
 Affix/Tooltip/Append/MythicCurseLevelDisadvantage=
 Affix/Name/MythicCurseCursed=Cursed
-Affix/Tooltip/MythicCurseCursed=Winning an objective no longer swaps a Curse to a Boon.<n/><n/>Obtain a <c val="c52020">Curse</c> every <c val="#TooltipNumbers">3</c> deaths. Counter is reset between rounds.<n/><n/>After reaching level <c val="#TooltipNumbers">20</c>, you and ALL allies lose <c val="#TooltipNumbers">5</c> Armor now and every minute.<n/>After reaching level <c val="#TooltipNumbers">30</c>, lose <c val="#TooltipNumbers">100</c> Armor every minute.
+Affix/Tooltip/MythicCurseCursed=Winning an objective no longer swaps a Curse to a Boon. Obtain a <c val="c52020">Curse</c> every <c val="#TooltipNumbers">3</c> deaths. Counter is reset between rounds. After reaching level <c val="#TooltipNumbers">20</c>, you and ALL allies lose <c val="#TooltipNumbers">5</c> Armor now and every minute. After reaching level <c val="#TooltipNumbers">30</c>, lose <c val="#TooltipNumbers">100</c> Armor every minute.
 Affix/Tooltip/Append/MythicCurseCursed=
 Affix/Name/MythicCurseEternal=Eternal
 Affix/Tooltip/MythicCurseEternal=Increases enemy Heroes's maximum Health, Spell Power and Attack Damage by <c val="#TooltipNumbers">150%</c>.
@@ -1089,3 +1101,12 @@ Affix/Tooltip/Append/Reinforcements=
 Affix/Name/SiegeReinforcements=Siege Reinforcements
 Affix/Tooltip/SiegeReinforcements=Enemy Catapults always spawn.
 Affix/Tooltip/Append/SiegeReinforcements=
+Affix/Name/LesserHearthstone=Lesser Hearthstone
+Affix/Tooltip/LesserHearthstone=Hearthstone no longer restores your Health and Mana.
+Affix/Tooltip/Append/LesserHearthstone=
+Affix/Name/ARAM=ARAM
+Affix/Tooltip/ARAM=Hall of Storms no longer restores your Health and Mana.
+Affix/Tooltip/Append/ARAM=
+Affix/Name/NotYourGlobes=Not Your Globes!
+Affix/Tooltip/NotYourGlobes=Enemy leader Minions drop red Regeneration Globes.
+Affix/Tooltip/Append/NotYourGlobes=

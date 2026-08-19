@@ -9545,7 +9545,11 @@ void libGame_gf_MinionDies (unit lp_minionUnit, int lp_killingPlayer, fixed lp_k
                 lv_regenGlobeOwner = libCore_gv_cOMPUTER_TeamChaos;
             }
             else {
-                lv_regenGlobeOwner = libCore_gv_cOMPUTER_TeamOrder;
+                if (libGame_teamChaosDropsChaosGlobe) {
+                    lv_regenGlobeOwner = libCore_gv_cOMPUTER_TeamChaos;
+                } else {
+                    lv_regenGlobeOwner = libCore_gv_cOMPUTER_TeamOrder;
+                }
             }
             libNtve_gf_CreateUnitsWithDefaultFacing(1, "RegenGlobe", c_unitCreateIgnorePlacement, lv_regenGlobeOwner, UnitGetPosition(lp_minionUnit), null);
         }

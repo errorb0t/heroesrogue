@@ -160,19 +160,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CAccumulatorToken>
   
   <CEffectCreatePersistent id="NazeeboZombieHandlerCreatePersistent">
-    <InitialEffect value="WitchDoctorZombieWallPersistentInitialSet" />
-    <ExpireEffect value="NazeeboZombieHandlerExpireSet" />
-    <ExpireDelay value="0.5" />
-    <PeriodCount value="1" />
-    <PeriodicEffectArray value="NazeeboZombieHandlerCreatePersistentZombieWall" />
-    <PeriodicPeriodArray value="0" />
-  </CEffectCreatePersistent>
-  <CEffectSet id="NazeeboZombieHandlerExpireSet">
-    <EffectArray value="WitchDoctorZombieWallDeathSoundSearch" />
-  </CEffectSet>  
-  <CEffectCreatePersistent id="NazeeboZombieHandlerCreatePersistentZombieWall">
     <OffsetFacingFallback Value="TargetPoint" />
-    <InitialDelay value="0.25" />
+    <InitialDelay value="0" />
     <PeriodCount value="1" />
     <PeriodicEffectArray value="NazeeboZombieHandlerCreateUnit" />
     <RevealRadius value="0.5" />
@@ -184,11 +173,11 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <CreateFlags index="PlacementIgnoreBlockers" value="1" />
     <CreateFlags index="PlacementIgnoreCliffTest" value="1" />
     <SpawnEffect value="NazeeboZombieHandlerSpawnSet" />
-    <SpawnUnit value="WitchDoctorZombieWallUnit" />
+    <SpawnUnit value="WitchDoctorZombieWallDeadRushTalentUnit" />
     <SpawnRange value="0.5" />
   </CEffectCreateUnit> 
   <CEffectSet id="NazeeboZombieHandlerSpawnSet">
-    <EffectArray value="NazeeboZombieHandlerApplyTimedLifeBehavior" />
+    <!--<EffectArray value="NazeeboZombieHandlerApplyTimedLifeBehavior" />-->
     <EffectArray value="WitchDoctorZombieWallDeadRushApplyBuffBehavior" />
     <EffectArray value="WitchDoctorSoulHarvestApplyCarry" />
     <EffectArray value="WitchDoctorVoodooRitualApplyDeathRitualTalentSummonCarry" />
@@ -210,6 +199,12 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Abil value="WitchDoctorZombieWallMorph" />
     <CmdFlags index="Preempt" value="1" />
   </CEffectIssueOrder>
+  <CActorUnit id="WitchDoctorZombieWallUnit">
+    <On Terms="Effect.NazeeboZombieHandlerSpawnSet.Start" Send="AnimGroupRemove Burrow" />
+    <On Terms="Effect.NazeeboZombieHandlerSpawnSet.Start" Send="AnimPlay Unburrow Unburrow 0 0.000000" />
+    <On Terms="Effect.NazeeboZombieHandlerSpawnSet.Start" Send="SetScale 0.900000 0.100000" />
+    <On Terms="Effect.NazeeboZombieHandlerSpawnSet.Start" Send="AnimClear Birth" />
+  </CActorUnit>
   <CActorModel id="NazeeboZombieHandlerZombieWallWarningModel" parent="StormModelNoAnims">
     <Flags index="VisionTestCenterOnly" value="1" />
     <Inherits index="TeamColor" value="1" />
@@ -225,6 +220,9 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <On Terms="Effect.NazeeboZombieHandlerCreatePersistentZombieWall.Start; At Effect" Send="Create" />
     <Sound value="WitchDoctor_Zombie_Warning" />
   </CActorSound>
+  <CUnit id="WitchDoctorZombieWallDeadRushTalentUnit">
+    <FlagArray index="CreateAITreeOnSpawn" value="1" />
+  </CUnit>
   
   <CEffectCreatePersistent id="WitchDoctorZombieWallPoisonZombieTalentPersistent">
     <PeriodicEffectArray value="WitchDoctorZombieWallPoisonZombieTalentSearch5" />

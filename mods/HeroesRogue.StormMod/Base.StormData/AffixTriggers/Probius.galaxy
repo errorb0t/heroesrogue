@@ -172,7 +172,7 @@ bool libAffx_ProbiusRapidDisruptorsUnitCreated (bool testConds, bool runActions)
 // ---------------------------------------------------------------
 // Zealot Armor
 // ---------------------------------------------------------------
-bool libAffx_ProbiusZealotArmorUnitCreated (bool testConds, bool runActions) {
+bool libAffx_ProbiusReinforcedPowerSuitUnitCreated (bool testConds, bool runActions) {
     unit createdUnit = EventUnitCreatedUnit();
     int owner = UnitGetOwner(createdUnit);
     if (testConds) {
@@ -186,6 +186,6 @@ bool libAffx_ProbiusZealotArmorUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    UnitBehaviorAdd(createdUnit, "ProbiusZealotArmorBehavior", createdUnit, 1);
+    UnitBehaviorAdd(createdUnit, "ProbiusReinforcedPowerSuitBehavior", createdUnit, 1);
     return true;
 }
