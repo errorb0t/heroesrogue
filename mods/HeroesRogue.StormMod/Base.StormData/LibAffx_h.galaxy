@@ -23,6 +23,7 @@ const int libAffx_maxQuests = 10;
 const int libAffx_maxFilters = 100;
 const int libAffx_maxAffixes = 400;
 const int libAffx_maxQueue = 100;
+const int libAffx_maxRequirements = 100;
 const int libAffx_maxEligibleAffixes = 200; // Maximum affixes that can be eligible for a slot when rolling
 const int libAffx_maxAffixSelection = 5;
 
@@ -211,8 +212,8 @@ struct libAffx_AffixData {
     bool cannotRoll;
     bool banned;
 
-    bool[libAffx_maxAffixes + 1] excludedAffixes; // List of mutually exclusive affixes.
-    bool[libAffx_maxAffixes + 1] requiredAffixes; // List of required affixes.
+    int[libAffx_maxRequirements + 1] excludedAffixes; // List of mutually exclusive affixes.
+    int[libAffx_maxRequirements + 1] requiredAffixes; // List of required affixes.
     int excludedCount;
     int requiredCount;
     bool requiresMaxStacks; // If required affixes also require maximum stacks.
@@ -253,7 +254,6 @@ struct libAffx_AffixData {
     int lastSeen;
 
     bool excludeChoGall;
-    bool excludeChoGallForAIEffects;
 };
 
 // ============================================================
@@ -461,6 +461,8 @@ trigger libAffx_AbathurUltimateEvolutionTrigger;
 trigger libAffx_ChenStormEarthFireTrigger;
 trigger libAffx_LostVikingsRaidboatTrigger;
 trigger libAffx_RexxarTrigger;
+trigger libAffx_SamuroTrigger;
+trigger libAffx_NovaTrigger;
 
 // ============================================================
 // DEBUG
@@ -474,7 +476,7 @@ bool libAffx_debug_enableDebugLogging = false; // Enables debug logging
 bool libAffx_debug_ignoreMap = false; // Ignores the saved map.
 bool libAffx_debug_disablePausing = false; // Disables pause features
 bool libAffx_debug_disableAffixQueue = false; // Disables queueing affixes.
-string libAffx_debug_player1Hero = "Probius"; // Player hero when hero selection is disabled.
+string libAffx_debug_player1Hero = "Nova"; // Player hero when hero selection is disabled.
 string libAffx_debug_player2Hero = "";
 string libAffx_debug_player3Hero = "";
 string libAffx_debug_player4Hero = "";

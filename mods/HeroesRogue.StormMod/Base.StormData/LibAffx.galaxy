@@ -160,6 +160,7 @@ void libAffx_SyncBehaviors(unit sourceUnit, unit targetUnit) {
     int i;
     int player = UnitGetOwner(sourceUnit); 
     int totalBehaviors = UnitBehaviorCountAll(sourceUnit);
+    int behaviorStacksSource;
     string behavior;
     int behaviorStacks;
     fixed behaviorDuration;
@@ -169,9 +170,10 @@ void libAffx_SyncBehaviors(unit sourceUnit, unit targetUnit) {
     for (i = 1; i <= libAffx_maxAffixBehaviors; i += 1) {
         behavior = libAffx_affixBehaviors[player][i];
         if (behavior == "") { break; }
-        behaviorStacks = MinI(1, UnitBehaviorCount(sourceUnit, behavior));
-        if (behaviorStacks <= 0) { // Minimum Integer won't work in some cases, bandaid fix
-            behaviorStacks = 1;
+        behaviorStacks = 1;
+        behaviorStacksSource = UnitBehaviorCount(sourceUnit, behavior);
+        if (behaviorStacksSource > 0) {
+            behaviorStacks = behaviorStacksSource;
         }
         behaviorDuration = UnitBehaviorDuration(sourceUnit, behavior);
         UnitModifyCooldown(targetUnit, "Abil/" + behavior, UnitGetCooldown(sourceUnit, "Abil/" + behavior), c_cooldownOperationSet);
@@ -322,6 +324,50 @@ bool libAffx_RexxarTrigger_Func (bool testConds, bool runActions) {
 void libAffx_RexxarTriggers_Init() {
     libAffx_RexxarTrigger = TriggerCreate("libAffx_RexxarTrigger_Func");
     TriggerAddEventUnitCreated(libAffx_RexxarTrigger, null, null, null);
+}
+//--------------------------------------------------------------------------------------------------
+// Samuro
+//--------------------------------------------------------------------------------------------------
+bool libAffx_SamuroTrigger_Func (bool testConds, bool runActions) {
+    unit eventUnit = EventUnitCreatedUnit();
+    int player = UnitGetOwner(eventUnit);
+    if (testConds) {
+        if (UnitGetType(eventUnit) != "SamuroMirrorImage") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_SyncBehaviors(libGame_gv_players[player].lv_heroUnit, eventUnit);
+    return true;
+}
+
+void libAffx_SamuroTriggers_Init() {
+    libAffx_SamuroTrigger = TriggerCreate("libAffx_SamuroTrigger_Func");
+    TriggerAddEventUnitCreated(libAffx_SamuroTrigger, null, null, null);
+}
+//--------------------------------------------------------------------------------------------------
+// Nova
+//--------------------------------------------------------------------------------------------------
+bool libAffx_NovaTrigger_Func (bool testConds, bool runActions) {
+    unit eventUnit = EventUnitCreatedUnit();
+    int player = UnitGetOwner(eventUnit);
+    if (testConds) {
+        if (UnitGetType(eventUnit) != "NovaHoloClone") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_SyncBehaviors(libGame_gv_players[player].lv_heroUnit, eventUnit);
+    return true;
+}
+
+void libAffx_NovaTriggers_Init() {
+    libAffx_NovaTrigger = TriggerCreate("libAffx_NovaTrigger_Func");
+    TriggerAddEventUnitCreated(libAffx_NovaTrigger, null, null, null);
 }
 //--------------------------------------------------------------------------------------------------
 // Lost Vikings
@@ -784,11 +830,9 @@ void libAffx_CreateAffixDialogItem(int buttonIndex, int affix, int xOffset) {
     libNtve_gf_CreateDialogItemLabel(libAffx_dialogAffixSelection, 320, 100, c_anchorTop, xOffset, yOffset + 320, StringExternal("Affix/Name/" + libAffx_affixes[affix].name) + StringToText(libAffx_CountToString(libAffx_affixes[affix].count, libAffx_affixes[affix].max)), libAffx_GetAffixColor(affix), false, 1.0);
     libNtve_gf_SetDialogItemStyle(DialogControlLastCreated(), "Storm_Tutorial_Small_Centered", PlayerGroupAll());
 
-    if (libAffx_affixes[affix].excludeChoGall && libAffx_affixes[affix].excludeChoGallForAIEffects && libAffx_choPlayer != 0) {
-        appendTooltip += StringExternal("Text/ExcludeChoGallForAIEffect");
-    } else if (libAffx_affixes[affix].excludeChoGall && libAffx_choPlayer != 0) {
-        appendTooltip += StringExternal("Text/ExcludeChoGall");
-    }
+    //if (libAffx_affixes[affix].excludeChoGall && libAffx_choPlayer != 0) {
+    //    appendTooltip += StringExternal("Text/ExcludeChoGall");
+    //}
 
     if (libAffx_appendTooltipInSelection && libAffx_affixes[affix].count > 0 && libAffx_affixes[affix].max != 1) {
         appendTooltip += StringExternal("Affix/Tooltip/Append/" + libAffx_affixes[affix].name);
@@ -967,11 +1011,9 @@ void libAffx_CreateAffixesOwnedDialogItem(int affix, int offsetX, int offsetY) {
     if (libAffx_affixes[affix].quest.isQuest) {
         questIcon = "Affix/Quest";
     }
-    if (libAffx_affixes[affix].excludeChoGall && libAffx_affixes[affix].excludeChoGallForAIEffects && libAffx_choPlayer != 0) {
-        appendTooltip += StringExternal("Text/ExcludeChoGallForAIEffect");
-    } else if (libAffx_affixes[affix].excludeChoGall && libAffx_choPlayer != 0) {
-        appendTooltip += StringExternal("Text/ExcludeChoGall");
-    }
+    //if (libAffx_affixes[affix].excludeChoGall && libAffx_choPlayer != 0) {
+    //    appendTooltip += StringExternal("Text/ExcludeChoGall");
+    //}
 
     if (libAffx_affixes[affix].count > 0 && libAffx_affixes[affix].max != 1) {
         appendTooltip += StringExternal("Affix/Tooltip/Append/" + libAffx_affixes[affix].name);
@@ -4184,6 +4226,8 @@ void libAffx_InitTriggers () {
     libAffx_ChenTriggers_Init();
     libAffx_LostVikingsTriggers_Init();
     libAffx_RexxarTriggers_Init();
+    libAffx_NovaTriggers_Init();
+    libAffx_SamuroTriggers_Init();
 
     TriggerEnable(libGDHL_gt_HeroSylvanasPossessionRewire, true);
     libAffx_pauseVLSK = TriggerCreate("libVLSK_PauseTrigger_Func");
@@ -4214,12 +4258,20 @@ void libAffx_AffixInitBlank() {
 }
 
 void libAffx_AffixAddExclusion(int affix, int excludeAffix) {
-    libAffx_affixes[affix].excludedAffixes[excludeAffix] = true;
+    if (libAffx_affixes[affix].excludedCount >= libAffx_maxRequirements) {
+        libAffx_DebugPrint("Reached maximum exclusion requirements for affix " + libAffx_affixes[affix].name);
+        return;
+    }
     libAffx_affixes[affix].excludedCount += 1;
+    libAffx_affixes[affix].excludedAffixes[libAffx_affixes[affix].excludedCount] = excludeAffix;
 }
 void libAffx_AffixAddRequirement(int affix, int requireAffix) {
-    libAffx_affixes[affix].requiredAffixes[requireAffix] = true;
+    if (libAffx_affixes[affix].requiredCount >= libAffx_maxRequirements) {
+        libAffx_DebugPrint("Reached maximum requirements for affix " + libAffx_affixes[affix].name);
+        return;
+    }
     libAffx_affixes[affix].requiredCount += 1;
+    libAffx_affixes[affix].requiredAffixes[libAffx_affixes[affix].requiredCount] = requireAffix;
 }
 void libAffx_AffixSetInfinite(int affix, bool infinite) {
     if (infinite) {
@@ -4561,6 +4613,7 @@ void libAffx_InitAffixes () {
     string affixInstance;
     string cooldownLink;
     string heroTooltip;
+    string heroTooltipLowerCase;
     string questRetain;
     string questRetainBehavior;
     string questRetainModifier;
@@ -4639,11 +4692,7 @@ void libAffx_InitAffixes () {
         if (UserDataGetInt("Affix", affixInstance, "CooldownHidden", 1) == 1) {
             libAffx_affixes[i].cooldownHidden = true;
         }
-        excludeChoGall = UserDataGetInt("Affix", affixInstance, "ExcludeChoGall", 1);
-        if (excludeChoGall == 2) {
-            libAffx_affixes[i].excludeChoGallForAIEffects = true;
-            libAffx_affixes[i].excludeChoGall = true;
-        } else if (excludeChoGall == 1) {
+        if (UserDataGetInt("Affix", affixInstance, "ExcludeChoGall", 1) == 1) {
             libAffx_affixes[i].excludeChoGall = true;
         }
         if (UserDataGetInt("Affix", affixInstance, "NoRoll", 1) == 1) {
@@ -4654,11 +4703,17 @@ void libAffx_InitAffixes () {
         }
         for (i2 = 1; i2 <= libAffx_maxHeroes; i2 += 1) {
             heroTooltip = UserDataGetString("Affix", affixInstance, "HeroTooltip", i2);
+            heroTooltipLowerCase = StringCase(heroTooltip, false);
             if (heroTooltip != "" && heroTooltip != null) {
-                if (StringCase(heroTooltip, false) == "nomana") {
+                if (heroTooltipLowerCase == "nomana") {
                     libAffx_affixes[i].customTooltipForNonManaUsers = true;
                 } else {
-                    libAffx_affixes[i].customTooltipForHero[libCore_gf_GetIndexFromHero(heroTooltip)] = true;
+                    if (heroTooltipLowerCase == "chogall" || heroTooltipLowerCase == "cho'gall") {
+                        libAffx_affixes[i].customTooltipForHero[libCore_gf_GetIndexFromHero("Cho")] = true;
+                        libAffx_affixes[i].customTooltipForHero[libCore_gf_GetIndexFromHero("Gall")] = true;
+                    } else {
+                        libAffx_affixes[i].customTooltipForHero[libCore_gf_GetIndexFromHero(heroTooltip)] = true;
+                    }
                 }
             }
         }

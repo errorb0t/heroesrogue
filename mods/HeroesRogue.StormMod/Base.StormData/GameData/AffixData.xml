@@ -779,6 +779,9 @@
             <String String="AA libAffx_BlessingoftheDragonsAffixAdded">
                 <Field Id="Trigger" Index="1"/>
             </String>
+            <String String="ChoGall">
+                <Field Id="HeroTooltip"/>
+            </String>
         </Instances>
         <Instances Id="NexusRange">
             <Int>
@@ -840,7 +843,7 @@
             <String String="Scaling libAffx_BuddyScaling">
                 <Field Id="Trigger" Index="2"/>
             </String>
-            <String String="OncePerGame libaffx_BuddyOncePerGame">
+            <String String="OncePerGame libAffx_BuddyOncePerGame">
                 <Field Id="Trigger" Index="3"/>
             </String>
             <String String="EffectUsed libAffx_BuddyCheck AffixBuddyDroneOwnerSet">
@@ -851,6 +854,15 @@
             </String>
             <String String="Abathur">
                 <Field Id="HeroTooltip" Index="1"/>
+            </String>
+            <String String="ChoGall">
+                <Field Id="HeroTooltip" Index="2"/>
+            </String>
+            <String String="LostVikings">
+                <Field Id="HeroTooltip" Index="3"/>
+            </String>
+            <String String="Rexxar">
+                <Field Id="HeroTooltip" Index="4"/>
             </String>
         </Instances>
         <Instances Id="MoreOptions">
@@ -1796,31 +1808,34 @@
                 <Field Id="CatalogModification" Index="1"/>
             </String>
         </Instances>
-        <Instances Id="BuddyAll">
-            <Int Int="2">
+        <Instances Id="ArmyofBUDDYs">
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
+            <Int Int="1">
                 <Field Id="ExcludeChoGall"/>
             </Int>
             <Int>
                 <Field Id="Max"/>
             </Int>
-            <String String="Legendary">
-                <Field Id="Rarity"/>
-            </String>
             <String String="Assets/Textures/affix_icon_scoutingdrone_multiple.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="OPG libAffx_BuddyAllOncePerGame">
+            <String String="OPG libAffx_ArmyofBUDDYsOncePerGame">
                 <Field Id="Trigger"/>
             </String>
-            <String String="LU libAffx_BuddyAllLevelUp">
+            <String String="LU libAffx_ArmyofBUDDYsLevelUp">
                 <Field Id="Trigger" Index="1"/>
             </String>
-            <String String="AA libaffx_BuddyAllAffixAdded">
+            <String String="AA libAffx_ArmyofBUDDYsAffixAdded">
                 <Field Id="Trigger" Index="2"/>
             </String>
             <User Type="Affix" Instance="Buddy">
                 <Field Id="AffixesRequired"/>
             </User>
+            <String String="ChoGall">
+                <Field Id="HeroTooltip"/>
+            </String>
         </Instances>
         <Instances Id="CriticalMass">
             <String String="Legendary">
@@ -1834,6 +1849,9 @@
             </String>
             <String String="HT libAffx_CriticalMassHT">
                 <Field Id="Trigger"/>
+            </String>
+            <String String="ChoGall">
+                <Field Id="HeroTooltip"/>
             </String>
         </Instances>
         <Instances Id="ToxicField">
@@ -1849,20 +1867,17 @@
             <String String="Assets/Textures/storm_ui_icon_abathur_toxicnest.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="P libAffx_ToxicFieldPeriodic 1">
+            <String String="Periodic libAffx_ToxicFieldPeriodic 1">
                 <Field Id="Trigger"/>
             </String>
-            <String String="AA libAffx_ToxicFieldAffixAdded">
+            <String String="AffixAdded libAffx_ToxicFieldAffixAdded">
                 <Field Id="Trigger" Index="1"/>
             </String>
-            <String String="E libAffx_ToxicField">
+            <String String="LevelUp libAffx_ToxicFieldLevelUp">
                 <Field Id="Trigger" Index="2"/>
             </String>
-            <String String="LU libAffx_ToxicFieldLevelUp">
+            <String String="ExecuteOncePerGame libAffx_ToxicFieldExecuteOncePerGame">
                 <Field Id="Trigger" Index="3"/>
-            </String>
-            <String String="eopg libAffx_ToxicFieldExecuteOncePerGame">
-                <Field Id="Trigger" Index="4"/>
             </String>
         </Instances>
         <Instances Id="Destruction">
@@ -2236,6 +2251,9 @@
             <String String="OPG libAffx_EmergencyMeasureOncePerGame">
                 <Field Id="Trigger"/>
             </String>
+            <String String="ChoGall">
+                <Field Id="HeroTooltip"/>
+            </String>
         </Instances>
         <Instances Id="LostVikingsButtonMasher">
             <String String="Assets/Textures/storm_ui_icon_lostvikings_jump.dds">
@@ -2565,6 +2583,9 @@
             </String>
             <String String="0 4 Add Behavior,AffixSlowStartBehavior,Duration 60">
                 <Field Id="CatalogModification"/>
+            </String>
+            <String String="ChoGall">
+                <Field Id="HeroTooltip"/>
             </String>
         </Instances>
         <Instances Id="PassiveAdvantage">
@@ -3777,8 +3798,8 @@
             <String String="AA libAffx_AllTalentsAffixAdded">
                 <Field Id="Trigger" Index="1"/>
             </String>
-            <String String="E libAffx_AllTalents">
-                <Field Id="Trigger" Index="2"/>
+            <String String="ChoGall">
+                <Field Id="HeroTooltip"/>
             </String>
         </Instances>
         <Instances Id="OverwhelmingPower">
@@ -3831,6 +3852,9 @@
             </String>
             <String String="5 0 AffixSelfReliantNoManaBehavior !mana">
                 <Field Id="Behavior" Index="7"/>
+            </String>
+            <String String="ChoGall">
+                <Field Id="HeroTooltip"/>
             </String>
         </Instances>
         <Instances Id="BelligerentGladiator">
@@ -5088,6 +5112,9 @@
             </String>
             <String String="5 0 AffixDifficultyBehavior">
                 <Field Id="Behavior" Index="3"/>
+            </String>
+            <String String="ChoGall">
+                <Field Id="HeroTooltip"/>
             </String>
         </Instances>
         <Instances Id="VeryBadBargain">
