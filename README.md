@@ -4,43 +4,46 @@ Singleplayer rogue-like mod for Heroes of the Storm.
 <img width="1919" height="1080" alt="heroesrogue" src="https://github.com/user-attachments/assets/25dcc8fc-9d86-49cf-ac81-ccc224881242" />
 
 
-**How to Play:**
+## **How to Play**
 
-1- Go to the Releases section and download the latest version of the mod.
+- Go to the Releases section (on the right panel on Github) and download the latest version of the mod.
 
-2- Extract the contents of the zip file into your Heroes of the Storm installation path (e.g. C:/Program Files (x86)/Heroes of the Storm). The maps and mods folder should be in the same location as the Heroes of the Storm executable.
+- Extract the contents of the zip file into your Heroes of the Storm installation path (e.g. C:/Program Files (x86)/Heroes of the Storm). The maps and mods folder should be in the same location as the Heroes of the Storm executable.
 
-3- Start the game, open the menu in the bottom right (cog icon), press Challenges, and then press Play.
+- Start the game, open the menu in the bottom right (cog icon), press Challenges, and then press Play.
 
-**How to Uninstall:**
+## **How to Uninstall**
 
-- Remove or rename the maps and mods folder in order to access regular try mode.
+- Remove the maps and mods folder in order to access regular try mode.
 
-**Info:**
 
-- You gain permanent benefits or buffs called boons when reaching level 1, 4, 7, and 10. Choose one of three options or reroll/ban if you do not like what you see.
 
-- Curses are permanent downsides that increases the difficulty of the game. You obtain curses every time the enemy Team reaches a talent tier, as well as at level 24, level 27, and level 30.
+# **Info**
 
-- Level 4 and 7 curses are obtained at the start of the game if you did not get them in the previous game.
+Welcome to Heroes Rogue! This is a singleplayer rogue-like mod for Heroes of the Storm. Throughout the game, you will have to choose Boons providing various permanent buffs and Curses which make the game more difficult. Your boons and curses are automatically saved after destroying the enemy Core, carrying them over into the next game. The game can be quit and played at another time, and will resume where you left of. Try to get as far as possible! If your Core gets destroyed, the run ends and all boons and curses are reset.
 
-- Completing a map objective (for example getting 3 tributes on Cursed Hollow) replaces a future curse with a boon, once per game.
+The following Heroes have special interactions with boons and curses:<br>
+- **Lost Vikings, Rexxar, Samuro, and Nova:** Boons and curses apply to all controlled units/clones.<br>
+- **Abathur:** Boons and curses apply to Symbiote (NOT the host) and Ultimate Evolution.<br>
+- **Cho'Gall:** Cho and Gall share all boons and curses.<br>
 
-- Some Heroes have unique boons, indicated with a golden border. There will be more in the future!
+**Golden Heroes:** These Heroes have access to unique boons and curses, in addition to the generic ones that all Heroes have access to.
 
-- Game progress is automatically saved after destroying the enemy Core, boons and curses persist every game. You can quit and play at another time, the game will resume from where you left of.
+**Boons:** Obtained when reaching level 1, 4, 7, and 10. If you win early and skip any boons, those skipped boons will be offered in the next game, up to the level 10 boons. Completing a map objective (for example getting three tributes on Cursed Hollow) also replaces a future curse with a boon, once per game. Boons can be Common, Uncommon, Rare, Epic, or Legendary, increasing in rarity and power. You are guaranteed at least a Rare Boon at the start of every game, and a Legendary Boon every 4 games.
 
-- If your Core gets destroyed, all boons and curses are reset and you have to start over. You can also type 'resetgame' in chat to manually restart the run.
+**Milestone Boons:** These are boons with unique effects that are obtained when reaching round 10 on any difficulty as a milestone reward.
 
-**Unique interactions:**
+**Starter Boons:** These are potent boons that can only be obtained at the start of the game. Some boons only show up with specific starter boons.
 
-- Lost Vikings: Most boons and curses apply to each Viking.
+**Curses:** Obtained every time the enemy Team reaches a talent tier, as well as level 24, 27, and 30. If you win early and skip any curses, those skipped curses will be offered in the next game, up to the level 10 curses.
 
-- Rexxar: Most boons and curses apply to both Rexxar and Misha.
+**Mythic Curses:** These are powerful and unique curses that show up at the start of the game and every 4 games afterwards on Mythic difficulty.
 
-- Cho'Gall: Most boons and curses apply to both Cho and Gall.
+**Challenge Curses:** These are curses that can be difficult to deal with but offer great rewards.
 
-- Abathur: Most boons and curses apply to both Symbiote and Ultimate Evolution.
+**Rerolls:** Obtain 3 rerolls at the start of a run and 1 additional reroll at the start of every subsequent game which can be used to reroll the selection of boons and curses. Boon rerolls and curse rerolls are separate.
+
+**Bans:** Obtain 3 bans at the start of a run and 1 additional ban at the start of every subsequent game which can be used to ban boons and curses, preventing them from showing up for the rest of the run. Infinite boons/curses, starter boons, mythic curses, and milestone boons cannot be banned.
 
 
 #### Disclaimer:

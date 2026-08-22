@@ -68,10 +68,11 @@ fixed libAffx_RingofMagicModifierCurrent;
 fixed libAffx_LastMomentsCooldownCurrent;
 fixed libAffx_MacGuffinModifierCurrent;
 
-int libAffx_BuddyCount = 1;
+int[libCore_gv_bALMaxPlayers + 1] libAffx_BuddyCount;
 int[libCore_gv_bALMaxPlayers + 1] libAffx_CurrentBuddyCount1;
 int[libCore_gv_bALMaxPlayers + 1] libAffx_CurrentBuddyCount2;
 int[libCore_gv_bALMaxPlayers + 1] libAffx_CurrentBuddyCount3;
+int libAffx_BuddyCountPlayer1;
 int libAffx_FortificationsTotal = 0;
 const int libAffx_FortificationsMax = 11;
 const int libAffx_DestructionMaxRewards = 3;
@@ -90,7 +91,7 @@ bool libAffx_PurificationProtocolApplied;
 
 int libAffx_BagBargainIndex;
 int libAffx_ResurgenceoftheStormIndex;
-int libAffx_BuddyAllIndex;
+int libAffx_ArmyofBUDDYsIndex;
 int libAffx_ChronoBoostIndex;
 int libAffx_KillContractIndex;
 int libAffx_ForificationsIndex;
@@ -220,7 +221,7 @@ bool libAffx_BuddyAI (bool testConds, bool runActions) {
         if (UnitGetType(ownerUnit) == "LongboatRaidBoat") {
             return false;
         }
-        if (libAffx_CurrentBuddyCount1[ownerPlayer] >= libAffx_BuddyCount) {
+        if (libAffx_CurrentBuddyCount1[ownerPlayer] >= libAffx_BuddyCount[ownerPlayer]) {
             return false;
         }
     }
@@ -357,10 +358,7 @@ bool libAffx_BuddyCheck (bool testConds, bool runActions) {
     int i;
     int totalBuddies = libAffx_CurrentBuddyCount1[player] + libAffx_CurrentBuddyCount2[player] + libAffx_CurrentBuddyCount3[player];
     if (testConds) {
-        if (player != libAffx_player) {
-            return false;
-        }
-        if (totalBuddies >= libAffx_BuddyCount) {
+        if (totalBuddies >= libAffx_BuddyCount[player]) {
             return false;
         }
         if (!UnitIsAlive(user)) {
@@ -370,9 +368,9 @@ bool libAffx_BuddyCheck (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    for (i = 1; i <= (libAffx_BuddyCount - totalBuddies); i += 1) {
+    for (i = 1; i <= (libAffx_BuddyCount[player] - totalBuddies); i += 1) {
         totalBuddies = libAffx_CurrentBuddyCount1[player] + libAffx_CurrentBuddyCount2[player] + libAffx_CurrentBuddyCount3[player];
-        if (totalBuddies >= libAffx_BuddyCount) {
+        if (totalBuddies >= libAffx_BuddyCount[player]) {
             break;
         }
         if (UnitGetType(user) == "HeroErik") {
@@ -406,14 +404,14 @@ bool libAffx_BuddyCheck (bool testConds, bool runActions) {
 bool libAffx_BuddyScaling (bool testConds, bool runActions) {
     int player = libGame_gf_HeroLevelUpPlayer();
     if (testConds) {
-        if (player != libAffx_player) {
+        if (player > 5 || player < 1) {
             return false;
         }
     }
     if (!runActions) {
         return true;
     }
-    if (libAffx_affixes[libAffx_BuddyAllIndex].count > 0) {
+    if (libAffx_affixes[libAffx_ArmyofBUDDYsIndex].count > 0) {
         libAffx_LevelUpScaling3("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
         libAffx_LevelUpScaling3("Effect,AffixBuddyDroneMissileDamage,Amount", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
     } else {
@@ -432,16 +430,19 @@ bool libAffx_BuddyAffixAdded (bool testConds, bool runActions) {
     libAffx_CatalogModifyForAllPlayers("Effect,AffixBuddyHealCreatePersistent,PeriodicPeriodArray[0]", FixedToString(3 - 0.25 * (count - 1), 2));
     return true;
 }
-bool libaffx_BuddyOncePerGame (bool testConds, bool runActions) {
+bool libAffx_BuddyOncePerGame (bool testConds, bool runActions) {
+    int i;
     if (!runActions) {
         return true;
     }
-    if (libAffx_playersHeroIndex[libAffx_player] == libCore_gf_GetIndexFromHero("LostVikings")) {
-        libAffx_BuddyCount = 3;
-    } else if (libAffx_playersHeroIndex[libAffx_player] == libCore_gf_GetIndexFromHero("Rexxar")) {
-        libAffx_BuddyCount = 2;
-    } else {
-        libAffx_BuddyCount = 1;
+    for (i = 1; i <= 5; i += 1) {
+        if (libAffx_playersHeroIndex[i] == libCore_gf_GetIndexFromHero("LostVikings")) {
+            libAffx_BuddyCount[i] = 3;
+        } else if (libAffx_playersHeroIndex[i] == libCore_gf_GetIndexFromHero("Rexxar")) {
+            libAffx_BuddyCount[i] = 2;
+        } else {
+            libAffx_BuddyCount[i] = 1;
+        }
     }
     libAffx_AddBehaviorWithExclusion(libAffx_player, "AffixBuddyDroneSpawnBehavior", 1, true, "HeroDVaMech");
     return true;
@@ -1614,20 +1615,13 @@ bool libAffx_ToxicFieldExecuteOncePerGame (bool testConds, bool runActions) {
 
     return true;
 }
-bool libAffx_ToxicField (bool testConds, bool runActions) {
-    if (!runActions) {
-        return true;
-    }
-    libAffx_CatalogFieldValueSetFixed(c_gameCatalogEffect, "ToxicNestDamage", "Amount", libAffx_teamChaos, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "ToxicNestDamage", "Amount", 0)) * Pow(1.04, UnitLevel(libGame_gv_players[6].lv_heroUnit)));
-
-    return true;
-}
 bool libAffx_ToxicFieldAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
     libAffx_ToxicFieldIndex = libAffx_EventAffix();
     libAffx_ToxicFieldCount = 2 * libAffx_EventAffixCount();
+    libAffx_CatalogFieldValueSetFixed(c_gameCatalogEffect, "ToxicNestDamage", "Amount", libAffx_teamChaos, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "ToxicNestDamage", "Amount", 0)) * Pow(1.04, UnitLevel(libGame_gv_players[6].lv_heroUnit)));
     return true;
 }
 bool libAffx_ToxicFieldPeriodic (bool testConds, bool runActions) {
@@ -1980,15 +1974,18 @@ bool libAffx_PathoftheAssassinLevelUp (bool testConds, bool runActions) {
 }
 
 // ---------------------------------------------------------------
-// Buddy All
+// Army of BUDDYs
 // ---------------------------------------------------------------
-bool libAffx_BuddyAllOncePerGame (bool testConds, bool runActions) {
+bool libAffx_ArmyofBUDDYsOncePerGame (bool testConds, bool runActions) {
     int i;
     if (!runActions) {
         return true;
     }
     for (i = 2; i <= 5; i += 1) {
         libAffx_AddBehaviorWithExclusion(i, "AffixBuddyDroneSpawnBehavior", 1, true, "HeroDVaMech");
+        if (i == libAffx_choPlayer || i == libAffx_gallPlayer) {
+            libAffx_BuddyCount[i] += 1;
+        }
     }
     for (i = 1; i <= 5; i += 1) {
         libAffx_LevelUpScaling3("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", i, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
@@ -1996,15 +1993,16 @@ bool libAffx_BuddyAllOncePerGame (bool testConds, bool runActions) {
     }
     return true;
 }
-bool libaffx_BuddyAllAffixAdded (bool testConds, bool runActions) {
+bool libAffx_ArmyofBUDDYsAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_BuddyAllIndex = libAffx_EventAffix();
-    libAffx_BuddyCount += libAffx_EventAffixCountAdded();
+    libAffx_ArmyofBUDDYsIndex = libAffx_EventAffix();
+    libAffx_BuddyCount[libAffx_player] += libAffx_EventAffixCountAdded();
+    libAffx_BuddyCountPlayer1 = libAffx_BuddyCount[libAffx_player];
     return true;
 }
-bool libAffx_BuddyAllLevelUp (bool testConds, bool runActions) {
+bool libAffx_ArmyofBUDDYsLevelUp (bool testConds, bool runActions) {
     int player = libGame_gf_HeroLevelUpPlayer();
     if (testConds) {
         if (player < 1 || player > 5) {
@@ -2221,6 +2219,11 @@ bool libAffx_GrenadierEffectUsed (bool testConds, bool runActions) {
     int random;
     unit caster;
     unit target;
+    if (testConds) {
+        if (UnitTestState(caster, c_unitStateHallucination)) {
+            return false;
+        }
+    }
     if (!runActions) {
         return true;
     }
@@ -2481,6 +2484,9 @@ bool libAffx_DivineInterventionEffectUsed (bool testConds, bool runActions) {
             return false;
         }
         if (libAffx_affixes[libAffx_DivineInterventionIndex].cooldown > 0) {
+            return false;
+        }
+        if (UnitTestState(target, c_unitStateHallucination)) {
             return false;
         }
     }
@@ -2759,17 +2765,11 @@ void libAffx_ApplyAllTalents(int level) {
         libAffx_PickAllTalents(player, 7);
     }
 }
-bool libAffx_AllTalents (bool testConds, bool runActions) {
-    if (!runActions) {
-        return true;
-    }
-    libAffx_ApplyAllTalents(UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit));
-    return true;
-}
 bool libAffx_AllTalentsAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
+    libAffx_ApplyAllTalents(UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit));
     return true;
 }
 bool libAffx_AllTalentsLevelUp (bool testConds, bool runActions) {
@@ -3027,6 +3027,9 @@ bool libAffx_LastMomentsEffectUsed (bool testConds, bool runActions) {
             return false;
         }
         if (libAffx_affixes[libAffx_LastMomentsIndex].cooldown > 0) {
+            return false;
+        }
+        if (UnitTestState(targetUnit, c_unitStateHallucination)) {
             return false;
         }
     }
@@ -3921,8 +3924,8 @@ bool libAffx_MoreOptionsOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_affixSelectionMaxCurrent += 1;
-    for (i = 1; i <= libAffx_queueMax; i += 1) {
+    libAffx_currentAffixSelection += 1;
+    for (i = 1; i <= libAffx_maxQueue; i += 1) {
         if (libAffx_queue[i].choiceCount > 1) {
             libAffx_queue[i].choiceCount += 1;
         }
