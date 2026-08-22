@@ -3921,8 +3921,8 @@ bool libAffx_MoreOptionsOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_affixSelectionMaxCurrent += 1;
-    for (i = 1; i <= libAffx_queueMax; i += 1) {
+    libAffx_currentAffixSelection += 1;
+    for (i = 1; i <= libAffx_maxQueue; i += 1) {
         if (libAffx_queue[i].choiceCount > 1) {
             libAffx_queue[i].choiceCount += 1;
         }

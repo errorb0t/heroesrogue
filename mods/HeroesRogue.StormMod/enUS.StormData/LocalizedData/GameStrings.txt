@@ -128,7 +128,7 @@ Affix/Tooltip/DifficultyHeroic=Enemy Heroes gain increased stats over time:<n/>�
 Affix/Tooltip/Append/DifficultyHeroic=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 Affix/Name/DifficultyMythic=Mythic
 Affix/Tooltip/DifficultyMythic=Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards.<n/><n/>ALL enemies gain significantly increased stats over time:<n/>• <c val="#TooltipNumbers">+4%</c> (<c val="#TooltipNumbers">+1%</c> per round) damage, maximum Health, maximum Mana, Health regeneration, and Mana regeneration, multiplied by the number of rounds.<n/>• <c val="#TooltipNumbers">+1%</c> enemy Experience gain per round.
-Affix/Tooltip/Append/DifficultyMythic=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c><n/>XP boost: <c val="#TooltipNumbers"><d ref="($GalaxyVar:libAffx_difficultyXPMod$)*100" precision="0"/>%</c>
+Affix/Tooltip/Append/DifficultyMythic=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c><n/>XP boost: <c val="#TooltipNumbers"><d ref="($GalaxyVar:libAffx_mythicDifficultyXPModifier$)*100" precision="0"/>%</c>
 Affix/Name/AffixNone=???
 Affix/Tooltip/AffixNone=???
 

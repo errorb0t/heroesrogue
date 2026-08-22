@@ -7,81 +7,25 @@
         <Fields Id="LevelMin" Type="Int" EditorColumn="4"/>
         <Fields Id="LevelMax" Type="Int" EditorColumn="4"/>
         <Fields Id="Curse" Type="Int" EditorColumn="1"/>
-        <Fields>
-            <Id value="AffixesExcluded"/>
-            <Type value="User"/>
-            <UserType value="Affix"/>
-            <Count value="100"/>
-        </Fields>
-        <Fields>
-            <Id value="AffixesRequired"/>
-            <Type value="User"/>
-            <UserType value="Affix"/>
-            <Count value="100"/>
-        </Fields>
-        <Fields>
-            <Id value="HeroesExcluded"/>
-            <Type value="String"/>
-            <Count value="90"/>
-            <EditorColumn value="5"/>
-        </Fields>
-        <Fields>
-            <Id value="MapsExcluded"/>
-            <Type value="String"/>
-            <Count value="7"/>
-            <EditorColumn value="5"/>
-        </Fields>
+        <Fields Id="AffixesExcluded" Type="User" UserType="Affix" Count="100" />
+        <Fields Id="AffixesRequired" Type="User" UserType="Affix" Count="100" />
+        <Fields Id="HeroesExcluded" Type="String" Count="90"/>
+        <Fields Id="MapsExcluded" Type="String" Count="7"/>
         <Fields Id="Max" Type="Int" EditorColumn="1"/>
         <Fields Id="HeroSpecific" Type="String" EditorColumn="3"/>
         <Fields Id="HeroTags" Type="String" EditorColumn="5"/>
         <Fields Id="Enabled" Type="Int" EditorColumn="1"/>
-        <Fields>
-            <Id value="TalentsAdd"/>
-            <Type value="String"/>
-            <Count value="10"/>
-            <EditorColumn value="3"/>
-        </Fields>
-        <Fields>
-            <Id value="TalentsDisable"/>
-            <Type value="String"/>
-            <Count value="10"/>
-            <EditorColumn value="3"/>
-        </Fields>
-        <Fields Id="TalentsShow" Type="String" Count="10"/>
-        <Fields>
-            <Id value="CatalogModification"/>
-            <Type value="String"/>
-            <Count value="20"/>
-            <EditorColumn value="3"/>
-        </Fields>
-        <Fields>
-            <Id value="Behavior"/>
-            <Type value="String"/>
-            <Count value="10"/>
-            <EditorColumn value="4"/>
-        </Fields>
-        <Fields>
-            <Id value="RemoveBehavior"/>
-            <Type value="String"/>
-            <Count value="10"/>
-            <EditorColumn value="4"/>
-        </Fields>
-        <Fields>
-            <Id value="AffixBehavior"/>
-            <Type value="String"/>
-            <Count value="10"/>
-            <EditorColumn value="4"/>
-        </Fields>
+        <Fields Id="TalentsAdd" Type="String" Count="20"/>
+        <Fields Id="TalentsDisable" Type="String" Count="20"/>
+        <Fields Id="TalentsShow" Type="String" Count="20"/>
+        <Fields Id="TalentsRequired" Type="String" Count="20"/>
+        <Fields Id="Behavior" Type="String" Count="10"/>
+        <Fields Id="RemoveBehavior" Type="String" Count="10"/>
+        <Fields Id="AffixBehavior" Type="String" Count="10"/>
         <Fields Id="CustomFunc" Type="String"/>
         <Fields Id="MapSpecific" Type="String"/>
-        <Fields>
-            <Id value="Trigger"/>
-            <Type value="String"/>
-            <Count value="10"/>
-            <EditorColumn value="3"/>
-        </Fields>
+        <Fields Id="Trigger" Type="String" Count="10"/>
         <Fields Id="Quest" Type="Int" EditorColumn="3"/>
-        <Fields Id="TalentsRequired" Type="String" Count="10"/>
         <Fields Id="QuestPersists" Type="Int"/>
         <Fields Id="CooldownLink" Type="String"/>
         <Fields Id="SkipCurses" Type="Int"/>
@@ -89,10 +33,11 @@
         <Fields Id="CooldownHidden" Type="Int"/>
         <Fields Id="ExcludeChoGall" Type="Int"/>
         <Fields Id="NoRoll" Type="Int"/>
-        <Fields Id="RequiredDifficulty" Type="Int"/>
-        <Fields Id="RequiredMapNumber" Type="Int"/>
+        <Fields Id="MinimumDifficulty" Type="Int"/>
+        <Fields Id="MinimumRound" Type="Int"/>
         <Fields Id="HeroTooltip" Type="String" Count="90"/>
         <Fields Id="AffixesRequiredMax" Type="Int"/>
+        <Fields Id="CatalogModification" Type="String" Count="20"/>
         <Instances Id="[Default]">
             <Int Int="1">
                 <Field Id="Enabled"/>
@@ -425,9 +370,6 @@
             </String>
         </Instances>
         <Instances Id="NazeeboFastUproot">
-            <Int Int="2000">
-                <Field Id="Weight"/>
-            </Int>
             <String String="Assets/Textures/storm_ui_icon_nazeebo_zombiewall.dds">
                 <Field Id="Icon"/>
             </String>
@@ -536,9 +478,6 @@
             </String>
         </Instances>
         <Instances Id="NazeeboNimbleLegs">
-            <Int Int="2000">
-                <Field Id="Weight"/>
-            </Int>
             <String String="Assets/Textures/storm_ui_icon_nazeebo_corpsespider.dds">
                 <Field Id="Icon"/>
             </String>
@@ -553,9 +492,6 @@
             </String>
         </Instances>
         <Instances Id="NazeeboJarofFrogs">
-            <Int Int="2000">
-                <Field Id="Weight"/>
-            </Int>
             <String String="Assets/Textures/storm_ui_icon_nazeebo_plagueoftoads.dds">
                 <Field Id="Icon"/>
             </String>
@@ -573,9 +509,6 @@
             </String>
         </Instances>
         <Instances Id="NazeeboTantrum">
-            <Int Int="2000">
-                <Field Id="Weight"/>
-            </Int>
             <String String="Rare">
                 <Field Id="Rarity"/>
             </String>
@@ -593,9 +526,6 @@
             </String>
         </Instances>
         <Instances Id="NazeeboQuickScare">
-            <Int Int="2000">
-                <Field Id="Weight"/>
-            </Int>
             <String String="Rare">
                 <Field Id="Rarity"/>
             </String>
@@ -996,7 +926,7 @@
             </String>
         </Instances>
         <Instances Id="MythicCurseSabotage">
-            <Int Int="2">
+            <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
             <Int Int="1">
@@ -1019,7 +949,7 @@
             </String>
         </Instances>
         <Instances Id="MythicCurseCitadel">
-            <Int Int="2">
+            <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
             <Int Int="1">
@@ -1051,7 +981,7 @@
             </String>
         </Instances>
         <Instances Id="MythicCurseLevelDisadvantage">
-            <Int Int="2">
+            <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
             <Int Int="1">
@@ -1068,7 +998,7 @@
             </String>
         </Instances>
         <Instances Id="MythicCurseBleeding">
-            <Int Int="2">
+            <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
             <Int Int="1">
@@ -1085,7 +1015,7 @@
             </String>
         </Instances>
         <Instances Id="MythicCurseCursed">
-            <Int Int="2">
+            <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
             <Int Int="1">
@@ -1111,7 +1041,7 @@
             </String>
         </Instances>
         <Instances Id="MythicCurseEternal">
-            <Int Int="2">
+            <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
             <Int Int="1">
@@ -3339,9 +3269,9 @@
             <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
-            <Int Int="500">
-                <Field Id="Weight"/>
-            </Int>
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
             <Int Int="3">
                 <Field Id="SkipCurses"/>
             </Int>
@@ -5136,7 +5066,7 @@
         </Instances>
         <Instances Id="SharedPower">
             <Int Int="2">
-                <Field Id="RequiredDifficulty"/>
+                <Field Id="MinimumDifficulty"/>
             </Int>
             <Int Int="1">
                 <Field Id="ExcludeChoGall"/>
@@ -5935,7 +5865,7 @@
             </String>
         </Instances>
         <Instances Id="Slivan">
-            <Int Int="3">
+            <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
             <Int Int="1">
@@ -5953,9 +5883,12 @@
             <String String="Assets/Textures/affix_icon_slivan.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="Legendary">
+            <String String="Challenge">
                 <Field Id="Rarity"/>
             </String>
+            <Int Int="100">
+                <Field Id="Weight"/>
+            </Int>
             <String String="AA libAffx_SlivanAffixAdded">
                 <Field Id="Trigger"/>
             </String>
