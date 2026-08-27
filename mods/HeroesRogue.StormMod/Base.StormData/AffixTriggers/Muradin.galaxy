@@ -14,10 +14,10 @@ bool libAffx_MuradinUnstoppableAvatarRespawn (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, true);
+    libAffx_AddPlayerBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, true);
     UnitCreateEffectUnit(respawnedUnit, "MuradinAvatarApplyBehaviorsSet", respawnedUnit);
     
-    libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, true);
+    libAffx_RemovePlayerBehavior(libAffx_player, "Ultimate1Unlocked", 1, true);
     return true;
 }
 bool libAffx_MuradinUnstoppableAvatar (bool testConds, bool runActions) {
@@ -26,10 +26,10 @@ bool libAffx_MuradinUnstoppableAvatar (bool testConds, bool runActions) {
     }
     CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
     
-    libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, true);
+    libAffx_AddPlayerBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, true);
     UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "MuradinAvatarApplyBehaviorsSet", libGame_gv_players[libAffx_player].lv_heroUnit);
 
-    libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, true);
+    libAffx_RemovePlayerBehavior(libAffx_player, "Ultimate1Unlocked", 1, true);
     return true;
 }
 bool libAffx_MuradinUnstoppableAvatarLevelUp (bool testConds, bool runActions) {

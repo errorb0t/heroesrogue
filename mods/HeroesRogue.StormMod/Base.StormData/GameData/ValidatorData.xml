@@ -304,6 +304,12 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Value value="0" />
     <Behavior value="HealingFountainRestoreL2" />
   </CValidatorUnitCompareBehaviorCount>
+  
+  <CValidatorUnitCompareBehaviorCount id="TargetHasAffixRevealingTouchBehavior">
+    <Compare value="GE" />
+    <Value value="1" />
+    <Behavior value="AffixRevealingTouchBehavior" />
+  </CValidatorUnitCompareBehaviorCount>
 
 
 </Catalog>

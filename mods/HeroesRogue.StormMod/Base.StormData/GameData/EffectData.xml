@@ -987,6 +987,19 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <WhichUnit Value="Source" />
     <Behavior value="AffixBlockChargedArmorBehavior" />
   </CEffectApplyBehavior>
+  
+  <CEffectApplyBehavior id="AffixRevealingTouchApplyBehavior">
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+    <Behavior value="AffixRevealingTouchBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectCreatePersistent id="AffixRevealingTouchPersistent">
+    <WhichLocation Value="TargetUnit" />
+    <Flags index="PersistUntilDestroyed" value="1" />
+    <PeriodicValidator value="TargetHasAffixRevealingTouchBehavior" />
+    <PeriodicPeriodArray value="0.125" />
+    <RevealRadius value="4" />
+    <RevealFlags index="Unfog" value="1" />
+  </CEffectCreatePersistent>
 
 
 </Catalog>

@@ -966,13 +966,13 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <DisableValidatorArray value="NotRexxar" />
   <DamageResponse Chance="0.30" TargetFilters="Structure;-" ModifyFraction="0" />
 </CBehaviorBuff>
-<CBehaviorBuff id="NimbleHeroicBehavior" parent="CarryBehaviorParent">
+<CBehaviorBuff id="NimbleBehavior" parent="CarryBehaviorParent">
   <DisableValidatorArray value="HasWorgenFormOrNotGreymane" />
   <DisableValidatorArray value="DVaSourceisMechOrNotDVa" />
   <DisableValidatorArray value="NotBaleog" />
   <DisableValidatorArray value="NotErik" />
   <DisableValidatorArray value="NotRexxar" />
-  <DamageResponse Chance="0.10" TargetFilters="Heroic;-" ModifyFraction="0" />
+  <DamageResponse Chance="0.10" TargetFilters="-;Structure" ModifyFraction="0" />
 </CBehaviorBuff>
 
 <CBehaviorBuff id="LongArmedGiants" parent="CarryBehaviorParent">
@@ -1208,6 +1208,25 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CBehaviorBuff id="TowersOfDoomMax1DamageClampBehavior" parent="CarryBehaviorParent">
     <DamageResponse ClampMaximum="1" Minimum="1">
       <Chance value="1"/>
+    </DamageResponse>
+  </CBehaviorBuff>
+  
+  <CBehaviorBuff id="AffixRevealingTouchBehavior" parent="StormReveal">
+    <Duration value="3" />
+    <InitialEffect value="AffixRevealingTouchPersistent" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixRevealingTouchController" parent="CarryBehaviorParent">
+    <DamageResponse>
+      <Chance value="1" />
+      <Handled value="AffixRevealingTouchApplyBehavior" />
+      <Location value="Attacker" />
+      <Cost>
+        <Cooldown Location="Unit" TimeUse="0" />
+      </Cost>
+      <TargetFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+      <Kind index="Splash" value="0" />
+      <Kind index="Ability" value="0" />
+      <ProvideCategories index="Proc" value="1" />
     </DamageResponse>
   </CBehaviorBuff>
   

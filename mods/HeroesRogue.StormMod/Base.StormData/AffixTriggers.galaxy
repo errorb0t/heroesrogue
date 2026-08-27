@@ -117,7 +117,7 @@ bool libAffx_ReinforcedWallsUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixReinforcedWallsBuff", 1, libAffx_filterReinforcedWalls);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixReinforcedWallsBuff", 1, libAffx_filterReinforcedWalls);
     return true;
 }
 bool libAffx_ReinforcedWallsAffixAdded (bool testConds, bool runActions) {
@@ -128,7 +128,7 @@ bool libAffx_ReinforcedWallsAffixAdded (bool testConds, bool runActions) {
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
         libAffx_AddExcludedUnitTypeFilter(libAffx_filterReinforcedWalls, "KingsCore");
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixReinforcedWallsBuff", 1, libAffx_filterReinforcedWalls);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixReinforcedWallsBuff", 1, libAffx_filterReinforcedWalls);
     return true;
 }
 // ---------------------------------------------------------------
@@ -412,11 +412,11 @@ bool libAffx_BuddyScaling (bool testConds, bool runActions) {
         return true;
     }
     if (libAffx_affixes[libAffx_ArmyofBUDDYsIndex].count > 0) {
-        libAffx_LevelUpScaling3("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
-        libAffx_LevelUpScaling3("Effect,AffixBuddyDroneMissileDamage,Amount", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
+        libAffx_SetLevelScalingAndValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player, 0.04, StringToFixed(libAffx_GetCatalogDefaultValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
+        libAffx_SetLevelScalingAndValue("Effect,AffixBuddyDroneMissileDamage,Amount", player, 0.04, StringToFixed(libAffx_GetCatalogDefaultValue("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
     } else {
-        libAffx_LevelUpScaling("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player);
-        libAffx_LevelUpScaling("Effect,AffixBuddyDroneMissileDamage,Amount", player);
+        libAffx_SetDefaultLevelScaling("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player);
+        libAffx_SetDefaultLevelScaling("Effect,AffixBuddyDroneMissileDamage,Amount", player);
     }
 
     return true;
@@ -444,7 +444,7 @@ bool libAffx_BuddyOncePerGame (bool testConds, bool runActions) {
             libAffx_BuddyCount[i] = 1;
         }
     }
-    libAffx_AddBehaviorWithExclusion(libAffx_player, "AffixBuddyDroneSpawnBehavior", 1, true, "HeroDVaMech");
+    libAffx_AddPlayerBehaviorWithExclusion(libAffx_player, "AffixBuddyDroneSpawnBehavior", 1, true, "HeroDVaMech");
     return true;
 }
 // ---------------------------------------------------------------
@@ -457,21 +457,21 @@ bool libAffx_PossessionOncePerGame (bool testConds, bool runActions) {
     libAffx_CopyFilter(libAffx_filterEnemyMinions, libAffx_filterPossession);
     libAffx_AddRequiredUnitTypeFilter(libAffx_filterPossession, "WizardMinion");
 
-    libAffx_UnitBehaviorAddCriteriaAll("AffixPossessionController", 1, libAffx_filterPossession);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixPossessionController", 1, libAffx_filterPossession);
     return true;
 }
 bool libAffx_PossessionUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixPossessionController", 1, libAffx_filterPossession);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixPossessionController", 1, libAffx_filterPossession);
     return true;
 }
 bool libAffx_PossessionUCO (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnitCreatedUnit(), "AffixPossessionController", 1, libAffx_filterPossession);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixPossessionController", 1, libAffx_filterPossession);
     return true;
 }
 // ---------------------------------------------------------------
@@ -659,14 +659,14 @@ bool libAffx_FaultyCatapultsOncePerGame (bool testConds, bool runActions) {
     libAffx_CopyFilter(libAffx_filterAlliedMinions, libAffx_filterFaultyCatapults);
     libAffx_AddRequiredUnitTypeFilter(libAffx_filterFaultyCatapults, "CatapultMinion");
 
-    libAffx_UnitBehaviorAddCriteriaAll("AffixFaultyCatapultsBehavior", 1, libAffx_filterFaultyCatapults);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixFaultyCatapultsBehavior", 1, libAffx_filterFaultyCatapults);
     return true;
 }
 bool libAffx_FaultyCatapultsUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixFaultyCatapultsBehavior", 1, libAffx_filterFaultyCatapults);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixFaultyCatapultsBehavior", 1, libAffx_filterFaultyCatapults);
     
     return true;
 }
@@ -674,7 +674,7 @@ bool libAffx_FaultyCatapultsUCO (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixFaultyCatapultsBehavior", 1, libAffx_filterFaultyCatapults);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixFaultyCatapultsBehavior", 1, libAffx_filterFaultyCatapults);
     return true;
 }
 // ---------------------------------------------------------------
@@ -684,7 +684,7 @@ bool libAffx_AmplificationUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixAmplificationBehavior", 1, libAffx_filterAmplification);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixAmplificationBehavior", 1, libAffx_filterAmplification);
     return true;
 }
 bool libAffx_Amplification (bool testConds, bool runActions) {
@@ -695,14 +695,14 @@ bool libAffx_Amplification (bool testConds, bool runActions) {
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
         libAffx_AddExcludedUnitTypeFilter(libAffx_filterAmplification, "KingsCore");
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixAmplificationBehavior", 1, libAffx_filterAmplification);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixAmplificationBehavior", 1, libAffx_filterAmplification);
     return true;
 }
 bool libAffx_AmplificationUnitChangeOwner (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixAmplificationBehavior", 1, libAffx_filterAmplification);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixAmplificationBehavior", 1, libAffx_filterAmplification);
     return true;
 }
 // ---------------------------------------------------------------
@@ -712,7 +712,7 @@ bool libAffx_ResilienceUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixResilienceBehavior", 1, libAffx_filterResilience);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixResilienceBehavior", 1, libAffx_filterResilience);
     return true;
 }
 bool libAffx_Resilience (bool testConds, bool runActions) {
@@ -723,14 +723,14 @@ bool libAffx_Resilience (bool testConds, bool runActions) {
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
         libAffx_AddExcludedUnitTypeFilter(libAffx_filterResilience, "KingsCore");
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixResilienceBehavior", 1, libAffx_filterResilience);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixResilienceBehavior", 1, libAffx_filterResilience);
     return true;
 }
 bool libAffx_ResilienceUnitChangeOwner (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixResilienceBehavior", 1, libAffx_filterResilience);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixResilienceBehavior", 1, libAffx_filterResilience);
     return true;
 }
 // ---------------------------------------------------------------
@@ -770,21 +770,21 @@ bool libAffx_ChronoBoostUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixChronoBoostBehavior", 1, libAffx_filterChronoBoost);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixChronoBoostBehavior", 1, libAffx_filterChronoBoost);
     return true;
 }
 bool libAffx_ChronoBoost (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixChronoBoostBehavior", 1, libAffx_filterChronoBoost);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixChronoBoostBehavior", 1, libAffx_filterChronoBoost);
     return true;
 }
 bool libAffx_ChronoBoostUCO (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixChronoBoostBehavior", 1, libAffx_filterChronoBoost);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixChronoBoostBehavior", 1, libAffx_filterChronoBoost);
     return true;
 }
 // ---------------------------------------------------------------
@@ -795,7 +795,7 @@ bool libAffx_RegenerativeCore (bool testConds, bool runActions) {
         return true;
     }
     if (libAffx_currentMap != libAffx_mapTowersOfDoom) {
-        libAffx_UnitBehaviorAddCriteriaAll("AffixRegenerativeCore", 1, libAffx_filterAlliedCore);
+        libAffx_AddUnitBehaviorCriteriaAll("AffixRegenerativeCore", 1, libAffx_filterAlliedCore);
     }
     
     return true;
@@ -807,7 +807,7 @@ bool libAffx_PowerfulUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixPowerfulBehavior", 1, libAffx_filterPowerful);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixPowerfulBehavior", 1, libAffx_filterPowerful);
     return true;
 }
 bool libAffx_Powerful (bool testConds, bool runActions) {
@@ -818,14 +818,14 @@ bool libAffx_Powerful (bool testConds, bool runActions) {
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
         libAffx_AddExcludedUnitTypeFilter(libAffx_filterPowerful, "KingsCore");
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixPowerfulBehavior", 1, libAffx_filterPowerful);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixPowerfulBehavior", 1, libAffx_filterPowerful);
     return true;
 }
 bool libAffx_PowerfulUnitChangeOwner (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixPowerfulBehavior", 1, libAffx_filterPowerful);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixPowerfulBehavior", 1, libAffx_filterPowerful);
     return true;
 }
 // ---------------------------------------------------------------
@@ -835,7 +835,7 @@ bool libAffx_SpellcastingUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixSpellcastingBehavior", 1, libAffx_filterSpellcasting);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixSpellcastingBehavior", 1, libAffx_filterSpellcasting);
     return true;
 }
 bool libAffx_Spellcasting (bool testConds, bool runActions) {
@@ -846,14 +846,14 @@ bool libAffx_Spellcasting (bool testConds, bool runActions) {
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
         libAffx_AddExcludedUnitTypeFilter(libAffx_filterSpellcasting, "KingsCore");
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixSpellcastingBehavior", 1, libAffx_filterSpellcasting);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixSpellcastingBehavior", 1, libAffx_filterSpellcasting);
     return true;
 }
 bool libAffx_SpellcastingUnitChangeOwner (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixSpellcastingBehavior", 1, libAffx_filterSpellcasting);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixSpellcastingBehavior", 1, libAffx_filterSpellcasting);
     return true;
 }
 // ---------------------------------------------------------------
@@ -863,7 +863,7 @@ bool libAffx_EnduranceUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixEnduranceBehavior", 1, libAffx_filterEndurance);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixEnduranceBehavior", 1, libAffx_filterEndurance);
     return true;
 }
 bool libAffx_Endurance (bool testConds, bool runActions) {
@@ -874,14 +874,14 @@ bool libAffx_Endurance (bool testConds, bool runActions) {
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
         libAffx_AddExcludedUnitTypeFilter(libAffx_filterEndurance, "KingsCore");
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixEnduranceBehavior", 1, libAffx_filterEndurance);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixEnduranceBehavior", 1, libAffx_filterEndurance);
     return true;
 }
 bool libAffx_EnduranceUnitChangeOwner (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixEnduranceBehavior", 1, libAffx_filterEndurance);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixEnduranceBehavior", 1, libAffx_filterEndurance);
     return true;
 }
 // ---------------------------------------------------------------
@@ -891,21 +891,21 @@ bool libAffx_FastFeetUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixFastFeetBehavior", 1, libAffx_filterAllAllies);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixFastFeetBehavior", 1, libAffx_filterAllAllies);
     return true;
 }
 bool libAffx_FastFeet (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixFastFeetBehavior", 1, libAffx_filterAllAllies);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixFastFeetBehavior", 1, libAffx_filterAllAllies);
     return true;
 }
 bool libAffx_FastFeetUnitChangeOwner (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixFastFeetBehavior", 1, libAffx_filterAllAllies);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixFastFeetBehavior", 1, libAffx_filterAllAllies);
     return true;
 }
 // ---------------------------------------------------------------
@@ -934,7 +934,7 @@ bool libAffx_AlteracsLegacy (bool testConds, bool runActions) {
     libAffx_AddRequiredUnitTypeFilter(libAffx_filterAlteracsLegacy, "TownCannonTowerL3");
     libAffx_AddRequiredUnitTypeFilter(libAffx_filterAlteracsLegacy, "TownTownHallL3");
 
-    libAffx_UnitBehaviorAddCriteriaAll("AffixBackdoorProtection", fortCount, libAffx_filterAlteracsLegacy);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixBackdoorProtection", fortCount, libAffx_filterAlteracsLegacy);
 
     return true;
 }
@@ -957,7 +957,7 @@ bool libAffx_AlteracsLegacyUnitDied (bool testConds, bool runActions) {
     townIndex = libGame_gf_TownGetTownForUnit(dyingStructure);
     victimTeam = libGame_gf_TeamNumberOfPlayer(UnitGetOwner(dyingStructure));
     if (UnitGetType(dyingStructure) == "TownTownHallL2" && victimTeam == libGame_gv_teamChaosIndex_C) {
-        libAffx_UnitBehaviorRemoveCriteriaAll("AffixBackdoorProtection", 1, libAffx_filterAlteracsLegacy);
+        libAffx_RemoveUnitBehaviorCriteriaAll("AffixBackdoorProtection", 1, libAffx_filterAlteracsLegacy);
     }
 
     return true;
@@ -991,7 +991,7 @@ bool libAffx_InfernalPunishmentUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixUltimatePunishment", 1, libAffx_filterInfernalPunishment);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixUltimatePunishment", 1, libAffx_filterInfernalPunishment);
 
     return true;
 }
@@ -1033,7 +1033,7 @@ bool libAffx_KillContract (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_AddBehavior(libAffx_player, "AffixKillContractQuestToken", 1, false);
+    libAffx_AddPlayerBehavior(libAffx_player, "AffixKillContractQuestToken", 1, false);
     
     return true;
 }
@@ -1115,11 +1115,11 @@ bool libAffx_DestructionQuest (bool testConds, bool runActions) {
         return true;
     }
     quest = libAffx_affixes[libAffx_DestructionIndex].quest.questProgress;
-    libAffx_AddBehavior(libAffx_player, "AffixDestructionToken", 1, false);
+    libAffx_AddPlayerBehavior(libAffx_player, "AffixDestructionToken", 1, false);
     
     if (quest > 0) {
         libAffx_DestructionSuppressRewards = true;
-        libAffx_ModifyTokenCount(libAffx_player, quest, "AffixDestructionToken");
+        libAffx_ModifyPlayerTokenCount(libAffx_player, quest, "AffixDestructionToken");
         libAffx_Wait(0.125, c_timeGame);
         libAffx_DestructionSuppressRewards = false;
     }
@@ -1540,14 +1540,14 @@ bool libAffx_EfficientGunsUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixEfficientGunsBehavior", 1, libAffx_filterEnemyStructures);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixEfficientGunsBehavior", 1, libAffx_filterEnemyStructures);
     return true;
 }
 bool libAffx_EfficientGuns (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixEfficientGunsBehavior", 1, libAffx_filterEnemyStructuresExcludingCore);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixEfficientGunsBehavior", 1, libAffx_filterEnemyStructuresExcludingCore);
     return true;
 }
 // ---------------------------------------------------------------
@@ -1557,21 +1557,21 @@ bool libAffx_LifeSteal (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixLifeStealBehavior", 1, libAffx_filterEnemyHeroes);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixLifeStealBehavior", 1, libAffx_filterEnemyHeroes);
     return true;
 }
 bool libAffx_LifeStealUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixLifeStealBehavior", 1, libAffx_filterEnemyHeroes);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixLifeStealBehavior", 1, libAffx_filterEnemyHeroes);
     return true;
 }
 bool libAffx_LifeStealUnitChangeOwner (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixLifeStealBehavior", 1, libAffx_filterEnemyHeroes);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixLifeStealBehavior", 1, libAffx_filterEnemyHeroes);
     return true;
 }
 // ---------------------------------------------------------------
@@ -1832,7 +1832,7 @@ bool libAffx_BriberyPeriodic (bool testConds, bool runActions) {
 
             for (i2 = unitCount; i2 > 0; i2 -= 1) {
                 UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "BribeSetAffix", UnitGroupUnitFromEnd(libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderUnitGroup, i2));
-                libAffx_DebugPrint("Trying to bribe " + UnitGetType(UnitGroupUnitFromEnd(libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderUnitGroup, i2)));
+                libAffx_DisplayDebugMessage("Trying to bribe " + UnitGetType(UnitGroupUnitFromEnd(libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderUnitGroup, i2)));
             }
             libMapM_gv_jungleCreepCamps[targetCamp].customRespawnTime = libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderRespawnTime / 2;
             Wait(0.125, c_timeGame);
@@ -1982,14 +1982,14 @@ bool libAffx_ArmyofBUDDYsOncePerGame (bool testConds, bool runActions) {
         return true;
     }
     for (i = 2; i <= 5; i += 1) {
-        libAffx_AddBehaviorWithExclusion(i, "AffixBuddyDroneSpawnBehavior", 1, true, "HeroDVaMech");
+        libAffx_AddPlayerBehaviorWithExclusion(i, "AffixBuddyDroneSpawnBehavior", 1, true, "HeroDVaMech");
         if (i == libAffx_choPlayer || i == libAffx_gallPlayer) {
             libAffx_BuddyCount[i] += 1;
         }
     }
     for (i = 1; i <= 5; i += 1) {
-        libAffx_LevelUpScaling3("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", i, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
-        libAffx_LevelUpScaling3("Effect,AffixBuddyDroneMissileDamage,Amount", i, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
+        libAffx_SetLevelScalingAndValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", i, 0.04, StringToFixed(libAffx_GetCatalogDefaultValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
+        libAffx_SetLevelScalingAndValue("Effect,AffixBuddyDroneMissileDamage,Amount", i, 0.04, StringToFixed(libAffx_GetCatalogDefaultValue("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
     }
     return true;
 }
@@ -2016,8 +2016,8 @@ bool libAffx_ArmyofBUDDYsLevelUp (bool testConds, bool runActions) {
         return true;
     }
 
-    libAffx_LevelUpScaling3("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
-    libAffx_LevelUpScaling3("Effect,AffixBuddyDroneMissileDamage,Amount", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
+    libAffx_SetLevelScalingAndValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player, 0.04, StringToFixed(libAffx_GetCatalogDefaultValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
+    libAffx_SetLevelScalingAndValue("Effect,AffixBuddyDroneMissileDamage,Amount", player, 0.04, StringToFixed(libAffx_GetCatalogDefaultValue("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
     return true;
 }
 // ---------------------------------------------------------------
@@ -2027,7 +2027,7 @@ bool libAffx_OverchargedShields (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AffixOverchargedShieldsBehavior", 1, libAffx_filterEnemyCore);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixOverchargedShieldsBehavior", 1, libAffx_filterEnemyCore);
     return true;
 }
 // ---------------------------------------------------------------
@@ -2138,12 +2138,12 @@ bool libAffx_Ammunition (bool testConds, bool runActions) {
     CatalogFieldValueModify(c_gameCatalogEffect, "StructureAmmoConsumeAmmoSet", "Chance", libAffx_teamOrder, "1", c_upgradeOperationSet);
     CatalogFieldValueModify(c_gameCatalogEffect, "StructureAmmoReplenish", "VitalArray[Energy].Change", libAffx_teamOrder, "2", c_upgradeOperationSet);
 
-    libAffx_UnitBehaviorAddCriteriaAll("StructureAmmoMonitor", 1, libAffx_filterAmmunitionTowers);
-    libAffx_UnitBehaviorAddCriteriaAll("StructureAmmoMonitor", 1, libAffx_filterAmmunitionForts);
-    libAffx_UnitBehaviorAddCriteriaAll("StructureAmmoReplenisher", 1, libAffx_filterAmmunitionTowers);
-    libAffx_UnitBehaviorAddCriteriaAll("StructureAmmoReplenisher", 1, libAffx_filterAmmunitionForts);
-    libAffx_UnitSetPropertyCriteriaAll(c_unitPropEnergyMax, 20, libAffx_filterAmmunitionTowers);
-    libAffx_UnitSetPropertyCriteriaAll(c_unitPropEnergyMax, 40, libAffx_filterAmmunitionForts);
+    libAffx_AddUnitBehaviorCriteriaAll("StructureAmmoMonitor", 1, libAffx_filterAmmunitionTowers);
+    libAffx_AddUnitBehaviorCriteriaAll("StructureAmmoMonitor", 1, libAffx_filterAmmunitionForts);
+    libAffx_AddUnitBehaviorCriteriaAll("StructureAmmoReplenisher", 1, libAffx_filterAmmunitionTowers);
+    libAffx_AddUnitBehaviorCriteriaAll("StructureAmmoReplenisher", 1, libAffx_filterAmmunitionForts);
+    libAffx_SetUnitPropertyCriteriaAll(c_unitPropEnergyMax, 20, libAffx_filterAmmunitionTowers);
+    libAffx_SetUnitPropertyCriteriaAll(c_unitPropEnergyMax, 40, libAffx_filterAmmunitionForts);
 
     return true;
 }
@@ -2157,12 +2157,12 @@ bool libAffx_AmmunitionUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(eventUnit, "StructureAmmoMonitor", 1, libAffx_filterAmmunitionTowers);
-    libAffx_UnitBehaviorAddCriteria(eventUnit, "StructureAmmoMonitor", 1, libAffx_filterAmmunitionForts);
-    libAffx_UnitBehaviorAddCriteria(eventUnit, "StructureAmmoReplenisher", 1, libAffx_filterAmmunitionTowers);
-    libAffx_UnitBehaviorAddCriteria(eventUnit, "StructureAmmoReplenisher", 1, libAffx_filterAmmunitionForts);
-    libAffx_UnitSetPropertyCriteria(eventUnit, c_unitPropEnergyMax, 20, libAffx_filterAmmunitionTowers);
-    libAffx_UnitSetPropertyCriteria(eventUnit, c_unitPropEnergyMax, 40, libAffx_filterAmmunitionForts);
+    libAffx_AddUnitBehaviorCriteria(eventUnit, "StructureAmmoMonitor", 1, libAffx_filterAmmunitionTowers);
+    libAffx_AddUnitBehaviorCriteria(eventUnit, "StructureAmmoMonitor", 1, libAffx_filterAmmunitionForts);
+    libAffx_AddUnitBehaviorCriteria(eventUnit, "StructureAmmoReplenisher", 1, libAffx_filterAmmunitionTowers);
+    libAffx_AddUnitBehaviorCriteria(eventUnit, "StructureAmmoReplenisher", 1, libAffx_filterAmmunitionForts);
+    libAffx_SetUnitPropertyCriteria(eventUnit, c_unitPropEnergyMax, 20, libAffx_filterAmmunitionTowers);
+    libAffx_SetUnitPropertyCriteria(eventUnit, c_unitPropEnergyMax, 40, libAffx_filterAmmunitionForts);
     return true;
 }
 // ---------------------------------------------------------------
@@ -2191,9 +2191,9 @@ bool libAffx_GrenadierAffixAdded (bool testConds, bool runActions) {
             grenadierTotal += 1;
             grenadierPlayers[i] = 5 + i;
             if (UnitGetType(libGame_gv_players[5 + i].lv_heroUnit) == "HeroDVaPilot" || UnitGetType(libGame_gv_players[5 + i].lv_heroUnit) == "HeroDVaMech") {
-                libAffx_AddBehavior(5 + i, "AffixGrenadierController", 1, false);
+                libAffx_AddPlayerBehavior(5 + i, "AffixGrenadierController", 1, false);
             } else {
-                libAffx_AddBehavior(5 + i, "AffixGrenadierController", 1, true);
+                libAffx_AddPlayerBehavior(5 + i, "AffixGrenadierController", 1, true);
             }
         }
     }
@@ -2209,10 +2209,10 @@ bool libAffx_GrenadierLevelUp (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_LevelUpScaling("Effect,TychusGrenadeDamage,Amount", player);
-    libAffx_LevelUpScaling("Effect,AnaBioticGrenadeEnemyImpactDamage,Amount", player);
-    libAffx_LevelUpScaling("Effect,AnaBioticGrenadeAllyImpactCreateHealer,RechargeVitalRate", player);
-    libAffx_LevelUpScaling("Effect,ZaryaParticleGrenadeDamageAffix,Amount", player);
+    libAffx_SetDefaultLevelScaling("Effect,TychusGrenadeDamage,Amount", player);
+    libAffx_SetDefaultLevelScaling("Effect,AnaBioticGrenadeEnemyImpactDamage,Amount", player);
+    libAffx_SetDefaultLevelScaling("Effect,AnaBioticGrenadeAllyImpactCreateHealer,RechargeVitalRate", player);
+    libAffx_SetDefaultLevelScaling("Effect,ZaryaParticleGrenadeDamageAffix,Amount", player);
     return true;
 }
 bool libAffx_GrenadierEffectUsed (bool testConds, bool runActions) {
@@ -2395,7 +2395,7 @@ bool libAffx_ExplosiveEndScaling (bool testConds, bool runActions) {
         return true;
     }
 
-    libAffx_LevelUpScaling("Effect,JunkratTotalMayhemDamage,Amount", player);
+    libAffx_SetDefaultLevelScaling("Effect,JunkratTotalMayhemDamage,Amount", player);
 
     return true;
 }
@@ -2528,7 +2528,7 @@ bool libAffx_DivineInterventionScaling (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_LevelUpScaling("Effect,MonkDivinePalmCreateHealer,RechargeVitalRate", player);
+    libAffx_SetDefaultLevelScaling("Effect,MonkDivinePalmCreateHealer,RechargeVitalRate", player);
 
     return true;
 }
@@ -2549,11 +2549,11 @@ bool libAffx_NexusRangeAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeRangeTank,Range", libAffx_player, FixedToString(11.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
-    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeRange,Range", libAffx_player, FixedToString(11.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
-    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange1,Range", libAffx_player, FixedToString(12.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
-    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange2,Range", libAffx_player, FixedToString(13.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
-    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange3,Range", libAffx_player, FixedToString(14.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
+    libAffx_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeRangeTank,Range", libAffx_player, FixedToString(11.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
+    libAffx_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeRange,Range", libAffx_player, FixedToString(11.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
+    libAffx_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange1,Range", libAffx_player, FixedToString(12.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
+    libAffx_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange2,Range", libAffx_player, FixedToString(13.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
+    libAffx_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange3,Range", libAffx_player, FixedToString(14.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
     return true;
 }
 // ---------------------------------------------------------------
@@ -2600,7 +2600,7 @@ void libAffx_TalentDisadvantagePickAllTalents(int player, int tier) {
     unit heroUnit = libGame_gv_players[player].lv_heroUnit;
     int affixCount = libAffx_affixes[libAffx_TalentDisadvantageIndex].count;
     if (libAffx_TalentDisadvantageApplied[player][tier]) { return; }
-    libAffx_DebugPrint("Trying to apply " + IntToString(tier) + " tier to hero " + hero);
+    libAffx_DisplayDebugMessage("Trying to apply " + IntToString(tier) + " tier to hero " + hero);
     if (hero == "Varian") {
         if (tier == 1 && affixCount < 1) { return; }
         else if (tier == 2) { return; }
@@ -2626,7 +2626,7 @@ void libAffx_TalentDisadvantagePickAllTalents(int player, int tier) {
             }
         }
         libGame_gf_TalentsChooseTalentForPlayer(tier, i, player);
-        libAffx_DebugPrint(IntToString(tier) + " tier talent " + IntToString(i) + " applied to player " + IntToString(player));
+        libAffx_DisplayDebugMessage(IntToString(tier) + " tier talent " + IntToString(i) + " applied to player " + IntToString(player));
     }
     libAffx_TalentDisadvantageApplied[player][tier] = true;
 }
@@ -2887,7 +2887,7 @@ bool libAffx_BlindfoldedAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify2("Unit,AffixBuddyDrone,Sight", libAffx_player, FixedToString(StringToFixed(libAffx_GetCatalogDefault("Behavior,AffixBlindfoldedBehavior,Modification.SightBonus")) * libAffx_EventAffixCountAdded(), 0), c_upgradeOperationAdd);
+    libAffx_CatalogReferenceModify("Unit,AffixBuddyDrone,Sight", libAffx_player, FixedToString(StringToFixed(libAffx_GetCatalogDefaultValue("Behavior,AffixBlindfoldedBehavior,Modification.SightBonus")) * libAffx_EventAffixCountAdded(), 0), c_upgradeOperationAdd);
     return true;
 }
 
@@ -2898,27 +2898,27 @@ bool libAffx_PromoteAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPromoteBehavior", "DamageResponse.ModifyFraction", libAffx_teamOrder, StringToFixed(libAffx_GetCatalogDefault("Behavior,AffixPromoteBehavior,DamageResponse.ModifyFraction")) + (0.25 * (libAffx_EventAffixCount() - 1)));
+    libAffx_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPromoteBehavior", "DamageResponse.ModifyFraction", libAffx_teamOrder, StringToFixed(libAffx_GetCatalogDefaultValue("Behavior,AffixPromoteBehavior,DamageResponse.ModifyFraction")) + (0.25 * (libAffx_EventAffixCount() - 1)));
     libAffx_CatalogModifyForAllPlayers("Behavior,AffixPromoteBehavior,Modification.VitalMaxFractionArray[Life]", FixedToString(0.15 * libAffx_EventAffixCount(), 2));
     libAffx_CatalogModifyForAllPlayers("Behavior,AffixPromoteBehavior,Modification.VitalMaxFractionArray[Shields]", FixedToString(0.15 * libAffx_EventAffixCount(), 2));
-    libAffx_UnitBehaviorAddCriteriaAll("AffixPromoteBehavior", 1, libAffx_filterAlliedMinions);
-    libAffx_UnitBehaviorAddCriteriaAll("AffixPromoteDamageReductionBehavior", 1, libAffx_filterAlliedMinions);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixPromoteBehavior", 1, libAffx_filterAlliedMinions);
+    libAffx_AddUnitBehaviorCriteriaAll("AffixPromoteDamageReductionBehavior", 1, libAffx_filterAlliedMinions);
     return true;
 }
 bool libAffx_PromoteUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixPromoteBehavior", 1, libAffx_filterAlliedMinions);
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixPromoteDamageReductionBehavior", 1, libAffx_filterAlliedMinions);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixPromoteBehavior", 1, libAffx_filterAlliedMinions);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AffixPromoteDamageReductionBehavior", 1, libAffx_filterAlliedMinions);
     return true;
 }
 bool libAffx_PromoteUnitChangeOwner (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixPromoteBehavior", 1, libAffx_filterAlliedMinions);
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixPromoteDamageReductionBehavior", 1, libAffx_filterAlliedMinions);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixPromoteBehavior", 1, libAffx_filterAlliedMinions);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "AffixPromoteDamageReductionBehavior", 1, libAffx_filterAlliedMinions);
     
     return true;
 }
@@ -2929,14 +2929,14 @@ bool libAffx_AutomaticRepairsUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AutomaticRepairs", 1, libAffx_filterAlliedStructuresExcludingCore);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "AutomaticRepairs", 1, libAffx_filterAlliedStructuresExcludingCore);
     return true;
 }
 bool libAffx_AutomaticRepairsAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteriaAll("AutomaticRepairs", 1, libAffx_filterAlliedStructuresExcludingCore);
+    libAffx_AddUnitBehaviorCriteriaAll("AutomaticRepairs", 1, libAffx_filterAlliedStructuresExcludingCore);
     return true;
 }
 // ---------------------------------------------------------------
@@ -2946,8 +2946,8 @@ bool libAffx_StormShieldAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixStormShieldBehavior", "DamageResponse.ModifyLimitVitalMaxFractionArray[Life]", libAffx_player, StringToFixed(libAffx_GetCatalogDefault("Behavior,AffixStormShieldBehavior,DamageResponse.ModifyLimitVitalMaxFractionArray[Life]")) + (libAffx_StormShieldModifier / 5) * (libAffx_EventAffixCount() - 1));
-    libAffx_AddBehavior(libAffx_player, "AffixStormShieldBehavior", 5, true);
+    libAffx_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixStormShieldBehavior", "DamageResponse.ModifyLimitVitalMaxFractionArray[Life]", libAffx_player, StringToFixed(libAffx_GetCatalogDefaultValue("Behavior,AffixStormShieldBehavior,DamageResponse.ModifyLimitVitalMaxFractionArray[Life]")) + (libAffx_StormShieldModifier / 5) * (libAffx_EventAffixCount() - 1));
+    libAffx_AddPlayerBehavior(libAffx_player, "AffixStormShieldBehavior", 5, true);
     return true;
 }
 // ---------------------------------------------------------------
@@ -2986,8 +2986,8 @@ bool libAffx_RingofRegenerationAffixAdded (bool testConds, bool runActions) {
         return true;
     }
     for (i = 1; i <= 5; i += 1) {
-        libAffx_CatalogReferenceModify("Behavior,AffixRingofRegenerationBehavior,Modification.VitalMaxArray[Life]", i, FixedToString(250 + 100 * (count - 1), 0));
-        libAffx_CatalogReferenceModify("Behavior,AffixRingofRegenerationBehavior,Modification.VitalRegenArray[Life]", i, FixedToString(12 + 8 * (count - 1), 0));
+        libAffx_CatalogReferenceSet("Behavior,AffixRingofRegenerationBehavior,Modification.VitalMaxArray[Life]", i, FixedToString(250 + 100 * (count - 1), 0));
+        libAffx_CatalogReferenceSet("Behavior,AffixRingofRegenerationBehavior,Modification.VitalRegenArray[Life]", i, FixedToString(12 + 8 * (count - 1), 0));
     }
     return true;
 }
@@ -3043,7 +3043,7 @@ bool libAffx_LastMomentsEffectUsed (bool testConds, bool runActions) {
 
 bool libAffx_LastMomentsPeriodic (bool testConds, bool runActions) {
     fixed behaviorDuration;
-    unit heroUnit = libAffx_GetHeroUnit(libAffx_player);
+    unit heroUnit = libAffx_GetPlayerHeroUnit(libAffx_player);
 	string heroUnitType = UnitGetType(heroUnit);
 
     if (testConds) {
@@ -3202,7 +3202,7 @@ bool libAffx_MythicCurseSabotageUnitChangeOwner (bool testConds, bool runActions
     while (UnitHasBehavior2(changed, "StructureOwnershipChangeRepairBehavior")) {
         libAffx_Wait(0.0625, c_timeGame);
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(changed, "MythicCurseSabotageDebuff", 1, libAffx_filterSabotage);
+    libAffx_UpdateUnitBehaviorCriteria(changed, "MythicCurseSabotageDebuff", 1, libAffx_filterSabotage);
     if (libAffx_UnitMatchesCriteria(changed, libAffx_filterSabotage)) {
         UnitSetPropertyFixed(changed, c_unitPropLife, UnitGetPropertyFixed(changed, c_unitPropLife, true) * 0.5);
     } else {
@@ -3222,7 +3222,7 @@ bool libAffx_MythicCurseCitadelExecuteOncePerGame (bool testConds, bool runActio
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
         libAffx_AddExcludedUnitTypeFilter(libAffx_filterCitadel, "KingsCore");
     }
-    libAffx_UnitBehaviorAddCriteriaAll("MythicCurseCitadelBuff", 1, libAffx_filterCitadel);
+    libAffx_AddUnitBehaviorCriteriaAll("MythicCurseCitadelBuff", 1, libAffx_filterCitadel);
 
     return true;
 }
@@ -3323,7 +3323,7 @@ bool libAffx_MythicCurseCursedLevelUp (bool testConds, bool runActions) {
     TriggerAddEventTimePeriodic(TriggerCreate("libAffx_MythicCurseCursedPeriodic"), 0.0625, c_timeGame);
     TriggerAddEventUnitCreated(TriggerCreate("libAffx_MythicCurseCursedUnitCreated"), null, null, null);
     TriggerAddEventUnitChangeOwner(TriggerCreate("libAffx_MythicCurseCursedUnitChangeOwner"), null);
-    libAffx_UnitBehaviorAddCriteriaAll("MythicCurseCursedDebuff", 1, libAffx_filterAllAllies);
+    libAffx_AddUnitBehaviorCriteriaAll("MythicCurseCursedDebuff", 1, libAffx_filterAllAllies);
     
     return true;
 }
@@ -3336,7 +3336,7 @@ bool libAffx_MythicCurseCursedUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "MythicCurseCursedDebuff", 1, libAffx_filterAllAllies);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "MythicCurseCursedDebuff", 1, libAffx_filterAllAllies);
     return true;
 }
 bool libAffx_MythicCurseCursedUnitChangeOwner (bool testConds, bool runActions) {
@@ -3348,7 +3348,7 @@ bool libAffx_MythicCurseCursedUnitChangeOwner (bool testConds, bool runActions) 
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "MythicCurseCursedDebuff", 1, libAffx_filterAllAllies);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "MythicCurseCursedDebuff", 1, libAffx_filterAllAllies);
     return true;
 }
 bool libAffx_MythicCurseCursedPeriodic (bool testConds, bool runActions) {
@@ -3421,10 +3421,10 @@ bool libAffx_VeryBadBargainPeriodic (bool testConds, bool runActions) {
     }
 
     if (libAffx_affixes[libAffx_VeryBadBargainIndex].cooldown <= 0) {
-        libAffx_CatalogReferenceModify2("Behavior,VeryBadBargainDebuff,Modification.HealDealtAdditiveMultiplier[Life]", libAffx_player, FixedToString(libAffx_VeryBadBargainModifier * libAffx_affixes[libAffx_VeryBadBargainIndex].count, 2), c_upgradeOperationSubtract);
-        libAffx_CatalogReferenceModify2("Behavior,VeryBadBargainDebuff,Modification.HealDealtAdditiveMultiplier[Shields]", libAffx_player, FixedToString(libAffx_VeryBadBargainModifier * libAffx_affixes[libAffx_VeryBadBargainIndex].count, 2), c_upgradeOperationSubtract);
-        libAffx_CatalogReferenceModify2("Behavior,VeryBadBargainDebuff,Modification.DamageDealtFraction[Ability]", libAffx_player, FixedToString(libAffx_VeryBadBargainModifier * libAffx_affixes[libAffx_VeryBadBargainIndex].count, 2), c_upgradeOperationSubtract);
-        libAffx_CatalogReferenceModify2("Behavior,VeryBadBargainDebuff,Modification.DamageDealtFraction[Basic]", libAffx_player, FixedToString(libAffx_VeryBadBargainModifier * libAffx_affixes[libAffx_VeryBadBargainIndex].count, 2), c_upgradeOperationSubtract);
+        libAffx_CatalogReferenceModify("Behavior,VeryBadBargainDebuff,Modification.HealDealtAdditiveMultiplier[Life]", libAffx_player, FixedToString(libAffx_VeryBadBargainModifier * libAffx_affixes[libAffx_VeryBadBargainIndex].count, 2), c_upgradeOperationSubtract);
+        libAffx_CatalogReferenceModify("Behavior,VeryBadBargainDebuff,Modification.HealDealtAdditiveMultiplier[Shields]", libAffx_player, FixedToString(libAffx_VeryBadBargainModifier * libAffx_affixes[libAffx_VeryBadBargainIndex].count, 2), c_upgradeOperationSubtract);
+        libAffx_CatalogReferenceModify("Behavior,VeryBadBargainDebuff,Modification.DamageDealtFraction[Ability]", libAffx_player, FixedToString(libAffx_VeryBadBargainModifier * libAffx_affixes[libAffx_VeryBadBargainIndex].count, 2), c_upgradeOperationSubtract);
+        libAffx_CatalogReferenceModify("Behavior,VeryBadBargainDebuff,Modification.DamageDealtFraction[Basic]", libAffx_player, FixedToString(libAffx_VeryBadBargainModifier * libAffx_affixes[libAffx_VeryBadBargainIndex].count, 2), c_upgradeOperationSubtract);
         libAffx_affixes[libAffx_VeryBadBargainIndex].cooldown = libAffx_VeryBadBargainCooldown;
     } else {
         libAffx_affixes[libAffx_VeryBadBargainIndex].cooldown -= 0.0625;
@@ -3467,10 +3467,10 @@ bool libAffx_PurificationProtocolOncePerGame (bool testConds, bool runActions) {
     TriggerEnable(libGDHL_gt_HeroArtanisSpearofAdunPurifierBeamRedirectTarget2ElectricBoogaloo, true);
     TriggerEnable(libGDHL_gt_HeroArtanisSpearofAdunPurifierBeamUnitCreated, true);
     libGame_AddAbilityEffectMapping("ArtanisSpearofAdunPurifierBeam", "ArtanisSpearofAdunPurifierBeamDamage");
-    libAffx_CatalogReferenceModify("Behavior,ArtanisSpearofAdunPurifierBeamTimedLife,Duration", libAffx_teamChaos, "0");
-    libAffx_CatalogReferenceModify("Behavior,ArtanisSpearofAdunPurifierBeamRevealer,Duration", libAffx_teamChaos, "1");
-    libAffx_CatalogReferenceModify("Behavior,ArtanisSpearofAdunPurifierBeamPointMovementOverride,Duration", libAffx_teamChaos, "0");
-    libAffx_CatalogReferenceModify("Behavior,ArtanisSpearofAdunPurifierBeamMoveSearch,Duration", libAffx_teamChaos, "0");
+    libAffx_CatalogReferenceSet("Behavior,ArtanisSpearofAdunPurifierBeamTimedLife,Duration", libAffx_teamChaos, "0");
+    libAffx_CatalogReferenceSet("Behavior,ArtanisSpearofAdunPurifierBeamRevealer,Duration", libAffx_teamChaos, "1");
+    libAffx_CatalogReferenceSet("Behavior,ArtanisSpearofAdunPurifierBeamPointMovementOverride,Duration", libAffx_teamChaos, "0");
+    libAffx_CatalogReferenceSet("Behavior,ArtanisSpearofAdunPurifierBeamMoveSearch,Duration", libAffx_teamChaos, "0");
     while (!libAffx_GateIsOpen()) {
         libAffx_Wait(0.0625, c_timeGame);
     }
@@ -3488,7 +3488,7 @@ bool libAffx_PurificationProtocolLevelUp (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_LevelUpScaling("Effect,ArtanisSpearofAdunPurifierBeamDamage,Amount", libAffx_teamChaos);
+    libAffx_SetDefaultLevelScaling("Effect,ArtanisSpearofAdunPurifierBeamDamage,Amount", libAffx_teamChaos);
     
     return true;
 }
@@ -3501,7 +3501,7 @@ bool libAffx_GiantKillerAffixAdded (bool testConds, bool runActions) {
         return true;
     }
 
-    libAffx_CatalogReferenceModify("Effect,AffixGiantKillerDamage,VitalFractionMax[Life]", libAffx_player, FixedToString(0.02 + 0.01 * (count - 1), 2));
+    libAffx_CatalogReferenceSet("Effect,AffixGiantKillerDamage,VitalFractionMax[Life]", libAffx_player, FixedToString(0.02 + 0.01 * (count - 1), 2));
     
     return true;
 }
@@ -3518,8 +3518,8 @@ bool libAffx_AncientBlessingsScaling (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_LevelUpScaling("Effect,AffixAncientBlessingsAoEDamage,Amount", player);
-    libAffx_LevelUpScaling("Effect,AffixAncientBlessingsCreateHealer,RechargeVitalRate", player);
+    libAffx_SetDefaultLevelScaling("Effect,AffixAncientBlessingsAoEDamage,Amount", player);
+    libAffx_SetDefaultLevelScaling("Effect,AffixAncientBlessingsCreateHealer,RechargeVitalRate", player);
 
     return true;
 }
@@ -3599,8 +3599,8 @@ bool libAffx_DoomedAffixAdded (bool testConds, bool runActions) {
         return true;
     }
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
-        libAffx_UnitAddPropertyFixed(libGame_gv_teams[libAffx_teamOrderIndex].lv_core, c_unitPropLife, -10);
-        libAffx_UnitBehaviorAdd(libGame_gv_teams[libAffx_teamChaosIndex].lv_core, "DoomedRegen", libGame_gv_teams[libAffx_teamChaosIndex].lv_core, 1);
+        libAffx_AddUnitPropertyFixed(libGame_gv_teams[libAffx_teamOrderIndex].lv_core, c_unitPropLife, -10);
+        libAffx_AddUnitBehavior(libGame_gv_teams[libAffx_teamChaosIndex].lv_core, "DoomedRegen", libGame_gv_teams[libAffx_teamChaosIndex].lv_core, 1);
     }
 
     return true;
@@ -3668,16 +3668,16 @@ bool libAffx_MuradinDualHammerAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.CountMax", libAffx_player, "2");
-    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.CountStart", libAffx_player, "2");
-    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.CountUse", libAffx_player, "1");
-    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "10");
-    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Cooldown.TimeUse", libAffx_player, "0.5");
-    libAffx_CatalogReferenceModify("Effect,MuradinHeroWeaponItsHammerTimeStormBoltModifyCooldown,Cost[0].CooldownTimeUse", libAffx_player, "0");
-    libAffx_CatalogReferenceModify("Effect,MuradinHeroWeaponItsHammerTimeStormBoltModifyCooldown,Cost[0].ChargeTimeUse", libAffx_player, "-0.5");
+    libAffx_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.CountMax", libAffx_player, "2");
+    libAffx_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.CountStart", libAffx_player, "2");
+    libAffx_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.CountUse", libAffx_player, "1");
+    libAffx_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "10");
+    libAffx_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Cooldown.TimeUse", libAffx_player, "0.5");
+    libAffx_CatalogReferenceSet("Effect,MuradinHeroWeaponItsHammerTimeStormBoltModifyCooldown,Cost[0].CooldownTimeUse", libAffx_player, "0");
+    libAffx_CatalogReferenceSet("Effect,MuradinHeroWeaponItsHammerTimeStormBoltModifyCooldown,Cost[0].ChargeTimeUse", libAffx_player, "-0.5");
 
     if (PlayerHasTalent(libAffx_player, "MuradinMasteryStormhammerSledgehammer")) {
-        libAffx_CatalogReferenceModify2("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "1.5", c_upgradeOperationSubtract);
+        libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "1.5", c_upgradeOperationSubtract);
     }
 
     return true;
@@ -3696,7 +3696,7 @@ bool libAffx_MuradinDualHammerTalentGained (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify2("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "1.5", c_upgradeOperationSubtract);
+    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "1.5", c_upgradeOperationSubtract);
 
     return true;
 }
@@ -3713,7 +3713,7 @@ bool libAffx_LiMingStormArmorScaling (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_LevelUpScaling("Effect,LiMingStormArmorDamage,Amount", player);
+    libAffx_SetDefaultLevelScaling("Effect,LiMingStormArmorDamage,Amount", player);
 
     return true;
 }
@@ -3766,7 +3766,7 @@ bool libAffx_LongArmedGiantsUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "LongArmedGiants", 1, libAffx_filterLongArmedGiants);
+    libAffx_AddUnitBehaviorCriteria(EventUnitCreatedUnit(), "LongArmedGiants", 1, libAffx_filterLongArmedGiants);
     return true;
 }
 bool libAffx_LongArmedGiantsAffixAdded (bool testConds, bool runActions) {
@@ -3775,14 +3775,14 @@ bool libAffx_LongArmedGiantsAffixAdded (bool testConds, bool runActions) {
     }
     libAffx_CopyFilter(libAffx_filterAllEnemies, libAffx_filterLongArmedGiants);
     libAffx_AddRequiredUnitTypeFilter(libAffx_filterLongArmedGiants, "MercLanerSiegeGiant");
-    libAffx_UnitBehaviorAddCriteriaAll("LongArmedGiants", 1, libAffx_filterLongArmedGiants);
+    libAffx_AddUnitBehaviorCriteriaAll("LongArmedGiants", 1, libAffx_filterLongArmedGiants);
     return true;
 }
 bool libAffx_LongArmedGiantsUnitChangeOwner (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "LongArmedGiants", 1, libAffx_filterLongArmedGiants);
+    libAffx_UpdateUnitBehaviorCriteria(EventUnit(), "LongArmedGiants", 1, libAffx_filterLongArmedGiants);
     return true;
 }
 // ---------------------------------------------------------------
@@ -3825,7 +3825,7 @@ bool libAffx_SlivanQuest (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_AddBehavior(libAffx_player, "SlivanQuest", 1, false);
+    libAffx_AddPlayerBehavior(libAffx_player, "SlivanQuest", 1, false);
     if (!slivanSpawned[libAffx_teamChaosIndex]) {
         UnitCreate(1, "SlivanBoss", c_unitCreateIgnorePlacement, libAffx_teamChaos, libGame_gv_players[libAffx_enemy].lv_spawnPoint, 0, null);
         slivanSpawned[libAffx_teamChaosIndex] = true;
@@ -3996,7 +3996,7 @@ bool libAffx_SecondWindAffixAdded (bool testConds, bool runActions) {
     return true;
 }
 bool libAffx_SecondWindPeriodic (bool testConds, bool runActions) {
-    fixed behaviorDuration = UnitBehaviorDuration(libAffx_GetPlayerUnit(libAffx_player), "AffixSecondWindCooldown");
+    fixed behaviorDuration = UnitBehaviorDuration(libAffx_GetPlayerHeroUnit(libAffx_player), "AffixSecondWindCooldown");
     if (testConds) {
         if (libAffx_gamePaused) {
             return false;

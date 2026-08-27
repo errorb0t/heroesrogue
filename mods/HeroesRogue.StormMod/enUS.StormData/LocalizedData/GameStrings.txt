@@ -60,10 +60,11 @@ Label/Name/RarityCurseChallenge=<c val="9B2400">Challenge
 Label/Name/RaritySuffixStackable= - Stackable</c>
 Label/Name/RaritySuffixInfinite= - Infinite</c>
 Label/Name/RaritySuffixNone=</c>
-Label/Name/PickAffix=Pick a Boon!
-Label/Name/PickAffixCurse=Pick a Curse!
-Label/Name/PickAffixCurseMythic=Mythic Curse
-Label/Name/PickAffixMilestone=Pick a Milestone Boon!
+Label/Name/PickAffix=<c val="1eff00">Pick a Boon!</c>
+Label/Name/PickAffixCurse=<c val="c52020">Pick a Curse!</c>
+Label/Name/PickAffixCurseMythic=<c val="A84987">Mythic Curse</c>
+Label/Name/PickAffixMilestone=<c val="01ffff">Pick a Milestone Boon!</c>
+Label/Name/PickAffixStarter=<c val="e6cc80">Pick a Starter Boon!</c>
 Label/Name/ShowAffixes=Boons & Curses
 Label/Name/Bans=Bans available: 
 Label/Name/Reroll=Boon rerolls available: 
@@ -71,7 +72,7 @@ Label/Name/RerollCurse=Curse rerolls available:
 Label/Name/RerollStarter=Cannot reroll starters
 Label/Name/RerollMythic=Cannot reroll
 Label/Name/Options=Options
-Label/Name/OptionsRestart=Are you sure you wish to restart the run?
+Label/Name/OptionsRestart=Are you sure you wish to restart the run?<n/>All progress will be lost.
 Label/Name/OptionsSpeedup=Increase game speed while gates are opening
 Label/Name/OptionsSpeedupDeath=Increase game speed while dead
 Label/Name/OptionsPicksBans=Display picks/bans in chat
@@ -93,12 +94,35 @@ Message/Pacifism=<c val="FFDE36">Obtained Boons from Pacifism!</c>
 Message/GoldenBorder=Golden Heroes have unique starter Boons.
 Message/Ban=Banned 
 Message/Pick=Picked 
+Message/ResetCommand=Resetting the game...
+Message/TestCommand/AffixAddAll=Adds every boon and curse.</n>afxaddall [number of affixes] [optional arguments]</n>Optional arguments: ignore (ignores requirements), hero (only adds hero-specific)</n>boons (boons only), curses (curses only)
+Message/TestCommand/NextMap=Moves you to the specified round number. Defaults to the next map.<n/>nextmap [map number]
+Message/TestCommand/NextMapLoading=Loading next map...
+Message/TestCommand/Rerolls=Adds the specified amount of rerolls. Default to 999.<n/>rerolls [rerolls amount]
+Message/TestCommand/AddingRerolls=Adding ~A~ rerolls.
+Message/TestCommand/Bans=Adds the specified amount of bans. Default to 999.<n/>bans [bans amount]
+Message/TestCommand/AddingBans=Adding ~A~ bans.
+Message/TestCommand/Cooldown=Sets the cooldown of a boon/curse. Defaults to 0.<n/>cooldown <affix> [cooldown value]
+Message/TestCommand/CooldownSet=Cooldown of ~A~ set to ~B~.
+Message/TestCommand/Boon=Queues up a boon. Defaults to 1 with common rarity.<n/>boon [amount] [rarity]
+Message/TestCommand/Curse=Queues up a curse.<n/>curse [amount]
+Message/TestCommand/AffixAdd=Adds a boon/curse with the id. Amount defaults to 1.<n/>affixadd | afxadd | affix | afx <affix> [ammount]
+Message/TestCommand/Commands=## Commands ##<n/>boon [amount] [rarity]<n/>curse [amount]<n/>afxadd <affix> [amount]<n/>afxaddall [number of affixes] [optional arguments]<n/>nextmap [map number]<n/>rerolls [rerolls amount]<n/>bans [bans amount]<n/>cooldown <affix> [cooldown value]
+Message/TestCommand/CouldNotFind=Could not find affix ~A~.
+Message/TestCommand/Added=Added ~A~x ~B~.
+Message/TestCommand/AddedTotal=Added a total of ~A~ affixes.
+Message/TestCommand/ForcedPause=Forced pause.
+Message/TestCommand/ForcedUnpause=Forced unpause.
+Message/TestCommand/Camera=Modifies the player's camera.<n/>camera <camera type> <value>
+Message/TestCommand/RavenCurse=Forces Raven's Curse on a team.<n/>ravencurse <team>
+Message/TestCommand/PrintHeroIndex=Player ~A~: ~B~
+Message/DebugEnabled=Debug mode enabled!
 
 Button/Name/Close=Close
 Button/Name/HowToPlay=How to Play
 Button/Name/BanAffix=Ban
 Button/Name/PickAffix=Pick
-Button/Name/ShowAffixes=Boons & Curses
+Button/Name/OwnedAffixes=Boons & Curses
 Button/Name/Reroll=Reroll
 Button/Name/OptionsRestart=Restart the Run
 Button/Name/OptionsReturn=Return to Game
@@ -722,12 +746,12 @@ Affix/Name/LootBox=Loot Box
 Affix/Tooltip/LootBox=Gain <c val="#TooltipNumbers">2</c> random <c val="ffffff">Common Boons</c> with a chance for higher rarity Boons.
 Affix/Tooltip/Append/LootBox=
 Affix/Name/Nimble=Nimble
-Affix/Tooltip/Nimble=You have a <c val="#TooltipNumbers">10%</c> chance to take no damage from enemy Heroes, increased to <c val="#TooltipNumbers">30%</c> against enemy Structures.
-Affix/Tooltip/Nimble/Greymane=While in <c val="CC66FF">Worgen</c> Form, you have a <c val="#TooltipNumbers">10%</c> chance to take no damage from enemy Heroes, increased to <c val="#TooltipNumbers">30%</c> against enemy Structures.
-Affix/Tooltip/Nimble/DVa=DVa's Mech has a <c val="#TooltipNumbers">10%</c> chance to take no damage from enemy Heroes, increased to <c val="#TooltipNumbers">30%</c> against enemy Structures.
-Affix/Tooltip/Nimble/LostVikings=Olaf has a <c val="#TooltipNumbers">10%</c> chance to take no damage from enemy Heroes, increased to <c val="#TooltipNumbers">30%</c> against enemy Structures.
-Affix/Tooltip/Nimble/Rexxar=Misha has a <c val="#TooltipNumbers">10%</c> chance to take no damage from enemy Heroes, increased to <c val="#TooltipNumbers">30%</c> against enemy Structures.
-Affix/Tooltip/Append/Nimble=
+Affix/Tooltip/Nimble=You have a <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c> chance to take no damage, increased to <c val="#TooltipNumbers">30%</c> <c val="747A84">(+30% per stack)</c> against enemy Structures.
+Affix/Tooltip/Nimble/Greymane=While in <c val="CC66FF">Worgen</c> Form, you have a <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c> chance to take no damage, increased to <c val="#TooltipNumbers">30%</c> <c val="747A84">(+30% per stack)</c> against enemy Structures.
+Affix/Tooltip/Nimble/DVa=DVa's Mech has a <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c> chance to take no damage, increased to <c val="#TooltipNumbers">30%</c> <c val="747A84">(+30% per stack)</c> against enemy Structures.
+Affix/Tooltip/Nimble/LostVikings=Olaf has a <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c> chance to take no damage, increased to <c val="#TooltipNumbers">30%</c> <c val="747A84">(+30% per stack)</c> against enemy Structures.
+Affix/Tooltip/Nimble/Rexxar=Misha has a <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c> chance to take no damage, increased to <c val="#TooltipNumbers">30%</c> <c val="747A84">(+30% per stack)</c> against enemy Structures.
+Affix/Tooltip/Append/Nimble=<n/><n/>Dodge chance: <c val="#TooltipNumbers"><d ref="Behavior,NimbleBehavior,DamageResponse.Chance*100" precision="1"/>%</c><n/>Structure dodge chance: <c val="#TooltipNumbers"><d ref=",Behavior,NimbleStructureBehavior,DamageResponse.Chance*100" precision="1"/>%</c>
 Affix/Name/ExperienceHoarder=Experience Hoarder
 Affix/Tooltip/ExperienceHoarder=Carry over <c val="#TooltipNumbers">20%</c> of your Experience after winning the game.
 Affix/Tooltip/Append/ExperienceHoarder=
@@ -859,6 +883,9 @@ Affix/Name/SecondWind=Second Wind
 Affix/Tooltip/SecondWind=On fatal damage, become Unkillable for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">300</c> seconds.
 Affix/Tooltip/Append/SecondWind=
 Behavior/Name/AffixSecondWindBehavior=Second Wind
+Affix/Name/RevealingTouch=Revealing Touch
+Affix/Tooltip/RevealingTouch=Basic Attacks reveal a small area around the target for <c val="#TooltipNumbers">3</c> seconds.
+Affix/Tooltip/Append/RevealingTouch=
 
 Affix/Name/MoreOptions=More Options
 Affix/Tooltip/MoreOptions=Grants a <c val="#TooltipNumbers">4th</c> option when selecting a boon or a curse.
