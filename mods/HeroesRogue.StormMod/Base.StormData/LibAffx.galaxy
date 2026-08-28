@@ -72,18 +72,24 @@ bool libAffx_HeroSelectionTrigger_Func (bool testConds, bool runActions) {
                             }
                         }
                     }
-                    if (libAffx_debug_forcedHeroes) {
-                        if (player == 6) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("LostVikings");
-                        } else if (player == 7) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("MalGanis");
-                        } else if (player == 8) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Uther");
-                        } else if (player == 9) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Abathur");
-                        } else if (player == 10) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Samuro");
-                        }
+                    if (player == 2 && libAffx_debug_player2Hero != "") {
+                        libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player2Hero);
+                    } else if (player == 3 && libAffx_debug_player3Hero != "") {
+                        libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player3Hero);
+                    } else if (player == 4 && libAffx_debug_player4Hero != "") {
+                        libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player4Hero);
+                    } else if (player == 5 && libAffx_debug_player5Hero != "") {
+                        libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player5Hero);
+                    } else if (player == 6 && libAffx_debug_player6Hero != "") {
+                        libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player6Hero);
+                    } else if (player == 7 && libAffx_debug_player7Hero != "") {
+                        libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player7Hero);
+                    } else if (player == 8 && libAffx_debug_player8Hero != "") {
+                        libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player8Hero);
+                    } else if (player == 9 && libAffx_debug_player9Hero != "") {
+                        libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player9Hero);
+                    } else if (player == 10 && libAffx_debug_player10Hero != "") {
+                        libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player10Hero);
                     }
                     libAffx_playersHeroIndex[player] = libGame_gv_players[player].lv_heroIndex;
                 }
@@ -93,7 +99,6 @@ bool libAffx_HeroSelectionTrigger_Func (bool testConds, bool runActions) {
                     libGame_gf_HeroSelectionRandomlyPickMount(player);
                     PlayerSetSpray(player, "RandomSpray");
                 }
-                libAffx_DebugPrint("Player " + IntToString(player) + " set to Hero: " + libCore_gf_GetHeroFromIndex(libGame_gv_players[player].lv_heroIndex));
             }
         }
     }
@@ -155,18 +160,20 @@ void libAffx_SyncBehaviors(unit sourceUnit, unit targetUnit) {
     int i;
     int player = UnitGetOwner(sourceUnit); 
     int totalBehaviors = UnitBehaviorCountAll(sourceUnit);
+    int behaviorStacksSource;
     string behavior;
     int behaviorStacks;
     fixed behaviorDuration;
     string debug_behaviors;
 
     Wait(0.0625, c_timeGame);
-    for (i = 1; i <= libAffx_behaviorMax; i += 1) {
+    for (i = 1; i <= libAffx_maxAffixBehaviors; i += 1) {
         behavior = libAffx_affixBehaviors[player][i];
         if (behavior == "") { break; }
-        behaviorStacks = MinI(1, UnitBehaviorCount(sourceUnit, behavior));
-        if (behaviorStacks <= 0) { // Minimum Integer won't work in some cases, bandaid fix
-            behaviorStacks = 1;
+        behaviorStacks = 1;
+        behaviorStacksSource = UnitBehaviorCount(sourceUnit, behavior);
+        if (behaviorStacksSource > 0) {
+            behaviorStacks = behaviorStacksSource;
         }
         behaviorDuration = UnitBehaviorDuration(sourceUnit, behavior);
         UnitModifyCooldown(targetUnit, "Abil/" + behavior, UnitGetCooldown(sourceUnit, "Abil/" + behavior), c_cooldownOperationSet);
@@ -317,6 +324,50 @@ bool libAffx_RexxarTrigger_Func (bool testConds, bool runActions) {
 void libAffx_RexxarTriggers_Init() {
     libAffx_RexxarTrigger = TriggerCreate("libAffx_RexxarTrigger_Func");
     TriggerAddEventUnitCreated(libAffx_RexxarTrigger, null, null, null);
+}
+//--------------------------------------------------------------------------------------------------
+// Samuro
+//--------------------------------------------------------------------------------------------------
+bool libAffx_SamuroTrigger_Func (bool testConds, bool runActions) {
+    unit eventUnit = EventUnitCreatedUnit();
+    int player = UnitGetOwner(eventUnit);
+    if (testConds) {
+        if (UnitGetType(eventUnit) != "SamuroMirrorImage") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_SyncBehaviors(libGame_gv_players[player].lv_heroUnit, eventUnit);
+    return true;
+}
+
+void libAffx_SamuroTriggers_Init() {
+    libAffx_SamuroTrigger = TriggerCreate("libAffx_SamuroTrigger_Func");
+    TriggerAddEventUnitCreated(libAffx_SamuroTrigger, null, null, null);
+}
+//--------------------------------------------------------------------------------------------------
+// Nova
+//--------------------------------------------------------------------------------------------------
+bool libAffx_NovaTrigger_Func (bool testConds, bool runActions) {
+    unit eventUnit = EventUnitCreatedUnit();
+    int player = UnitGetOwner(eventUnit);
+    if (testConds) {
+        if (UnitGetType(eventUnit) != "NovaHoloClone") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_SyncBehaviors(libGame_gv_players[player].lv_heroUnit, eventUnit);
+    return true;
+}
+
+void libAffx_NovaTriggers_Init() {
+    libAffx_NovaTrigger = TriggerCreate("libAffx_NovaTrigger_Func");
+    TriggerAddEventUnitCreated(libAffx_NovaTrigger, null, null, null);
 }
 //--------------------------------------------------------------------------------------------------
 // Lost Vikings
@@ -575,12 +626,12 @@ void libAffx_Pause(bool pause) {
 string libAffx_GetAffixLabel(int affix) {
     if (libAffx_affixes[affix].rarity == libAffx_rarityMythic) {
         return "Label/Name/RarityMythic";
-    } else if (libAffx_affixes[affix].rarity == libAffx_rarityMilestone) {
-        return "Label/Name/RarityMilestone";
-    } else if (libAffx_affixes[affix].challengeCurse) {
+    } else if (libAffx_affixes[affix].rarity == libAffx_rarityChallenge) {
         return "Label/Name/RarityCurseChallenge";
     } else if (libAffx_affixes[affix].curse) {
         return "Label/Name/RarityCurse";
+    } else if (libAffx_affixes[affix].rarity == libAffx_rarityMilestone) {
+        return "Label/Name/RarityMilestone";
     } else if (libAffx_affixes[affix].rarity == libAffx_rarityCommon) {
         return "Label/Name/RarityCommon";
     } else if (libAffx_affixes[affix].rarity == libAffx_rarityUncommon) {
@@ -610,12 +661,12 @@ string libAffx_GetAffixLabelSuffix(int affix) {
 color libAffx_GetAffixColor(int affix) {
     if (libAffx_affixes[affix].rarity == libAffx_rarityMythic) {
         return Color(66, 29, 53);
-    } else if (libAffx_affixes[affix].rarity == libAffx_rarityMilestone) {
-        return Color(0, 100, 100);
-    } else if (libAffx_affixes[affix].challengeCurse) {
+    } else if (libAffx_affixes[affix].rarity == libAffx_rarityChallenge) {
         return Color(89, 39, 0);
     } else if (libAffx_affixes[affix].curse) {
         return Color(77, 12, 12);
+    } else if (libAffx_affixes[affix].rarity == libAffx_rarityMilestone) {
+        return Color(0, 100, 100);
     } else if (libAffx_affixes[affix].rarity == libAffx_rarityCommon) {
         return Color(100, 100, 100);
     } else if (libAffx_affixes[affix].rarity == libAffx_rarityUncommon) {
@@ -635,12 +686,12 @@ color libAffx_GetAffixColor(int affix) {
 string libAffx_GetAffixSuffix(int affix) {
     if (libAffx_affixes[affix].rarity == libAffx_rarityMythic) {
         return "_mythic";
-    } else if (libAffx_affixes[affix].rarity == libAffx_rarityMilestone) {
-        return "_milestone";
-    } else if (libAffx_affixes[affix].challengeCurse) {
+    } else if (libAffx_affixes[affix].rarity == libAffx_rarityChallenge) {
         return "_curse_challenge";
     } else if (libAffx_affixes[affix].curse) {
         return "_curse";
+    } else if (libAffx_affixes[affix].rarity == libAffx_rarityMilestone) {
+        return "_milestone";
     } else if (libAffx_affixes[affix].rarity == libAffx_rarityCommon) {
         return "_common";
     } else if (libAffx_affixes[affix].rarity == libAffx_rarityUncommon) {
@@ -715,10 +766,12 @@ int libAffx_GetRarity(string rarityString) {
         return libAffx_rarityLegendary;
     } else if (rarity == "starter") {
         return libAffx_rarityStarter;
-    } else if (rarity == "mythic" || rarity == "mythic") {
+    } else if (rarity == "mythic") {
         return libAffx_rarityMythic;
     } else if (rarity == "milestone") {
         return libAffx_rarityMilestone;
+    } else if (rarity == "challenge") {
+        return libAffx_rarityChallenge;
     }
     return 0;
 }
@@ -739,6 +792,8 @@ string libAffx_GetRarityString(int rarity) {
         return "Mythic";
     } else if (rarity == libAffx_rarityMilestone) {
         return "Milestone";
+    } else if (rarity == libAffx_rarityChallenge) {
+        return "Challenge";
     }
     return "";
 }
@@ -775,11 +830,9 @@ void libAffx_CreateAffixDialogItem(int buttonIndex, int affix, int xOffset) {
     libNtve_gf_CreateDialogItemLabel(libAffx_dialogAffixSelection, 320, 100, c_anchorTop, xOffset, yOffset + 320, StringExternal("Affix/Name/" + libAffx_affixes[affix].name) + StringToText(libAffx_CountToString(libAffx_affixes[affix].count, libAffx_affixes[affix].max)), libAffx_GetAffixColor(affix), false, 1.0);
     libNtve_gf_SetDialogItemStyle(DialogControlLastCreated(), "Storm_Tutorial_Small_Centered", PlayerGroupAll());
 
-    if (libAffx_affixes[affix].excludeChoGall && libAffx_affixes[affix].excludeChoGallForAIEffect && libAffx_choPlayer != 0) {
-        appendTooltip += StringExternal("Text/ExcludeChoGallForAIEffect");
-    } else if (libAffx_affixes[affix].excludeChoGall && libAffx_choPlayer != 0) {
-        appendTooltip += StringExternal("Text/ExcludeChoGall");
-    }
+    //if (libAffx_affixes[affix].excludeChoGall && libAffx_choPlayer != 0) {
+    //    appendTooltip += StringExternal("Text/ExcludeChoGall");
+    //}
 
     if (libAffx_appendTooltipInSelection && libAffx_affixes[affix].count > 0 && libAffx_affixes[affix].max != 1) {
         appendTooltip += StringExternal("Affix/Tooltip/Append/" + libAffx_affixes[affix].name);
@@ -806,9 +859,9 @@ void libAffx_CreateAffixDialogItem(int buttonIndex, int affix, int xOffset) {
         }
     }
     
-    if (libAffx_affixes[affix].heroTooltip[libAffx_playersHeroIndex[libAffx_player]]) {
+    if (libAffx_affixes[affix].customTooltipForHero[libAffx_playersHeroIndex[libAffx_player]]) {
         tooltip = StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name + "/" + libCore_gf_GetHeroFromIndex(libAffx_playersHeroIndex[libAffx_player])) + appendTooltip;
-    } else if (libAffx_affixes[affix].manalessTooltip && UnitHasBehavior2(libAffx_GetHeroUnit(libAffx_player), "NotManaUserDummy")) {
+    } else if (libAffx_affixes[affix].customTooltipForNonManaUsers && UnitHasBehavior2(libAffx_GetHeroUnit(libAffx_player), "NotManaUserDummy")) {
         tooltip = StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name + "/NoMana") + appendTooltip;
     } else {
         tooltip = StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name) + appendTooltip;
@@ -843,36 +896,6 @@ text libAffx_GetAffixTitle(bool curse) {
     } else {
         return StringExternal("Label/Name/PickAffix");
     }
-}
-
-bool libAffx_IsMilestoneBoon() {
-    int i;
-    for (i = 1; i <= libAffx_affixSelectionMaxCurrent; i += 1) {
-        if (libAffx_affixes[libAffx_rolledAffixes[i]].rarity == libAffx_rarityMilestone) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool libAffx_IsMythicCurse() {
-    int i;
-    for (i = 1; i <= libAffx_affixSelectionMaxCurrent; i += 1) {
-        if (libAffx_affixes[libAffx_rolledAffixes[i]].rarity == libAffx_rarityMythic) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool libAffx_IsStarterBoon() {
-    int i;
-    for (i = 1; i <= libAffx_affixSelectionMaxCurrent; i += 1) {
-        if (libAffx_affixes[libAffx_rolledAffixes[i]].rarity == libAffx_rarityStarter) {
-            return true;
-        }
-    }
-    return false;
 }
 
 void libAffx_CreateAffixDialog() {
@@ -988,11 +1011,9 @@ void libAffx_CreateAffixesOwnedDialogItem(int affix, int offsetX, int offsetY) {
     if (libAffx_affixes[affix].quest.isQuest) {
         questIcon = "Affix/Quest";
     }
-    if (libAffx_affixes[affix].excludeChoGall && libAffx_affixes[affix].excludeChoGallForAIEffect && libAffx_choPlayer != 0) {
-        appendTooltip += StringExternal("Text/ExcludeChoGallForAIEffect");
-    } else if (libAffx_affixes[affix].excludeChoGall && libAffx_choPlayer != 0) {
-        appendTooltip += StringExternal("Text/ExcludeChoGall");
-    }
+    //if (libAffx_affixes[affix].excludeChoGall && libAffx_choPlayer != 0) {
+    //    appendTooltip += StringExternal("Text/ExcludeChoGall");
+    //}
 
     if (libAffx_affixes[affix].count > 0 && libAffx_affixes[affix].max != 1) {
         appendTooltip += StringExternal("Affix/Tooltip/Append/" + libAffx_affixes[affix].name);
@@ -1014,9 +1035,9 @@ void libAffx_CreateAffixesOwnedDialogItem(int affix, int offsetX, int offsetY) {
         }
     }
 
-    if (libAffx_affixes[affix].heroTooltip[libAffx_playersHeroIndex[libAffx_player]]) {
+    if (libAffx_affixes[affix].customTooltipForHero[libAffx_playersHeroIndex[libAffx_player]]) {
         tooltip = StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name + "/" + libCore_gf_GetHeroFromIndex(libAffx_playersHeroIndex[libAffx_player])) + appendTooltip;
-    } else if (libAffx_affixes[affix].manalessTooltip && UnitHasBehavior2(libAffx_GetHeroUnit(libAffx_player), "NotManaUserDummy")) {
+    } else if (libAffx_affixes[affix].customTooltipForNonManaUsers && UnitHasBehavior2(libAffx_GetHeroUnit(libAffx_player), "NotManaUserDummy")) {
         tooltip = StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name + "/NoMana") + appendTooltip;
     } else {
         tooltip = StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name) + appendTooltip;
@@ -1555,7 +1576,7 @@ bool libAffx_ShowAffixesClickedTrigger_Func (bool testConds, bool runActions) {
         if (EventDialogControl() != libAffx_dialogControlAffixesButton) {
             return false;
         }
-        if (libAffx_showingOptions) {
+        if (libAffx_showingOptions || !libAffx_bankLoaded) {
             return false;
         }
     }
@@ -1752,16 +1773,16 @@ void libAffx_CatalogModifyForAllPlayers(string reference, string value) {
 }
 
 void libAffx_SendAffixAddedEvent (int affix, int amount) {
-    DataTableSetInt(false, TriggerEventParamName(libAffx_eventID + libAffx_affixes[affix].name, libAffx_eventParam), affix);
-    DataTableSetInt(false, TriggerEventParamName(libAffx_eventID + libAffx_affixes[affix].name, libAffx_eventParam2), amount);
-    TriggerSendEvent(libAffx_eventID + libAffx_affixes[affix].name);
-    TriggerSendEvent(libAffx_eventID);
+    DataTableSetInt(false, TriggerEventParamName(libAffx_eventAffixAddedID + libAffx_affixes[affix].name, libAffx_eventAffixAddedParam), affix);
+    DataTableSetInt(false, TriggerEventParamName(libAffx_eventAffixAddedID + libAffx_affixes[affix].name, libAffx_eventAffixAddedParam2), amount);
+    TriggerSendEvent(libAffx_eventAffixAddedID + libAffx_affixes[affix].name);
+    TriggerSendEvent(libAffx_eventAffixAddedID);
 }
 int libAffx_EventAffix() {
-    return DataTableGetInt(false, TriggerEventParamName(EventGenericName(), libAffx_eventParam));
+    return DataTableGetInt(false, TriggerEventParamName(EventGenericName(), libAffx_eventAffixAddedParam));
 }
 int libAffx_EventAffixCountAdded() {
-    return DataTableGetInt(false, TriggerEventParamName(EventGenericName(), libAffx_eventParam2));
+    return DataTableGetInt(false, TriggerEventParamName(EventGenericName(), libAffx_eventAffixAddedParam2));
 }
 int libAffx_EventAffixCount() {
     return libAffx_affixes[libAffx_EventAffix()].count;
@@ -1927,28 +1948,33 @@ void libAffx_PlayerAddPropertyFixed (int player, int inProp, fixed value, bool a
         }
     }
 }
-void libAffx_AddAffixBehavior(int player, string behavior) {
-    if (player >= 1 && player <= 10 && libAffx_behaviorIndex[player] <= libAffx_behaviorMax && behavior != "" && behavior != null) {
-        libAffx_behaviorIndex[player] += 1;
-        libAffx_affixBehaviors[player][libAffx_behaviorIndex[player]] = behavior;
-        //libAffx_DebugPrint("Adding " + behavior + " to affix behaviors for player " + IntToString(player) + " at index " + IntToString(libAffx_behaviorIndex[player]));
+bool libAffx_HasAffixBehavior(int player, string behavior) {
+    int i;
+    for (i = 1; i <= libAffx_affixBehaviorIndex[player]; i += 1) {
+        if (libAffx_affixBehaviors[player][i] == behavior) {
+            return true;
+        }
     }
+    return false;
+}
+void libAffx_AddAffixBehavior(int player, string behavior) {
+    if (player < 1 || player > 10 || behavior == "" || behavior == null || (libAffx_affixBehaviorIndex[player] + 1) > libAffx_maxAffixBehaviors) {
+        return;
+    }
+    if (UnitBehaviorHasCategoryFlag(behavior, c_behaviorCategoryTemporary) || libAffx_HasAffixBehavior(player, behavior)) {
+        return;
+    }
+
+    libAffx_affixBehaviorIndex[player] += 1;
+    libAffx_affixBehaviors[player][libAffx_affixBehaviorIndex[player]] = behavior;
 }
 void libAffx_UnitBehaviorAdd(unit targetUnit, string behavior, unit casterUnit, int stacks) {
     int player = UnitGetOwner(targetUnit);
     UnitBehaviorAdd(targetUnit, behavior, casterUnit, stacks);
     if (player >= 1 && player <= 10 && behavior != "" && behavior != null) {
-        if (libAffx_behaviorIndex[player] <= libAffx_behaviorMax) {
+        if (libAffx_affixBehaviorIndex[player] <= libAffx_maxAffixBehaviors) {
             if (!UnitTestState(targetUnit, c_unitStateHallucination) && UnitTypeTestAttribute(UnitGetType(targetUnit), c_unitAttributeHeroic)) {
-                libAffx_behaviorIndex[player] += 1;
-                if (libAffx_behaviorIndex[player] > 0) {
-                    if (libAffx_affixBehaviors[player][libAffx_behaviorIndex[player] - 1] == null || (libAffx_affixBehaviors[player][libAffx_behaviorIndex[player] - 1] != null && libAffx_affixBehaviors[player][libAffx_behaviorIndex[player] - 1] != behavior)) {
-                        libAffx_affixBehaviors[player][libAffx_behaviorIndex[player]] = behavior;
-                        //libAffx_DebugPrint("Adding " + behavior + " to affix behaviors for player " + IntToString(player) + " at index " + IntToString(libAffx_behaviorIndex[player]));
-                    } else {
-                        libAffx_behaviorIndex[player] -= 1;
-                    }
-                }
+                libAffx_AddAffixBehavior(player, behavior);
             }
         } else {
             libAffx_DebugPrint("Warning: Too many affix behaviors added!");
@@ -2200,7 +2226,7 @@ void libAffx_ApplyTalents(int affix) {
         return;
     }
 
-    for (i = 1; i <= libAffx_maxTalentsAdd; i += 1) {
+    for (i = 1; i <= libAffx_maxTalents; i += 1) {
         addTalent = libAffx_affixes[affix].addTalents[i];
         if (addTalent != "" && addTalent != null) {
             libAffx_AddTalent(libAffx_player, addTalent);
@@ -2242,7 +2268,7 @@ void libAffx_ApplyCatalogModifications(int affix, int amount) {
     fixed catalogValue;
     string catalogValueString;
     int catalogOperation;
-    for (i = 1; i <= libAffx_maxCatalogModification; i += 1) {
+    for (i = 1; i <= libAffx_maxCatalogModifications; i += 1) {
         catalogReference = libAffx_affixes[affix].catalogModifications[i].reference;
         if (catalogReference != "" && catalogReference != null) {
             catalogType = libAffx_affixes[affix].catalogModifications[i].type;
@@ -2300,7 +2326,7 @@ void libAffx_RemoveBehaviors(int affix) {
     int i2;
     string behavior;
     int behaviorPlayer;
-    for (i = 1; i <= libAffx_maxBehavior; i += 1) {
+    for (i = 1; i <= libAffx_maxBehaviors; i += 1) {
         behavior = libAffx_affixes[affix].removeBehaviors[i].behavior;
         if (behavior != "" && behavior != null) {
             behaviorPlayer = libAffx_affixes[affix].removeBehaviors[i].player;
@@ -2330,7 +2356,7 @@ void libAffx_ApplyBehaviors(int affix, int amount) {
     int unitGroupCount;
     int amountToAdd;
     bool affectedByCount;
-    for (i = 1; i <= libAffx_maxBehavior; i += 1) {
+    for (i = 1; i <= libAffx_maxBehaviors; i += 1) {
         behavior = libAffx_affixes[affix].behaviors[i].behavior;
         if (behavior != "" && behavior != null) {
             behaviorPlayer = libAffx_affixes[affix].behaviors[i].player;
@@ -2363,12 +2389,37 @@ void libAffx_ApplyBehaviors(int affix, int amount) {
         }
     }
 }
+void libAffx_ApplyAffixBehaviors(int affix, int amount) {
+    int i;
+    int i2;
+    string behavior;
+    int behaviorPlayer;
+    for (i = 1; i <= libAffx_maxBehaviors; i += 1) {
+        behavior = libAffx_affixes[affix].affixBehaviors[i].behavior;
+        if (behavior != "" && behavior != null) {
+            behaviorPlayer = libAffx_affixes[affix].affixBehaviors[i].player;
+            if (behaviorPlayer == 0) {
+                for (i2 = 1; i2 <= 10; i2 += 1) {
+                    if ((i2 == libAffx_choPlayer || i2 == libAffx_gallPlayer) && libAffx_affixes[affix].excludeChoGall) {
+                        continue;
+                    } else {
+                        libAffx_AddAffixBehavior(i2, behavior);
+                    }
+                }
+            } else if ((behaviorPlayer == libAffx_choPlayer || behaviorPlayer == libAffx_gallPlayer) && libAffx_affixes[affix].excludeChoGall) {
+                continue;
+            } else if (behaviorPlayer >= 1 && behaviorPlayer <= 10) {
+                libAffx_AddAffixBehavior(behaviorPlayer, behavior);
+            }
+        }
+    }
+}
 void libAffx_ApplyImmediateTriggers() {
     int i;
     int i2;
     int i3;
     for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
-        for (i2 = 1; i2 <= libAffx_maxTrigger; i2 += 1) {
+        for (i2 = 1; i2 <= libAffx_maxTriggers; i2 += 1) {
             if (libAffx_affixes[i].triggers[i2].type == libAffx_triggerGameStart) {
                 if (libAffx_affixes[i].createdTriggers[i2] == null) {
                     libAffx_affixes[i].createdTriggers[i2] = TriggerCreate(libAffx_affixes[i].triggers[i2].name);
@@ -2395,9 +2446,7 @@ void libAffx_ApplyTriggers(int affix, int amount) {
     string triggerName;
     string triggerArg1;
 
-    libAffx_executingAffix = affix;
-    libAffx_executingAffixCount = amount;
-    for (i = 1; i <= libAffx_maxTrigger; i += 1) {
+    for (i = 1; i <= libAffx_maxTriggers; i += 1) {
         triggerType = libAffx_affixes[affix].triggers[i].type;
         triggerName = libAffx_affixes[affix].triggers[i].name;
         triggerArg1 = libAffx_affixes[affix].triggers[i].arg1;
@@ -2408,9 +2457,9 @@ void libAffx_ApplyTriggers(int affix, int amount) {
                     libAffx_affixes[affix].createdTriggers[i] = TriggerCreate(triggerName);
                 }
                 if (triggerType == libAffx_triggerAnyAffixAdded) {
-                    TriggerAddEventGeneric(libAffx_affixes[affix].createdTriggers[i], libAffx_eventID);
+                    TriggerAddEventGeneric(libAffx_affixes[affix].createdTriggers[i], libAffx_eventAffixAddedID);
                 } else if (triggerType == libAffx_triggerAffixAdded) {
-                    TriggerAddEventGeneric(libAffx_affixes[affix].createdTriggers[i], libAffx_eventID + libAffx_affixes[affix].name);
+                    TriggerAddEventGeneric(libAffx_affixes[affix].createdTriggers[i], libAffx_eventAffixAddedID + libAffx_affixes[affix].name);
                 } else if (triggerType == libAffx_triggerNPCTakedown) {
                     libGame_gf_HeroParticipatedInNPCTakedown(libAffx_affixes[affix].createdTriggers[i]);
                 } else if (triggerType == libAffx_triggerHeroTakedown) {
@@ -2498,7 +2547,7 @@ void libAffx_ApplyTriggers(int affix, int amount) {
 }
 void libAffx_ApplyQuest(int affix) {
     int i;
-    for (i = 1; i <= libAffx_maxQuestRetain; i += 1) {
+    for (i = 1; i <= libAffx_maxQuests; i += 1) {
         if (libAffx_affixes[affix].questRetain[i].tokenBehavior != "" && libAffx_affixes[affix].questRetain[i].tokenBehavior != null && libAffx_affixes[affix].questRetain[i].tokenCount > 0) {
             libAffx_ModifyTokenCount(libAffx_player, RoundI(libAffx_affixes[affix].questRetain[i].tokenCount), libAffx_affixes[affix].questRetain[i].tokenBehavior);
         }
@@ -2513,6 +2562,7 @@ void libAffx_ApplyAffix(int affix, int amount) {
     libAffx_ApplyCatalogModifications(affix, amount);
     libAffx_ApplyBehaviors(affix, amount);
     libAffx_RemoveBehaviors(affix);
+    libAffx_ApplyAffixBehaviors(affix, amount);
     libAffx_ApplyTriggers(affix, amount);
     libAffx_ApplyQuest(affix);
 
@@ -2623,6 +2673,7 @@ void libAffx_BankSave() {
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "Bans", libAffx_bans);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "Difficulty", libAffx_difficulty);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "CursesNextGame", libAffx_cursesNextGame);
+    BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "BoonsNextGame", libAffx_boonsNextGame);
     for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
         affixName = libAffx_affixes[i].name;
         if (libAffx_affixes[i].quest.isQuest) {
@@ -2633,7 +2684,7 @@ void libAffx_BankSave() {
                 BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, affixName + "_QuestProgress", libAffx_affixes[i].quest.questProgress);
             }
         }
-        for (i2 = 1; i2 <= libAffx_maxQuestRetain; i2 += 1) {
+        for (i2 = 1; i2 <= libAffx_maxQuests; i2 += 1) {
             if (libAffx_affixes[i].questRetain[i2].tokenBehavior != "" && libAffx_affixes[i].questRetain[i2].tokenBehavior != null) {
                 groupCount = UnitGroupCount(heroGroup, c_unitCountAll);
                 for (;; groupCount -= 1) {
@@ -2695,6 +2746,9 @@ void libAffx_BankLoad() {
     if (BankKeyExists(BankLastCreated(), libAffx_BankSection, "CursesNextGame")) {
         libAffx_cursesQueued += BankValueGetAsInt(BankLastCreated(), libAffx_BankSection, "CursesNextGame");
     }
+    if (BankKeyExists(BankLastCreated(), libAffx_BankSection, "BoonsNextGame")) {
+        libAffx_boonsQueued += BankValueGetAsInt(BankLastCreated(), libAffx_BankSection, "BoonsNextGame");
+    }
 
     for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
         affixName = libAffx_affixes[i].name;
@@ -2715,7 +2769,7 @@ void libAffx_BankLoad() {
                 libAffx_affixes[i].quest.questProgress = BankValueGetAsInt(BankLastCreated(), libAffx_BankSection, affixName + "_QuestProgress");
             }
         }
-        for (i2 = 1; i2 <= libAffx_maxQuestRetain; i2 += 1) {
+        for (i2 = 1; i2 <= libAffx_maxQuests; i2 += 1) {
             if (BankKeyExists(BankLastCreated(), libAffx_BankSection, libAffx_affixes[i].questRetain[i2].tokenBehavior)) {
                 libAffx_affixes[i].questRetain[i2].tokenCount = BankValueGetAsFixed(BankLastCreated(), libAffx_BankSection, libAffx_affixes[i].questRetain[i2].tokenBehavior);
             }
@@ -2737,6 +2791,7 @@ void libAffx_BankLoad() {
             libAffx_ApplyAffix(i, libAffx_affixes[i].count);
         }
     }
+    libAffx_bankLoaded = true;
     libAffx_DebugPrint("Boons & Curses loaded!");
 }
 void libAffx_BankReset() {
@@ -2848,15 +2903,12 @@ void libAffx_AffixLogicUnitCreatedTrigger_Init () {
 
 int libAffx_RollRarity(int baseRarity, bool curse) {
     int result = baseRarity;
-    fixed roll;
+    fixed roll = RandomFixed(0, 1.0);
     fixed modifier = 1.0;
     fixed modifierHigh = 0;
-    roll = RandomFixed(0, 1.0);
     if (curse) {
-        modifier += libAffx_curseAddRoll;
-        modifierHigh += libAffx_curseAddHighRoll;
-    }
-    if (baseRarity == libAffx_rarityCommon) {
+        return baseRarity;
+    } else if (baseRarity == libAffx_rarityCommon) {
         if (roll <= libAffx_commonToLegendary * (modifier + modifierHigh)) {
             result = libAffx_rarityLegendary;
         } else if (roll <= (libAffx_commonToLegendary + libAffx_commonToEpic) * (modifier + modifierHigh)) {
@@ -2888,131 +2940,143 @@ int libAffx_RollRarity(int baseRarity, bool curse) {
     return result;
 }
 
-int libAffx_RollAffix(int rarity, bool curse, int level, bool preventUpgrade) {
-    int[libAffx_rollMax + 1] eligibleAffixes;
-    int rolledAffix;
-    int totalWeight = 0;
-    int cumulativeWeight = 0;
-    int slotRarity;
-    int slotAffixCount = 0;
-    int upgradeCount = 0;
+bool libAffx_AffixFailsRequirements(int affix) {
     int i;
-    int i2;
-    bool eligible;
-    bool upgradeRarity = true;
+    int affixToCheck;
+    int count;
+    int max;
+    string requiredTalent;
+
+    for (i = 1; i <= libAffx_currentAffixSelection; i += 1) {
+        if (libAffx_rolledAffixes[i] == affix) {
+            return true;
+        }
+    }
+    for (i = 1; i <= libAffx_affixes[affix].excludedCount; i += 1) {
+        affixToCheck = libAffx_affixes[affix].excludedAffixes[i];
+        if (libAffx_affixes[affixToCheck].count > 0) {
+            return true;
+        }
+    }
+    for (i = 1; i <= libAffx_affixes[affix].requiredCount; i+= 1) {
+        affixToCheck = libAffx_affixes[affix].requiredAffixes[i];
+        count = libAffx_affixes[affixToCheck].count;
+        max = libAffx_affixes[affixToCheck].max;
+        if (libAffx_affixes[affixToCheck].requiresMaxStacks && max != 0) {
+            if (count < max) {
+                return true;
+            }
+        } else if (count < 1) {
+            return true;
+        }
+    }
+    for (i = 1; i <= libAffx_affixes[affix].requiredTalentsCount; i += 1) {
+        requiredTalent = libAffx_affixes[affix].requiredTalents[i];
+        if (!PlayerHasTalent(libAffx_player, requiredTalent)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int libAffx_RollAffix(int rarity, bool curse, int level, bool lockRarity) {
+    int[libAffx_maxEligibleAffixes + 1] eligibleAffixes;
+    int[libAffx_maxEligibleAffixes + 1] eligibleWeights;
+    int totalWeight;
+    int cumulativeWeight;
+    int randomWeight;
+    int slotRarity;
+    int slotAffixCount;
+    int i;
+    int random;
+    bool rarityHasUpgraded;
     int repeat = 3;
+    int currentMap = libAffx_GetMapID(libCore_gv_mAPMapStringID);
 
     slotRarity = rarity;
 
     while (true) {
         slotAffixCount = 0;
+        totalWeight = 0;
+        cumulativeWeight = 0;
         
         // Search for eligible affixes
         for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
-            eligible = true;
+            // Is blank, is disabled, cannot roll, or is banned
             if (libAffx_affixes[i].name == "" || !libAffx_affixes[i].enabled || libAffx_affixes[i].cannotRoll || libAffx_affixes[i].banned) {
                 continue;
             }
-            if (slotAffixCount > libAffx_rollMax) {
-                //continue; no cap for now
-            }
 
-            if (libAffx_affixes[i].requiredDifficulty != 0 && libAffx_affixes[i].requiredDifficulty > libAffx_difficulty) {
-                continue;
-            }
-            if (libAffx_affixes[i].requiredMapNumber != 0 && libAffx_affixes[i].requiredMapNumber > libAffx_currentRun) {
+            // Check if it has already been seen previously
+            if (libAffx_affixes[i].lastSeen > 0) {
+                libAffx_affixes[i].lastSeen -= 1;
                 continue;
             }
 
-            if (curse && !libAffx_affixes[i].curse || !curse && libAffx_affixes[i].curse) {
-                continue;
-            }
-
-            // Check for affix exclusions and requirements
-            for (i2 = 1; i2 <= libAffx_registeredAffixes; i2 += 1) {
-                if ((libAffx_affixes[i].excludedAffixes[i2] && libAffx_affixes[i2].count > 0) || (libAffx_affixes[i].requiredAffixes[i2] && libAffx_affixes[i2].count < 1 && libAffx_affixes[i2].max != 0 && !libAffx_affixes[i2].requiresMaxStacks) || (libAffx_affixes[i].requiredAffixes[i2] && libAffx_affixes[i2].count < libAffx_affixes[i2].max && libAffx_affixes[i2].max != 0 && libAffx_affixes[i2].requiresMaxStacks) || (libAffx_affixes[i].requiredAffixes[i2] && libAffx_affixes[i2].count <= 0 && libAffx_affixes[i2].max == 0)) {
-                    eligible = false;
-                    break;
-                }
-            }
-            for (i2 = 1; i2 <= libAffx_maxTalentsAdd; i2 += 1) {
-                if (libAffx_affixes[i].requiredTalents[i2] != "" && libAffx_affixes[i].requiredTalents[i2] != null && !PlayerHasTalent(libAffx_player, libAffx_affixes[i].requiredTalents[i2])) {
-                    eligible = false;
-                    break;
-                }
-            }
-            // Check for already rolled affixes
-            for (i2 = 1; i2 <= libAffx_affixSelectionMaxCurrent; i2 += 1) {
-                if (libAffx_rolledAffixes[i2] == i) {
-                    eligible = false;
-                    break;
-                }
-            }
-            if (!eligible) {
-                continue;
-            }
-            // Check for correct Map
-            if (!libAffx_affixes[i].allowedMap[libAffx_GetMapID(libCore_gv_mAPMapStringID)]) {
-                continue;
-            }
-            // Check for correct Hero
-            if (!libAffx_affixes[i].allowedHero[libAffx_playersHeroIndex[libAffx_player]]) {
-                continue;
-            }
             // Check maximum count
             if ((libAffx_affixes[i].count >= libAffx_affixes[i].max) && libAffx_affixes[i].max != 0) {
                 continue;
             }
+
+            // Check boon/curse and rarity requirement
+            if ((curse && !libAffx_affixes[i].curse) || (!curse && libAffx_affixes[i].curse) || (libAffx_affixes[i].rarity != slotRarity && !curse)) {
+                continue;
+            }
+
+            // Check difficulty and round requirements
+            if ((libAffx_affixes[i].minDifficulty != 0 && libAffx_affixes[i].minDifficulty > libAffx_difficulty) || (libAffx_affixes[i].minRound != 0 && libAffx_affixes[i].minRound > libAffx_currentRun)) {
+                continue;
+            }
+            
+            // Check for map and hero requirements
+            if (!libAffx_affixes[i].allowedMap[currentMap] || !libAffx_affixes[i].allowedHero[libAffx_playersHeroIndex[libAffx_player]]) {
+                continue;
+            }
+
             // Check min and max level requirement
             if ((libAffx_affixes[i].minLevel > 0 && level < libAffx_affixes[i].minLevel) || (libAffx_affixes[i].maxLevel > 0 && level > libAffx_affixes[i].maxLevel)) {
                 continue;
             }
-            // Check for rarity
-            if (libAffx_affixes[i].rarity != slotRarity && !curse) {
-                continue;
-            }
-            if (libAffx_affixes[i].lastSeen > 0) {
-                libAffx_affixes[i].lastSeen -= 1;
+
+            // Check for affix exclusions, requirements, talent requirements, and whether it has already rolled
+            if (libAffx_AffixFailsRequirements(i)) {
                 continue;
             }
 
             slotAffixCount += 1;
             eligibleAffixes[slotAffixCount] = i;
             if (curse) {
-                totalWeight += FixedToInt(libAffx_affixes[i].weight / (1 + (libAffx_affixes[i].rarity - 1) * 0.25));
+                eligibleWeights[slotAffixCount] = FixedToInt(libAffx_affixes[i].weight / (1 + (libAffx_affixes[i].rarity - 1) * (libAffx_affixes[i].rarity - 1) * 0.25));
             } else {
-                totalWeight += libAffx_affixes[i].weight;
+                eligibleWeights[slotAffixCount] = libAffx_affixes[i].weight;
             }
+            totalWeight += eligibleWeights[slotAffixCount];
         }
 
         // Shuffle
         if (slotAffixCount > 0) {
-            i2 = RandomInt(1, MaxI(totalWeight, 1));
+            randomWeight = RandomInt(1, MaxI(totalWeight, 1));
             for (i = 1; i <= slotAffixCount; i += 1) {
-                if (curse) {
-                    cumulativeWeight += FixedToInt(libAffx_affixes[eligibleAffixes[i]].weight / (1 + (libAffx_affixes[eligibleAffixes[i]].rarity - 1) * 0.25));
-                } else {
-                    cumulativeWeight += libAffx_affixes[eligibleAffixes[i]].weight;
-                }
-                if (i2 <= cumulativeWeight) {
+                cumulativeWeight += eligibleWeights[i];
+                if (randomWeight <= cumulativeWeight) {
                     libAffx_affixes[eligibleAffixes[i]].lastSeen = 3;
                     return eligibleAffixes[i];
                 }
             }
-            i2 = RandomInt(1, slotAffixCount);
-            libAffx_affixes[eligibleAffixes[i2]].lastSeen = 3;
-            return eligibleAffixes[i2];
+            random = RandomInt(1, slotAffixCount);
+            libAffx_affixes[eligibleAffixes[random]].lastSeen = 3;
+            return eligibleAffixes[random];
         }
 
         // Upgrade rarity if no affixes are found, and then downgrade if no upgraded rarity affixes are found
-        if (!preventUpgrade) {
-            if (slotRarity < libAffx_rarityLegendary && upgradeRarity) {
+        if (curse) {
+            return 0;
+        } else if (!lockRarity) {
+            if (slotRarity < libAffx_rarityLegendary && !rarityHasUpgraded) {
                 slotRarity += 1;
-                upgradeRarity = false;
-                upgradeCount += 1;
-            } else if (upgradeRarity) {
-                upgradeCount += 1;
-                upgradeRarity = false;
+                rarityHasUpgraded = true;
+            } else if (!rarityHasUpgraded) {
+                rarityHasUpgraded = true;
                 slotRarity = MaxI(rarity - 1, libAffx_rarityCommon);
             } else if (slotRarity > libAffx_rarityCommon) {
                 slotRarity -= 1;
@@ -3023,7 +3087,7 @@ int libAffx_RollAffix(int rarity, bool curse, int level, bool preventUpgrade) {
                     return 0;
                 }
             }
-        } else if (preventUpgrade && slotRarity > libAffx_rarityCommon && slotRarity != libAffx_rarityStarter) {
+        } else if (lockRarity && slotRarity > libAffx_rarityCommon && slotRarity != libAffx_rarityStarter) {
             slotRarity -= 1;
         } else {
             if (repeat > 0) {
@@ -3038,12 +3102,15 @@ int libAffx_RollAffix(int rarity, bool curse, int level, bool preventUpgrade) {
 }
 
 bool libAffx_ProcessQueueTimeElapsed_Func (bool testConds, bool runActions) {
+    if (testConds) {
+        if (!libAffx_processingQueue || libAffx_processQueueTimeElapsed > 60) {
+            return false;
+        }
+    }
     if (!runActions) {
         return true;
     }
-    if (libAffx_processQueueTimeElapsed < 600) {
-        libAffx_processQueueTimeElapsed += 0.0625;
-    }
+    libAffx_processQueueTimeElapsed += 0.0625;
     return true;
 }
 void libAffx_ProcessQueueTimeElapsed_Init() {
@@ -3177,7 +3244,7 @@ void libAffx_EnqueueAffix(structref<libAffx_QueuedAffix> queued, int amountToQue
     }
     if (amountToQueue > 0) {
         for (i = 1; i <= amountToQueue; i += 1) {
-            if (libAffx_queueCount >= libAffx_queueMax) {
+            if (libAffx_queueCount >= libAffx_maxQueue) {
                 break;
             }
             libAffx_queueCount += 1;
@@ -3212,7 +3279,7 @@ void libAffx_Enqueue(int choiceCount, int amountToQueue, int rarity, int level, 
 }
 
 void libAffx_QueueBoon(int rarity, int amountToQueue, bool rerollDisabled, bool lockRarity) {
-    libAffx_Enqueue(libAffx_affixSelectionMaxCurrent, amountToQueue, rarity, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), false, lockRarity, rerollDisabled);
+    libAffx_Enqueue(libAffx_currentAffixSelection, amountToQueue, rarity, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), false, lockRarity, rerollDisabled);
 }
 void libAffx_QueueBoonWithChoiceCount(int choiceCount, int rarity, int amountToQueue, bool rerollDisabled, bool lockRarity) {
     libAffx_Enqueue(choiceCount, amountToQueue, rarity, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), false, lockRarity, rerollDisabled);
@@ -3221,7 +3288,7 @@ void libAffx_QueueMythicCurse(int amountToQueue) {
     libAffx_Enqueue(1, amountToQueue, libAffx_rarityMythic, UnitLevel(libGame_gv_players[libAffx_enemy].lv_heroUnit), true, true, true);
 }
 void libAffx_QueueCurse(int amountToQueue, bool rerollDisabled) {
-    libAffx_Enqueue(libAffx_affixSelectionMaxCurrent, amountToQueue, libAffx_rarityCommon, UnitLevel(libGame_gv_players[libAffx_enemy].lv_heroUnit), true, false, rerollDisabled);
+    libAffx_Enqueue(libAffx_currentAffixSelection, amountToQueue, libAffx_rarityCommon, UnitLevel(libGame_gv_players[libAffx_enemy].lv_heroUnit), true, false, rerollDisabled);
 }
 
 void libAffx_BanAffix(int selectionIndex) {
@@ -3243,7 +3310,6 @@ void libAffx_SelectAffix(int selectionIndex) {
         UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/Pick") + TextWithColor(StringExternal("Affix/Name/" + libAffx_affixes[libAffx_rolledAffixes[selectionIndex]].name), libAffx_GetAffixColor(libAffx_rolledAffixes[selectionIndex])) + StringToText("."));
     }
     
-    libAffx_lastSelected = selectionIndex;
     DialogSetVisible(libAffx_dialogAffixSelection, PlayerGroupAll(), false);
     libAffx_AddAffix(libAffx_rolledAffixes[selectionIndex], 1);
     if (!libAffx_showingOwnedAffixes) {
@@ -3261,10 +3327,10 @@ bool libAffx_AffixHotkeyPressedTrigger_Func (bool testConds, bool runActions) {
         if (!libAffx_processingQueue){
             return false;
         }
-        if (libAffx_processQueueTimeElapsed < libAffx_hotkeyDelay) {
+        if (libAffx_processQueueTimeElapsed < libAffx_disableHotkeysDuration) {
             return false;
         }
-        if ((EventKeyPressed() - 3) > libAffx_affixSelectionMaxCurrent) {
+        if ((EventKeyPressed() - 3) > libAffx_currentAffixSelection) {
             return false;
         }
         if ((EventKeyPressed() - 3) > libAffx_currentQueue.choiceCount) {
@@ -3299,11 +3365,11 @@ bool libAffx_AffixSelectedTrigger_Func (bool testConds, bool runActions) {
     int i;
 
     if (testConds) {
-        if (libAffx_processQueueTimeElapsed < libAffx_hotkeyDelay) {
+        if (libAffx_processQueueTimeElapsed < libAffx_disableDialogControlDuration) {
             return false;
         }
         testForButton = false;
-        for (i = 1; i <= libAffx_affixSelectionMax; i += 1) {
+        for (i = 1; i <= libAffx_maxAffixSelection; i += 1) {
             if (EventDialogControl() == libAffx_dialogAffixSelectionButton[i]) {
                 testForButton = true;
             }
@@ -3317,7 +3383,7 @@ bool libAffx_AffixSelectedTrigger_Func (bool testConds, bool runActions) {
     }
     dialogButton = EventDialogControl();
 
-    for (i = 1; i <= libAffx_affixSelectionMax; i += 1) {
+    for (i = 1; i <= libAffx_maxAffixSelection; i += 1) {
         if (dialogButton == libAffx_dialogAffixSelectionButton[i]) {
             selectedButton = i;
         }
@@ -3336,20 +3402,21 @@ void libAffx_AffixSelectedTrigger_Init() {
 }
 bool libAffx_DialogIsBanButton(int dialog) {
     int i;
-    for (i = 1; i <= libAffx_affixSelectionMax; i += 1) {
+    for (i = 1; i <= libAffx_maxAffixSelection; i += 1) {
         if (dialog == libAffx_dialogAffixBanButton[i]) {
             return true;
         }
     }
     return false;
 }
+
 bool libAffx_AffixBanTrigger_Func (bool testConds, bool runActions) {
     int dialogButton = EventDialogControl();
     int selectedIndex;
     int i;
 
     if (testConds) {
-        if (libAffx_processQueueTimeElapsed < libAffx_hotkeyDelay) {
+        if (libAffx_processQueueTimeElapsed < libAffx_disableDialogControlDuration) {
             return false;
         }
         if (libAffx_bans <= 0) {
@@ -3367,7 +3434,7 @@ bool libAffx_AffixBanTrigger_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    for (i = 1; i <= libAffx_affixSelectionMax; i += 1) {
+    for (i = 1; i <= libAffx_maxAffixSelection; i += 1) {
         if (dialogButton == libAffx_dialogAffixBanButton[i]) {
             selectedIndex = i;
         }
@@ -3419,14 +3486,14 @@ void libAffx_AffixRerollTrigger_Init() {
 
 bool libAffx_ObjectiveWonTrigger_Func (bool testConds, bool runActions) {
     if (testConds) {
-        if (libAffx_objectivesWon >= libAffx_maxAffixesFromObjectives) {
+        if (libAffx_objectivesWonThisGame >= libAffx_maxAffixesFromObjectives) {
             return false;
         }
     }
     if (!runActions) {
         return true;
     }
-    libAffx_objectivesWon += 1;
+    libAffx_objectivesWonThisGame += 1;
     libAffx_objectivesWonCounter += 1;
     UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseToBoon"));
 
@@ -3737,8 +3804,8 @@ void libAffx_ApplyDifficulty () {
 
     if (libAffx_difficulty == libAffx_difficultyMythic) {
         modifier = 0.04;
-        libAffx_difficultyXPMod = 0.01 * libAffx_currentRun;
-        libGame_teamChaosXPMod += libAffx_difficultyXPMod;
+        libAffx_mythicDifficultyXPModifier = 0.01 * libAffx_currentRun;
+        libGame_teamChaosXPMod += libAffx_mythicDifficultyXPModifier;
         scaledModifier = (modifier + 0.01 * libAffx_currentRun) * libAffx_currentRun;
         libAffx_SetAffix(libAffx_GetAffixId("DifficultyMythic"), libAffx_currentRun);
         libAffx_UnitBehaviorAddCriteriaAll("AffixDifficultyBehavior", 1, libAffx_filterDifficulty);
@@ -3813,10 +3880,23 @@ bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
                     libAffx_QueueBoon(libAffx_rarityRare, 1, false, false);
                 }
             }
+            if (libAffx_boonsQueued > 0) {
+                if (libAffx_boonsQueued >= 3) {
+                    UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/BoonNextGame3"));
+                } else if (libAffx_boonsQueued == 2) {
+                    UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/BoonNextGame2"));
+                } else if (libAffx_boonsQueued == 1) {
+                    UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/BoonNextGame1"));
+                }
+                libAffx_QueueBoon(libAffx_rarityCommon, libAffx_boonsQueued, false, false);
+                libAffx_boonsQueued = 0;
+            }
         } else if (level == 4 || level == 7) {
             libAffx_QueueBoon(libAffx_rarityCommon, 1, false, false);
+            libAffx_boonsNextGame -= 1;
         } else if (level == 10) {
-            libAffx_QueueBoon(libAffx_rarityCommon, libAffx_boonsLevel10, false, false);
+            libAffx_QueueBoon(libAffx_rarityCommon, 1, false, false);
+            libAffx_boonsNextGame -= 1;
         }
         libAffx_startingBoonsQueued = true;
     } else if (player == libAffx_enemy) {
@@ -3826,9 +3906,11 @@ bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
                 libAffx_Wait(0.0625, c_timeGame);
             }
             libAffx_ApplyDifficulty();
-            libAffx_QueueCurse(libAffx_cursesLevel1, false);
+            libAffx_QueueCurse(1, false);
             if (libAffx_cursesQueued > 0) {
-                if (libAffx_cursesQueued >= 2) {
+                if (libAffx_cursesQueued >= 3) {
+                    UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseNextGame3"));
+                } else if (libAffx_cursesQueued == 2) {
                     UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseNextGame2"));
                 } else if (libAffx_cursesQueued == 1) {
                     UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseNextGame1"));
@@ -3840,7 +3922,7 @@ bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
             while (!libAffx_startingBoonsQueued) {
                 libAffx_Wait(0.0625, c_timeGame);
             }
-            if (level == 4 || level == 7) {
+            if (level == 4 || level == 7 || level == 10) {
                 libAffx_cursesNextGame -= 1;
             }
             libAffx_QueueCurse(1, false);
@@ -4042,12 +4124,12 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
     libAffx_ShowTalent("DoNothing20", false);
     
     if (libAffx_debug_disableHeroSelection) {
-        libGame_gv_players[libAffx_player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_playerHero);
+        libGame_gv_players[libAffx_player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player1Hero);
         libCore_gf_DataLoadHeroDataIntoIndex(libCore_gf_GetHeroFromIndex(libGame_gv_players[libAffx_player].lv_heroIndex), libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickSkin(libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickMount(libAffx_player);
         PlayerSetSpray(libAffx_player, "RandomSpray");
-        libAffx_playersHeroIndex[libAffx_player] = libCore_gf_GetIndexFromHero(libAffx_debug_playerHero);
+        libAffx_playersHeroIndex[libAffx_player] = libCore_gf_GetIndexFromHero(libAffx_debug_player1Hero);
         libGame_gv_pickingHeroesCallback = libAffx_HeroSelectionTrigger;
     } else if (libAffx_playerHeroIndexLoaded == 0) {
         libGame_gv_pickingHeroesCallback = libAffx_CurateHeroesTrigger;
@@ -4072,7 +4154,7 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
         libAffx_bans += libAffx_bansPerGame;
     }
 
-    if (libAffx_debug_enableTryMeMode2 || libAffx_debug_enableCheatCommands) {
+    if (libAffx_DEBUG || libAffx_debug_enableTryMeMode2 || libAffx_debug_enableCheatCommands) {
         UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("Debug mode enabled!"));
     }
     
@@ -4092,6 +4174,14 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
             GameSetNextMap("heroes/singleplayermaps/(10)trymemode.stormmap");
             KickFromGame(PlayerGroupAll());
         }
+    }
+    
+    while (!libAffx_playersFirstSpawnIn[libAffx_player]) {
+        libAffx_Wait(0.0625, c_timeGame);
+    }
+    if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
+        libAffx_UnitBehaviorAddCriteriaAll("TowersOfDoomMax1DamageClampBehavior", 1, libAffx_filterAlliedCore);
+        libAffx_UnitBehaviorAddCriteriaAll("TowersOfDoomMax1DamageClampBehavior", 1, libAffx_filterEnemyCore);
     }
 
     return true;
@@ -4136,6 +4226,8 @@ void libAffx_InitTriggers () {
     libAffx_ChenTriggers_Init();
     libAffx_LostVikingsTriggers_Init();
     libAffx_RexxarTriggers_Init();
+    libAffx_NovaTriggers_Init();
+    libAffx_SamuroTriggers_Init();
 
     TriggerEnable(libGDHL_gt_HeroSylvanasPossessionRewire, true);
     libAffx_pauseVLSK = TriggerCreate("libVLSK_PauseTrigger_Func");
@@ -4166,11 +4258,20 @@ void libAffx_AffixInitBlank() {
 }
 
 void libAffx_AffixAddExclusion(int affix, int excludeAffix) {
-    libAffx_affixes[affix].excludedAffixes[excludeAffix] = true;
-    libAffx_affixes[excludeAffix].excludedAffixes[affix] = true;
+    if (libAffx_affixes[affix].excludedCount >= libAffx_maxRequirements) {
+        libAffx_DebugPrint("Reached maximum exclusion requirements for affix " + libAffx_affixes[affix].name);
+        return;
+    }
+    libAffx_affixes[affix].excludedCount += 1;
+    libAffx_affixes[affix].excludedAffixes[libAffx_affixes[affix].excludedCount] = excludeAffix;
 }
 void libAffx_AffixAddRequirement(int affix, int requireAffix) {
-    libAffx_affixes[affix].requiredAffixes[requireAffix] = true;
+    if (libAffx_affixes[affix].requiredCount >= libAffx_maxRequirements) {
+        libAffx_DebugPrint("Reached maximum requirements for affix " + libAffx_affixes[affix].name);
+        return;
+    }
+    libAffx_affixes[affix].requiredCount += 1;
+    libAffx_affixes[affix].requiredAffixes[libAffx_affixes[affix].requiredCount] = requireAffix;
 }
 void libAffx_AffixSetInfinite(int affix, bool infinite) {
     if (infinite) {
@@ -4417,6 +4518,13 @@ void libAffx_InitVariables () {
         return;
     }
 
+    if (libAffx_DEBUG) {
+        libAffx_debug_enableTryMeMode2 = true;
+        libAffx_debug_enableCheatCommands = true;
+        libAffx_debug_disableHeroSelection = true;
+        libAffx_debug_enableDebugLogging = true;
+    }
+
     libAffx_filterAllAllies.unitFilter = UnitFilter(0, 0, (1 << c_targetFilterNeutral) | (1 << c_targetFilterEnemy) | (1 << c_targetFilterCreep) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)));
     libAffx_AddExcludedUnitTypeFilter(libAffx_filterAllAllies, "AnubarakCocoonNormal");
     libAffx_AddExcludedUnitTypeFilter(libAffx_filterAllAllies, "AnubarakCocoonFat");
@@ -4458,7 +4566,7 @@ void libAffx_InitVariables () {
     libAffx_filterEnemyMinions.requiredPlayer = libAffx_teamChaos;
     
 
-    libAffx_objectivesWon = 0;
+    libAffx_objectivesWonThisGame = 0;
     libAffx_registeredAffixes = 0;
     libAffx_currentRun = 0;
     libAffx_gamePaused = false;
@@ -4466,7 +4574,8 @@ void libAffx_InitVariables () {
     libAffx_rerolls = 0;
     libAffx_rerollsCurse = 0;
     libAffx_bans = 0;
-    libAffx_cursesNextGame = 2;
+    libAffx_boonsNextGame = 3;
+    libAffx_cursesNextGame = 3;
     libAffx_processingQueue = false;
     libAffx_showingOwnedAffixes = false;
     libAffx_playersFirstSpawnIn[libAffx_player] = false;
@@ -4502,22 +4611,37 @@ void libAffx_InitAffixes () {
     int i2;
     int affixCountLoaded;
     string affixInstance;
-    string affixHeroSpecific;
-    string affixMapSpecific;
-    string affixHeroTags;
-    string affixString;
-    int affixCatalogMod1;
-    int affixCatalogMod2;
-    string affixCatalogMod3;
-    string affixCatalogMod4;
-    string affixCatalogMod5;
-    int affixBehavior1;
-    int affixBehavior2;
-    string affixBehavior3;
-    string affixTrigger1;
-    string affixTrigger2;
-    string affixTrigger3;
-    int affixInt;
+    string cooldownLink;
+    string heroTooltip;
+    string heroTooltipLowerCase;
+    string questRetain;
+    string questRetainBehavior;
+    string questRetainModifier;
+    string heroSpecific;
+    string heroTags;
+    string heroExclusion;
+    string mapSpecific;
+    string mapExclusion;
+    string talentsAdd;
+    string talentsDisable;
+    string talentsShow;
+    string talentsRequired;
+    string catalogModification;
+    int catalogModificationPlayer;
+    int catalogModificationType;
+    string catalogModificationOperation;
+    string catalogModificationReference;
+    string catalogModificationValue;
+    string behavior;
+    int behaviorPlayer;
+    int behaviorAffectedByCount;
+    string behaviorName;
+    string behaviorTags;
+    string triggerAffix;
+    string triggerType;
+    string triggerName;
+    string triggerArg1;
+    int excludeChoGall;
     string affixExcluded;
     string affixRequired;
 
@@ -4527,14 +4651,17 @@ void libAffx_InitAffixes () {
     
     libAffx_AffixInitBlank();
 
-    libAffx_DebugPrint("Total number of registered boons and curses: " + IntToString(UserDataInstanceCount("Affix")));
     affixCountLoaded = UserDataInstanceCount("Affix");
+    libAffx_DebugPrint("Total number of registered boons and curses: " + IntToString(affixCountLoaded));
+    if (affixCountLoaded > libAffx_maxAffixes) {
+        libAffx_DebugPrint("Registered affix count exceeds the maximum! Limitting to " + IntToString(libAffx_maxAffixes));
+        affixCountLoaded = libAffx_maxAffixes;
+    }
 
     for (i = 1; i <= affixCountLoaded; i += 1) {
-        if (i > libAffx_affixMax) {
-            return;
-        }
         affixInstance = UserDataInstance("Affix", i);
+
+        libAffx_affixes[i].count = 0;
         libAffx_affixes[i].name = affixInstance;
         libAffx_affixes[i].rarity = libAffx_GetRarity(UserDataGetString("Affix", affixInstance, "Rarity", 1));
         libAffx_affixes[i].icon = UserDataGetString("Affix", affixInstance, "Icon", 1);
@@ -4543,300 +4670,280 @@ void libAffx_InitAffixes () {
         libAffx_affixes[i].maxLevel = UserDataGetInt("Affix", affixInstance, "LevelMax", 1);
         libAffx_affixes[i].max = UserDataGetInt("Affix", affixInstance, "Max", 1);
         libAffx_affixes[i].skipCurses = UserDataGetInt("Affix", affixInstance, "SkipCurses", 1);
-        libAffx_affixes[i].requiredDifficulty = UserDataGetInt("Affix", affixInstance, "RequiredDifficulty", 1);
-        libAffx_affixes[i].requiredMapNumber = UserDataGetInt("Affix", affixInstance, "RequiredMapNumber", 1);
+        libAffx_affixes[i].minDifficulty = UserDataGetInt("Affix", affixInstance, "MinimumDifficulty", 1);
+        libAffx_affixes[i].minRound = UserDataGetInt("Affix", affixInstance, "MinimumRound", 1);
         if (UserDataGetInt("Affix", affixInstance, "Quest", 1) == 1) {
             libAffx_affixes[i].quest.isQuest = true;
             libAffx_affixes[i].quest.questDone = false;
-        } else {
-            libAffx_affixes[i].quest.isQuest = false;
         }
         if (libAffx_IntToBoolean(UserDataGetInt("Affix", affixInstance, "QuestPersists", 1))) {
             libAffx_affixes[i].quest.questProgressPersists = true;
-        } else {
-            libAffx_affixes[i].quest.questProgressPersists = false;
         }
         if (UserDataGetInt("Affix", affixInstance, "Enabled", 1) == 1) {
             libAffx_affixes[i].enabled = true;
-        } else {
-            libAffx_affixes[i].enabled = false;
         }
-        if (UserDataGetInt("Affix", affixInstance, "Curse", 1) == 3) {
-            libAffx_affixes[i].challengeCurse = true;
+        if (UserDataGetInt("Affix", affixInstance, "Curse", 1) >= 1) {
             libAffx_affixes[i].curse = true;
-        } else if (UserDataGetInt("Affix", affixInstance, "Curse", 1) == 2) {
-            libAffx_affixes[i].mythicCurse = true;
-            libAffx_affixes[i].curse = true;
-            libAffx_affixes[i].cannotRoll = true;
-        } else if (UserDataGetInt("Affix", affixInstance, "Curse", 1) == 1) {
-            libAffx_affixes[i].curse = true;
-        } else {
-            libAffx_affixes[i].curse = false;
         }
-        if (UserDataGetString("Affix", affixInstance, "CooldownLink", 1) != "" && UserDataGetString("Affix", affixInstance, "CooldownLink", 1) != null) {
-            libAffx_affixes[i].cooldownLink = UserDataGetString("Affix", affixInstance, "CooldownLink", 1);
+        cooldownLink = UserDataGetString("Affix", affixInstance, "CooldownLink", 1);
+        if (cooldownLink != "" && cooldownLink != null) {
+            libAffx_affixes[i].cooldownLink = cooldownLink;
         }
         if (UserDataGetInt("Affix", affixInstance, "CooldownHidden", 1) == 1) {
             libAffx_affixes[i].cooldownHidden = true;
-        } else {
-            libAffx_affixes[i].cooldownHidden = false;
         }
-        if (UserDataGetInt("Affix", affixInstance, "ExcludeChoGall", 1) == 2) {
-            libAffx_affixes[i].excludeChoGallForAIEffect = true;
+        if (UserDataGetInt("Affix", affixInstance, "ExcludeChoGall", 1) == 1) {
             libAffx_affixes[i].excludeChoGall = true;
-        } else if (UserDataGetInt("Affix", affixInstance, "ExcludeChoGall", 1) == 1) {
-            libAffx_affixes[i].excludeChoGall = true;
-        } else {
-            libAffx_affixes[i].excludeChoGall = false;
         }
         if (UserDataGetInt("Affix", affixInstance, "NoRoll", 1) == 1) {
             libAffx_affixes[i].cannotRoll = true;
-        } else {
-            libAffx_affixes[i].cannotRoll = false;
         }
         if (UserDataGetInt("Affix", affixInstance, "AffixesRequiredMax", 1) == 1) {
             libAffx_affixes[i].requiresMaxStacks = true;
-        } else {
-            libAffx_affixes[i].requiresMaxStacks = false;
         }
         for (i2 = 1; i2 <= libAffx_maxHeroes; i2 += 1) {
-            affixString = UserDataGetString("Affix", affixInstance, "HeroTooltip", i2);
-            if (affixString != "" && affixString != null) {
-                if (StringCase(affixString, false) == "nomana") {
-                    libAffx_affixes[i].manalessTooltip = true;
+            heroTooltip = UserDataGetString("Affix", affixInstance, "HeroTooltip", i2);
+            heroTooltipLowerCase = StringCase(heroTooltip, false);
+            if (heroTooltip != "" && heroTooltip != null) {
+                if (heroTooltipLowerCase == "nomana") {
+                    libAffx_affixes[i].customTooltipForNonManaUsers = true;
                 } else {
-                    libAffx_affixes[i].heroTooltip[libCore_gf_GetIndexFromHero(affixString)] = true;
+                    if (heroTooltipLowerCase == "chogall" || heroTooltipLowerCase == "cho'gall") {
+                        libAffx_affixes[i].customTooltipForHero[libCore_gf_GetIndexFromHero("Cho")] = true;
+                        libAffx_affixes[i].customTooltipForHero[libCore_gf_GetIndexFromHero("Gall")] = true;
+                    } else {
+                        libAffx_affixes[i].customTooltipForHero[libCore_gf_GetIndexFromHero(heroTooltip)] = true;
+                    }
                 }
             }
         }
-        for (i2 = 1; i2 <= libAffx_maxQuestRetain; i2 += 1) {
-            affixString = UserDataGetString("Affix", affixInstance, "QuestRetain", i2);
-            if (affixString != "" && affixString != null) {
-                libAffx_affixes[i].questRetain[i2].tokenBehavior = StringWord(affixString, 1);
-                if (StringWord(affixString, 2) != "" && StringWord(affixString, 2) != null) {
-                    libAffx_affixes[i].questRetain[i2].retainModifier = StringToFixed(StringWord(affixString, 2));
-                } else {
-                    libAffx_affixes[i].questRetain[i2].retainModifier = 1;
+        for (i2 = 1; i2 <= libAffx_maxQuests; i2 += 1) {
+            questRetain = UserDataGetString("Affix", affixInstance, "QuestRetain", i2);
+            if (questRetain != "" && questRetain != null) {
+                questRetainBehavior = StringWord(questRetain, 1);
+                questRetainModifier = StringWord(questRetain, 2);
+                libAffx_affixes[i].questRetain[i2].tokenBehavior = questRetainBehavior;
+                libAffx_affixes[i].questRetain[i2].retainModifier = 1;
+                if (questRetainModifier != "" && questRetainModifier != null) {
+                    libAffx_affixes[i].questRetain[i2].retainModifier = StringToFixed(questRetainModifier);
                 }
             }
         }
-        libAffx_affixes[i].count = 0;
-        affixHeroSpecific = UserDataGetString("Affix", affixInstance, "HeroSpecific", 1);
-        affixHeroTags = UserDataGetString("Affix", affixInstance, "HeroTags", 1);
+        heroSpecific = UserDataGetString("Affix", affixInstance, "HeroSpecific", 1);
+        heroTags = UserDataGetString("Affix", affixInstance, "HeroTags", 1);
         libAffx_AffixSetHeroAll(i, true);
-        if (affixHeroSpecific != "" && affixHeroSpecific != null) {
-            libAffx_AffixSetHeroSpecific(i, affixHeroSpecific);
+        if (heroSpecific != "" && heroSpecific != null) {
+            libAffx_AffixSetHeroSpecific(i, heroSpecific);
             libAffx_affixes[i].weight *= 2;
         } else {
-            if (affixHeroTags != "" && affixHeroTags != null) {
-                affixHeroTags = ";" + affixHeroTags + ";";
-                if (StringContains(affixHeroTags, ";mana;", c_stringAnywhere, c_stringNoCase)) {
+            if (heroTags != "" && heroTags != null) {
+                heroTags = ";" + heroTags + ";";
+                if (StringContains(heroTags, ";mana;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_AffixSetHeroAll(i, false);
                     libAffx_AffixSetHeroUsesMana(i, true);
-                } else if (StringContains(affixHeroTags, ";!mana;", c_stringAnywhere, c_stringNoCase)) {
+                } else if (StringContains(heroTags, ";!mana;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_AffixSetHeroAll(i, true);
                     libAffx_AffixSetHeroUsesMana(i, false);
                 }
-                if (StringContains(affixHeroTags, ";melee;", c_stringAnywhere, c_stringNoCase)) {
+                if (StringContains(heroTags, ";melee;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_AffixSetHeroAllMelee(i, true);
-                } else if (StringContains(affixHeroTags, ";!melee;", c_stringAnywhere, c_stringNoCase)) {
+                } else if (StringContains(heroTags, ";!melee;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_AffixSetHeroAllMelee(i, false);
                 }
-                if (StringContains(affixHeroTags, ";ranged;", c_stringAnywhere, c_stringNoCase)) {
+                if (StringContains(heroTags, ";ranged;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_AffixSetHeroAllRanged(i, true);
-                } else if (StringContains(affixHeroTags, ";!ranged;", c_stringAnywhere, c_stringNoCase)) {
+                } else if (StringContains(heroTags, ";!ranged;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_AffixSetHeroAllRanged(i, false);
                 }
-                if (StringContains(affixHeroTags, ";all;", c_stringAnywhere, c_stringNoCase)) {
+                if (StringContains(heroTags, ";all;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_AffixSetHeroAll(i, true);
-                } else if (StringContains(affixHeroTags, ";!all;", c_stringAnywhere, c_stringNoCase)) {
+                } else if (StringContains(heroTags, ";!all;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_AffixSetHeroAll(i, false);
                 }
-                if (StringContains(affixHeroTags, ";starter;", c_stringAnywhere, c_stringNoCase)) {
+                if (StringContains(heroTags, ";starter;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_AffixSetHeroAll(i, false);
                     libAffx_AffixSetHeroStartersOnly(i, true);
-                } else if (StringContains(affixHeroTags, ";!starter;", c_stringAnywhere, c_stringNoCase)) {
+                } else if (StringContains(heroTags, ";!starter;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_AffixSetHeroAll(i, true);
                     libAffx_AffixSetHeroStartersOnly(i, false);
                 }
             }
             for (i2 = 1; i2 <= libAffx_maxHeroes; i2 += 1) {
-                affixString = UserDataGetString("Affix", affixInstance, "HeroesExcluded", i2);
-                if (affixString != "" && affixString != null) {
-                    libAffx_AffixSetHero(i, affixString, false);
+                heroExclusion = UserDataGetString("Affix", affixInstance, "HeroesExcluded", i2);
+                if (heroExclusion != "" && heroExclusion != null) {
+                    libAffx_AffixSetHero(i, heroExclusion, false);
                 }
             }
         }
-        affixMapSpecific = UserDataGetString("Affix", affixInstance, "MapSpecific", 1);
         libAffx_AffixSetMapAll(i, true);
-        if (affixMapSpecific) {
-            libAffx_AffixSetMapSpecific(i, libAffx_GetMapID(affixMapSpecific));
+        mapSpecific = UserDataGetString("Affix", affixInstance, "MapSpecific", 1);
+        if (mapSpecific != "" && mapSpecific != null) {
+            libAffx_AffixSetMapSpecific(i, libAffx_GetMapID(mapSpecific));
         } else {
             for (i2 = 1; i2 <= libAffx_maxMaps; i2 += 1) {
-                affixString = UserDataGetString("Affix", affixInstance, "MapsExcluded", i2);
-                if (affixString != "" && affixString != null) {
-                    libAffx_AffixSetMap(i, libAffx_GetMapID(affixString), false);
+                mapExclusion = UserDataGetString("Affix", affixInstance, "MapsExcluded", i2);
+                if (mapExclusion != "" && mapExclusion != null) {
+                    libAffx_AffixSetMap(i, libAffx_GetMapID(mapExclusion), false);
                 }
             }
         }
-        for (i2 = 1; i2 <= libAffx_maxTalentsAdd; i2 += 1) {
-            affixString = UserDataGetString("Affix", affixInstance, "TalentsAdd", i2);
-            if (affixString != "" && affixString != null) {
-                libAffx_affixes[i].addTalents[i2] = affixString;
+        for (i2 = 1; i2 <= libAffx_maxTalents; i2 += 1) {
+            talentsAdd = UserDataGetString("Affix", affixInstance, "TalentsAdd", i2);
+            talentsDisable = UserDataGetString("Affix", affixInstance, "TalentsDisable", i2);
+            talentsShow = UserDataGetString("Affix", affixInstance, "TalentsShow", i2);
+            talentsRequired = UserDataGetString("Affix", affixInstance, "TalentsRequired", i2);
+            if (talentsAdd != "" && talentsAdd != null) {
+                libAffx_affixes[i].addTalents[i2] = talentsAdd;
             }
-            affixString = UserDataGetString("Affix", affixInstance, "TalentsDisable", i2);
-            if (affixString != "" && affixString != null) {
-                libAffx_affixes[i].disableTalents[i2] = affixString;
+            if (talentsDisable != "" && talentsDisable != null) {
+                libAffx_affixes[i].disableTalents[i2] = talentsDisable;
             }
-            affixString = UserDataGetString("Affix", affixInstance, "TalentsShow", i2);
-            if (affixString != "" && affixString != null) {
-                libAffx_affixes[i].showTalents[i2] = affixString;
-                libAffx_ShowTalent(affixString, false);
+            if (talentsShow != "" && talentsShow != null) {
+                libAffx_affixes[i].showTalents[i2] = talentsShow;
+                libAffx_ShowTalent(talentsShow, false);
             }
-            affixString = UserDataGetString("Affix", affixInstance, "TalentsRequired", i2);
-            if (affixString != "" && affixString != null) {
-                libAffx_affixes[i].requiredTalents[i2] = affixString;
+            if (talentsRequired != "" && talentsRequired != null) {
+                libAffx_affixes[i].requiredTalents[i2] = talentsRequired;
+                libAffx_affixes[i].requiredTalentsCount += 1;
             }
         }
-        // Catalog modification: <player> <catalog type> <operation> <reference> <value>
-        for (i2 = 1; i2 <= libAffx_maxCatalogModification; i2 += 1) {
-            affixString = UserDataGetString("Affix", affixInstance, "CatalogModification", i2);
-            if (affixString != "" && affixString != null) {
-                affixCatalogMod1 = StringToInt(StringWord(affixString, 1));
-                affixCatalogMod2 = StringToInt(StringWord(affixString, 2));
-                affixCatalogMod3 = StringWord(affixString, 3);
-                affixCatalogMod4 = StringWord(affixString, 4);
-                affixCatalogMod5 = StringWord(affixString, 5);
-                if (affixCatalogMod3 != "" && affixCatalogMod3 != null && affixCatalogMod4 != "" && affixCatalogMod4 != null && affixCatalogMod5 != "" && affixCatalogMod5 != null) {
-                    if (affixCatalogMod1 <= 12 && affixCatalogMod1 >= 0) {
-                        libAffx_affixes[i].catalogModifications[i2].player = affixCatalogMod1;
-                    } else {
-                        libAffx_affixes[i].catalogModifications[i2].player = 0;
+        for (i2 = 1; i2 <= libAffx_maxCatalogModifications; i2 += 1) {
+            catalogModification = UserDataGetString("Affix", affixInstance, "CatalogModification", i2);
+            if (catalogModification != "" && catalogModification != null) {
+                catalogModificationPlayer = StringToInt(StringWord(catalogModification, 1));
+                catalogModificationType = StringToInt(StringWord(catalogModification, 2));
+                catalogModificationOperation = StringCase(StringWord(catalogModification, 3), false);
+                catalogModificationReference = StringWord(catalogModification, 4);
+                catalogModificationValue = StringWord(catalogModification, 5);
+                if (catalogModificationOperation != "" && catalogModificationOperation != null && catalogModificationReference != "" && catalogModificationReference != null && catalogModificationValue != "" && catalogModificationValue != null) {
+                    libAffx_affixes[i].catalogModifications[i2].player = 0;
+                    libAffx_affixes[i].catalogModifications[i2].type = libAffx_catalogTypeFlat;
+                    libAffx_affixes[i].catalogModifications[i2].operation = c_upgradeOperationSet;
+                    libAffx_affixes[i].catalogModifications[i2].reference = catalogModificationReference;
+                    libAffx_affixes[i].catalogModifications[i2].value = StringToFixed(catalogModificationValue);
+                    if (catalogModificationPlayer <= 12 && catalogModificationPlayer >= 0) {
+                        libAffx_affixes[i].catalogModifications[i2].player = catalogModificationPlayer;
                     }
-                    if (affixCatalogMod2 != 0) {
-                        libAffx_affixes[i].catalogModifications[i2].type = affixCatalogMod2;
-                    } else {
-                        libAffx_affixes[i].catalogModifications[i2].type = libAffx_catalogTypeFlat;
+                    if (catalogModificationType != 0) {
+                        libAffx_affixes[i].catalogModifications[i2].type = catalogModificationType;
                     }
-                    if (StringCase(affixCatalogMod3, false) == "add" || affixCatalogMod3 == "0") {
+                    if (catalogModificationOperation == "add" || catalogModificationOperation == "+") {
                         libAffx_affixes[i].catalogModifications[i2].operation = c_upgradeOperationAdd;
-                    } else if (StringCase(affixCatalogMod3, false) == "subtract" || affixCatalogMod3 == "1") {
+                    } else if (catalogModificationOperation == "subtract" || catalogModificationOperation == "-") {
                         libAffx_affixes[i].catalogModifications[i2].operation = c_upgradeOperationSubtract;
-                    } else if (StringCase(affixCatalogMod3, false) == "multiply" || StringCase(affixCatalogMod3, false) == "mult" || affixCatalogMod3 == "4") {
+                    } else if (catalogModificationOperation == "multiply" || catalogModificationOperation == "mult" || catalogModificationOperation == "*" || catalogModificationOperation == "x") {
                         libAffx_affixes[i].catalogModifications[i2].operation = c_upgradeOperationMultiply;
-                    } else if (StringCase(affixCatalogMod3, false) == "divide" || affixCatalogMod3 == "5") {
+                    } else if (catalogModificationOperation == "divide" || catalogModificationOperation == "/") {
                         libAffx_affixes[i].catalogModifications[i2].operation = c_upgradeOperationDivide;
-                    } else if (StringCase(affixCatalogMod3, false) == "set" || affixCatalogMod3 == "6") {
-                        libAffx_affixes[i].catalogModifications[i2].operation = c_upgradeOperationSet;
-                    } else {
-                        libAffx_affixes[i].catalogModifications[i2].operation = c_upgradeOperationSet;
                     }
-                    libAffx_affixes[i].catalogModifications[i2].reference = affixCatalogMod4;
-                    libAffx_affixes[i].catalogModifications[i2].value = StringToFixed(affixCatalogMod5);
                 }
             }
         }
-        // Behavior: <player> <affected by count?> <behavior> (tags)
-        for (i2 = 1; i2 <= libAffx_maxBehavior; i2 += 1) {
-            affixString = UserDataGetString("Affix", affixInstance, "Behavior", i2);
-            if (affixString != "" && affixString != null) {
-                affixBehavior1 = StringToInt(StringWord(affixString, 1));
-                affixBehavior2 = StringToInt(StringWord(affixString, 2));
-                affixBehavior3 = StringWord(affixString, 3);
-                affixTrigger1 = StringWord(affixString, 4);
-                if (affixBehavior1 <= 12 && affixBehavior1 >= 0) {
-                    libAffx_affixes[i].behaviors[i2].player = affixBehavior1;
-                } else {
-                    libAffx_affixes[i].behaviors[i2].player = 0;
+        for (i2 = 1; i2 <= libAffx_maxBehaviors; i2 += 1) {
+            behavior = UserDataGetString("Affix", affixInstance, "Behavior", i2);
+            if (behavior != "" && behavior != null) {
+                behaviorPlayer = StringToInt(StringWord(behavior, 1));
+                behaviorAffectedByCount = StringToInt(StringWord(behavior, 2));
+                behaviorName = StringWord(behavior, 3);
+                behaviorTags = ";" + StringWord(behavior, 4) + ";";
+
+                libAffx_affixes[i].behaviors[i2].player = 0;
+                libAffx_affixes[i].behaviors[i2].behavior = behaviorName;
+                libAffx_affixes[i].behaviors[i2].affectedByCount = false;
+                if (behaviorPlayer <= 12 && behaviorPlayer >= 0) {
+                    libAffx_affixes[i].behaviors[i2].player = behaviorPlayer;
                 }
-                if (affixBehavior2 == 1) {
+                if (behaviorAffectedByCount >= 1) {
                     libAffx_affixes[i].behaviors[i2].affectedByCount = true;
-                } else {
-                    libAffx_affixes[i].behaviors[i2].affectedByCount = false;
                 }
-                affixTrigger1 = ";" + affixTrigger1 + ";";
-                if (StringContains(affixTrigger1, ";mana;", c_stringAnywhere, c_stringNoCase)) {
+                if (StringContains(behaviorTags, ";mana;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_affixes[i].behaviors[i2].onlyManaUsers = true;
-                } else if (StringContains(affixTrigger1, ";!mana;", c_stringAnywhere, c_stringNoCase)) {
+                } else if (StringContains(behaviorTags, ";!mana;", c_stringAnywhere, c_stringNoCase)) {
                     libAffx_affixes[i].behaviors[i2].disallowManaUsers = true;
                 }
-                libAffx_affixes[i].behaviors[i2].behavior = affixBehavior3;
             }
-        }
-        for (i2 = 1; i2 <= libAffx_maxBehavior; i2 += 1) {
-            affixString = UserDataGetString("Affix", affixInstance, "RemoveBehavior", i2);
-            if (affixString != "" && affixString != null) {
-                affixBehavior1 = StringToInt(StringWord(affixString, 1));
-                affixBehavior3 = StringWord(affixString, 2);
-                if (affixBehavior1 <= 12 && affixBehavior1 >= 0) {
-                    libAffx_affixes[i].removeBehaviors[i2].player = affixBehavior1;
-                } else {
-                    libAffx_affixes[i].removeBehaviors[i2].player = 0;
+            behavior = UserDataGetString("Affix", affixInstance, "RemoveBehavior", i2);
+            if (behavior != "" && behavior != null) {
+                behaviorPlayer = StringToInt(StringWord(behavior, 1));
+                behaviorName = StringWord(behavior, 2);
+
+                libAffx_affixes[i].removeBehaviors[i2].player = 0;
+                libAffx_affixes[i].removeBehaviors[i2].behavior = behaviorName;
+                if (behaviorPlayer <= 12 && behaviorPlayer >= 0) {
+                    libAffx_affixes[i].removeBehaviors[i2].player = behaviorPlayer;
                 }
-                libAffx_affixes[i].removeBehaviors[i2].behavior = affixBehavior3;
+            }
+            behavior = UserDataGetString("Affix", affixInstance, "AffixBehavior", i2);
+            if (behavior != "" && behavior != null) {
+                behaviorPlayer = StringToInt(StringWord(behavior, 1));
+                behaviorName = StringWord(behavior, 2);
+
+                libAffx_affixes[i].affixBehaviors[i2].player = 0;
+                libAffx_affixes[i].affixBehaviors[i2].behavior = behaviorName;
+                if (behaviorPlayer <= 12 && behaviorPlayer >= 0) {
+                    libAffx_affixes[i].affixBehaviors[i2].player = behaviorPlayer;
+                }
             }
         }
-        // Trigger: <trigger type> <trigger name> <trigger args>
-        for (i2 = 1; i2 <= libAffx_maxTrigger; i2 += 1) {
-            affixString = UserDataGetString("Affix", affixInstance, "Trigger", i2);
-            if (affixString != "" && affixString != null) {
-                affixTrigger1 = StringCase(StringWord(affixString, 1), false);
-                affixTrigger2 = StringWord(affixString, 2);
-                affixTrigger3 = StringWord(affixString, 3);
-                if (affixTrigger1 != "" && affixTrigger1 != null && affixTrigger2 != "" && affixTrigger2 != null) {
-                    if (affixTrigger1 == "anyaffixadded" || affixTrigger1 == "aaa" || affixTrigger1 == "affixaddedany") {
+        for (i2 = 1; i2 <= libAffx_maxTriggers; i2 += 1) {
+            triggerAffix = UserDataGetString("Affix", affixInstance, "Trigger", i2);
+            if (triggerAffix != "" && triggerAffix != null) {
+                triggerType = StringCase(StringWord(triggerAffix, 1), false);
+                triggerName = StringWord(triggerAffix, 2);
+                triggerArg1 = StringWord(triggerAffix, 3);
+                if (triggerType != "" && triggerType != null && triggerName != "" && triggerName != null) {
+                    libAffx_affixes[i].triggers[i2].type = 0;
+                    libAffx_affixes[i].triggers[i2].name = triggerName;
+                    libAffx_affixes[i].triggers[i2].arg1 = triggerArg1;
+                    if (triggerType == "anyaffixadded" || triggerType == "aaa" || triggerType == "affixaddedany") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerAnyAffixAdded;
-                    } else if (affixTrigger1 == "affixadded" || affixTrigger1 == "aa" || affixTrigger1 == "execute" || affixTrigger1 == "e") {
+                    } else if (triggerType == "affixadded" || triggerType == "aa" || triggerType == "execute" || triggerType == "e") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerAffixAdded;
-                    } else if (affixTrigger1 == "npctakedown" || affixTrigger1 == "nt") {
+                    } else if (triggerType == "npctakedown" || triggerType == "nt") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerNPCTakedown;
-                    } else if (affixTrigger1 == "onetime" || affixTrigger1 == "ot" || affixTrigger1 == "executeonce" || affixTrigger1 == "eo") {
+                    } else if (triggerType == "onetime" || triggerType == "ot" || triggerType == "executeonce" || triggerType == "eo") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerOneTime;
-                    } else if (affixTrigger1 == "oncepergame" || affixTrigger1 == "opg" || affixTrigger1 == "executeoncepergame" || affixTrigger1 == "eopg") {
+                    } else if (triggerType == "oncepergame" || triggerType == "opg" || triggerType == "executeoncepergame" || triggerType == "eopg") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerOncePerGame;
-                    } else if (affixTrigger1 == "gamestart" || affixTrigger1 == "gs" || affixTrigger1 == "immediate" || affixTrigger1 == "i" || affixTrigger1 == "executeimmediate" || affixTrigger1 == "ei") {
+                    } else if (triggerType == "gamestart" || triggerType == "gs" || triggerType == "immediate" || triggerType == "i" || triggerType == "executeimmediate" || triggerType == "ei") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerGameStart;
-                    } else if (affixTrigger1 == "herotakedown" || affixTrigger1 == "ht") { 
+                    } else if (triggerType == "herotakedown" || triggerType == "ht") { 
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroTakedown;
-                    } else if (affixTrigger1 == "unitcreated" || affixTrigger1 == "uc") {
+                    } else if (triggerType == "unitcreated" || triggerType == "uc") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerUnitCreated;
-                    } else if (affixTrigger1 == "unitbehaviorchange" || affixTrigger1 == "ubc" || affixTrigger1 == "behaviorchange" || affixTrigger1 == "bc") {
+                    } else if (triggerType == "unitbehaviorchange" || triggerType == "ubc" || triggerType == "behaviorchange" || triggerType == "bc") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerUnitBehaviorChange;
-                    } else if (affixTrigger1 == "unitbehaviorcreate" || affixTrigger1 == "ubcreate" || affixTrigger1 == "behaviorcreate" || affixTrigger1 == "bcreate") {
+                    } else if (triggerType == "unitbehaviorcreate" || triggerType == "ubcreate" || triggerType == "behaviorcreate" || triggerType == "bcreate") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerUnitBehaviorCreate;
-                    } else if (affixTrigger1 == "unitbehaviorchangecategory" || affixTrigger1 == "ubcc" || affixTrigger1 == "behaviorchangecategory" || affixTrigger1 == "bcc") {
+                    } else if (triggerType == "unitbehaviorchangecategory" || triggerType == "ubcc" || triggerType == "behaviorchangecategory" || triggerType == "bcc") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerUnitBehaviorChangeCategory;
-                    } else if (affixTrigger1 == "effectused" || affixTrigger1 == "eu" || affixTrigger1 == "playereffectused" || affixTrigger1 == "peu") {
+                    } else if (triggerType == "effectused" || triggerType == "eu" || triggerType == "playereffectused" || triggerType == "peu") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerPlayerEffectUsed;
-                    } else if (affixTrigger1 == "levelup" || affixTrigger1 == "lu" || affixTrigger1 == "herolevelup" || affixTrigger1 == "hlu") {
+                    } else if (triggerType == "levelup" || triggerType == "lu" || triggerType == "herolevelup" || triggerType == "hlu") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroLevelUp;
-                    } else if (affixTrigger1 == "scaling" || affixTrigger1 == "s") {
+                    } else if (triggerType == "scaling" || triggerType == "s") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerScaling;
-                    } else if (affixTrigger1 == "unitdied" || affixTrigger1 == "ud") {
+                    } else if (triggerType == "unitdied" || triggerType == "ud") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerUnitDied;
-                    } else if (affixTrigger1 == "quest" || affixTrigger1 == "q") {
+                    } else if (triggerType == "quest" || triggerType == "q") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerQuest;
-                    } else if (affixTrigger1 == "unitchangeowner" || affixTrigger1 == "uco") {
+                    } else if (triggerType == "unitchangeowner" || triggerType == "uco") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerUnitChangeOwner;
-                    } else if (affixTrigger1 == "periodic" || affixTrigger1 == "p") {
+                    } else if (triggerType == "periodic" || triggerType == "p") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerPeriodic;
-                    } else if (affixTrigger1 == "win" || affixTrigger1 == "w") {
+                    } else if (triggerType == "win" || triggerType == "w") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerWin;
-                    } else if (affixTrigger1 == "herorespawn" || affixTrigger1 == "hr" || affixTrigger1 == "respawn" || affixTrigger1 == "r") {
+                    } else if (triggerType == "herorespawn" || triggerType == "hr" || triggerType == "respawn" || triggerType == "r") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroRespawn;
-                    } else if (affixTrigger1 == "herokilled" || affixTrigger1 == "herokill" || affixTrigger1 == "hk") {
+                    } else if (triggerType == "herokilled" || triggerType == "herokill" || triggerType == "hk") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroKilled;
-                    } else if (affixTrigger1 == "talentgained" || affixTrigger1 == "herotalentgain" || affixTrigger1 == "herogaintalent" || affixTrigger1 == "herotalent" || affixTrigger1 == "hgt" || affixTrigger1 == "htg" || affixTrigger1 == "tg") {
+                    } else if (triggerType == "talentgained" || triggerType == "herotalentgain" || triggerType == "herogaintalent" || triggerType == "herotalent" || triggerType == "hgt" || triggerType == "htg" || triggerType == "tg") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroGainTalent;
-                    } else {
-                        libAffx_affixes[i].triggers[i2].type = 0;
                     }
-                    libAffx_affixes[i].triggers[i2].name = affixTrigger2;
-                    libAffx_affixes[i].triggers[i2].arg1 = affixTrigger3;
                 }
             }
         }
-        for (i2 = 1; i2 <= libAffx_affixMax; i2 += 1) {
+        for (i2 = 1; i2 <= libAffx_maxAffixes; i2 += 1) {
             affixExcluded = UserDataGetUserInstance("Affix", affixInstance, "AffixesExcluded", i2);
             affixRequired = UserDataGetUserInstance("Affix", affixInstance, "AffixesRequired", i2);
             if (affixExcluded != "" && affixExcluded != "[Default]" && affixExcluded != null) {

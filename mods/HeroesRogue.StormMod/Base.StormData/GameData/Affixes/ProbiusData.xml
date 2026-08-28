@@ -126,7 +126,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ShieldsMax value="330"/>
     <ShieldRegenRate value="33"/>
     <ShieldRegenDelay value="5"/>
-    <Speed value="3.25" />
+    <Speed value="4" />
     <Sight value="8" />
     <AbilArray Link="stop" />
     <AbilArray Link="attack" />
@@ -140,6 +140,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <AbilArray Link="ProgressRally"/>
     <AbilArray Link="Charge"/>
     <WeaponArray Link="PsiBlades"/>
+    <BehaviorArray Link="ProbiusProtossArmorBehavior" />
     <CardLayouts>
         <LayoutButtons Face="Move" Type="AbilCmd" AbilCmd="move,Move" Row="0" Column="0"/>
         <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
@@ -153,7 +154,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <TurningRate value="999.8437"/>
     <Acceleration value="1000"/>
     <LateralAcceleration value="46.0625"/>
-    <AIThinkTree value="AI/MinionMap.aitree" />
+    <AIThinkTree value="AI/SummonedMinion.aitree" />
     <FlagArray index="CreateAITreeOnSpawn" value="1" />
   </CUnit>
   <CUnit id="ProbiusStalker" parent="StormSummonActive">
@@ -166,7 +167,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <ShieldsMax value="528"/>
       <ShieldRegenDelay value="5"/>
       <ShieldRegenRate value="52"/>
-      <Speed value="3.25"/>
+      <Speed value="4"/>
       <Acceleration value="1000"/>
       <LateralAcceleration value="46"/>
       <StationaryTurningRate value="999.8437"/>
@@ -190,6 +191,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <AbilArray Link="Warpable"/>
       <AbilArray Link="ProgressRally"/>
       <AbilArray Link="Blink"/>
+      <BehaviorArray Link="ProbiusProtossArmorBehavior" />
       <CardLayouts>
           <LayoutButtons Face="Move" Type="AbilCmd" AbilCmd="move,Move" Row="0" Column="0"/>
           <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
@@ -212,7 +214,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
           <ChanceArray index="Idle" value="90"/>
           <ChanceArray index="Turn" value="5"/>
       </Fidget>
-    <AIThinkTree value="AI/MinionMap.aitree" />
+    <AIThinkTree value="AI/SummonedMinion.aitree" />
     <FlagArray index="CreateAITreeOnSpawn" value="1" />
   </CUnit>
   <CUnit id="StalkerWeapon" parent="MISSILE">
@@ -230,7 +232,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <ShieldsMax value="675"/>
       <ShieldRegenDelay value="5"/>
       <ShieldRegenRate value="90"/>
-      <Speed value="3.25"/>
+      <Speed value="4"/>
       <Acceleration value="1000"/>
       <AttackTargetPriority value="20"/>
       <Radius value="0.75"/>
@@ -251,6 +253,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <AbilArray Link="attack"/>
       <AbilArray Link="move"/>
       <AbilArray Link="Warpable"/>
+      <BehaviorArray Link="ProbiusProtossArmorBehavior" />
       <CardLayouts>
           <LayoutButtons Face="Move" Type="AbilCmd" AbilCmd="move,Move" Row="0" Column="0"/>
           <LayoutButtons Face="Stop" Type="AbilCmd" AbilCmd="stop,Stop" Row="0" Column="1"/>
@@ -276,7 +279,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
           <ChanceArray index="Anim" value="5"/>
           <ChanceArray index="Idle" value="90"/>
       </Fidget>
-    <AIThinkTree value="AI/MinionMap.aitree" />
+    <AIThinkTree value="AI/SummonedMinion.aitree" />
     <FlagArray index="CreateAITreeOnSpawn" value="1" />
   </CUnit>
   <CUnit id="ProbiusInvisibleWarpInImmortal" parent="ProbiusInvisibleWarpIn" />
@@ -491,7 +494,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <AdditiveAttackSpeedFactor value="0.25" />
     </Modification>
   </CBehaviorBuff>
-  <CBehaviorBuff id="ProbiusZealotArmorBehavior" parent="StormArmor">
+  <CBehaviorBuff id="ProbiusReinforcedPowerSuitBehavior" parent="StormArmor">
     <ArmorModification>
       <ArmorSet index="Hero">
         <ArmorMitigationTable index="Basic" value="35" />
@@ -559,6 +562,14 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <EffectArray value="ProbiusWarpRiftApplyPullBehavior" />
   </CEffectSet>
 
+  <CBehaviorBuff id="ProbiusProtossArmorBehavior" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="CasterNotBeingTownFlipRepaired" />
+    <Modification>
+      <VitalMaxFractionArray index="Life" value="0" />
+      <VitalMaxFractionArray index="Shields" value="0" />
+    </Modification>
+  </CBehaviorBuff>
+
   <CEffectCreatePersistent id="PsiBladesBurst">
     <EditorCategories value="Race:Protoss"/>
     <PeriodCount value="2"/>
@@ -571,11 +582,12 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectCreatePersistent>
   <CEffectDamage id="PsiBlades" parent="StormSummonedUnitWeapon">
     <EditorCategories value="Race:Protoss"/>
-    <Amount value="35"/>
+    <Amount value="42"/>
     <Death value="Eviscerate"/>
     <ValidatorArray value="NotHidden"/>
     <MultiplicativeModifierArray index="ProtossWeapons" Modifier="0" />
     <MultiplicativeModifierArray index="MercMinion" Validator="IsMercorMinion" Modifier="1" />
+    <MultiplicativeModifierArray index="Structure" Validator="IsStructureTarget" Modifier="1" />
   </CEffectDamage>
 
   <CEffectSet id="ProbiusWarpInZealotsInitialSet">
@@ -663,9 +675,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectLaunchMissile>
   <CEffectDamage id="ParticleDisruptorsU" parent="StormSummonedUnitWeapon">
     <EditorCategories value="Race:Protoss"/>
-    <Amount value="70"/>
+    <Amount value="84"/>
     <MultiplicativeModifierArray index="ProtossWeapons" Modifier="0" />
     <MultiplicativeModifierArray index="MercMinion" Validator="IsMercorMinion" Modifier="1" />
+    <MultiplicativeModifierArray index="Structure" Validator="IsStructureTarget" Modifier="1" />
   </CEffectDamage>
 
   <CEffectSet id="ProbiusWarpInStalkersInitialSet">
@@ -804,13 +817,13 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectSet>
   <CEffectDamage id="ProbiusWeaponDamage" parent="StormWeapon">
     <Amount value="33" />
-    <MultiplicativeModifierArray Validator="TargetDoesNotHaveProbiusZAPCooldownAndIsHero" index="ProbiusZAP" Modifier="0" Crit="0" />
+    <MultiplicativeModifierArray Validator="TargetDoesNotHaveProbiusZAPCooldown" index="ProbiusZAP" Modifier="0" Crit="0" />
   </CEffectDamage>
   
   <CEffectSet id="ProbiusZAPSet">
     <Chance value="0" />
     <ValidatorArray value="TargetDoesNotHaveProbiusZAPCooldown" />
-    <ValidatorArray value="TargetIsHero" />
+    <!--<ValidatorArray value="TargetIsHero" />-->
     <EffectArray value="ProbiusZAPSlowApplyBehavior" />
     <EffectArray value="ProbiusZAPCooldownApplyBehavior" />
   </CEffectSet>
@@ -856,15 +869,15 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CBehaviorBuff id="ProbiusWarpRiftSplit" />
   
   <CBehaviorBuff id="ProbiusZealotBuildInProgressBehavior" parent="StormTimedLife">
-    <Duration value="2" />
+    <Duration value="1" />
     <ExpireEffect value="ProbiusWarpInZealotsExpireSet" />
   </CBehaviorBuff>
   <CBehaviorBuff id="ProbiusStalkerBuildInProgressBehavior" parent="StormTimedLife">
-    <Duration value="2" />
+    <Duration value="1" />
     <ExpireEffect value="ProbiusWarpInStalkersExpireSet" />
   </CBehaviorBuff>
   <CBehaviorBuff id="ProbiusImmortalBuildInProgressBehavior" parent="StormTimedLife">
-    <Duration value="2" />
+    <Duration value="1" />
     <ExpireEffect value="ProbiusWarpInImmortalsExpireSet" />
   </CBehaviorBuff>
   <CBehaviorAbility id="AffixWarpInZealotsBehaviorAbility">
@@ -883,6 +896,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <IncreaseEvents index="0" EventId="" />
     <DecreaseEvents index="0" EventId="" />
     <AtMinEvents index="0" EventId="" />
+    <Init value="50" />
   </CBehaviorTokenCounter>
 
   <CBehaviorBuff id="ProbiusPhotonCannonExtenderBehavior">
