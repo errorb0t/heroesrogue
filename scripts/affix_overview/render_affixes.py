@@ -3,7 +3,7 @@ from __future__ import annotations
 import html
 import re
 
-from .constants import RARITY_COLORS, RARITY_DISPLAY_NAMES, RARITY_FILTERS
+from .constants import RARITY_COLORS, RARITY_DISPLAY_NAMES, RARITY_ORDER
 from .models import AffixRecord
 from .render_common import render_page
 
@@ -21,7 +21,7 @@ def render_stackability_html(affix: AffixRecord) -> str:
 
 
 def render_mythic_order_html(affix: AffixRecord) -> str:
-    if affix.rarity != "MythicCurse":
+    if affix.rarity != "Mythic":
         return ""
 
     match = re.fullmatch(r"Mythic(\d+)", affix.affix_id)
@@ -177,9 +177,9 @@ AFFIX_PAGE_STYLES = """
       padding: 18px;
     }
 
-    .affix-card[data-rarity="MythicCurse"] {
-      border-color: rgba(255, 91, 110, 0.65);
-      box-shadow: inset 0 0 0 1px rgba(255, 91, 110, 0.12);
+    .affix-card[data-rarity="Mythic"] {
+      border-color: rgba(168, 73, 135, 0.65);
+      box-shadow: inset 0 0 0 1px rgba(168, 73, 135, 0.12);
     }
 
     .affix-card.hidden {
@@ -233,9 +233,9 @@ AFFIX_PAGE_STYLES = """
       color: var(--rarity-color);
     }
 
-    .affix-card[data-rarity="MythicCurse"] .rarity-chip {
-      background: rgba(76, 10, 18, 0.9);
-      border-color: rgba(255, 91, 110, 0.4);
+    .affix-card[data-rarity="Mythic"] .rarity-chip {
+      background: rgba(66, 29, 53, 0.9);
+      border-color: rgba(168, 73, 135, 0.4);
     }
 
     .hero-chip {
@@ -372,6 +372,19 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
             """.strip()
         )
 
+    present_rarities = {affix.rarity for affix in affixes}
+    ordered_rarities = [
+        rarity for rarity in RARITY_ORDER if rarity in present_rarities
+    ]
+    ordered_rarities.extend(sorted(present_rarities - set(ordered_rarities)))
+    rarity_filters = [
+        ("all", "All"),
+        ("hero-limited", "Hero-specific"),
+        *(
+            (rarity, RARITY_DISPLAY_NAMES.get(rarity, rarity))
+            for rarity in ordered_rarities
+        ),
+    ]
     filter_buttons = "\n        ".join(
         (
             '<button class="filter-chip active" type="button" '
@@ -382,7 +395,7 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
             '<button class="filter-chip" type="button" '
             f'data-rarity-filter="{html.escape(filter_value)}">{html.escape(label)}</button>'
         )
-        for filter_value, label in RARITY_FILTERS
+        for filter_value, label in rarity_filters
     )
     hero_content = f"""      <div class="hero-head">
         <h2>{html.escape(page_label)}</h2>

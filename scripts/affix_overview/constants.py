@@ -26,7 +26,9 @@ RARITY_ORDER = [
     "Rare",
     "Epic",
     "Legendary",
-    "MythicCurse",
+    "Milestone",
+    "Mythic",
+    "Challenge",
 ]
 RARITY_DISPLAY_NAMES = {
     "Starter": "Starter",
@@ -35,7 +37,9 @@ RARITY_DISPLAY_NAMES = {
     "Rare": "Rare",
     "Epic": "Epic",
     "Legendary": "Legendary",
-    "MythicCurse": "Mythic",
+    "Milestone": "Milestone",
+    "Mythic": "Mythic",
+    "Challenge": "Challenge",
 }
 RARITY_ALIASES = {
     "starter": "Starter",
@@ -44,16 +48,14 @@ RARITY_ALIASES = {
     "rare": "Rare",
     "epic": "Epic",
     "legendary": "Legendary",
-    "mythiccurse": "MythicCurse",
-    "mythic curse": "MythicCurse",
-    "mythic_curse": "MythicCurse",
-    "mythic-curse": "MythicCurse",
+    "milestone": "Milestone",
+    "mythic": "Mythic",
+    "mythiccurse": "Mythic",
+    "mythic curse": "Mythic",
+    "mythic_curse": "Mythic",
+    "mythic-curse": "Mythic",
+    "challenge": "Challenge",
 }
-RARITY_FILTERS = [
-    ("all", "All"),
-    ("hero-limited", "Hero-specific"),
-    *((rarity, RARITY_DISPLAY_NAMES[rarity]) for rarity in RARITY_ORDER),
-]
 RARITY_COLORS = {
     "Starter": "#e6cc80",
     "Common": "#f2f5f8",
@@ -61,7 +63,9 @@ RARITY_COLORS = {
     "Rare": "#4f95ff",
     "Epic": "#d26dff",
     "Legendary": "#ff9d3a",
-    "MythicCurse": "#ff5b6e",
+    "Milestone": "#01ffff",
+    "Mythic": "#d86caf",
+    "Challenge": "#e05a28",
 }
 STORM_COLORS = {
     "#TooltipNumbers": "#ffd96a",
