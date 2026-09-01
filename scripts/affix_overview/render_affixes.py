@@ -345,28 +345,31 @@ def render_html(affixes: list[AffixRecord], page_type: str, mod_version: str) ->
             ]
             if part
         ).lower()
-        hero_badge = (
-            f'<span class="meta-chip hero-chip">{html.escape(affix.hero_specific)}</span>'
+        hero_badge_block = (
+            f'\n                  <span class="meta-chip hero-chip">{html.escape(affix.hero_specific)}</span>'
             if affix.hero_specific
             else ""
         )
         footer_summary_html = render_footer_summary_html(affix)
         footer_footnotes_html = render_footer_footnotes_html(affix)
+        footer_footnotes_block = (
+            f"\n                {footer_footnotes_html}"
+            if footer_footnotes_html
+            else ""
+        )
         cards.append(
             f"""
             <article class="affix-card" data-rarity="{html.escape(affix.rarity)}" data-hero-limited="{str(affix.has_hero_condition).lower()}" data-search="{html.escape(search_blob)}">
               <div class="card-top">
                 <img class="affix-icon" src="{html.escape(affix.icon_url)}" alt="{html.escape(affix.name)} icon" loading="lazy">
                 <div class="meta-row">
-                  <span class="meta-chip rarity-chip" style="--rarity-color: {html.escape(rarity_color)}">{html.escape(rarity_label)}</span>
-                  {hero_badge}
+                  <span class="meta-chip rarity-chip" style="--rarity-color: {html.escape(rarity_color)}">{html.escape(rarity_label)}</span>{hero_badge_block}
                 </div>
               </div>
               <h2 class="card-title">{html.escape(affix.name)}</h2>
               <div class="tooltip-copy">{affix.tooltip_html}</div>
               <footer class="card-footer">
-                <div class="footer-summary">{footer_summary_html}</div>
-                {footer_footnotes_html}
+                <div class="footer-summary">{footer_summary_html}</div>{footer_footnotes_block}
               </footer>
             </article>
             """.strip()

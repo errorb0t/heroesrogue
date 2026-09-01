@@ -45,7 +45,7 @@ The following Heroes have special interactions with boons and curses:<br>
 
 **Bans:** Obtain 3 bans at the start of a run and 1 additional ban at the start of every subsequent game which can be used to ban boons and curses, preventing them from showing up for the rest of the run. Infinite boons/curses, starter boons, mythic curses, and milestone boons cannot be banned.
 
-[List of all boons and curses.](https://errorb0t.github.io/heroesrogue/index.html) Credit to errorb0t.
+[Heroes Rogue Compendium: boons, curses, difficulties, and achievements.](https://errorb0t.github.io/heroesrogue/index.html) Credit to errorb0t.
 
 #### Disclaimer:
 This is a fan-made project and is not affiliated with or endorsed by Blizzard Entertainment. The mod runs locally and does not interact with Blizzard's servers. All original game assets, characters, and intellectual property belong to Blizzard Entertainment.

@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from .constants import (
+    ACHIEVEMENT_TEXTURES_DIR,
     AFFIX_OVERVIEW_CONFIG_PATH,
     DYNAMIC_OVERRIDES_PATH,
     HERO_NAME_OVERRIDES_PATH,
@@ -14,6 +15,7 @@ from .constants import (
     TEXTURES_DIR,
 )
 from .data_loading import (
+    load_achievements,
     load_affixes,
     load_difficulties,
     load_dynamic_value_overrides,
@@ -26,12 +28,13 @@ from .data_loading import (
 from .dynamic_values import DynamicValueResolver
 from .icon_export import export_texture_icons
 from .render_affixes import render_html
+from .render_achievements import render_achievements_html
 from .render_difficulties import render_difficulties_html
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate an HTML overview of Heroes Rogue affixes."
+        description="Generate the Heroes Rogue Compendium documentation."
     )
     parser.add_argument(
         "--output",
@@ -83,6 +86,9 @@ def main() -> None:
     output_dir = args.output.resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     exported_icons = export_texture_icons(TEXTURES_DIR, output_dir / "icons")
+    exported_achievement_icons = export_texture_icons(
+        ACHIEVEMENT_TEXTURES_DIR, output_dir / "icons" / "achievements"
+    )
 
     mod_version = load_mod_version(LIB_AFFX_HEADER_PATH)
     strings = load_strings(STRINGS_PATH)
@@ -104,6 +110,7 @@ def main() -> None:
     if hidden_affix_ids:
         affixes = [affix for affix in affixes if affix.affix_id not in hidden_affix_ids]
     difficulties = load_difficulties(strings, resolver)
+    achievements = load_achievements(strings, output_dir, resolver)
     boons = [affix for affix in affixes if not affix.negative]
     curses = [affix for affix in affixes if affix.negative]
 
@@ -112,6 +119,9 @@ def main() -> None:
         output_dir / "curses.html": render_html(curses, "curse", mod_version),
         output_dir / "difficulties.html": render_difficulties_html(
             difficulties, mod_version
+        ),
+        output_dir / "achievements.html": render_achievements_html(
+            achievements, mod_version
         ),
     }
 
@@ -123,7 +133,8 @@ def main() -> None:
     print(f"Boons: {len(boons)}")
     print(f"Curses: {len(curses)}")
     print(f"Difficulties: {len(difficulties)}")
-    print(f"Exported icons: {exported_icons}")
+    print(f"Achievements: {len(achievements)}")
+    print(f"Exported icons: {exported_icons + exported_achievement_icons}")
     missing_icon_names = sorted(
         {
             affix.icon_name
@@ -134,3 +145,11 @@ def main() -> None:
     print(f"Placeholder icons: {len(missing_icon_names)}")
     for icon_name in missing_icon_names:
         print(f"Missing icon file: {icon_name}")
+    missing_achievement_icons = [
+        achievement.achievement_id
+        for achievement in achievements
+        if achievement.uses_placeholder
+    ]
+    print(f"Placeholder achievement icons: {len(missing_achievement_icons)}")
+    for achievement_id in missing_achievement_icons:
+        print(f"Missing achievement icon file: {achievement_id}.dds")

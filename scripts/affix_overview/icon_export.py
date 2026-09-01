@@ -29,11 +29,27 @@ def export_with_magick(source_path: Path, target_path: Path) -> None:
         command = [magick_binary, str(source_path), str(target_path)]
     else:
         convert_binary = which("convert")
-        if convert_binary is None:
-            raise RuntimeError(
-                "DDS conversion requires Pillow or ImageMagick (`magick`/`convert`)."
-            )
-        command = [convert_binary, str(source_path), str(target_path)]
+        if convert_binary is not None:
+            command = [convert_binary, str(source_path), str(target_path)]
+        else:
+            ffmpeg_binary = which("ffmpeg")
+            if ffmpeg_binary is None:
+                raise RuntimeError(
+                    "DDS conversion requires Pillow, ImageMagick "
+                    "(`magick`/`convert`), or FFmpeg."
+                )
+            command = [
+                ffmpeg_binary,
+                "-nostdin",
+                "-loglevel",
+                "error",
+                "-y",
+                "-i",
+                str(source_path),
+                "-frames:v",
+                "1",
+                str(target_path),
+            ]
 
     subprocess.run(command, check=True)
 

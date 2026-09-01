@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Heroes Rogue Wiki - v0.16.0 - Achievements</title>
+  <style>
+
+    :root {
+      --bg: #0c1220;
+      --panel: #162133;
+      --panel-alt: #111927;
+      --panel-border: #24344a;
+      --text: #eef4ff;
+      --muted: #9eb1cd;
+      --accent: #8fd3ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(1400px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .site-header {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .github-link {
+      border: 1px solid #31455f;
+      background: #0f1826;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 12px 18px;
+      font: inherit;
+      white-space: nowrap;
+    }
+
+    .top-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .menu-link {
+      border: 1px solid #31455f;
+      background: #0f1826;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 12px 18px;
+      font: inherit;
+    }
+
+    .menu-link.active {
+      background: #214161;
+      border-color: #74afe6;
+      color: #f3fbff;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 26px;
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+    }
+
+    .results-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .tooltip-copy {
+      color: #dce7f9;
+      line-height: 1.55;
+    }
+
+    .tooltip-copy br {
+      content: "";
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 20px, 1400px);
+        padding-top: 20px;
+      }
+
+      .hero,
+      .affix-card {
+        border-radius: 18px;
+      }
+
+      .top-bar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .github-link {
+        align-self: flex-start;
+      }
+    }
+
+
+    .hero-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .hero h2 {
+      margin-bottom: 10px;
+    }
+
+    .search {
+      width: min(100%, 460px);
+      padding: 14px 16px;
+      font: inherit;
+      color: var(--text);
+      background: #0d1522;
+      border: 1px solid #31455f;
+      border-radius: 14px;
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: var(--accent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .achievement-card {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 14px;
+      align-items: start;
+      min-height: 100%;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .achievement-card.hidden {
+      display: none;
+    }
+
+    .achievement-icon {
+      width: 88px;
+      height: 88px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid #31455f;
+      background: #0d1522;
+    }
+
+    .card-title {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+      line-height: 1.2;
+    }
+
+    @media (max-width: 720px) {
+      .achievement-card {
+        border-radius: 18px;
+      }
+    }
+
+  </style>
+</head>
+  <body>
+  <div class="shell">
+    <div class="top-bar">
+      <h1 class="site-header">Heroes Rogue Compendium (v0.16.0)</h1>
+      <a class="github-link" href="https://github.com/sobbyellow/heroesrogue" target="_blank" rel="noreferrer">Play Heroes Rogue</a>
+    </div>
+    <nav class="top-nav" aria-label="Sections">
+      <a class="menu-link" href="index.html">Boons</a>
+      <a class="menu-link" href="curses.html">Curses</a>
+      <a class="menu-link" href="difficulties.html">Difficulties</a>
+      <a class="menu-link active" href="achievements.html">Achievements</a>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-head">
+        <div>
+          <h2>Achievements</h2>
+          <p class="results-note" id="results-note">98 achievements shown</p>
+        </div>
+        <input class="search" id="achievement-search" type="search" placeholder="Search achievements" aria-label="Search achievements">
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="achievement-card" data-search="abathur abathur win round 20 on abathur.">
+              <img class="achievement-icon" src="icons/achievements/abathur.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Abathur</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Abathur</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="alarak alarak win round 20 on alarak.">
+              <img class="achievement-icon" src="icons/achievements/alarak.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Alarak</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Alarak</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="alexstrasza alexstrasza win round 20 on alexstrasza.">
+              <img class="achievement-icon" src="icons/achievements/alexstrasza.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Alexstrasza</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Alexstrasza</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="ana ana win round 20 on ana.">
+              <img class="achievement-icon" src="icons/achievements/ana.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Ana</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Ana</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="anduin anduin win round 20 on anduin.">
+              <img class="achievement-icon" src="icons/achievements/anduin.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Anduin</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Anduin</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="anubarak anub&#x27;arak win round 20 on anub&#x27;arak.">
+              <img class="achievement-icon" src="icons/achievements/anubarak.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Anub&#x27;arak</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Anub&#x27;arak</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="artanis artanis win round 20 on artanis.">
+              <img class="achievement-icon" src="icons/achievements/artanis.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Artanis</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Artanis</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="arthas arthas win round 20 on arthas.">
+              <img class="achievement-icon" src="icons/achievements/arthas.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Arthas</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Arthas</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="auriel auriel win round 20 on auriel.">
+              <img class="achievement-icon" src="icons/achievements/auriel.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Auriel</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Auriel</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="azmodan azmodan win round 20 on azmodan.">
+              <img class="achievement-icon" src="icons/achievements/azmodan.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Azmodan</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Azmodan</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="blaze blaze win round 20 on blaze.">
+              <img class="achievement-icon" src="icons/achievements/blaze.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Blaze</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Blaze</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="brightwing brightwing win round 20 on brightwing.">
+              <img class="achievement-icon" src="icons/achievements/brightwing.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Brightwing</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Brightwing</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="cassia cassia win round 20 on cassia.">
+              <img class="achievement-icon" src="icons/achievements/cassia.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Cassia</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Cassia</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="chen chen win round 20 on chen.">
+              <img class="achievement-icon" src="icons/achievements/chen.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Chen</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Chen</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="chogall cho win round 20 on cho.">
+              <img class="achievement-icon" src="icons/achievements/chogall.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Cho</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Cho</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="chromie chromie win round 20 on chromie.">
+              <img class="achievement-icon" src="icons/achievements/chromie.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Chromie</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Chromie</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="dva d.va win round 20 on d.va.">
+              <img class="achievement-icon" src="icons/achievements/dva.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">D.Va</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">D.Va</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="deathwing deathwing win round 20 on deathwing.">
+              <img class="achievement-icon" src="icons/achievements/deathwing.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Deathwing</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Deathwing</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="deckard deckard win round 20 on deckard.">
+              <img class="achievement-icon" src="icons/achievements/deckard.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Deckard</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Deckard</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="dehaka dehaka win round 20 on dehaka.">
+              <img class="achievement-icon" src="icons/achievements/dehaka.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Dehaka</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Dehaka</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="diablo diablo win round 20 on diablo.">
+              <img class="achievement-icon" src="icons/achievements/diablo.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Diablo</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Diablo</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="etc e.t.c. win round 20 on e.t.c..">
+              <img class="achievement-icon" src="icons/achievements/etc.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">E.T.C.</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">E.T.C.</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="falstad falstad win round 20 on falstad.">
+              <img class="achievement-icon" src="icons/achievements/falstad.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Falstad</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Falstad</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="fenix fenix win round 20 on fenix.">
+              <img class="achievement-icon" src="icons/achievements/fenix.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Fenix</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Fenix</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="gall gall win round 20 on gall.">
+              <img class="achievement-icon" src="icons/achievements/gall.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Gall</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Gall</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="garrosh garrosh win round 20 on garrosh.">
+              <img class="achievement-icon" src="icons/achievements/garrosh.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Garrosh</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Garrosh</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="gazlowe gazlowe win round 20 on gazlowe.">
+              <img class="achievement-icon" src="icons/achievements/gazlowe.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Gazlowe</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Gazlowe</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="genji genji win round 20 on genji.">
+              <img class="achievement-icon" src="icons/achievements/genji.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Genji</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Genji</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="greymane greymane win round 20 on greymane.">
+              <img class="achievement-icon" src="icons/achievements/greymane.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Greymane</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Greymane</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="guldan gul&#x27;dan win round 20 on gul&#x27;dan.">
+              <img class="achievement-icon" src="icons/achievements/guldan.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Gul&#x27;dan</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Gul&#x27;dan</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="hanzo hanzo win round 20 on hanzo.">
+              <img class="achievement-icon" src="icons/achievements/hanzo.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Hanzo</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Hanzo</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="hogger hogger win round 20 on hogger.">
+              <img class="achievement-icon" src="icons/achievements/hogger.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Hogger</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Hogger</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="illidan illidan win round 20 on illidan.">
+              <img class="achievement-icon" src="icons/achievements/illidan.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Illidan</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Illidan</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="imperius imperius win round 20 on imperius.">
+              <img class="achievement-icon" src="icons/achievements/imperius.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Imperius</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Imperius</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="jaina jaina win round 20 on jaina.">
+              <img class="achievement-icon" src="icons/achievements/jaina.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Jaina</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Jaina</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="johanna johanna win round 20 on johanna.">
+              <img class="achievement-icon" src="icons/achievements/johanna.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Johanna</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Johanna</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="junkrat junkrat win round 20 on junkrat.">
+              <img class="achievement-icon" src="icons/achievements/junkrat.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Junkrat</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Junkrat</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="kaelthas kael&#x27;thas win round 20 on kael&#x27;thas.">
+              <img class="achievement-icon" src="icons/achievements/kaelthas.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Kael&#x27;thas</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Kael&#x27;thas</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="kelthuzad kel&#x27;thuzad win round 20 on kel&#x27;thuzad.">
+              <img class="achievement-icon" src="icons/achievements/kelthuzad.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Kel&#x27;Thuzad</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Kel&#x27;Thuzad</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="kerrigan kerrigan win round 20 on kerrigan.">
+              <img class="achievement-icon" src="icons/achievements/kerrigan.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Kerrigan</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Kerrigan</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="kharazim kharazim win round 20 on kharazim.">
+              <img class="achievement-icon" src="icons/achievements/kharazim.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Kharazim</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Kharazim</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="leoric leoric win round 20 on leoric.">
+              <img class="achievement-icon" src="icons/achievements/leoric.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Leoric</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Leoric</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="lili li li win round 20 on li li.">
+              <img class="achievement-icon" src="icons/achievements/lili.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Li Li</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Li Li</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="liming li-ming win round 20 on li-ming.">
+              <img class="achievement-icon" src="icons/achievements/liming.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Li-Ming</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Li-Ming</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="lostvikings the lost vikings win round 20 on the lost vikings.">
+              <img class="achievement-icon" src="icons/achievements/lostvikings.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">The Lost Vikings</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">The Lost Vikings</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="ltmorales lt. morales win round 20 on lt. morales.">
+              <img class="achievement-icon" src="icons/achievements/ltmorales.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Lt. Morales</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Lt. Morales</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="lucio lúcio win round 20 on lúcio.">
+              <img class="achievement-icon" src="icons/achievements/lucio.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Lúcio</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Lúcio</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="lunara lunara win round 20 on lunara.">
+              <img class="achievement-icon" src="icons/achievements/lunara.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Lunara</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Lunara</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="maiev maiev win round 20 on maiev.">
+              <img class="achievement-icon" src="icons/achievements/maiev.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Maiev</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Maiev</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="malganis mal&#x27;ganis win round 20 on mal&#x27;ganis.">
+              <img class="achievement-icon" src="icons/achievements/malganis.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Mal&#x27;Ganis</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Mal&#x27;Ganis</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="malfurion malfurion win round 20 on malfurion.">
+              <img class="achievement-icon" src="icons/achievements/malfurion.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Malfurion</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Malfurion</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="malthael malthael win round 20 on malthael.">
+              <img class="achievement-icon" src="icons/achievements/malthael.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Malthael</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Malthael</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="medivh medivh win round 20 on medivh.">
+              <img class="achievement-icon" src="icons/achievements/medivh.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Medivh</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Medivh</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="mei mei win round 20 on mei.">
+              <img class="achievement-icon" src="icons/achievements/mei.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Mei</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Mei</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="mephisto mephisto win round 20 on mephisto.">
+              <img class="achievement-icon" src="icons/achievements/mephisto.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Mephisto</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Mephisto</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="muradin muradin win round 20 on muradin.">
+              <img class="achievement-icon" src="icons/achievements/muradin.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Muradin</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Muradin</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="murky murky win round 20 on murky.">
+              <img class="achievement-icon" src="icons/achievements/murky.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Murky</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Murky</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="nazeebo nazeebo win round 20 on nazeebo.">
+              <img class="achievement-icon" src="icons/achievements/nazeebo.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Nazeebo</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Nazeebo</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="nova nova win round 20 on nova.">
+              <img class="achievement-icon" src="icons/achievements/nova.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Nova</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Nova</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="orphea orphea win round 20 on orphea.">
+              <img class="achievement-icon" src="icons/achievements/orphea.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Orphea</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Orphea</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="probius probius win round 20 on probius.">
+              <img class="achievement-icon" src="icons/achievements/probius.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Probius</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Probius</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="qhira qhira win round 20 on qhira.">
+              <img class="achievement-icon" src="icons/achievements/qhira.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Qhira</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Qhira</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="ragnaros ragnaros win round 20 on ragnaros.">
+              <img class="achievement-icon" src="icons/achievements/ragnaros.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Ragnaros</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Ragnaros</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="raynor raynor win round 20 on raynor.">
+              <img class="achievement-icon" src="icons/achievements/raynor.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Raynor</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Raynor</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="rehgar rehgar win round 20 on rehgar.">
+              <img class="achievement-icon" src="icons/achievements/rehgar.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Rehgar</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Rehgar</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="rexxar rexxar win round 20 on rexxar.">
+              <img class="achievement-icon" src="icons/achievements/rexxar.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Rexxar</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Rexxar</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="samuro samuro win round 20 on samuro.">
+              <img class="achievement-icon" src="icons/achievements/samuro.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Samuro</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Samuro</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="sgthammer sgt. hammer win round 20 on sgt. hammer.">
+              <img class="achievement-icon" src="icons/achievements/sgthammer.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Sgt. Hammer</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Sgt. Hammer</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="sonya sonya win round 20 on sonya.">
+              <img class="achievement-icon" src="icons/achievements/sonya.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Sonya</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Sonya</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="stitches stitches win round 20 on stitches.">
+              <img class="achievement-icon" src="icons/achievements/stitches.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Stitches</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Stitches</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="stukov stukov win round 20 on stukov.">
+              <img class="achievement-icon" src="icons/achievements/stukov.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Stukov</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Stukov</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="sylvanas sylvanas win round 20 on sylvanas.">
+              <img class="achievement-icon" src="icons/achievements/sylvanas.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Sylvanas</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Sylvanas</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="tassadar tassadar win round 20 on tassadar.">
+              <img class="achievement-icon" src="icons/achievements/tassadar.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Tassadar</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Tassadar</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="thebutcher the butcher win round 20 on the butcher.">
+              <img class="achievement-icon" src="icons/achievements/thebutcher.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">The Butcher</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">The Butcher</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="thrall thrall win round 20 on thrall.">
+              <img class="achievement-icon" src="icons/achievements/thrall.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Thrall</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Thrall</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="tracer tracer win round 20 on tracer.">
+              <img class="achievement-icon" src="icons/achievements/tracer.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Tracer</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Tracer</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="tychus tychus win round 20 on tychus.">
+              <img class="achievement-icon" src="icons/achievements/tychus.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Tychus</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Tychus</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="tyrael tyrael win round 20 on tyrael.">
+              <img class="achievement-icon" src="icons/achievements/tyrael.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Tyrael</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Tyrael</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="tyrande tyrande win round 20 on tyrande.">
+              <img class="achievement-icon" src="icons/achievements/tyrande.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Tyrande</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Tyrande</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="uther uther win round 20 on uther.">
+              <img class="achievement-icon" src="icons/achievements/uther.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Uther</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Uther</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="valeera valeera win round 20 on valeera.">
+              <img class="achievement-icon" src="icons/achievements/valeera.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Valeera</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Valeera</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="valla valla win round 20 on valla.">
+              <img class="achievement-icon" src="icons/achievements/valla.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Valla</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Valla</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="varian varian win round 20 on varian.">
+              <img class="achievement-icon" src="icons/achievements/varian.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Varian</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Varian</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="whitemane whitemane win round 20 on whitemane.">
+              <img class="achievement-icon" src="icons/achievements/whitemane.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Whitemane</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Whitemane</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="xul xul win round 20 on xul.">
+              <img class="achievement-icon" src="icons/achievements/xul.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Xul</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Xul</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="yrel yrel win round 20 on yrel.">
+              <img class="achievement-icon" src="icons/achievements/yrel.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Yrel</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Yrel</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="zagara zagara win round 20 on zagara.">
+              <img class="achievement-icon" src="icons/achievements/zagara.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Zagara</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Zagara</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="zarya zarya win round 20 on zarya.">
+              <img class="achievement-icon" src="icons/achievements/zarya.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Zarya</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Zarya</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="zeratul zeratul win round 20 on zeratul.">
+              <img class="achievement-icon" src="icons/achievements/zeratul.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Zeratul</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Zeratul</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="zuljin zul&#x27;jin win round 20 on zul&#x27;jin.">
+              <img class="achievement-icon" src="icons/achievements/zuljin.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Zul&#x27;jin</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> on <span style="color: #ffd96a">Zul&#x27;jin</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="deathless deathless win round 20 without dying at any point during the run.">
+              <img class="achievement-icon" src="icons/achievements/deathless.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Deathless</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> without dying at any point during the run.</div>
+              </div>
+            </article><article class="achievement-card" data-search="objective focus obj! win round 20 without losing a map objective at any point during the run.">
+              <img class="achievement-icon" src="icons/achievements/objective.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Focus Obj!</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> without losing a map objective at any point during the run.</div>
+              </div>
+            </article><article class="achievement-card" data-search="norerolls luck reliant win round 20 without using any boon or curse rerolls at any point during the run.">
+              <img class="achievement-icon" src="icons/achievements/norerolls.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Luck Reliant</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> without using any boon or curse rerolls at any point during the run.</div>
+              </div>
+            </article><article class="achievement-card" data-search="nobans unbannable win round 20 without using any bans at any point during the run.">
+              <img class="achievement-icon" src="icons/achievements/nobans.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Unbannable</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> without using any bans at any point during the run.</div>
+              </div>
+            </article><article class="achievement-card" data-search="speedrun1 world record win round 20 in under 1 hour.">
+              <img class="achievement-icon" src="icons/achievements/speedrun1.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">World Record</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> in under <span style="color: #ffd96a">1</span> hour.</div>
+              </div>
+            </article><article class="achievement-card" data-search="speedrun2 speedrun win round 20 in under 2 hours.">
+              <img class="achievement-icon" src="icons/achievements/speedrun2.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Speedrun</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">20</span> in under <span style="color: #ffd96a">2</span> hours.</div>
+              </div>
+            </article><article class="achievement-card" data-search="round30 veteran win round 30.">
+              <img class="achievement-icon" src="icons/achievements/round30.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Veteran</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">30</span>.</div>
+              </div>
+            </article><article class="achievement-card" data-search="round40 elite win round 40.">
+              <img class="achievement-icon" src="icons/achievements/round40.png" alt="" loading="lazy">
+              <div>
+                <h2 class="card-title">Elite</h2>
+                <div class="tooltip-copy">Win Round <span style="color: #ffd96a">40</span>.</div>
+              </div>
+            </article>
+    </section>
+
+    <p class="footer-note">This Compendium is generated programmatically and may contain errors. Heroes Rogue is a fan-made project and is not affiliated with or endorsed by Blizzard Entertainment. The mod runs locally and does not interact with Blizzard&#x27;s servers. All original game assets, characters, and intellectual property belong to Blizzard Entertainment.</p>
+  </div>
+
+  <script>
+
+    const searchInput = document.querySelector("#achievement-search");
+    const cards = Array.from(document.querySelectorAll(".achievement-card"));
+    const resultsNote = document.querySelector("#results-note");
+
+    function updateAchievements() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visible = 0;
+
+      for (const card of cards) {
+        const matches = !query || card.dataset.search.includes(query);
+        card.classList.toggle("hidden", !matches);
+        if (matches) visible += 1;
+      }
+
+      resultsNote.textContent = `${visible} achievement${visible === 1 ? "" : "s"} shown`;
+    }
+
+    searchInput.addEventListener("input", updateAchievements);
+
+  </script>
+
+</body>
+</html>

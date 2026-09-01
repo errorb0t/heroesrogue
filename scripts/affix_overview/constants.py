@@ -8,6 +8,7 @@ PACKAGE_DIR = Path(__file__).resolve().parent
 CONFIG_DIR = PACKAGE_DIR / "config"
 MOD_ROOT = ROOT / "mods" / "HeroesRogue.StormMod"
 TEXTURES_DIR = MOD_ROOT / "Base.StormAssets" / "Assets" / "Textures"
+ACHIEVEMENT_TEXTURES_DIR = TEXTURES_DIR / "Achievements"
 AFFIX_DATA_PATH = MOD_ROOT / "Base.StormData" / "GameData" / "AffixData.xml"
 LIB_AFFX_SOURCE_PATH = MOD_ROOT / "Base.StormData" / "LibAffx.galaxy"
 LIB_AFFX_HEADER_PATH = MOD_ROOT / "Base.StormData" / "LibAffx_h.galaxy"
@@ -89,6 +90,7 @@ NAV_ITEMS = [
     ("index.html", "Boons", "boons"),
     ("curses.html", "Curses", "curses"),
     ("difficulties.html", "Difficulties", "difficulties"),
+    ("achievements.html", "Achievements", "achievements"),
 ]
 FOOTER_NOTE = (
     "This Compendium is generated programmatically and may contain errors. "

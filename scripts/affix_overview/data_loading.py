@@ -18,7 +18,7 @@ from .constants import (
 from .dynamic_values import DynamicValueResolver
 from .icon_names import icon_file_name
 from .markup import convert_storm_markup
-from .models import AffixCondition, AffixRecord, DifficultyRecord
+from .models import AchievementRecord, AffixCondition, AffixRecord, DifficultyRecord
 
 
 def load_strings(path: Path) -> dict[str, str]:
@@ -147,9 +147,24 @@ def extract_function_body(path: Path, signature: str) -> str:
 def load_difficulties(
     strings: dict[str, str], resolver: DynamicValueResolver
 ) -> list[DifficultyRecord]:
-    body = extract_function_body(LIB_AFFX_SOURCE_PATH, "string libAffx_GetDifficulty()")
+    signatures = (
+        "string libAffx_GetDifficultyLabel(int difficulty)",
+        "string libAffx_GetDifficulty()",
+    )
+    body = ""
+    for signature in signatures:
+        try:
+            body = extract_function_body(LIB_AFFX_SOURCE_PATH, signature)
+            break
+        except RuntimeError:
+            continue
+    if not body:
+        raise RuntimeError(
+            f"Unable to extract a difficulty label function from {LIB_AFFX_SOURCE_PATH}"
+        )
+
     matches = re.findall(
-        r"libAffx_difficulty\s*==\s*([A-Za-z_]\w*|\d+)\s*\)\s*\{\s*"
+        r"(?:libAffx_)?difficulty\s*==\s*([A-Za-z_]\w*|\d+)\s*\)\s*\{\s*"
         r'return\s+" \(([^"\r\n]+)\)";',
         body,
         flags=re.MULTILINE,
@@ -203,6 +218,48 @@ def load_difficulties(
         )
 
     return sorted(difficulties, key=lambda item: item.difficulty_value)
+
+
+def load_achievements(
+    strings: Mapping[str, str],
+    output_dir: Path,
+    resolver: DynamicValueResolver,
+) -> list[AchievementRecord]:
+    achievement_icon_dir = output_dir / "icons" / "achievements"
+    placeholder_url = "icons/affix_icon_question_mark.png"
+    achievements: list[AchievementRecord] = []
+
+    for name_key, name in strings.items():
+        if not name_key.startswith("Achievement/Name/"):
+            continue
+
+        achievement_id = name_key.removeprefix("Achievement/Name/")
+        tooltip = strings.get(f"Achievement/Tooltip/{achievement_id}")
+        if tooltip is None:
+            continue
+
+        tooltip_html, tooltip_plain, _tooltip_footnotes = convert_storm_markup(
+            tooltip, resolver
+        )
+        icon_name = icon_file_name(f"{achievement_id}.dds")
+        uses_placeholder = not (achievement_icon_dir / icon_name).exists()
+        icon_url = (
+            placeholder_url
+            if uses_placeholder
+            else f"icons/achievements/{icon_name}"
+        )
+        achievements.append(
+            AchievementRecord(
+                achievement_id=achievement_id,
+                name=name,
+                tooltip_html=tooltip_html,
+                tooltip_plain=tooltip_plain,
+                icon_url=icon_url,
+                uses_placeholder=uses_placeholder,
+            )
+        )
+
+    return achievements
 
 
 def field_child_value(child: ET.Element) -> str:

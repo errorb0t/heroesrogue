@@ -43,3 +43,13 @@ class DifficultyRecord:
     localized_tooltip_key: str
     tooltip_html: str
     tooltip_plain: str
+
+
+@dataclass
+class AchievementRecord:
+    achievement_id: str
+    name: str
+    tooltip_html: str
+    tooltip_plain: str
+    icon_url: str
+    uses_placeholder: bool
