@@ -3098,6 +3098,7 @@ void libMapM_gf_MMRavenTributeCollectionThresholdReached (int lp_winningTeam) {
         libMapM_gf_MMRavenCurseStart(libCore_gv_cOMPUTER_TeamChaos);
     }
     else {
+        TriggerSendEvent("AffixObjectiveLost");
         libMapM_gf_MMRavenCurseStart(libCore_gv_cOMPUTER_TeamOrder);
     }
 }
@@ -7547,6 +7548,7 @@ bool libMapM_gt_MMGardensDragonTransformChannelFinish_Func (bool testConds, bool
         TriggerSendEvent("AffixObjectiveWon");
         lv_duration *= libMapM_TeamOrderDragonDurationModifier;
     } else if (lv_dragonPilotTeam == libGame_gv_teamChaosIndex_C) {
+        TriggerSendEvent("AffixObjectiveLost");
         lv_duration *= libMapM_TeamChaosDragonDurationModifier;
     }
     libMapM_gv_mMGardensDragonDragonCaptures += 1;

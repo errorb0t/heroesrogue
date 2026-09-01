@@ -6551,7 +6551,7 @@ bool auto_libGame_gf_HeroDeathAwardXP_TriggerFunc (bool testConds, bool runActio
     }
     auto44AF96F8_g = lv_xPlayerGroup;
     lv_itPlayer = -1;
-    if (libGame_teamOrderSharedXPDisabled && libGame_gf_TeamNumberOfPlayer(lp_killingPlayer) == libGame_gv_teamOrderIndex_C) {
+    if (libGame_sharedXPDisabled[libGame_gf_TeamNumberOfPlayer(lp_killingPlayer)]) {
         lv_levelGap = libCore_gf_DataXPLevelGapBetweenHeroes(lp_killingPlayer, lp_deadHero);
         lv_xPGranted = libCore_gf_DataXPXPForHero(lp_killingPlayer, lp_deadHero);
         libGame_gf_GrantXPToPlayer(lv_xPGranted, lp_killingPlayer, libGame_ge_XPSources_Hero);
@@ -8696,7 +8696,8 @@ void libGame_gf_MinionStartStopMinionSpawnCycle (bool lp_startStop) {
         for ( ; ( (auto2AF0547F_ai >= 0 && lv_itLane <= auto2AF0547F_ae) || (auto2AF0547F_ai < 0 && lv_itLane >= auto2AF0547F_ae) ) ; lv_itLane += auto2AF0547F_ai ) {
             libGame_gv_laneData[lv_itLane].lv_minionSpawningEnabled = true;
         }
-        TriggerExecute(libGame_gt_MinionSpawnCycle, true, false);
+        TriggerExecute(libGame_MinionSpawnCycle[libGame_gv_teamOrderIndex_C], true, false);
+        TriggerExecute(libGame_MinionSpawnCycle[libGame_gv_teamChaosIndex_C], true, false);
     }
     else {
         auto759DBF5D_ae = libGame_gv_laneCount;
@@ -8704,7 +8705,8 @@ void libGame_gf_MinionStartStopMinionSpawnCycle (bool lp_startStop) {
         for ( ; ( (auto759DBF5D_ai >= 0 && lv_itLane <= auto759DBF5D_ae) || (auto759DBF5D_ai < 0 && lv_itLane >= auto759DBF5D_ae) ) ; lv_itLane += auto759DBF5D_ai ) {
             libGame_gv_laneData[lv_itLane].lv_minionSpawningEnabled = false;
         }
-        TriggerStop(libGame_gt_MinionSpawnCycle);
+        TriggerStop(libGame_MinionSpawnCycle[libGame_gv_teamOrderIndex_C]);
+        TriggerStop(libGame_MinionSpawnCycle[libGame_gv_teamChaosIndex_C]);
     }
 }
 
@@ -8793,7 +8795,7 @@ void libGame_gf_MinionSpawnMinion (int lp_lane, int lp_owner, int lp_type, point
         return ;
     }
 
-    if (lv_minionTeam == libGame_gv_teamChaosIndex_C && libGame_teamChaosAlwaysSpawnCatapults) {
+    if (libGame_alwaysSpawnCatapults[lv_minionTeam]) {
     } else if (((lp_type == libCore_ge_MinionTypes_Catapult) || (lp_type == libCore_ge_MinionTypes_CustomCatapult1) || (lp_type == libCore_ge_MinionTypes_CustomCatapult2)) && ((libGame_gv_minionMapNeverSpawnsCatapults == true) || ((libGame_gv_minion_CapCatapults == true) && (UnitGroupCount(libGame_gv_minion_CatapultGroup[lv_minionTeam], c_unitCountAlive) >= libGame_gv_minion_CatapultCap_C)) || (libGame_gf_TownsAliveinLane(libGame_gf_EnemyTeam(lv_minionTeam), lp_lane) >= 2) || ((libGame_gf_TownsAliveinLane(libGame_gf_EnemyTeam(lv_minionTeam), lp_lane) == 1) && (ModI((libGame_gv_minionWaveSpawnCounter - libGame_gv_minion_PeriodicCatapultsFirstWave), libGame_gv_minion_PeriodicCatapultsWavePeriod_C) != 0)))) {
         return ;
     }
@@ -8898,14 +8900,12 @@ bool auto_libGame_gf_MinionSpawnWave_TriggerFunc (bool testConds, bool runAction
             lv_spawnPoint = libNtve_gf_PointOffsetTowardsPoint(lv_basePoint, lv_currentOffsetAmount, lv_offsetPoint);
             PointSetFacing(lv_spawnPoint, PointGetFacing(lv_basePoint));
             autoEFB6C6D3_ae = libCore_gv_dataMinionWaveCompositions[(lp_composition)].lv_groupMinionCount[lv_itGroup];
-            if (lv_team == 2) {
-                if (lv_minionType == libCore_ge_MinionTypes_Footmen) {
-                    autoEFB6C6D3_ae += libGame_teamChaosExtraMeleeMinions;
-                } else if (lv_minionType == libCore_ge_MinionTypes_Wizard) {
-                    autoEFB6C6D3_ae += libGame_teamChaosExtraMageMinions;
-                } else if (lv_minionType == libCore_ge_MinionTypes_Ranged) {
-                    autoEFB6C6D3_ae += libGame_teamChaosExtraRangedMinions;
-                }
+            if (lv_minionType == libCore_ge_MinionTypes_Footmen) {
+                autoEFB6C6D3_ae += libGame_extraMinionsMelee[lv_team];
+            } else if (lv_minionType == libCore_ge_MinionTypes_Wizard) {
+                autoEFB6C6D3_ae += libGame_extraMinionsWizard[lv_team];
+            } else if (lv_minionType == libCore_ge_MinionTypes_Ranged) {
+                autoEFB6C6D3_ae += libGame_extraMinionsRanged[lv_team];
             }
             lv_itMinion = 1;
             for ( ; ( (autoEFB6C6D3_ai >= 0 && lv_itMinion <= autoEFB6C6D3_ae) || (autoEFB6C6D3_ai < 0 && lv_itMinion >= autoEFB6C6D3_ae) ) ; lv_itMinion += autoEFB6C6D3_ai ) {
@@ -9283,7 +9283,7 @@ void libGame_gf_AwardXPForNPCKill (unit lp_killedUnit, int lp_killedUnitPlayer, 
 
     auto60ED318E_g = lv_xPAwardGroup;
     lv_itPlayer = -1;
-    if (libGame_teamOrderSharedXPDisabled && libGame_gf_TeamNumberOfPlayer(lp_killingPlayer) == libGame_gv_teamOrderIndex_C) {
+    if (libGame_sharedXPDisabled[libGame_gf_TeamNumberOfPlayer(lp_killingPlayer)]) {
         auto6BF10103_val = lp_killedUnitClassification;
         if (auto6BF10103_val == c_unitAttributeStructure) {
             lv_xPSource = libGame_ge_XPSources_Structure;
@@ -9542,10 +9542,14 @@ void libGame_gf_MinionDies (unit lp_minionUnit, int lp_killingPlayer, fixed lp_k
         lv_minionOwner = UnitGetOwner(lp_minionUnit);
         if (((UnitGetType(lp_minionUnit) == "WizardMinion"))) {
             if ((lv_minionOwner == libCore_gv_cOMPUTER_TeamOrder)) {
-                lv_regenGlobeOwner = libCore_gv_cOMPUTER_TeamChaos;
+                if (libGame_dropOppositeGlobe[libGame_gv_teamOrderIndex_C]) {
+                    lv_regenGlobeOwner = libCore_gv_cOMPUTER_TeamOrder;
+                } else {
+                    lv_regenGlobeOwner = libCore_gv_cOMPUTER_TeamChaos;
+                }
             }
             else {
-                if (libGame_teamChaosDropsChaosGlobe) {
+                if (libGame_dropOppositeGlobe[libGame_gv_teamChaosIndex_C]) {
                     lv_regenGlobeOwner = libCore_gv_cOMPUTER_TeamChaos;
                 } else {
                     lv_regenGlobeOwner = libCore_gv_cOMPUTER_TeamOrder;
@@ -10420,6 +10424,7 @@ void libGame_gf_GrantXPToPlayer (fixed lp_incomingXP, int lp_player, int lp_sour
     fixed lv_currentXPForPlayer;
     fixed lv_fractionalLevelValue;
     fixed lv_xPDifference;
+    int team = libGame_gf_TeamNumberOfPlayer(lp_player);
 
     // Automatic Variable Declarations
     int autoDF74543F_val;
@@ -10479,15 +10484,12 @@ void libGame_gf_GrantXPToPlayer (fixed lp_incomingXP, int lp_player, int lp_sour
     }
 
     if (lp_source != libGame_ge_XPSources_External) {
-        if (lp_player >= 1 && lp_player <= 5) {
-            lv_xP = lv_xP * (1 + libGame_teamOrderXPMod);
+        if (lp_player >= 1 && lp_player <= 10) {
+            lv_xP = lv_xP * (1 + libGame_xpModifier[team]);
             if (lp_source == libGame_ge_XPSources_Trickle) {
-                lv_xP = lv_xP * (1 + libGame_teamOrderXPModTrickle);
-            }
-        } else if (lp_player >= 6 && lp_player <= 10) {
-            lv_xP = lv_xP * (1 + libGame_teamChaosXPMod);
-            if (lp_source == libGame_ge_XPSources_Trickle) {
-                lv_xP = lv_xP * (1 + libGame_teamChaosXPModTrickle);
+                lv_xP = lv_xP * (1 + libGame_xpModifierTrickle[team]);
+            } else if (lp_source == libGame_ge_XPSources_Minion) {
+                lv_xP = lv_xP * (1 + libGame_xpModifierMinion[team]);
             }
         }
     }
@@ -15920,7 +15922,7 @@ bool libGame_gt_ExperienceGlobeSpawn_Func (bool testConds, bool runActions) {
         }
         else {
             if ((UnitGetOwner(lv_unit) == libCore_gv_cOMPUTER_TeamChaos)) {
-                if (!libGame_teamOrderXPGlobesDisabled) {
+                if (!libGame_xpGlobesDisabled[libGame_gv_teamOrderIndex_C]) {
                     PlayerCreateEffectPoint(libCore_gv_cOMPUTER_TeamOrder, "HeroGenericGenerateExperienceGlobeCreateUnit", UnitGetPosition(lv_unit));
                 } else {
                     nearbyUnits = UnitGroupSearch(null, c_playerAny, UnitGetPosition(lv_unit), 12, null, 0);
@@ -15945,7 +15947,7 @@ bool libGame_gt_ExperienceGlobeSpawn_Func (bool testConds, bool runActions) {
                     if (nearestHero != null && UnitGetType(nearestHero) != "") {
                         xp = CatalogFieldValueGetAsFixed(c_gameCatalogEffect, "ExperienceAcquiredMinions", "XP", libCore_gv_cOMPUTER_TeamOrder);
                         lv_itPlayer = -1;
-                        if (libGame_teamOrderSharedXPDisabled) {
+                        if (libGame_sharedXPDisabled[libGame_gv_teamOrderIndex_C]) {
                             libGame_gf_GrantXPToPlayer(xp, UnitGetOwner(nearestHero), libGame_ge_XPSources_Minion);
                             libUIUI_gf_UIFloatingCombatTextH16MidXP(UnitGetOwner(nearestHero), lv_unit, libCore_ge_FloatingTextType_XPSmall, FixedToInt(xp));
                         } else {
@@ -16013,7 +16015,7 @@ bool libGame_gt_ExperienceGlobeGrantXP_Func (bool testConds, bool runActions) {
     lv_xPAwardGroup = PlayerGroupCopy(libGame_gf_AlliedPlayerGroupOfPlayer(lv_targetPlayer));
     auto4D2B2D44_g = lv_xPAwardGroup;
     lv_itPlayer = -1;
-    if (libGame_teamOrderSharedXPDisabled && libGame_gf_TeamNumberOfPlayer(lv_targetPlayer) == libGame_gv_teamOrderIndex_C) {
+    if (libGame_sharedXPDisabled[libGame_gf_TeamNumberOfPlayer(lv_targetPlayer)]) {
         libGame_gf_GrantXPToPlayer(lv_xPAmount, lv_targetPlayer, libGame_ge_XPSources_Minion);
     } else {
         while (true) {
@@ -18815,6 +18817,66 @@ void libGame_gt_LootSpray_Init () {
 //--------------------------------------------------------------------------------------------------
 // Trigger: Minion - Spawn Cycle
 //--------------------------------------------------------------------------------------------------
+void libGame_MinionWaveCycle(int team) {
+    int lv_lane = 1;
+    int lv_waveComposition;
+    int lv_laneConut = libGame_gv_laneCount;
+    bool lv_paused;
+    libGame_minionWaveSpawnCounter[team] += 1;
+    for (; lv_lane <= lv_laneConut; lv_lane += 1 ) {
+        if ((libGame_gv_laneData[lv_lane].lv_minionSpawningEnabled == true)) {
+            if ((libGame_gv_minionSystemPausedAdvanced[team][lv_lane] == false)) {
+                lv_waveComposition = libGame_gf_MinionDetermineWaveComposition(lv_lane, team);
+                libGame_gf_MinionSpawnWave(lv_lane, libGame_gf_ComputerPlayerInTeam(team), lv_waveComposition);
+            }
+            Wait(0.1875, c_timeGame);
+        }
+    }
+}
+
+bool libGame_MinionSpawnCycleOrder_Func (bool testConds, bool runActions) {
+    timer lv_waveTimer = TimerCreate();
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+    while (true) {
+        if (((libGame_gv_gameOver == true) || (libCore_gv_sYSMinionAI == false))) {
+            return true;
+        }
+        TimerStart(lv_waveTimer, libCore_minionWaveInterval[libGame_gv_teamOrderIndex_C], false, c_timeGame);
+        if ((libGame_gv_minionSpawningEnabled == true)) {
+            libGame_MinionWaveCycle(libGame_gv_teamOrderIndex_C);
+            libGame_Wait((TimerGetRemaining(lv_waveTimer) - 0.0625), c_timeGame);
+        }
+        else {
+            libGame_Wait(TimerGetRemaining(lv_waveTimer), c_timeGame);
+        }
+    }
+    return true;
+}
+bool libGame_MinionSpawnCycleChaos_Func (bool testConds, bool runActions) {
+    timer lv_waveTimer = TimerCreate();
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+    while (true) {
+        if (((libGame_gv_gameOver == true) || (libCore_gv_sYSMinionAI == false))) {
+            return true;
+        }
+        TimerStart(lv_waveTimer, libCore_minionWaveInterval[libGame_gv_teamChaosIndex_C], false, c_timeGame);
+        if ((libGame_gv_minionSpawningEnabled == true)) {
+            libGame_MinionWaveCycle(libGame_gv_teamChaosIndex_C);
+            libGame_Wait((TimerGetRemaining(lv_waveTimer) - 0.0625), c_timeGame);
+        }
+        else {
+            libGame_Wait(TimerGetRemaining(lv_waveTimer), c_timeGame);
+        }
+    }
+    return true;
+}
+
 bool libGame_gt_MinionSpawnCycle_Func (bool testConds, bool runActions) {
     // Variable Declarations
     int lv_lane;
@@ -18871,7 +18933,9 @@ bool libGame_gt_MinionSpawnCycle_Func (bool testConds, bool runActions) {
 
 //--------------------------------------------------------------------------------------------------
 void libGame_gt_MinionSpawnCycle_Init () {
-    libGame_gt_MinionSpawnCycle = TriggerCreate("libGame_gt_MinionSpawnCycle_Func");
+    //libGame_gt_MinionSpawnCycle = TriggerCreate("libGame_gt_MinionSpawnCycle_Func");
+    libGame_MinionSpawnCycle[libGame_gv_teamOrderIndex_C] = TriggerCreate("libGame_MinionSpawnCycleOrder_Func");
+    libGame_MinionSpawnCycle[libGame_gv_teamChaosIndex_C] = TriggerCreate("libGame_MinionSpawnCycleChaos_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -21687,6 +21751,11 @@ bool libGame_gt_KillStandaloneTowers_Func (bool testConds, bool runActions) {
     }
 
     if ((UnitGetType(EventUnit()) == "TownTownHallL2")) {
+        if ((UnitGetOwner(EventUnit()) == libCore_gv_cOMPUTER_TeamOrder && libGame_keepFallbackTowers[libGame_gv_teamOrderIndex_C]) ||
+            (UnitGetOwner(EventUnit()) == libCore_gv_cOMPUTER_TeamChaos && libGame_keepFallbackTowers[libGame_gv_teamChaosIndex_C])) {
+            return true;
+        }
+
         auto61769700_g = UnitGroupSearch(null, c_playerAny, UnitGetPosition(EventUnit()), 15.0, UnitFilter((1 << c_targetFilterStructure), 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
         auto61769700_u = UnitGroupCount(auto61769700_g, c_unitCountAll);
         for (;; auto61769700_u -= 1) {

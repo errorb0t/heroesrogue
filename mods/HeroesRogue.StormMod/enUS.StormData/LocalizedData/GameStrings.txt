@@ -21,31 +21,237 @@ Param/Expression/AffixCurseSkipsMultiple=<n/><n/><c val="FFDE36">Skips the next 
 Param/Expression/AffixCurseSkipsEachStack=<n/><n/><c val="FFDE36">Each stack skips the next Curse.</c>
 Param/Expression/AffixCurseSkipsMultipleEachStack=<n/><n/><c val="FFDE36">Each stack skips the next ~A~ Curses.</c>
 Param/Expression/Mythic=<n/><n/><c val="A84987">Round 1</c>: ~A~<n/><n/><c val="A84987">Round 5</c>: ~B~<n/><n/><c val="A84987">Round 9</c>: ~C~<n/><n/><c val="A84987">Round 13</c>: ~D~<n/><n/><c val="A84987">Round 17</c> and beyond: ~E~
+Param/Expression/AffixGameoverStats1=Total boons: <c val="#TooltipNumbers">~A~</c><n/>    - <c val="ffffff">Commons:</c> <c val="#TooltipNumbers">~C~</c><n/>    - <c val="1eff00">Uncommons:</c> <c val="#TooltipNumbers">~D~</c><n/>    - <c val="0070dd">Rares:</c> <c val="#TooltipNumbers">~E~</c><n/>    - <c val="a335ee">Epics:</c> <c val="#TooltipNumbers">~F~</c><n/>    - <c val="ff8000">Legendaries:</c> <c val="#TooltipNumbers">~G~</c><n/>    - <c val="e6cc80">Starters:</c> <c val="#TooltipNumbers">~H~</c><n/>    - <c val="01ffff">Milestones:</c> <c val="#TooltipNumbers">~I~</c><n/>Total curses: <c val="#TooltipNumbers">~B~</c><n/>    - <c val="c52020">Curses:</c> <c val="#TooltipNumbers">~J~</c><n/>    - <c val="9B2400">Challenges:</c> <c val="#TooltipNumbers">~K~</c><n/>    - <c val="A84987">Mythics:</c> <c val="#TooltipNumbers">~L~</c>
+Param/Expression/AffixGameoverStats2=Boon rerolls used: <c val="#TooltipNumbers">~A~</c><n/>Curse rerolls used: <c val="#TooltipNumbers">~B~</c><n/>Bans used: <c val="#TooltipNumbers">~C~</c><n/>Minions killed: <c val="#TooltipNumbers">~F~</c><n/>Mercenaries captured: <c val="#TooltipNumbers">~G~</c><n/>Regeneration globes: <c val="#TooltipNumbers">~H~</c><n/>Objectives won: <c val="#TooltipNumbers">~I~</c><n/>Objectives lost: <c val="#TooltipNumbers">~J~</c><n/>Curses skipped: <c val="#TooltipNumbers">~D~</c><n/>Curses swapped to boons: <c val="#TooltipNumbers">~E~</c><n/>Most common ally: <c val="#TooltipNumbers">~K~ (~M~)</c><n/>Most common enemy: <c val="#TooltipNumbers">~L~ (~N~)</c>
+Param/Expression/AffixGameoverStats3=Game time: <c val="#TooltipNumbers">~L~</c><n/>Total damage dealt: <c val="#TooltipNumbers">~A~</c><n/>Spell damage dealt: <c val="#TooltipNumbers">~B~</c><n/>Physical damage dealt: <c val="#TooltipNumbers">~C~</c><n/>Healing: <c val="#TooltipNumbers">~D~</c><n/>Damage taken: <c val="#TooltipNumbers">~E~</c><n/>Experience: <c val="#TooltipNumbers">~F~</c><n/>Takedowns: <c val="#TooltipNumbers">~G~</c><n/>Kills: <c val="#TooltipNumbers">~H~</c><n/>Assists: <c val="#TooltipNumbers">~I~</c><n/>Deaths: <c val="#TooltipNumbers">~J~</c><n/>KDA Ratio: <c val="#TooltipNumbers">~K~</c>
+Param/Expression/AchievementEarned=Earned the achievement: <c val="FFDE36">~A~~B~</c>
+
+Achievement/Tooltip/HighestDifficultyNormal=<n/><n/>Highest difficulty: <c val="ffffff">Normal</c>
+Achievement/Tooltip/HighestDifficultyHeroic=<n/><n/>Highest difficulty: <c val="ff8000">Heroic</c>
+Achievement/Tooltip/HighestDifficultyMythic=<n/><n/>Highest difficulty: <c val="A84987">Mythic</c>
+Achievement/Tooltip/RoundNumber=<n/>Highest round: <c val="#TooltipNumbers">~A~</c>
+Achievement/Name/Abathur=Abathur
+Achievement/Tooltip/Abathur=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Abathur</c>.
+Achievement/Name/Alarak=Alarak
+Achievement/Tooltip/Alarak=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Alarak</c>.
+Achievement/Name/Alexstrasza=Alexstrasza
+Achievement/Tooltip/Alexstrasza=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Alexstrasza</c>.
+Achievement/Name/Ana=Ana
+Achievement/Tooltip/Ana=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Ana</c>.
+Achievement/Name/Anduin=Anduin
+Achievement/Tooltip/Anduin=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Anduin</c>.
+Achievement/Name/Anubarak=Anub'arak
+Achievement/Tooltip/Anubarak=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Anub'arak</c>.
+Achievement/Name/Artanis=Artanis
+Achievement/Tooltip/Artanis=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Artanis</c>.
+Achievement/Name/Arthas=Arthas
+Achievement/Tooltip/Arthas=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Arthas</c>.
+Achievement/Name/Auriel=Auriel
+Achievement/Tooltip/Auriel=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Auriel</c>.
+Achievement/Name/Azmodan=Azmodan
+Achievement/Tooltip/Azmodan=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Azmodan</c>.
+Achievement/Name/Blaze=Blaze
+Achievement/Tooltip/Blaze=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Blaze</c>.
+Achievement/Name/Brightwing=Brightwing
+Achievement/Tooltip/Brightwing=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Brightwing</c>.
+Achievement/Name/Cassia=Cassia
+Achievement/Tooltip/Cassia=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Cassia</c>.
+Achievement/Name/Chen=Chen
+Achievement/Tooltip/Chen=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Chen</c>.
+Achievement/Name/Chogall=Cho
+Achievement/Tooltip/Chogall=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Cho</c>.
+Achievement/Name/Chromie=Chromie
+Achievement/Tooltip/Chromie=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Chromie</c>.
+Achievement/Name/DVa=D.Va
+Achievement/Tooltip/DVa=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">D.Va</c>.
+Achievement/Name/Deathwing=Deathwing
+Achievement/Tooltip/Deathwing=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Deathwing</c>.
+Achievement/Name/Deckard=Deckard
+Achievement/Tooltip/Deckard=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Deckard</c>.
+Achievement/Name/Dehaka=Dehaka
+Achievement/Tooltip/Dehaka=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Dehaka</c>.
+Achievement/Name/Diablo=Diablo
+Achievement/Tooltip/Diablo=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Diablo</c>.
+Achievement/Name/ETC=E.T.C.
+Achievement/Tooltip/ETC=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">E.T.C.</c>.
+Achievement/Name/Falstad=Falstad
+Achievement/Tooltip/Falstad=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Falstad</c>.
+Achievement/Name/Fenix=Fenix
+Achievement/Tooltip/Fenix=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Fenix</c>.
+Achievement/Name/Gall=Gall
+Achievement/Tooltip/Gall=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Gall</c>.
+Achievement/Name/Garrosh=Garrosh
+Achievement/Tooltip/Garrosh=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Garrosh</c>.
+Achievement/Name/Gazlowe=Gazlowe
+Achievement/Tooltip/Gazlowe=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Gazlowe</c>.
+Achievement/Name/Genji=Genji
+Achievement/Tooltip/Genji=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Genji</c>.
+Achievement/Name/Greymane=Greymane
+Achievement/Tooltip/Greymane=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Greymane</c>.
+Achievement/Name/Guldan=Gul'dan
+Achievement/Tooltip/Guldan=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Gul'dan</c>.
+Achievement/Name/Hanzo=Hanzo
+Achievement/Tooltip/Hanzo=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Hanzo</c>.
+Achievement/Name/Hogger=Hogger
+Achievement/Tooltip/Hogger=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Hogger</c>.
+Achievement/Name/Illidan=Illidan
+Achievement/Tooltip/Illidan=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Illidan</c>.
+Achievement/Name/Imperius=Imperius
+Achievement/Tooltip/Imperius=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Imperius</c>.
+Achievement/Name/Jaina=Jaina
+Achievement/Tooltip/Jaina=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Jaina</c>.
+Achievement/Name/Johanna=Johanna
+Achievement/Tooltip/Johanna=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Johanna</c>.
+Achievement/Name/Junkrat=Junkrat
+Achievement/Tooltip/Junkrat=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Junkrat</c>.
+Achievement/Name/Kaelthas=Kael'thas
+Achievement/Tooltip/Kaelthas=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Kael'thas</c>.
+Achievement/Name/KelThuzad=Kel'Thuzad
+Achievement/Tooltip/KelThuzad=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Kel'Thuzad</c>.
+Achievement/Name/Kerrigan=Kerrigan
+Achievement/Tooltip/Kerrigan=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Kerrigan</c>.
+Achievement/Name/Kharazim=Kharazim
+Achievement/Tooltip/Kharazim=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Kharazim</c>.
+Achievement/Name/Leoric=Leoric
+Achievement/Tooltip/Leoric=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Leoric</c>.
+Achievement/Name/LiLi=Li Li
+Achievement/Tooltip/LiLi=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Li Li</c>.
+Achievement/Name/LiMing=Li-Ming
+Achievement/Tooltip/LiMing=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Li-Ming</c>.
+Achievement/Name/LostVikings=The Lost Vikings
+Achievement/Tooltip/LostVikings=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">The Lost Vikings</c>.
+Achievement/Name/LtMorales=Lt. Morales
+Achievement/Tooltip/LtMorales=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Lt. Morales</c>.
+Achievement/Name/Lucio=Lúcio
+Achievement/Tooltip/Lucio=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Lúcio</c>.
+Achievement/Name/Lunara=Lunara
+Achievement/Tooltip/Lunara=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Lunara</c>.
+Achievement/Name/Maiev=Maiev
+Achievement/Tooltip/Maiev=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Maiev</c>.
+Achievement/Name/MalGanis=Mal'Ganis
+Achievement/Tooltip/MalGanis=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Mal'Ganis</c>.
+Achievement/Name/Malfurion=Malfurion
+Achievement/Tooltip/Malfurion=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Malfurion</c>.
+Achievement/Name/Malthael=Malthael
+Achievement/Tooltip/Malthael=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Malthael</c>.
+Achievement/Name/Medivh=Medivh
+Achievement/Tooltip/Medivh=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Medivh</c>.
+Achievement/Name/Mei=Mei
+Achievement/Tooltip/Mei=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Mei</c>.
+Achievement/Name/Mephisto=Mephisto
+Achievement/Tooltip/Mephisto=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Mephisto</c>.
+Achievement/Name/Muradin=Muradin
+Achievement/Tooltip/Muradin=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Muradin</c>.
+Achievement/Name/Murky=Murky
+Achievement/Tooltip/Murky=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Murky</c>.
+Achievement/Name/Nazeebo=Nazeebo
+Achievement/Tooltip/Nazeebo=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Nazeebo</c>.
+Achievement/Name/Nova=Nova
+Achievement/Tooltip/Nova=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Nova</c>.
+Achievement/Name/Orphea=Orphea
+Achievement/Tooltip/Orphea=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Orphea</c>.
+Achievement/Name/Probius=Probius
+Achievement/Tooltip/Probius=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Probius</c>.
+Achievement/Name/Qhira=Qhira
+Achievement/Tooltip/Qhira=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Qhira</c>.
+Achievement/Name/Ragnaros=Ragnaros
+Achievement/Tooltip/Ragnaros=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Ragnaros</c>.
+Achievement/Name/Raynor=Raynor
+Achievement/Tooltip/Raynor=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Raynor</c>.
+Achievement/Name/Rehgar=Rehgar
+Achievement/Tooltip/Rehgar=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Rehgar</c>.
+Achievement/Name/Rexxar=Rexxar
+Achievement/Tooltip/Rexxar=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Rexxar</c>.
+Achievement/Name/Samuro=Samuro
+Achievement/Tooltip/Samuro=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Samuro</c>.
+Achievement/Name/SgtHammer=Sgt. Hammer
+Achievement/Tooltip/SgtHammer=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Sgt. Hammer</c>.
+Achievement/Name/Sonya=Sonya
+Achievement/Tooltip/Sonya=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Sonya</c>.
+Achievement/Name/Stitches=Stitches
+Achievement/Tooltip/Stitches=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Stitches</c>.
+Achievement/Name/Stukov=Stukov
+Achievement/Tooltip/Stukov=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Stukov</c>.
+Achievement/Name/Sylvanas=Sylvanas
+Achievement/Tooltip/Sylvanas=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Sylvanas</c>.
+Achievement/Name/Tassadar=Tassadar
+Achievement/Tooltip/Tassadar=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Tassadar</c>.
+Achievement/Name/TheButcher=The Butcher
+Achievement/Tooltip/TheButcher=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">The Butcher</c>.
+Achievement/Name/Thrall=Thrall
+Achievement/Tooltip/Thrall=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Thrall</c>.
+Achievement/Name/Tracer=Tracer
+Achievement/Tooltip/Tracer=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Tracer</c>.
+Achievement/Name/Tychus=Tychus
+Achievement/Tooltip/Tychus=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Tychus</c>.
+Achievement/Name/Tyrael=Tyrael
+Achievement/Tooltip/Tyrael=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Tyrael</c>.
+Achievement/Name/Tyrande=Tyrande
+Achievement/Tooltip/Tyrande=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Tyrande</c>.
+Achievement/Name/Uther=Uther
+Achievement/Tooltip/Uther=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Uther</c>.
+Achievement/Name/Valeera=Valeera
+Achievement/Tooltip/Valeera=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Valeera</c>.
+Achievement/Name/Valla=Valla
+Achievement/Tooltip/Valla=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Valla</c>.
+Achievement/Name/Varian=Varian
+Achievement/Tooltip/Varian=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Varian</c>.
+Achievement/Name/Whitemane=Whitemane
+Achievement/Tooltip/Whitemane=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Whitemane</c>.
+Achievement/Name/Xul=Xul
+Achievement/Tooltip/Xul=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Xul</c>.
+Achievement/Name/Yrel=Yrel
+Achievement/Tooltip/Yrel=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Yrel</c>.
+Achievement/Name/Zagara=Zagara
+Achievement/Tooltip/Zagara=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Zagara</c>.
+Achievement/Name/Zarya=Zarya
+Achievement/Tooltip/Zarya=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Zarya</c>.
+Achievement/Name/Zeratul=Zeratul
+Achievement/Tooltip/Zeratul=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Zeratul</c>.
+Achievement/Name/Zuljin=Zul'jin
+Achievement/Tooltip/Zuljin=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Zul'jin</c>.
+Achievement/Name/Deathless=Deathless
+Achievement/Tooltip/Deathless=Win Round <c val="#TooltipNumbers">20</c> without dying at any point during the run.
+Achievement/Name/Objective=Focus Obj!
+Achievement/Tooltip/Objective=Win Round <c val="#TooltipNumbers">20</c> without losing a map objective at any point during the run.
+Achievement/Name/NoRerolls=Luck Reliant
+Achievement/Tooltip/NoRerolls=Win Round <c val="#TooltipNumbers">20</c> without using any boon or curse rerolls at any point during the run.
+Achievement/Name/NoBans=Unbannable
+Achievement/Tooltip/NoBans=Win Round <c val="#TooltipNumbers">20</c> without using any bans at any point during the run.
+Achievement/Name/Speedrun1=World Record
+Achievement/Tooltip/Speedrun1=Win Round <c val="#TooltipNumbers">20</c> in under <c val="#TooltipNumbers">1</c> hour.
+Achievement/Name/Speedrun2=Speedrun
+Achievement/Tooltip/Speedrun2=Win Round <c val="#TooltipNumbers">20</c> in under <c val="#TooltipNumbers">2</c> hours.
+Achievement/Name/Round30=Veteran
+Achievement/Tooltip/Round30=Win Round <c val="#TooltipNumbers">30</c>.
+Achievement/Name/Round40=Elite
+Achievement/Tooltip/Round40=Win Round <c val="#TooltipNumbers">40</c>.
 
 LoadingScreen/Help00=You gain Boons at level 1, 4, 7, and 10, and Curses every enemy talent tier.
 LoadingScreen/Help01=Completing map objectives replaces a future Curse with a Boon, once per game.
 LoadingScreen/Help02=Some Curses are more powerful than others, choose carefully!
 LoadingScreen/Help03=Certain Boons and Curses appear only on specific maps or Heroes.
-LoadingScreen/Help04=Boons or Curses can stack its effect.
+LoadingScreen/Help04=Boons and Curses can stack their effects and become significantly more powerful.
 LoadingScreen/Help05=Heroes with a golden border have unique Boons which only appear at the start of the run.
 LoadingScreen/Help06=You can reroll Boons or Curses you don't like.
 LoadingScreen/Help07=You gain a powerful Legendary Boon every 4 games.
 LoadingScreen/Help08=You can ban Boons or Curses, preventing them from rolling again for the rest of the run.
-LoadingScreen/Help09=You gain a Milestone boon with unique effects on round 10. 
+LoadingScreen/Help09=You gain a Milestone Boon with unique effects on round 10. 
 LoadingScreen/Help10=Boons and curses up to level 10 are obtained next game when skipped.
 LoadingScreen/Help11=Challenge curses are difficult to deal with but offer great rewards.
 LoadingScreen/Help12=Enemy stats scale over time on Heroic difficulty or higher.
+LoadingScreen/Help12=You win by getting to Round 20 and destroying the enemy Core! You can stop or continue into an endless run afterwards.
 
 UI/MapLoadingScreen/LibAffx/Description1=Gain powerful, permanent Boons throughout your run to increase your and your team's strength!
 UI/MapLoadingScreen/LibAffx/Description2=The game becomes more difficult over time as you obtain dangerous Curses.
-UI/MapLoadingScreen/LibAffx/Description3=Victory is not the end. Continue on to a new map, keeping your Boons and Curses, and try to get as far as possible!
+UI/MapLoadingScreen/LibAffx/Description3=Victory is not the end. Continue on to a new map, keeping your Boons and Curses, and try to get to Round 20 and win!
 UI/MapLoadingScreen/LibAffx/Title1=Boons
 UI/MapLoadingScreen/LibAffx/Title2=Curses
-UI/MapLoadingScreen/LibAffx/Title3=Endless
+UI/MapLoadingScreen/LibAffx/Title3=Persistence
 
 Text/ExcludeChoGallForAIEffect=<n/><n/><c val="FFDE32">AI teammate effect does not apply to Cho'Gall.</c>
 Text/ExcludeChoGall=<n/><n/><c val="FFDE32">Does not apply to Cho'Gall.</c>
-Text/Information=Welcome to Heroes Rogue! This is a singleplayer rogue-like mod for Heroes of the Storm. Throughout the game, you will have to choose <c val="#TooltipNumbers">Boons</c> providing various permanent buffs and <c val="c52020">Curses</c> which make the game more difficult. Your boons and curses are automatically saved after destroying the enemy Core, carrying them over into the next game. The game can be quit and played at another time, and will resume where you left of. Try to get as far as possible! If your Core gets destroyed, the run ends and all boons and curses are reset.<n/><n/>The following Heroes have special interactions with boons and curses:<n/>• <c val="#TooltipNumbers">Lost Vikings, Rexxar, Samuro, and Nova:</c> Boons and curses apply to all controlled units/clones.<n/>• <c val="#TooltipNumbers">Abathur:</c> Boons and curses apply to Symbiote (NOT the host) and Ultimate Evolution.<n/>• <c val="#TooltipNumbers">Cho'Gall:</c> Cho and Gall share all boons and curses.<n/><n/><c val="FFDE36">Golden Heroes:</c> These Heroes have access to unique boons and curses, in addition to the generic ones that all Heroes have access to.<n/><n/><c val="#TooltipNumbers">Boons:</c> Obtained when reaching level <c val="#TooltipNumbers">1</c>, <c val="#TooltipNumbers">4</c>, <c val="#TooltipNumbers">7</c>, and <c val="#TooltipNumbers">10</c>. If you win early and skip any boons, those skipped boons will be offered in the next game, up to the level <c val="#TooltipNumbers">10</c> boons. Completing a map objective (for example getting three tributes on Cursed Hollow) also replaces a future curse with a boon, once per game. Boons can be <c val="ffffff">Common</c>, <c val="1eff00">Uncommon</c>, <c val="0070dd">Rare</c>, <c val="a335ee">Epic</c>, or <c val="ff8000">Legendary</c>, increasing in rarity and power. You are guaranteed at least a <c val="0070dd">Rare Boon</c> at the start of every game, and a <c val="ff8000">Legendary Boon</c> every <c val="#TooltipNumbers">4</c> games.<n/><n/><c val="01ffff">Milestone Boons:</c> These are boons with unique effects that are obtained when reaching round <c val="#TooltipNumbers">10</c> on any difficulty as a milestone reward.<n/><n/><c val="e6cc80">Starter Boons:</c> These are potent boons that can only be obtained at the start of the game. Some boons only show up with specific starter boons.<n/><n/><c val="c52020">Curses:</c> Obtained every time the enemy Team reaches a talent tier, as well as level <c val="#TooltipNumbers">24</c>, <c val="#TooltipNumbers">27</c>, and <c val="#TooltipNumbers">30</c>. If you win early and skip any curses, those skipped curses will be offered in the next game, up to the level <c val="#TooltipNumbers">10</c> curses.<n/><n/><c val="A84987">Mythic Curses:</c> These are powerful and unique curses that show up at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards on <c val="#TooltipNumbers">Mythic</c> difficulty.<n/><n/><c val="9B2400">Challenge Curses:</c> These are curses that can be difficult to deal with but offer great rewards.<n/><n/><c val="FFDE36">Rerolls:</c> Obtain <c val="#TooltipNumbers">3</c> rerolls at the start of a run and <c val="#TooltipNumbers">1</c> additional reroll at the start of every subsequent game which can be used to reroll the selection of boons and curses. Boon rerolls and curse rerolls are separate.<n/><n/><c val="FC4747">Bans:</c> Obtain <c val="#TooltipNumbers">3</c> bans at the start of a run and <c val="#TooltipNumbers">1</c> additional ban at the start of every subsequent game which can be used to ban boons and curses, preventing them from showing up for the rest of the run. Infinite boons/curses, starter boons, mythic curses, and milestone boons cannot be banned.
+Text/Information=Welcome to Heroes Rogue! This is a singleplayer rogue-like mod for Heroes of the Storm. Throughout the game, you will have to choose <c val="#TooltipNumbers">Boons</c> providing various permanent buffs and <c val="c52020">Curses</c> which make the game more difficult. Your boons and curses are automatically saved after destroying the enemy Core, carrying them over into the next game. The game can be quit and played at another time, and will resume where you left off. You win by getting to round <c val="#TooltipNumbers">20</c>! If your Core gets destroyed, the run ends and all boons and curses are reset.<n/><n/>The following Heroes have special interactions with boons and curses:<n/>• <c val="#TooltipNumbers">Lost Vikings, Rexxar, Samuro, and Nova:</c> Boons and curses apply to all controlled units/clones.<n/>• <c val="#TooltipNumbers">Abathur:</c> Boons and curses apply to Symbiote (NOT the host) and Ultimate Evolution.<n/>• <c val="#TooltipNumbers">Cho'Gall:</c> Cho and Gall share all boons and curses.<n/><n/><c val="FFDE36">Golden Heroes:</c> These Heroes have access to unique boons and curses, in addition to the generic ones that all Heroes have access to.<n/><n/><c val="#TooltipNumbers">Boons:</c> Obtained when reaching level <c val="#TooltipNumbers">1</c>, <c val="#TooltipNumbers">4</c>, <c val="#TooltipNumbers">7</c>, and <c val="#TooltipNumbers">10</c>. If you win early and skip any boons, those skipped boons will be offered in the next game, up to the level <c val="#TooltipNumbers">10</c> boons. Completing a map objective (for example getting three tributes on Cursed Hollow) also replaces a future curse with a boon, once per game. Boons can be <c val="ffffff">Common</c>, <c val="1eff00">Uncommon</c>, <c val="0070dd">Rare</c>, <c val="a335ee">Epic</c>, or <c val="ff8000">Legendary</c>, increasing in rarity and power. You are guaranteed at least a <c val="0070dd">Rare Boon</c> at the start of every game, and a <c val="ff8000">Legendary Boon</c> every <c val="#TooltipNumbers">4</c> games.<n/><n/><c val="01ffff">Milestone Boons:</c> These are boons with unique effects that are obtained when reaching round <c val="#TooltipNumbers">10</c> on any difficulty as a milestone reward.<n/><n/><c val="e6cc80">Starter Boons:</c> These are potent boons that can only be obtained at the start of the game. Some boons only show up with specific starter boons.<n/><n/><c val="c52020">Curses:</c> Obtained every time the enemy Team reaches a talent tier, as well as level <c val="#TooltipNumbers">24</c>, <c val="#TooltipNumbers">27</c>, and <c val="#TooltipNumbers">30</c>. If you win early and skip any curses, those skipped curses will be offered in the next game, up to the level <c val="#TooltipNumbers">10</c> curses.<n/><n/><c val="A84987">Mythic Curses:</c> These are powerful and unique curses that show up at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards on <c val="#TooltipNumbers">Mythic</c> difficulty.<n/><n/><c val="9B2400">Challenge Curses:</c> These are curses that can be difficult to deal with but offer great rewards.<n/><n/><c val="FFDE36">Rerolls:</c> Obtain <c val="#TooltipNumbers">3</c> rerolls at the start of a run and <c val="#TooltipNumbers">1</c> additional reroll at the start of every subsequent game which can be used to reroll the selection of boons and curses. Boon rerolls and curse rerolls are separate.<n/><n/><c val="FC4747">Bans:</c> Obtain <c val="#TooltipNumbers">3</c> bans at the start of a run and <c val="#TooltipNumbers">1</c> additional ban at the start of every subsequent game which can be used to ban boons and curses, preventing them from showing up for the rest of the run. Infinite boons/curses, starter boons, mythic curses, and milestone boons cannot be banned.
 
 Label/Name/RarityCommon=<c val="ffffff">Common
 Label/Name/RarityUncommon=<c val="1eff00">Uncommon
@@ -72,13 +278,19 @@ Label/Name/RerollCurse=Curse rerolls available:
 Label/Name/RerollStarter=Cannot reroll starters
 Label/Name/RerollMythic=Cannot reroll
 Label/Name/Options=Options
-Label/Name/OptionsRestart=Are you sure you wish to restart the run?<n/>All progress will be lost.
+Label/Name/OptionsRestart=Are you sure you wish to restart the run?<n/><n/><c val="c52020">All progress will be lost.</c>
+Label/Name/OptionsRestartEnemyWon=Are you sure you wish to start a new run?
 Label/Name/OptionsSpeedup=Increase game speed while gates are opening
 Label/Name/OptionsSpeedupDeath=Increase game speed while dead
 Label/Name/OptionsPicksBans=Display picks/bans in chat
 Label/Name/Difficulty=Difficulty
 Label/Name/AffixNone=???
+Label/Name/Victory=<c val="1eff00">Victory!</c>
+Label/Name/GameOver=<c val="c52020">Game over!</c>
+Label/Name/Achievements=Achievements
+Label/Name/ResetAchievements=Reset all Achievements?<n/><n/><c val="c52020">This cannot be undone!</c>
 
+Message/AchievementsReset=<c val="FFDE36">All achievements have been reset!</c>
 Message/CurseToBoon=<c val="FFDE36">The next Curse you obtain will become a Boon!</c>
 Message/CurseSkipped=<c val="FFDE36">Curse skipped due to a previous Curse.</c>
 Message/CurseSwap=<c val="FFDE36">Curse swapped to a Boon due to winning the last Objective.</c>
@@ -107,7 +319,7 @@ Message/TestCommand/CooldownSet=Cooldown of ~A~ set to ~B~.
 Message/TestCommand/Boon=Queues up a boon. Defaults to 1 with common rarity.<n/>boon [amount] [rarity]
 Message/TestCommand/Curse=Queues up a curse.<n/>curse [amount]
 Message/TestCommand/AffixAdd=Adds a boon/curse with the id. Amount defaults to 1.<n/>affixadd | afxadd | affix | afx <affix> [ammount]
-Message/TestCommand/Commands=## Commands ##<n/>boon [amount] [rarity]<n/>curse [amount]<n/>afxadd <affix> [amount]<n/>afxaddall [number of affixes] [optional arguments]<n/>nextmap [map number]<n/>rerolls [rerolls amount]<n/>bans [bans amount]<n/>cooldown <affix> [cooldown value]
+Message/TestCommand/Commands=## Commands ##<n/>boon [amount] [rarity]<n/>curse [amount]<n/>afxadd <affix> [amount]<n/>afxaddall [number of affixes] [optional arguments]<n/>nextmap [map number]<n/>rerolls [rerolls amount]<n/>bans [bans amount]<n/>cooldown <affix> [cooldown value]<n/>teleport <x> <y>
 Message/TestCommand/CouldNotFind=Could not find affix ~A~.
 Message/TestCommand/Added=Added ~A~x ~B~.
 Message/TestCommand/AddedTotal=Added a total of ~A~ affixes.
@@ -116,14 +328,21 @@ Message/TestCommand/ForcedUnpause=Forced unpause.
 Message/TestCommand/Camera=Modifies the player's camera.<n/>camera <camera type> <value>
 Message/TestCommand/RavenCurse=Forces Raven's Curse on a team.<n/>ravencurse <team>
 Message/TestCommand/PrintHeroIndex=Player ~A~: ~B~
+Message/TestCommand/Teleport=Teleports the player to a point.<n/>teleport <x> <y>
 Message/DebugEnabled=Debug mode enabled!
 
+Button/Name/ResetAchievements=Reset all achievements
+Button/Name/GameoverContinue=Continue into Endless
+Button/Name/GameoverRestart=New Run
+Button/Name/GameoverExit=Exit
 Button/Name/Close=Close
 Button/Name/HowToPlay=How to Play
 Button/Name/BanAffix=Ban
 Button/Name/PickAffix=Pick
 Button/Name/OwnedAffixes=Boons & Curses
+Button/Name/OwnedAffixesHide=Hide
 Button/Name/Reroll=Reroll
+Button/Name/OptionsAchievements=Achievements
 Button/Name/OptionsRestart=Restart the Run
 Button/Name/OptionsReturn=Return to Game
 Button/Name/OptionsRestartYes=Yes
@@ -386,7 +605,7 @@ Affix/Tooltip/IllidanBurningBlades=Gain <c val="#TooltipNumbers">Fiery Brand</c>
 Affix/Tooltip/Append/IllidanBurningBlades=
 Button/Name/IllidanBurningBladesTokenCounter=Burning Blades
 Button/Tooltip/IllidanBurningBladesTokenCounter=<c val="#TooltipQuest">Bonus Attack Speed: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:IllidanBurningBladesTokenCounter$*(100*Accumulator,IllidanBurningBladesAccumulator,Scale)" precision="2"/>%</c>
-Affix/Name/IllidanEvasive=IllidanEvasive
+Affix/Name/IllidanEvasive=Evasive
 Affix/Tooltip/IllidanEvasive=Evasion is permanently active.<n/><n/>You take double Spell Damage.
 Affix/Tooltip/Append/IllidanEvasive=
 Affix/Name/TyrandeElunesRanger=Elune's Ranger
@@ -420,17 +639,29 @@ Affix/Tooltip/Append/TyrandeElunesReach=
 Affix/Name/TyrandeFlybyAttack=Flyby Attack
 Affix/Tooltip/TyrandeFlybyAttack=Sentinel pierces and deals <c val="#TooltipNumbers">50%</c> damage to non-Heroic enemies.
 Affix/Tooltip/Append/TyrandeFlybyAttack=
-Affix/Name/MuradinJumper=MuradinJumper
+Affix/Name/MuradinJumper=Jumper
 Affix/Tooltip/MuradinJumper=Gain <c val="#TooltipNumbers">Dwarf Block</c>, <c val="#TooltipNumbers">Heavy Impact</c>, <c val="#TooltipNumbers">Dwarf Launch</c>, and <c val="#TooltipNumbers">Mountain King</c>.<n/><n/>Increases Dwarf Toss's range and radius by <c val="#TooltipNumbers">100%</c> and become Unstoppable during the jump.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Dwarf Toss increases its damage by <c val="#TooltipNumbers">10%</c>.<n/><n/><c val="#TooltipQuest">Reward:</c> After hitting <c val="#TooltipNumbers">25</c> Heroes, reduce Dwarf Toss's cooldown by <c val="#TooltipNumbers">4</c> seconds.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
 Affix/Tooltip/Append/MuradinJumper=
-Button/Name/MuradinDwarfTossTokenCounter=MuradinJumper
+Button/Name/MuradinDwarfTossTokenCounter=Jumper
 Button/Tooltip/MuradinDwarfTossTokenCounter=<c val="#TooltipQuest">Bonus damage: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:MuradinDwarfTossTokenCounter$*100*(Accumulator,MuradinDwarfTossAccumulator,Scale)" precision="0"/>%</c>
 Affix/Name/MuradinUnstoppableAvatar=Unstoppable Avatar
-Affix/Tooltip/MuradinUnstoppableAvatar=Gain <c val="#TooltipNumbers">Avatar</c>, <c val="#TooltipNumbers">Unstoppable Force</c>, <c val="#TooltipNumbers">Third Wind</c>, and <c val="#TooltipNumbers">Stoneform</c>.<n/><n/>Avatar is always active.<n/><n/>Basic Attacks deal bonus damage equal to <c val="#TooltipNumbers">3%</c> of your current Health.
+Affix/Tooltip/MuradinUnstoppableAvatar=Gain <c val="#TooltipNumbers">Avatar</c>, <c val="#TooltipNumbers">Unstoppable Force</c>, <c val="#TooltipNumbers">Third Wind</c>, and <c val="#TooltipNumbers">Stoneform</c>.<n/><n/>Avatar is always active.<n/><n/>Basic Attacks deal bonus damage equal to <c val="#TooltipNumbers">3%</c> of your maximum Health.
 Affix/Tooltip/Append/MuradinUnstoppableAvatar=
 Affix/Name/MuradinHammerer=Hammerer
 Affix/Tooltip/MuradinHammerer=Gain <c val="#TooltipNumbers">Perfect Storm</c> and <c val="#TooltipNumbers">Sledgehammer</c>.<n/><n/>Storm Bolt deals bonus damage to enemy Heroes equal to <c val="#TooltipNumbers">7%</c> of their maximum Health.<n/><n/>Retain Storm Bolt's Quest progress after winning the game.
 Affix/Tooltip/Append/MuradinHammerer=
+Affix/Name/MuradinPowerBolt=Power Bolt
+Affix/Tooltip/MuradinPowerBolt=Increases Storm Bolt's damage by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
+Affix/Tooltip/Append/MuradinPowerBolt=<n/><n/>Total modifier: <c val="#TooltipNumbers"><d ref="Effect,StormBoltDamage,MultiplicativeModifierArray[MuradinPowerBolt].Modifier*100" precision="1"/>%</c>
+Affix/Name/MuradinClapClap=Clap Clap
+Affix/Tooltip/MuradinClapClap=Increases Thunder Clap's damage by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
+Affix/Tooltip/Append/MuradinClapClap=<n/><n/>Total modifier: <c val="#TooltipNumbers"><d ref="Effect,ThunderclapDamage,MultiplicativeModifierArray[MuradinClapClap].Modifier*100" precision="1"/>%</c>
+Affix/Name/MuradinDwarfImpact=Dwarf Impact
+Affix/Tooltip/MuradinDwarfImpact=Increases Dwarf Toss's damage by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
+Affix/Tooltip/Append/MuradinDwarfImpact=<n/><n/>Total modifier: <c val="#TooltipNumbers"><d ref="Effect,MuradinDwarfTossDamage,MultiplicativeModifierArray[MuradinDwarfImpact].Modifier*100" precision="1"/>%</c>
+Affix/Name/MuradinCheapHammer=Cheap Hammer
+Affix/Tooltip/MuradinCheapHammer=Reduces Storm Bolt's Mana cost by <c val="#TooltipNumbers">25</c>.
+Affix/Tooltip/Append/MuradinCheapHammer=
 Affix/Name/IllidanExtendedAssault=Extended Assault
 Affix/Tooltip/IllidanExtendedAssault=Increases Sweeping Strike's Basic Attack damage bonus duration by <c val="#TooltipNumbers">3</c> seconds.
 Affix/Tooltip/Append/IllidanExtendedAssault=
@@ -477,13 +708,13 @@ Affix/Tooltip/Append/IllidanSurpriseHunt=
 Affix/Name/IllidanEfficientMorph=Efficient Morph
 Affix/Tooltip/IllidanEfficientMorph=Increases Metamorphosis's maximum Health bonus by <c val="#TooltipNumbers">100%</c> and reduces its cooldown by <c val="#TooltipNumbers">40</c> seconds.
 Affix/Tooltip/Append/IllidanEfficientMorph=
-Affix/Name/TyrandeOwling=TyrandeOwling
+Affix/Name/TyrandeOwling=Owling
 Affix/Tooltip/TyrandeOwling=Reduces Sentinel's cooldown by <c val="#TooltipNumbers">3</c> <c val="747A84">(+3s per stack)</c> seconds.
 Affix/Tooltip/Append/TyrandeOwling=
 Affix/Name/TyrandeStarRain=Star Rain
 Affix/Tooltip/TyrandeStarRain=Starfall gains unlimited range.<n/><n/>Reduces Starfall's cooldown by <c val="#TooltipNumbers">40</c>.
 Affix/Tooltip/Append/TyrandeStarRain=
-Affix/Name/TyrandeShadowstalker=TyrandeShadowstalker
+Affix/Name/TyrandeShadowstalker=Shadowstalker
 Affix/Tooltip/TyrandeShadowstalker=Shadowstalk grants Unrevealable for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>Reduces Shadowstalk's cooldown by <c val="#TooltipNumbers">45</c>.
 Affix/Tooltip/Append/TyrandeShadowstalker=
 Affix/Name/TyrandeLunarShower=Lunar Shower
@@ -511,8 +742,8 @@ Affix/Name/Superiority=Superiority
 Affix/Tooltip/Superiority=Grants <c val="#TooltipNumbers">30</c> <c val="747A84">(+15 per stack)</c> Armor against non-Heroic enemies to ALL allied Heroes.
 Affix/Tooltip/Append/Superiority=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixSuperiorityBehavior,ArmorModification.ArmorSet[Minion].ArmorMitigationTable[Basic]" precision="0"/></c>
 Affix/Name/MercenaryLord=Mercenary Lord
-Affix/Tooltip/MercenaryLord=Friendly non-Boss Mercenaries near you deal <c val="#TooltipNumbers">50%</c> <c val="747A84">(+50% per stack)</c> more damage.
-Affix/Tooltip/Append/MercenaryLord=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixMercenaryLordDamageBuff,Modification.DamageDealtFraction[Basic]*100" precision="0"/>%</c>
+Affix/Tooltip/MercenaryLord=Allied Mercenaries have <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c> increased maximum Health and deal <c val="#TooltipNumbers">50%</c> <c val="747A84">(+50% per stack)</c> more damage.
+Affix/Tooltip/Append/MercenaryLord=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixMercenaryLordBuff,Modification.DamageDealtFraction[Basic]*100" precision="0"/>%</c>
 Affix/Name/Demolitionist=Demolitionist
 Affix/Tooltip/Demolitionist=Increases damage dealt to Structures of ALL allied Heroes by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
 Affix/Tooltip/Append/Demolitionist=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDemolitionistBehavior,Modification.DamageDealtAttributeMultiplier[Structure]*100" precision="0"/>%</c>
@@ -591,6 +822,9 @@ Affix/Tooltip/Append/ThrallHealthyFrostwolf=<n/><n/>Total bonus: <c val="#Toolti
 Affix/Name/LiMingTeleporter=Teleporter
 Affix/Tooltip/LiMingTeleporter=Gain <c val="#TooltipNumbers">Aether Walker</c>, <c val="#TooltipNumbers">Calamity</c>, <c val="#TooltipNumbers">Illusionist</c>, and <c val="#TooltipNumbers">Diamond Skin</c>. Calamity deals <c val="#TooltipNumbers">50%</c> damage to non-Heroes.<n/><n/>Increases Teleport's range by <c val="#TooltipNumbers">100%</c> and maximum charges by <c val="#TooltipNumbers">2</c>.
 Affix/Tooltip/Append/LiMingTeleporter=
+Affix/Name/LiMingTrueCalamity=True Calamity
+Affix/Tooltip/LiMingTrueCalamity=Increases Calamity's base damage to non-Heroes from <c val="#TooltipNumbers">50%</c> to <c val="#TooltipNumbers">75%</c>.
+Affix/Tooltip/Append/LiMingTrueCalamity=
 Affix/Name/LiMingMissileBarrage=Missile Barrage
 Affix/Tooltip/LiMingMissileBarrage=Gain <c val="#TooltipNumbers">Force Armor</c>, <c val="#TooltipNumbers">Charged Blast</c>, <c val="#TooltipNumbers">Seeker</c>, <c val="#TooltipNumbers">Fireflies</c>, and <c val="#TooltipNumbers">Mirrorball</c>.<n/><n/>After the initial missiles, Magic Missiles fires a barage of <c val="#TooltipNumbers">15</c> magic missiles over <c val="#TooltipNumbers">1</c> second dealing <c val="#TooltipNumbers">50%</c> damage, but its cooldown is increased to <c val="#TooltipNumbers">5</c> seconds.<n/><n/>The additional magic missiles deal <c val="#TooltipNumbers">25%</c> damage to Structures and do not benefit from Seeker.
 Affix/Tooltip/Append/LiMingMissileBarrage=
@@ -603,7 +837,7 @@ Affix/Tooltip/Append/LiMingCriticalPower=
 Button/Name/LiMingCriticalPowerTokenCounter=Critical Power
 Button/Tooltip/LiMingCriticalPowerTokenCounter=<c val="#TooltipQuest">Bonus Spell Power: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:LiMingCriticalPowerTokenCounter$*100*(Accumulator,LiMingCriticalPowerAccumulator,Scale)" precision="0"/>%</c>
 Affix/Name/LiMingImprovedArchon=Improved Archon
-Affix/Tooltip/LiMingImprovedArchon=Reduces Disintegrate's cooldown to <c val="#TooltipNumbers">0.5</c> seconds and its Mana cost to <c val="#TooltipNumbers">5</c>.
+Affix/Tooltip/LiMingImprovedArchon=Gain <c val="#TooltipNumbers">Temporal Flux</c>.<n/><n/>Reduces Disintegrate's cooldown to <c val="#TooltipNumbers">0.5</c> seconds and its Mana cost to <c val="#TooltipNumbers">5</c>.
 Affix/Tooltip/Append/LiMingImprovedArchon=
 Affix/Name/LiMingWaveofDeath=Wave of Doom
 Affix/Tooltip/LiMingWaveofDeath=Gain <c val="#TooltipNumbers">Repulsion</c>.<n/><n/>Wave of Force reduces the Spell Armor of enemy Heroes by <c val="#TooltipNumbers">50</c> for <c val="#TooltipNumbers">0.5</c> seconds.
@@ -611,6 +845,21 @@ Affix/Tooltip/Append/LiMingWaveofDeath=
 Affix/Name/LiMingNeedMoreMana=Need More Mana!
 Affix/Tooltip/LiMingNeedMoreMana=Takedowns restore Mana equal to <c val="#TooltipNumbers">30%</c> of Li-Ming's maximum Mana.
 Affix/Tooltip/Append/LiMingNeedMoreMana=
+Affix/Name/LiMingPowerfulMissiles=Powerful Missiles
+Affix/Tooltip/LiMingPowerfulMissiles=Increases Magic Missiles's damage by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
+Affix/Tooltip/Append/LiMingPowerfulMissiles=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,WizardMagicMissilesDamage,MultiplicativeModifierArray[LiMingPowerfulMissiles].Modifier*100" precision="0"/>%</c>
+Affix/Name/LiMingHurtfulOrbs=Hurtful Orbs
+Affix/Tooltip/LiMingHurtfulOrbs=Increases Arcane Orb's damage by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
+Affix/Tooltip/Append/LiMingHurtfulOrbs=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,WizardArcaneOrbDamage,MultiplicativeModifierArray[LiMingHurtfulOrbs].Modifier*100" precision="0"/>%</c>
+Affix/Name/LiMingCalamitous=Calamitous
+Affix/Tooltip/LiMingCalamitous=Increases Calamity's damage by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
+Affix/Tooltip/Append/LiMingCalamitous=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,WizardTeleportCalamityDamage,MultiplicativeModifierArray[LiMingCalamitous].Modifier*100" precision="0"/>%</c>
+Affix/Name/LiMingRapidMissiles=Rapid Missiles
+Affix/Tooltip/LiMingRapidMissiles=Reduces Magic Missiles's cooldown by <c val="#TooltipNumbers">1</c> second.
+Affix/Tooltip/Append/LiMingRapidMissiles=
+Affix/Name/LiMingPiercingMissiles=Piercing Missiles
+Affix/Tooltip/LiMingPiercingMissiles=Increases Missile Barrage additional missiles's base damage against Structures from <c val="#TooltipNumbers">25%</c> to <c val="#TooltipNumbers">50%</c>.
+Affix/Tooltip/Append/LiMingPiercingMissiles=
 Affix/Name/LiMingSelfishPower=Selfish Power
 Affix/Tooltip/LiMingSelfishPower=Increases Spell Power by <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c>.
 Affix/Tooltip/Append/LiMingSelfishPower=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,LiMingSelfishPowerBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
@@ -618,7 +867,7 @@ Affix/Name/LiMingFarshot=Farshot
 Affix/Tooltip/LiMingFarshot=Increases Magic Missiles's range by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.
 Affix/Tooltip/Append/LiMingFarshot=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="-(Effect,WizardMagicMissilesLeftOffsetCP,InitialOffset.Y)-12" precision="2"/></c>
 Affix/Name/LiMingArcaneLoop=Arcane Loop
-Affix/Tooltip/LiMingArcaneLoop=Using a Basic Ability reduces the cooldown of your other Basic Abilities by <c val="#TooltipNumbers">0.5</c> seconds.
+Affix/Tooltip/LiMingArcaneLoop=Using a Basic Ability reduces the cooldown of your other Basic Abilities by <c val="#TooltipNumbers">0.75</c> seconds.
 Affix/Tooltip/Append/LiMingArcaneLoop=
 Affix/Name/LiMingStormArmor=Storm Armor
 Affix/Tooltip/LiMingStormArmor=Bathe yourself in electrical energy, shocking a random nearby enemy every second for <c val="#TooltipNumbers"><d ref="Effect,LiMingStormArmorDamage,Amount" precision="0"/></c> damage, prioritizing enemy Heroes.
@@ -717,7 +966,7 @@ Affix/Tooltip/SgtHammerMechanicalExpert=Gain <c val="#TooltipNumbers">Mechanical
 Affix/Tooltip/Append/SgtHammerMechanicalExpert=
 Affix/Name/GlobeCollector=Globe Collector
 Affix/Tooltip/GlobeCollector=Increases the collection range of Regeneration Globes for ALL allies by <c val="#TooltipNumbers">5</c> <c val="747A84">(+5 per stack)</c> and their duration by <c val="#TooltipNumbers">2.5</c> <c val="747A84">(+2.5s per stack)</c> seconds.
-Affix/Tooltip/Append/GlobeCollector=<n/><n/>Range bonus: <c val="#TooltipNumbers"><d ref="Effect,RegenGlobeSearch2,AreaArray[0].Radius-1.25" precision="0"/></c><n/>Duration bonus: <c val="#TooltipNumbers"><d ref="Behavior,HeroGenericRegenGlobeBarbarianPercentBuff,Duration-5" player="1" precision="0"/></c> seconds
+Affix/Tooltip/Append/GlobeCollector=<n/><n/>Range bonus: <c val="#TooltipNumbers"><d ref="Effect,RegenGlobeSearch2,AreaArray[0].Radius-1.25" precision="0"/></c><n/>Duration bonus: <c val="#TooltipNumbers"><d ref="Behavior,HeroGenericRegenGlobeBarbarianPercentBuff,Duration-5" player="1" precision="1"/></c> seconds
 Affix/Name/LostVikingsPowerofThree=Power of Three
 Affix/Tooltip/LostVikingsPowerofThree=Increases Olaf's maximum Health by <c val="#TooltipNumbers">7.5%</c> <c val="747A84">(+7.5% per stack)</c>.<n/><n/>Increases Baleog's Attack Damage and Attack Speed by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.<n/><n/>Increases Erik's Attack Damage by <c val="#TooltipNumbers">7</c> <c val="747A84">(+7 per stack)</c> and Movement Speed by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.
 Affix/Tooltip/Append/LostVikingsPowerofThree=<n/><n/>Olaf's bonus: <c val="#TooltipNumbers"><d ref="Behavior,PowerofThreeOlaf,Modification.VitalMaxFractionArray[Life]*100" precision="2"/>%</c><n/>Baleog's bonuses: <c val="#TooltipNumbers"><d ref="Behavior,PowerofThreeBaleog,Modification.AdditiveAttackSpeedFactor*100" precision="0"/>%</c><n/>Erik's Movement Speed bonus: <c val="#TooltipNumbers"><d ref="Behavior,PowerofThreeErik,Modification.UnifiedMoveSpeedFactor*100" precision="0"/>%</c><n/>Erik's damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,PowerofThreeErik,Modification.DamageDealtScaled[Basic]" precision="0"/></c>
@@ -880,12 +1129,31 @@ Affix/Name/AutoMULE=Auto MULE
 Affix/Tooltip/AutoMULE=Automatically drop down a MULE near a random damaged allied Structure that repairs <c val="#TooltipNumbers">10%</c> of the Structure's maximum Health per second.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">60</c> <c val="747A84">(-20s per stack)</c> seconds.
 Affix/Tooltip/Append/AutoMULE=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_AutoMULECooldownCurrent$"/></c> seconds
 Affix/Name/SecondWind=Second Wind
-Affix/Tooltip/SecondWind=On fatal damage, become Unkillable for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">300</c> seconds.
+Affix/Tooltip/SecondWind=On fatal damage, become Protected for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">300</c> seconds.
 Affix/Tooltip/Append/SecondWind=
 Behavior/Name/AffixSecondWindBehavior=Second Wind
 Affix/Name/RevealingTouch=Revealing Touch
 Affix/Tooltip/RevealingTouch=Basic Attacks reveal a small area around the target for <c val="#TooltipNumbers">3</c> seconds.
 Affix/Tooltip/Append/RevealingTouch=
+Affix/Name/UnyieldingDefense=Unyielding Defense
+Affix/Tooltip/UnyieldingDefense=When an allied Fort or Keep is destroyed, ALL allied Structures become Protected for <c val="#TooltipNumbers">30</c> seconds.<n/><n/>Incoming damage against allied Structures cannot exceed <c val="#TooltipNumbers">10%</c> of their maximum Health.
+Affix/Tooltip/Append/UnyieldingDefense=
+Affix/Name/ImprovedArchery=Improved Archery
+Affix/Tooltip/ImprovedArchery=Allied ranged Minions gain <c val="#TooltipNumbers">2</c> Attack Range and <c val="#TooltipNumbers">25%</c> Attack Speed.
+Affix/Tooltip/Append/ImprovedArchery=
+Affix/Name/DurableShields=Durable Shields
+Affix/Tooltip/DurableShields=Allied melee Minions gain <c val="#TooltipNumbers">50</c> Physical Armor.
+Affix/Tooltip/Append/DurableShields=
+Affix/Name/HealingSpell=Healing Spell
+Affix/Tooltip/HealingSpell=Allied leader Minions heal nearby allied Minions for <c val="#TooltipNumbers">1%</c> of their maximum Health every second.
+Affix/Tooltip/Append/HealingSpell=
+Affix/Name/Cleaver=Cleaver
+Affix/Tooltip/Cleaver=Basic Attacks splash for <c val="#TooltipNumbers">100%</c> damage in an area around the target.
+Affix/Tooltip/Cleaver/Greymane=<c val="CC66FF">Worgen</c> Basic Attacks splash for <c val="#TooltipNumbers">100%</c> damage in an area around the target.
+Affix/Tooltip/Cleaver/DVa=D.Va's Mech Basic Attacks splash for <c val="#TooltipNumbers">100%</c> damage in an area around the target.
+Affix/Tooltip/Cleaver/LostVikings=Olaf's Basic Attacks splash for <c val="#TooltipNumbers">100%</c> damage in an area around the target.
+Affix/Tooltip/Cleaver/Rexxar=Misha's Basic Attacks splash for <c val="#TooltipNumbers">100%</c> damage in an area around the target.
+Affix/Tooltip/Append/Cleaver=
 
 Affix/Name/MoreOptions=More Options
 Affix/Tooltip/MoreOptions=Grants a <c val="#TooltipNumbers">4th</c> option when selecting a boon or a curse.
@@ -897,24 +1165,38 @@ Affix/Name/RarityBoost=Rare Booster
 Affix/Tooltip/RarityBoost=Quadruples the chance to roll <c val="0070dd">Rare Boons</c>, <c val="a335ee">Epic Boons</c>, and <c val="ff8000">Legendary Boons</c>.<n/><n/>Also affects the chance to upgrade rarity on rerolls and bans.
 Affix/Tooltip/Append/RarityBoost=
 
-Affix/Name/MythicCurseSabotage=Sabotage
-Affix/Tooltip/MythicCurseSabotage=ALL allied Structures start at <c val="#TooltipNumbers">50%</c> Health and have their Armor reduced by <c val="#TooltipNumbers">10</c>.
-Affix/Tooltip/Append/MythicCurseSabotage=
-Affix/Name/MythicCurseCitadel=Citadel
-Affix/Tooltip/MythicCurseCitadel=Increases enemy Structures maximum Health by <c val="#TooltipNumbers">150%</c> and their damage by <c val="#TooltipNumbers">50%</c>.<n/><n/>Enemy Heroes gain <c val="#TooltipNumbers">25</c> Armor.
-Affix/Tooltip/Append/MythicCurseCitadel=
-Affix/Name/MythicCurseBleeding=Bleeding
-Affix/Tooltip/MythicCurseBleeding=Reduces regeneration effects and all healing received by <c val="#TooltipNumbers">100%</c>. This effect is inactive while in the Hall of Storms or while affected by a Healing Fountain.
-Affix/Tooltip/Append/MythicCurseBleeding=
-Affix/Name/MythicCurseLevelDisadvantage=Level Disadvantage
-Affix/Tooltip/MythicCurseLevelDisadvantage=Enemy Heroes start at Level <c val="#TooltipNumbers">4</c> and gain <c val="#TooltipNumbers">25%</c> increased Experience.
-Affix/Tooltip/Append/MythicCurseLevelDisadvantage=
-Affix/Name/MythicCurseCursed=Cursed
-Affix/Tooltip/MythicCurseCursed=Winning an objective no longer swaps a Curse to a Boon. Obtain a <c val="c52020">Curse</c> every <c val="#TooltipNumbers">3</c> deaths. Counter is reset between rounds. After reaching level <c val="#TooltipNumbers">20</c>, you and ALL allies lose <c val="#TooltipNumbers">5</c> Armor now and every minute. After reaching level <c val="#TooltipNumbers">30</c>, lose <c val="#TooltipNumbers">100</c> Armor every minute.
-Affix/Tooltip/Append/MythicCurseCursed=
-Affix/Name/MythicCurseEternal=Eternal
-Affix/Tooltip/MythicCurseEternal=Increases enemy Heroes's maximum Health, Spell Power and Attack Damage by <c val="#TooltipNumbers">150%</c>.
-Affix/Tooltip/Append/MythicCurseEternal=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,MythicCurseEternalBuff,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,MythicCurseEternalBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
+Affix/Name/Sabotage=Sabotage
+Affix/Tooltip/Sabotage=ALL allied Structures start at <c val="#TooltipNumbers">50%</c> Health and have their Armor reduced by <c val="#TooltipNumbers">10</c>.
+Affix/Tooltip/Append/Sabotage=
+Affix/Name/Citadel=Citadel
+Affix/Tooltip/Citadel=Increases enemy Structures maximum Health by <c val="#TooltipNumbers">150%</c> and their damage by <c val="#TooltipNumbers">50%</c>.<n/><n/>Enemy Heroes gain <c val="#TooltipNumbers">25</c> Armor.
+Affix/Tooltip/Append/Citadel=
+Affix/Name/Bleeding=Bleeding
+Affix/Tooltip/Bleeding=Reduces regeneration effects and all healing received by <c val="#TooltipNumbers">100%</c>. This effect is inactive while in the Hall of Storms or while affected by a Healing Fountain.
+Affix/Tooltip/Append/Bleeding=
+Affix/Name/LevelDisadvantage=Level Disadvantage
+Affix/Tooltip/LevelDisadvantage=Enemy Heroes start at Level <c val="#TooltipNumbers">4</c> and gain <c val="#TooltipNumbers">25%</c> increased Experience.
+Affix/Tooltip/Append/LevelDisadvantage=
+Affix/Name/Cursed=Cursed
+Affix/Tooltip/Cursed=Winning an objective no longer swaps a Curse to a Boon. Obtain a <c val="c52020">Curse</c> every <c val="#TooltipNumbers">3</c> deaths. Counter is reset between rounds. After reaching level <c val="#TooltipNumbers">20</c>, you and ALL allies lose <c val="#TooltipNumbers">5</c> Armor now and every minute. After reaching level <c val="#TooltipNumbers">30</c>, lose <c val="#TooltipNumbers">100</c> Armor every minute.
+Affix/Tooltip/Append/Cursed=
+Affix/Name/Eternal=Eternal
+Affix/Tooltip/Eternal=Increases enemy Heroes's maximum Health, Spell Power and Attack Damage by <c val="#TooltipNumbers">150%</c>.
+Affix/Tooltip/Append/Eternal=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,EternalBuff,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,EternalBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
+Affix/Name/Sappers=Sappers
+Affix/Tooltip/Sappers=Enemy leader Minions gain <c val="#TooltipNumbers">5.5</c> Attack Range while near your Structures, have <c val="#TooltipNumbers">100%</c> increased base maximum Health, disable Structures hit for <c val="#TooltipNumbers">3</c> seconds, and their bonus damage to Structures is increased from <c val="#TooltipNumbers">200%</c> to <c val="#TooltipNumbers">2000%</c>.
+Affix/Tooltip/Append/Sappers=
+Affix/Name/ArmoredUp=Armored Up
+Affix/Tooltip/ArmoredUp=Enemy Minions and Heroes gain <c val="#TooltipNumbers">15</c> Armor, increased by <c val="#TooltipNumbers">1</c> per enemy level.
+Affix/Tooltip/Append/ArmoredUp=
+Affix/Name/WeakPoint=Weak Point
+Affix/Tooltip/WeakPoint=Any direct damage taken is dealt to you again over <c val="#TooltipNumbers">4</c> seconds.
+Affix/Tooltip/Append/WeakPoint=
+Button/Name/AffixWeakPoint=Weak Point
+Button/SimpleDisplayText/AffixWeakPoint=Any direct damage taken is dealt to you again over time.
+Affix/Name/Invasion=Invasion
+Affix/Tooltip/Invasion=Enemy Minion waves spawn <c val="#TooltipNumbers">25%</c> faster and provide <c val="#TooltipNumbers">20%</c> less Experience. These effects increase every enemy level, up to a maximum of <c val="#TooltipNumbers">100%</c> faster spawn rate and <c val="#TooltipNumbers">50%</c> reduced Minion Experience at level <c val="#TooltipNumbers">20</c>. After level <c val="#TooltipNumbers">20</c>, enemy Minions gain <c val="#TooltipNumbers">25%</c> increased stats every minute.
+Affix/Tooltip/Append/Invasion=<n/><n/>Spawn rate modifier: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_InvasionSpawnRateDisplay$*100" precision="1"/>%</c><n/>Reduced experience modifier: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_InvasionExpDisplay$*100" precision="1"/>%</c><n/>Stats modifier: <c val="#TooltipNumbers"><d ref="Behavior,AffixInvasionBehavior,Modification.DamageDealtFraction[Ability]*100" precision="1" player="12" />%</c>
 
 Affix/Name/Possession=Possession
 Affix/Tooltip/Possession=Enemy leader Minions convert a nearby allied Minion to their side every <c val="#TooltipNumbers">60</c> <c val="747A84">(-20s per stack)</c> seconds.
@@ -946,6 +1228,15 @@ Affix/Tooltip/Append/AlteracsLegacy=
 Affix/Name/RavenLordsFavor=Raven Lord's Favor
 Affix/Tooltip/RavenLordsFavor=Reduces the number of tributes required for a curse for the enemy team by <c val="#TooltipNumbers">1</c>.<n/><n/>Your team is cursed for <c val="#TooltipNumbers">50%</c> longer.
 Affix/Tooltip/Append/RavenLordsFavor=
+Affix/Name/QueenNightshadesTerrors=Queen Nightshade's Terrors
+Affix/Tooltip/QueenNightshadesTerrors=Reduces the number of seeds required for garden terrors for the enemy team by <c val="#TooltipNumbers">1</c>.<n/><n/>The enemy Garden Terror's overgrowth plants no longer lose Health over time.
+Affix/Tooltip/Append/QueenNightshadesTerrors=
+Affix/Name/BlackheartsHoard=Blackheart's Hoard
+Affix/Tooltip/BlackheartsHoard=Enemy Heroes do not drop Doubloons on death and enemy turn-in cost does not increase.
+Affix/Tooltip/Append/BlackheartsHoard=
+Affix/Name/KasPower=Ka's Power
+Affix/Tooltip/KasPower=Enemy controlled temples take <c val="#TooltipNumbers">50%</c> less time to fire.
+Affix/Tooltip/Append/KasPower=
 Affix/Name/InfernalPunishment=Infernal Punishment
 Affix/Tooltip/InfernalPunishment=Reduces the number of Shrine Minions required to summon a Punisher for the enemy team by <c val="#TooltipNumbers">15</c>.<n/><n/>Enemy Punisher gains Arcane, Frozen, and Mortar Abilities and deals <c val="#TooltipNumbers">25%</c> increased damage.
 Affix/Tooltip/Append/InfernalPunishment=
@@ -958,6 +1249,9 @@ Affix/Tooltip/Append/RaenaKnight=
 Affix/Name/Fortifications=Fortifications
 Affix/Tooltip/Fortifications=Several enemy Towers appear around the map. These Towers reveal everything in range.<n/><n/>Additional stacks increases the amount of Towers on the map.
 Affix/Tooltip/Append/Fortifications=<n/><n/>Total Towers: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_FortificationsTotal$" precision="0"/></c>
+Affix/Name/SturdyTowers=Sturdy Towers
+Affix/Tooltip/SturdyTowers=Enemy fallback towers stay intact when enemy Forts are destroyed.
+Affix/Tooltip/Append/SturdyTowers=
 Affix/Name/ManyHeroics=Many Heroics
 Affix/Tooltip/ManyHeroics=Enemy Heroes gain access to all of their Heroic Abilities.
 Affix/Tooltip/Append/ManyHeroics=
@@ -1075,7 +1369,7 @@ Affix/Tooltip/Append/ExpensiveAttacks=
 Affix/Name/LastMoments=Last Moments
 Affix/Tooltip/LastMoments=Last Rites is cast on you when you take damage while below <c val="#TooltipNumbers">35%</c> Health.<n/><n/>This effect has a <c val="#TooltipNumbers">300</c> <c val="747A84">(-60s per stack)</c> second cooldown.<n/><n/>Damage scales with the enemy's Core.
 Affix/Tooltip/Append/LastMoments=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_LastMomentsCooldownCurrent$" precision="0"/></c> seconds
-Affix/Name/ThrallSlowfury=ThrallSlowfury
+Affix/Name/ThrallSlowfury=Slowfury
 Affix/Tooltip/ThrallSlowfury=Reduces Windfury's Attack Speed bonus by <c val="#TooltipNumbers">50%</c>.
 Affix/Tooltip/Append/ThrallSlowfury=
 Affix/Name/BadMannerism=Bad Mannerism

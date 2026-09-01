@@ -2296,6 +2296,7 @@ bool libMTOD_gt_MMToDScoringAltarCaptured_Func (bool testConds, bool runActions)
                 libMTOD_gf_MMToDAltarDamageDoneCache(lv_capturingPlayer, UnitGroupCount(libMTOD_gv_mMToDOrderBases, c_unitCountAlive));
             }
             else {
+                TriggerSendEvent("AffixObjectiveLost");
                 StatEventAddDataInt(StatEventLastCreated(), "Towns Owned", UnitGroupCount(libMTOD_gv_mMToDChaosBases, c_unitCountAlive));
                 libMTOD_gf_MMToDAltarDamageDoneCache(lv_capturingPlayer, UnitGroupCount(libMTOD_gv_mMToDChaosBases, c_unitCountAlive));
             }

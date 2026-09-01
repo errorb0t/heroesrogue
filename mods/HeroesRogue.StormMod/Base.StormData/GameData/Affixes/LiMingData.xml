@@ -426,15 +426,29 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <EffectArray value="WizardMagicMissilesDamage2Structure" />
     <EffectArray value="ApplyAbilityImpactReveal" />
   </CEffectSet>
+  <CEffectDamage id="WizardMagicMissilesDamage">
+    <MultiplicativeModifierArray index="LiMingPowerfulMissiles" Modifier="0" />
+  </CEffectDamage>
   <CEffectDamage id="WizardMagicMissilesDamage2" parent="StormSpell">
     <Amount value="73.5" />
+    <MultiplicativeModifierArray index="LiMingPowerfulMissiles" Modifier="0" />
     <MultiplicativeModifierArray index="0" Accumulator="WizardTalrashasElementsSourceMissileAccumulator" />
     <MultiplicativeModifierArray index="AetherWalker" Validator="WizardSourceHasTeleportMagicMissilesBonusDamageBuffAndAetherWalkerTalent" Modifier="0.1" />
   </CEffectDamage>
   <CEffectDamage id="WizardMagicMissilesDamage2Structure" parent="StormSpell">
     <Amount value="36.75" />
+    <MultiplicativeModifierArray index="LiMingPowerfulMissiles" Modifier="0" />
     <MultiplicativeModifierArray index="0" Accumulator="WizardTalrashasElementsSourceMissileAccumulator" />
     <MultiplicativeModifierArray index="AetherWalker" Validator="WizardSourceHasTeleportMagicMissilesBonusDamageBuffAndAetherWalkerTalent" Modifier="0.1" />
+  </CEffectDamage>
+  <CEffectDamage id="WizardArcaneOrbDamage">
+    <MultiplicativeModifierArray index="LiMingHurtfulOrbs" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="WizardArcaneOrbZeisVengeanceDamage">
+    <MultiplicativeModifierArray index="LiMingHurtfulOrbs" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="WizardTeleportCalamityDamage">
+    <MultiplicativeModifierArray index="LiMingCalamitous" Modifier="0" />
   </CEffectDamage>
 
   <CBehaviorBuff id="LiMingGlassBehavior" parent="CarryBehaviorParent">

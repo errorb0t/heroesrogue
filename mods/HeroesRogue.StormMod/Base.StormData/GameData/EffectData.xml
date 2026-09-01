@@ -439,7 +439,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectEnumArea>
   <CEffectApplyBehavior id="AffixMercenaryLordApplyDamageBuffBehavior">
     <ValidatorArray index="0" value="TargetIsNotABossUnitOrMonsterMinorCombine" />
-    <Behavior value="AffixMercenaryLordDamageBuff" />
+    <Behavior value="AffixMercenaryLordBuff" />
   </CEffectApplyBehavior>
 
   <CEffectSet id="RegenGlobeSearchSet">
@@ -1001,5 +1001,54 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <RevealFlags index="Unfog" value="1" />
   </CEffectCreatePersistent>
 
+  <CEffectApplyBehavior id="AffixSappersApplyBehavior">
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+    <Behavior value="AffixSappersStructureDisable" />
+  </CEffectApplyBehavior>
+
+  <CEffectDamage id="AffixWeakPointDamage" parent="StormSpellDotPercentDamage">
+    <Flags index="NoLeech" value="1" />
+    <Flags index="NoVitalLeechLife" value="1" />
+    <Flags index="NoVitalLeechShields" value="1" />
+    <Flags index="NoVitalLeechEnergy" value="1" />
+    <SourceButtonFace value="AffixWeakPoint" />
+  </CEffectDamage>
+
+  <CEffectEnumArea id="AffixHealingSpellSearch">
+    <ValidatorArray value="AffixHealingSpellValidatorCombine" />
+    <SearchFilters value="-;Structure,Neutral,Enemy,Creep,MapCreature,ImmuneToFriendlyAbilities,Missile,Stasis,Hidden,Summoned,Heroic" />
+    <AreaArray Effect="AffixHealingSpellCreateHealer">
+      <Radius value="8" />
+    </AreaArray>
+    <SearchFlags index="ExtendByUnitRadius" value="1" />
+  </CEffectEnumArea>
+  
+  <CEffectCreateHealer id="AffixHealingSpellCreateHealer" parent="StormHealingSpell">
+    <RechargeVitalFraction value="0.01" />
+  </CEffectCreateHealer>
+
+  <CEffectSet id="AffixCleaverProcSet">
+    <EffectArray value="AffixCleaverAoESearch" />
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+  </CEffectSet>
+  <CEffectEnumArea id="AffixCleaverAoESearch">
+    <ValidatorArray value="TargetNotEvading" />
+    <ExcludeArray Value="Target" />
+    <SearchFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="AffixCleaverAoEImpactSet">
+      <Radius value="2.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.75" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <SearchFlags index="DoActorSearch" value="1" />
+  </CEffectEnumArea>
+  <CEffectSet id="AffixCleaverAoEImpactSet">
+    <ValidatorArray value="TargetNotEvading" />
+  </CEffectSet>
+  <CEffectDamage id="AffixCleaverAoEDamage" parent="StormWeapon">
+    <Flags index="NoFractionDealtBonus" value="1" />
+    <SourceButtonFace value="Attack" />
+  </CEffectDamage>
 
 </Catalog>

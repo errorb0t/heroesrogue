@@ -104,3 +104,15 @@ bool libAffx_LostVikingsTrulyLostPeriodic (bool testConds, bool runActions) {
 
     return true;
 }
+
+// ---------------------------------------------------------------
+// Trilogy
+// ---------------------------------------------------------------
+bool libAffx_LostVikingsTrilogyAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libGDHL_gv_data_LostVikingsTheSequelDeathTimeReduction[libAffx_player] = 0.8;
+
+    return true;
+}

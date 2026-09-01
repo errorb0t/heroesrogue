@@ -900,6 +900,8 @@ trigger libCore_gt_InitializeMiscStuff;
 trigger libCore_gt__SendTransmissionTick;
 trigger libCore_gt_AutoRevealRegionController;
 
+fixed[libCore_gv_bALMaxTeams + 1] libCore_minionWaveInterval;
+
 // Library Initialization
 void libCore_InitVariables ();
 

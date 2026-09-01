@@ -53,14 +53,6 @@ bool libAffx_LiMingMissileBarrageLevelUp (bool testConds, bool runActions) {
     libAffx_SetLevelScaling("Effect,WizardMagicMissilesDamage2Structure,Amount", libAffx_player, 0.035);
     return true;
 }
-bool libAffx_LiMingMissileBarrageExecuteOncePerGame (bool testConds, bool runActions) {
-    if (!runActions) {
-        return true;
-    }
-    libAffx_CatalogReferenceSet("Abil,WizardMagicMissiles,Cost[0].Cooldown.TimeUse", libAffx_player, "5");
-    libAffx_CatalogReferenceSet("Effect,WizardMagicMissilesCreatePersistents,PeriodCount", libAffx_player, "20");
-    return true;
-}
 // ---------------------------------------------------------------
 // Critical Power
 // ---------------------------------------------------------------
@@ -107,5 +99,23 @@ bool libAffx_LiMingNeedMoreManaHeroTakedown (bool testConds, bool runActions) {
 
     UnitCreateEffectUnit(killerUnit, "WizardDominanceManaHealerAffix", killerUnit);
     
+    return true;
+}
+
+// ---------------------------------------------------------------
+// Storm Armor
+// ---------------------------------------------------------------
+bool libAffx_LiMingStormArmorScaling (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_SetDefaultLevelScaling("Effect,LiMingStormArmorDamage,Amount", player);
+
     return true;
 }

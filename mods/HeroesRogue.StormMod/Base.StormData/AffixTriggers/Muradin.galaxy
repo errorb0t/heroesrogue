@@ -46,3 +46,43 @@ bool libAffx_MuradinUnstoppableAvatarLevelUp (bool testConds, bool runActions) {
     CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
     return true;
 }
+
+// ---------------------------------------------------------------
+// Dual Hammer
+// ---------------------------------------------------------------
+bool libAffx_MuradinDualHammerAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.CountMax", libAffx_player, "2");
+    libAffx_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.CountStart", libAffx_player, "2");
+    libAffx_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.CountUse", libAffx_player, "1");
+    libAffx_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "10");
+    libAffx_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Cooldown.TimeUse", libAffx_player, "0.5");
+    libAffx_CatalogReferenceSet("Effect,MuradinHeroWeaponItsHammerTimeStormBoltModifyCooldown,Cost[0].CooldownTimeUse", libAffx_player, "0");
+    libAffx_CatalogReferenceSet("Effect,MuradinHeroWeaponItsHammerTimeStormBoltModifyCooldown,Cost[0].ChargeTimeUse", libAffx_player, "-0.5");
+
+    if (PlayerHasTalent(libAffx_player, "MuradinMasteryStormhammerSledgehammer")) {
+        libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "1.5", c_upgradeOperationSubtract);
+    }
+
+    return true;
+}
+bool libAffx_MuradinDualHammerTalentGained (bool testConds, bool runActions) {
+    string talent = libGame_gf_HeroGainTalentGainedTalent();
+    int player = libGame_gf_HeroGainTalentPlayer();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+        if (talent != "MuradinMasteryStormhammerSledgehammer") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "1.5", c_upgradeOperationSubtract);
+
+    return true;
+}

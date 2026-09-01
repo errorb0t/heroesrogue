@@ -71,6 +71,8 @@ void libCore_InitVariables () {
         libCore_gv_dataHeroVODataFieldMap[init_i] = "";
     }
     libCore_gv_bALMinionWaveInterval = 30.0;
+    libCore_minionWaveInterval[libGame_gv_teamOrderIndex_C] = 30.0;
+    libCore_minionWaveInterval[libGame_gv_teamChaosIndex_C] = 30.0;
     libCore_gv_bALMinionScalingTimerDuration = 60.0;
     for (init_i = 0; init_i <= libCore_gv_dataMinionWaveCompositionMaxCount; init_i += 1) {
         libCore_gv_dataMinionWaveCompositions[init_i].lv_enabled = true;

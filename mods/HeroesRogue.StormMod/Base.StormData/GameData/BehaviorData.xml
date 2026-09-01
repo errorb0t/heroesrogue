@@ -334,27 +334,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <BehaviorLinkDisableArray value="AffixSecondWindController" />
     </Modification>
   </CBehaviorBuff>
-  <CBehaviorBuff id="AffixSecondWindBehavior">
-    <InfoFlags index="AlwaysUseGameText" value="1" />
-    <BehaviorCategories index="Restorable" value="1" />
-    <BehaviorCategories index="Unkillable" value="1" />
-    <DisplayDuration index="Self" value="1" />
-    <DisplayDuration index="Ally" value="1" />
-    <DisplayDuration index="Neutral" value="1" />
-    <DisplayDuration index="Enemy" value="1" />
+  <CBehaviorBuff id="AffixSecondWindBehavior" parent="StormProtect">
     <Duration value="4" />
-    <DamageResponse>
-      <Chance value="1" />
-      <Handled value="AffixSecondWindDummyFatalResponse" />
-      <Priority value="23" />
-      <Fatal value="1" />
-      <RecordBehaviorShieldDamage value="1" />
-      <RestoreLifeAfterFatal value="1" />
-      <ModifyFraction value="0" />
-      <ModifyMinimumDamage value="1" />
-      <ProvideCategories index="Shield" value="1" />
-      <PreventCategories index="Shield" value="1" />
-    </DamageResponse>
   </CBehaviorBuff>
 
   <CBehaviorBuff id="AffixTimeTrapAutoDetonate">
@@ -634,16 +615,18 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <PeriodicEffect value="AffixMercenaryLordPeriodicSearch" />
   <DisableValidatorArray value="TargetNotUsingVehicle" />
 </CBehaviorBuff>
-<CBehaviorBuff id="AffixMercenaryLordDamageBuff">
+<CBehaviorBuff id="AffixMercenaryLordBuff">
   <BehaviorFlags index="Permanent" value="1" />
   <BehaviorFlags index="EnabledWhileDead" value="1" />
+  <DisableValidatorArray value="TargetIsNotABossUnitOrMonsterMinorCombine" />
   <InfoIcon value="Assets\Textures\storm_ui_temp_icon_teleport.dds" />
   <Modification>
     <DamageDealtFraction index="Splash" value="0.5" />
     <DamageDealtFraction index="Basic" value="0.5" />
     <DamageDealtFraction index="Ability" value="0.5" />
+    <VitalMaxFractionArray index="Life" value="0.15" />
+    <VitalMaxFractionArray index="Shields" value="0.15" />
   </Modification>
-  <Duration value="2" />
 </CBehaviorBuff>
 
 <CBehaviorBuff id="AffixDemolitionistBehavior" parent="CarryBehaviorParent">
@@ -766,14 +749,14 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CBehaviorBuff>
 
 
-<CBehaviorBuff id="MythicCurseSabotageDebuff" parent="CarryBehaviorParent">
+<CBehaviorBuff id="SabotageDebuff" parent="CarryBehaviorParent">
   <DisableValidatorArray value="CasterNotBeingTownFlipRepaired" />
   <ArmorModification StackCount="1" >
     <AllArmorBonus value="-10" />
   </ArmorModification>
 </CBehaviorBuff>
 
-<CBehaviorBuff id="MythicCurseCitadelBuff" parent="CarryBehaviorParent">
+<CBehaviorBuff id="CitadelBuff" parent="CarryBehaviorParent">
   <DisableValidatorArray value="CasterNotBeingTownFlipRepaired" />
   <Modification>
     <VitalMaxFractionArray index="Life" value="1.5" />
@@ -784,13 +767,13 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </Modification>
 </CBehaviorBuff>
 
-<CBehaviorBuff id="MythicCurseCitadelEnemyBuff" parent="CarryBehaviorParent">
+<CBehaviorBuff id="CitadelEnemyBuff" parent="CarryBehaviorParent">
   <ArmorModification StackCount="1" >
     <AllArmorBonus value="25" />
   </ArmorModification>
 </CBehaviorBuff>
 
-<CBehaviorBuff id="MythicCurseBleedingDebuff" parent="CarryBehaviorParent">
+<CBehaviorBuff id="BleedingDebuff" parent="CarryBehaviorParent">
   <DisableValidatorArray value="CasterDoesNotHaveHealingFountainRestoreL2" />
   <DisableValidatorArray value="CasterDoesNotHaveHallOfStormsHealBuff" />
   <Modification>
@@ -799,7 +782,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </Modification>
 </CBehaviorBuff>
 
-<CBehaviorBuff id="MythicCurseCursedDebuff" parent="CarryBehaviorParent">
+<CBehaviorBuff id="CursedDebuff" parent="CarryBehaviorParent">
   <MaxStackCount value="1" />
   <ArmorModification AllArmorBonus="-5" StackCount="1" >
     <ArmorSet index="Hero">
@@ -835,7 +818,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </ArmorModification>
 </CBehaviorBuff>
 
-<CBehaviorBuff id="MythicCurseEternalBuff" parent="CarryBehaviorParent">
+<CBehaviorBuff id="EternalBuff" parent="CarryBehaviorParent">
 <DisableValidatorArray value="LeoricDoesNotHaveUndying" />
   <Modification>
     <VitalMaxFractionArray index="Life" value="1.5" />
@@ -1222,6 +1205,135 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <Location value="Attacker" />
       <Cost>
         <Cooldown Location="Unit" TimeUse="0" />
+      </Cost>
+      <TargetFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+      <Kind index="Splash" value="0" />
+      <Kind index="Ability" value="0" />
+      <ProvideCategories index="Proc" value="1" />
+    </DamageResponse>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixSappersBehavior" parent="StormArmor">
+    <DamageResponse>
+      <Chance value="1" />
+      <Handled value="AffixSappersApplyBehavior" />
+      <Location value="Attacker" />
+      <Cost>
+        <Cooldown Location="Unit" TimeUse="0" />
+      </Cost>
+      <TargetFilters value="Structure;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+      <Kind index="Splash" value="0" />
+      <Kind index="Ability" value="0" />
+      <ProvideCategories index="Proc" value="1" />
+    </DamageResponse>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixSappersAARangeBehavior">
+    <DisableValidatorArray value="AffixSapperIsNearStructure" />
+    <Modification>
+      <WeaponRange value="5.5" />
+      <WeaponScanBonus value="5.5" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixSappersStructureDisable" parent="StormStructureDisable">
+    <Duration value="3" />
+  </CBehaviorBuff>
+  
+  <CBehaviorBuff id="AffixArmoredUpBehavior" parent="StormArmorPermanent">
+    <Alignment value="Positive" />
+    <ArmorModification AllArmorBonus="15" />
+  </CBehaviorBuff>
+  
+  <CBehaviorBuff id="AffixWeakPointController" parent="CarryBehaviorParent" />
+  
+  <CBehaviorBuff id="AffixInvasionBehavior" parent="CarryBehaviorParent">
+    <Modification>
+      <HealDealtAdditiveMultiplier index="Life" value="0" />
+      <HealDealtAdditiveMultiplier index="Shields" value="0" />
+      <DamageDealtFraction index="Ability" value="0" />
+      <DamageDealtFraction index="Basic" value="0" />
+      <VitalMaxFractionArray index="Life" value="0" />
+      <VitalMaxFractionArray index="Energy" value="0" />
+      <VitalRegenMultiplier index="Life" value="0" />
+      <VitalRegenMultiplier index="Energy" value="0" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixUnyieldingDefenseBehaviorCore" parent="CarryBehaviorParent">
+    <DamageResponse ClampMaximum="1" Chance="1" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixUnyieldingDefenseBehaviorKeep" parent="CarryBehaviorParent">
+    <DamageResponse ClampMaximum="1" Chance="1" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixUnyieldingDefenseBehaviorFort" parent="CarryBehaviorParent">
+    <DamageResponse ClampMaximum="1" Chance="1" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixUnyieldingDefenseBehaviorKeepTower" parent="CarryBehaviorParent">
+    <DamageResponse ClampMaximum="1" Chance="1" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixUnyieldingDefenseBehaviorFortTower" parent="CarryBehaviorParent">
+    <DamageResponse ClampMaximum="1" Chance="1" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixUnyieldingDefenseBehaviorGate" parent="CarryBehaviorParent">
+    <DamageResponse ClampMaximum="1" Chance="1" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixUnyieldingDefenseBehaviorWall" parent="CarryBehaviorParent">
+    <DamageResponse ClampMaximum="1" Chance="1" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixUnyieldingDefenseProtected" parent="StormProtect">
+    <Duration value="30" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixImprovedArcheryBuff" parent="CarryBehaviorParent">
+    <Modification>
+      <WeaponRange value="2" />
+      <WeaponScanBonus value="2" />
+      <AdditiveAttackSpeedFactor value="0.25" />
+    </Modification>
+  </CBehaviorBuff>
+  
+  <CBehaviorBuff id="AffixDurableShieldsBuff" parent="StormArmor">
+    <BehaviorFlags index="Permanent" value="1" />
+    <BehaviorFlags index="EnabledWhileDead" value="1" />
+    <ArmorModification>
+      <ArmorSet index="Hero">
+        <ArmorMitigationTable index="Basic" value="50" />
+      </ArmorSet>
+      <ArmorSet index="Merc">
+        <ArmorMitigationTable index="Basic" value="50" />
+      </ArmorSet>
+      <ArmorSet index="Monster">
+        <ArmorMitigationTable index="Basic" value="50" />
+      </ArmorSet>
+      <ArmorSet index="Summon">
+        <ArmorMitigationTable index="Basic" value="50" />
+      </ArmorSet>
+      <ArmorSet index="Structure">
+        <ArmorMitigationTable index="Basic" value="50" />
+      </ArmorSet>
+      <ArmorSet index="Minion">
+        <ArmorMitigationTable index="Basic" value="50" />
+      </ArmorSet>
+    </ArmorModification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixHealingSpellBuff" parent="CarryBehaviorParent">
+    <Period value="1" />
+    <PeriodicEffect value="AffixHealingSpellSearch" />
+  </CBehaviorBuff>
+  
+  <CBehaviorBuff id="AffixCleaverController" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="HasWorgenFormOrNotGreymane" />
+    <DisableValidatorArray value="DVaSourceisMechOrNotDVa" />
+    <DisableValidatorArray value="NotBaleog" />
+    <DisableValidatorArray value="NotErik" />
+    <DisableValidatorArray value="NotRexxar" />
+    <DamageResponse>
+      <Chance value="1" />
+      <Handled value="AffixCleaverProcSet" />
+      <Location value="Attacker" />
+      <Cost>
+        <Cooldown Location="Unit" TimeUse="0.125" />
       </Cost>
       <TargetFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
       <Kind index="Splash" value="0" />
