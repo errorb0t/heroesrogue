@@ -64,7 +64,7 @@ bool libAffx_NazeeboPowerRitualScaling (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_LevelUpScaling("Effect,WitchDoctorHeroWeaponDamageSplash,Amount", player);
+    libAffx_SetDefaultLevelScaling("Effect,WitchDoctorHeroWeaponDamageSplash,Amount", player);
 
     return true;
 }
@@ -76,11 +76,11 @@ bool libAffx_NazeeboZombieHandlerAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify("Sound,WitchDoctor_Zombie_AttackLaunch,Volume", libAffx_player, "-20,-20");
-    libAffx_CatalogReferenceModify("Sound,WitchDoctor_Zombie_Attack_Impact,Volume", libAffx_player, "-20,-20");
-    libAffx_CatalogReferenceModify("Sound,WitchDoctor_Zombie_Birth,Volume", libAffx_player, "-8,-8");
-    libAffx_CatalogReferenceModify("Sound,WitchDoctor_Zombie_Chase_Vox,Volume", libAffx_player, "-20,-20");
-    libAffx_CatalogReferenceModify("Sound,WitchDoctor_Zombie_Death,Volume", libAffx_player, "-20,-20");
+    libAffx_CatalogReferenceSet("Sound,WitchDoctor_Zombie_AttackLaunch,Volume", libAffx_player, "-20,-20");
+    libAffx_CatalogReferenceSet("Sound,WitchDoctor_Zombie_Attack_Impact,Volume", libAffx_player, "-20,-20");
+    libAffx_CatalogReferenceSet("Sound,WitchDoctor_Zombie_Birth,Volume", libAffx_player, "-8,-8");
+    libAffx_CatalogReferenceSet("Sound,WitchDoctor_Zombie_Chase_Vox,Volume", libAffx_player, "-20,-20");
+    libAffx_CatalogReferenceSet("Sound,WitchDoctor_Zombie_Death,Volume", libAffx_player, "-20,-20");
     
     return true;
 }
@@ -88,13 +88,10 @@ bool libAffx_NazeeboZombieHandlerUnitDied (bool testConds, bool runActions) {
     unit deadUnit = EventUnit();
     point npcPosition = UnitGetPosition(deadUnit);
     int random;
-    unit heroUnit = libAffx_GetHeroUnit(libAffx_player);
+    unit heroUnit = libAffx_GetPlayerHeroUnit(libAffx_player);
     int killingPlayer = libNtve_gf_KillingPlayer();
     if (testConds) {
-        if (!libAffx_IsMinion(deadUnit)) {
-            return false;
-        }
-        if (!UnitFilterMatch(deadUnit, libAffx_teamChaos, UnitFilter((1 << c_targetFilterMinion), 0, 0, 0)) && !libAffx_NazeeboZombieHandlerAllowFriendlies) {
+        if (!UnitFilterMatch(deadUnit, c_playerAny, libAffx_filterEnemyMinions.unitFilter) && !libAffx_NazeeboZombieHandlerAllowFriendlies) {
             return false;
         }
         if (!UnitIsAlive(heroUnit)) {
@@ -155,11 +152,11 @@ bool libAffx_NazeeboManyRitualsAffixAdded (bool testConds, bool runActions) {
         amount += 20;
     }
 
-    libAffx_AddTokenCount(heroUnit, "WitchDoctorVoodooRitual", amount);
-    libAffx_AddTokenCount(heroUnit, "WitchDoctorVoodooRitualTokenCounter", amount);
-    libAffx_AddTokenCount(heroUnit, "WitchDoctorVoodooRitualVileInfectionTokenCounter", amount);
-    libAffx_AddTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken", amount);
-    libAffx_AddTokenCount(heroUnit, "WitchDoctorRitualofBoonsQuestToken", amount);
+    libAffx_AddUnitTokenCount(heroUnit, "WitchDoctorVoodooRitual", amount);
+    libAffx_AddUnitTokenCount(heroUnit, "WitchDoctorVoodooRitualTokenCounter", amount);
+    libAffx_AddUnitTokenCount(heroUnit, "WitchDoctorVoodooRitualVileInfectionTokenCounter", amount);
+    libAffx_AddUnitTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken", amount);
+    libAffx_AddUnitTokenCount(heroUnit, "WitchDoctorRitualofBoonsQuestToken", amount);
 
     libAffx_NazeeboManyRitualsTotal += amount;
     
@@ -180,7 +177,7 @@ bool libAffx_NazeeboRitualofBoons (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_AddBehavior(libAffx_player, "WitchDoctorRitualofBoonsQuestToken", 1, false);
+    libAffx_AddPlayerBehavior(libAffx_player, "WitchDoctorRitualofBoonsQuestToken", 1, false);
     
     return true;
 }
@@ -206,7 +203,7 @@ bool libAffx_NazeeboToadMasterMilestone (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify2("Effect,WitchDoctorPlagueofToadsInitialPersistent,PeriodCount", libAffx_player, "2", c_upgradeOperationAdd);
+    libAffx_CatalogReferenceModify("Effect,WitchDoctorPlagueofToadsInitialPersistent,PeriodCount", libAffx_player, "2", c_upgradeOperationAdd);
     
     return true;
 }

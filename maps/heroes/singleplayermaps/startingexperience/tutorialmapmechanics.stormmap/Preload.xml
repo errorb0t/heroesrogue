@@ -1,132 +1,99 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Preload>
 <Actor id="SYSTEM_ActorConfig"/>
-<Actor id="Storm_Doodad_Heaven2_CurbDetails" Variations="1,2,4,5,6,7,8,9,10,11,12,13"/>
-<Actor id="Storm_Doodad_Heaven2_CurbThick" Variations="1,2,4,5,7,8,12,14,16,18"/>
-<Actor id="Storm_Doodad_Heaven2_CurbThin" Variations="0,4,7,8,16,18,19"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_A"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_AA"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_AB"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_AC"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_AD"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_AE"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_AF"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_AG"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_AH"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_AI"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_B"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_C"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_D"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_E"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_F"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_G"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_H"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_I"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_J"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_K"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_L"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_M"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_N"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_O"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_P"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_Q"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_R"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_S"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_T"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_U"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_V"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_W"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_X"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_Y"/>
-<Actor id="Storm_Doodad_Heaven2_Jungle_Z"/>
-<Actor id="Storm_Doodad_Heaven2_MercCamp_A"/>
-<Actor id="Storm_Doodad_Heaven2_MercCamp_B"/>
-<Actor id="Storm_Doodad_Heaven2_MercCamp_CA"/>
-<Actor id="Storm_Doodad_Heaven2_MercCamp_CB"/>
-<Actor id="Storm_Doodad_Heaven2_MercCamp_CC"/>
-<Actor id="Storm_Doodad_Heaven_FloatingTree" Variations="1,3,4,5"/>
-<Actor id="Storm_Doodad_Heaven_HeavenGazeebo" Variations="0,1"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_A"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AA"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AB"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AC"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AD"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AE"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AF"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AG"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AH"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AI"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AJ"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_AK"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_B"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_C"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_D"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_E"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_F"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_G"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_H"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_I"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_J"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_K"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_L"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_M"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_N"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_O"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_P"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_S"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_T"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_U"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_V"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_W"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_X"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_Y"/>
-<Actor id="Storm_Doodad_Hell2_Jungle_Z"/>
-<Actor id="Storm_Doodad_Hell2_MercCamp_A"/>
-<Actor id="Storm_Doodad_Hell2_MercCamp_B"/>
-<Actor id="Storm_Doodad_Hell_CurtainLarge"/>
-<Actor id="Storm_Doodad_Heaven_CurtainLarge"/>
-<Actor id="Storm_Doodad_Heaven_DefeatedMinions" Variations="0,1,2"/>
-<Actor id="Storm_Doodad_Hell_OrganicHellCurb" Variations="0,2,3,4,5,6,7,8,9,10,11,12,13,14"/>
-<Actor id="Storm_Doodad_Hell_Rock2" Variations="0,1,3,4"/>
-<Actor id="Storm_Doodad_HvH_Divide_HellCracks" Variations="0,1,2"/>
-<Actor id="Storm_FX_HeavenHell_WispyEnergy"/>
-<Actor id="Storm_Doodad_Hell_DefeatedMinions" Variations="0,1,2"/>
-<Actor id="Storm_Doodad_Hell_Embers"/>
-<Actor id="Storm_Doodad_Hell_JungleKit" Variations="7,8,16,24,28"/>
-<Actor id="Storm_Doodad_Hell_JungleKit_Rocks" Variations="2,4,10,11,12,16"/>
-<Actor id="Storm_Doodad_Hell_LavaPool" Variations="0,1,2,3"/>
-<Actor id="Storm_Doodad_Hell_Pot_Footprint" Variations="0,1,2,3,4"/>
-<Actor id="Strom_Doodad_Heaven_Pot_Footprint" Variations="0,1,2,3,4"/>
-<Actor id="Storm_Doodad_Heaven_CoreRange" Variations="0,1"/>
-<Actor id="Storm_Doodad_Heaven_Shrub" Variations="0"/>
-<Actor id="Storm_Doodad_Hell_GroundDecal" Variations="0,3,4,7,14"/>
-<Actor id="Storm_Doodad_Hell_TransitionWall"/>
-<Actor id="Storm_Doodad_HvH_Spine_Glow" Variations="0,2,3"/>
-<Actor id="Storm_Doodad_Heaven_ArchWall" Variations="1,2,3,4"/>
-<Actor id="Storm_Doodad_Heaven2_CaptureSlab"/>
-<Actor id="Storm_Doodad_Heaven_StartingPlatform"/>
-<Actor id="Storm_Doodad_Hell_CaptureSlab"/>
-<Actor id="Storm_Doodad_Hell_StartingPlatform2"/>
-<Actor id="Storm_Doodad_Heaven_Grate" Variations="0,1,2,3,6,7,8,9,10"/>
-<Actor id="Storm_Doodad_Heaven_Statue" Variations="1"/>
-<Actor id="Storm_Doodad_Hell_CoreRange" Variations="0,1,2"/>
-<Actor id="Storm_Doodad_Hell_Grate" Variations="0,1,2,3,7,8,9,10"/>
-<Actor id="Storm_Doodad_Hell_OuterWall" Variations="0,3,4,5,6,7,10,15,25,30,33,35"/>
-<Actor id="Storm_Doodad_Heaven_OuterWall" Variations="0,1,2,4,5,7,11,14,24,30,34"/>
-<Actor id="Storm_Doodad_Hell_EdgeWall"/>
-<Actor id="Storm_Doodad_Heaven_CrystalShine"/>
-<Actor id="Storm_Doodad_HvH_Creep_Glow" Variations="0,2,4"/>
-<Actor id="Storm_Doodad_Heaven2_GroundDecal" Variations="0,1"/>
-<Actor id="Storm_Doodad_HvH2_Shrines_Slab"/>
-<AnnouncerPack id="Angel"/>
-<AnnouncerPack id="Demon"/>
-<Terrain id="StormHeavenAndHell2Transition"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_CoreRange" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_CastleBackground_Overgrown" Variations="1,2"/>
+<Actor id="Storm_Doodad_KingsCrest_CastleManor_Overgrown" Variations="0"/>
+<Actor id="Storm_Doodad_KingsCrest_Hose"/>
+<Actor id="Storm_Doodad_Kingscrest_FlowerArrangements" Variations="2"/>
+<Actor id="Storm_Doodad_KingsCrest_Sprinkler"/>
+<Actor id="Storm_Doodad_KingsCrest_SoilSack" Variations="1"/>
+<Actor id="Storm_Doodad_KingsCrest_PicketFences" Variations="8,9,10,11,13,16,18"/>
+<Actor id="Storm_Doodad_KingsCrest_ToolShed"/>
+<Actor id="Storm_Doodad_KingsCrest_Fence_Iron_Door_StainedGlass"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Obelisk_Overgrown" Variations="0,3"/>
+<Actor id="StormKingsCrest_BackGroundManor" Variations="2"/>
+<Actor id="Storm_Doodad_KingsCrest_Butterfly"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Emblem"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Tree" Variations="3,4,6,7"/>
+<Actor id="Storm_Doodad_CyberWorld_Curtain" Variations="0,3"/>
+<Actor id="Storm_Doodad_CyberWorld_CurtainLarge" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_ChiseledRock_Small" Variations="0,3,4,9"/>
+<Actor id="Storm_Doodad_KingsCrest_Campfire" Variations="1"/>
+<Actor id="Storm_Doodad_KingsCrest_Pillars" Variations="3"/>
+<Actor id="Storm_Doodad_KingsCrest_StartingPlatform"/>
+<Actor id="Storm_Doodad_KingsCrest_SpiralSteppingStones" Variations="0,1,2,3,4"/>
+<Actor id="Storm_Doodad_KingsCrest_CastleBackGround" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_CurbStone" Variations="0,1,2,3,4,5,6,7,8,9"/>
+<Actor id="Storm_Doodad_KingsCrest_Fence_Iron_StainedGlass" Variations="1,7,9"/>
+<Actor id="Storm_Doodad_KingsCrest_Fountain" Variations="0,3"/>
+<Actor id="Storm_Doodad_KingsCrest_Flowers" Variations="0,1,2,3,4,5,6,7,9,10,11"/>
+<Actor id="Storm_Doodad_KingsCrest_GardenBush" Variations="0,2,3,4,5,6,7,8,9"/>
+<Actor id="Storm_Doodad_KingsCrest_GardenHedges" Variations="0,1,13,15,16,17"/>
+<Actor id="Storm_Doodad_KingsCrest_MayPole"/>
+<Actor id="Storm_Doodad_KingsCrest_AltarOfSwords_Mercenary" Variations="0"/>
+<Actor id="Storm_Doodad_KingsCrest_StreetLamp"/>
+<Actor id="Storm_Doodad_KingsCrest_GardenerScene" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Male_Gardener" Variations="0,1,2,3,4,6,7"/>
+<Actor id="Doodad_Amb_3D_GardenOfTerror_Day_Raven"/>
+<Actor id="Doodad_Amb_3D_GardenOfTerror_Night_Wolf"/>
+<Actor id="Storm_Doodad_KingsCrest_Bird_Flyaway" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Fireflies"/>
+<Actor id="Storm_Doodad_Kingscrest_Gardens_Greenhouse_LRG_Overgrown" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_KingsCrest_GardenStatue"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Gnome"/>
+<Actor id="Storm_Doodad_Kingscrest_Gardens_Greenhouse_LRG" Variations="3"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Mushrooms" Variations="0,2,3,4,5,7,8"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Flytrap" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Maneaterplant" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_ManeaterTentacle" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Vines_A"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Vines_B"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Vines_C"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_Vines_E"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_A"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_AA"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_B" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_C"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_D"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_E" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_F"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_H" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_I"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_J" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_K"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_L"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_M"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_N"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_P" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_Q" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_R"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_RR"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_S"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_SS"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_T" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_TT"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_U"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_UU"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_V"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_VV" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Garden_Jungle_W"/>
+<Sound id="Amb_3D_GardenOfTerror_Day_WindGust_Brush"/>
+<Sound id="Amb_3D_GardenOfTerror_Night_Bird_Owls2"/>
+<Sound id="Amb_3D_GardenOfTerror_Night_Bird_Owls1"/>
+<Sound id="Amb_3D_GardenOfTerror_Night_Lemur"/>
+<Sound id="Amb_3D_GardenOfTerror_Night_Creature_Spooky"/>
+<Sound id="Amb_3D_GardenOfTerror_Night_Bird_Loon"/>
+<Sound id="Amb_3D_GardenOfTerror_Night_Thunder"/>
+<Sound id="Amb_3D_GardenOfTerror_Night_Wolf"/>
+<Terrain id="StormKingsCrestGardens"/>
 <Unit id="StormGameStartPathingBlockerDiagonal"/>
 <Unit id="StormGameStartPathingBlocker"/>
-<Unit id="TownGateL215BLUR" Variations="2"/>
-<Unit id="TownGateL215BRUL" Variations="2"/>
-<Unit id="TownGateL3VerticalLeftVisionBlocked" Variations="0"/>
-<Unit id="TownGateL3VerticalRightVisionBlocked" Variations="3"/>
+<Unit id="TownGateL2VerticalLeftVisionBlocked" Variations="0,1"/>
+<Unit id="TownGateL2VerticalRightVisionBlocked" Variations="0"/>
+<Unit id="TownGateL215BRUL" Variations="0,2"/>
+<Unit id="TownGateL3VerticalLeftVisionBlocked" Variations="2"/>
+<Unit id="TownGateL3VerticalRightVisionBlocked" Variations="0"/>
 <Unit id="TownGateL3BLURTLVisionBlocked" Variations="1"/>
 <Unit id="TownGateL3BLURBRVisionBlocked" Variations="1"/>
 <Unit id="TownGateL3BRULBLVisionBlocked" Variations="2"/>
@@ -140,25 +107,25 @@
 <Unit id="TownTownHallL2"/>
 <Unit id="HallOfStormsLocationUnit"/>
 <Unit id="KingsCore"/>
-<Unit id="TownWallRadial2L3" Variations="3"/>
-<Unit id="TownWallRadial3L3" Variations="2"/>
-<Unit id="TownWallRadial4L2" Variations="1,3"/>
-<Unit id="TownWallRadial5L2" Variations="0,2"/>
-<Unit id="TownWallRadial5L3" Variations="1"/>
-<Unit id="TownWallRadial6L3" Variations="0"/>
-<Unit id="TownWallRadial8L3" Variations="3"/>
-<Unit id="TownWallRadial9L3" Variations="2"/>
-<Unit id="TownWallRadial14L3" Variations="5"/>
-<Unit id="TownWallRadial15L3" Variations="4"/>
-<Unit id="TownWallRadial17L3" Variations="5"/>
-<Unit id="TownWallRadial18L2" Variations="3"/>
-<Unit id="TownWallRadial18L3" Variations="4"/>
-<Unit id="TownWallRadial19L2" Variations="0,2"/>
-<Unit id="TownWallRadial20L3" Variations="5"/>
-<Unit id="TownWallRadial21L3" Variations="0"/>
+<Unit id="TownWallRadial2L3" Variations="8"/>
+<Unit id="TownWallRadial3L3" Variations="7"/>
+<Unit id="TownWallRadial4L2" Variations="16"/>
+<Unit id="TownWallRadial5L2" Variations="6,8,9"/>
+<Unit id="TownWallRadial5L3" Variations="16"/>
+<Unit id="TownWallRadial6L2" Variations="7,17"/>
+<Unit id="TownWallRadial6L3" Variations="7"/>
+<Unit id="TownWallRadial7L3" Variations="2"/>
+<Unit id="TownWallRadial8L3" Variations="1"/>
+<Unit id="TownWallRadial9L3" Variations="6"/>
+<Unit id="TownWallRadial14L3" Variations="9"/>
+<Unit id="TownWallRadial15L3" Variations="7"/>
+<Unit id="TownWallRadial16L2" Variations="16"/>
+<Unit id="TownWallRadial17L2" Variations="6,8"/>
+<Unit id="TownWallRadial17L3" Variations="8"/>
+<Unit id="TownWallRadial18L2" Variations="6,17"/>
+<Unit id="TownWallRadial18L3" Variations="6"/>
+<Unit id="TownWallRadial19L3" Variations="2"/>
+<Unit id="TownWallRadial20L3" Variations="1"/>
+<Unit id="TownWallRadial21L3" Variations="7"/>
 <Unit id="LootBannerSconce"/>
-<Unit id="WeaponRackSpecialHeaven"/>
-<Unit id="Hell_GiantDemon_Base"/>
-<Unit id="Hell_GiantDemon_Chains"/>
-<Unit id="DiabloShrine"/>
 </Preload>

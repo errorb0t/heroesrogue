@@ -110,6 +110,7 @@ int libPBU2_difficultyDialogNormal;
 int libPBU2_difficultyDialogHeroic;
 int libPBU2_difficultyDialogMythic;
 int libPBU2_dialogHowToPlay;
+int libPBU2_dialogAchievements;
 int libPBU2_informationDialog;
 int libPBU2_informationDialogBG;
 int libPBU2_informationDialogText;

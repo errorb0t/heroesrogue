@@ -569,6 +569,7 @@ void libMSOC_gf_MMTombSpiderQueenSoulCollectionThresholdReached (int lp_winningT
         SoundPlayForPlayer(SoundLink("UI_Game_Ping_Shrine_Captured_Enemy", -1), c_maxPlayers, libGame_gf_PlayersOnTeamHeroes(2, false), 100.0, 0.0);
     }
     else {
+        TriggerSendEvent("AffixObjectiveLost");
         libMSOC_gf_MMTombSpiderQueenTurnInPointTeamColor(2);
         libMSOC_gf_MMTombSpiderQueenSpawnSoulEaters(libCore_gv_cOMPUTER_TeamOrder);
         SoundPlayForPlayer(SoundLink("UI_Game_Ping_Shrine_Captured_Ally", -1), c_maxPlayers, libGame_gf_PlayersOnTeamHeroes(2, false), 100.0, 0.0);

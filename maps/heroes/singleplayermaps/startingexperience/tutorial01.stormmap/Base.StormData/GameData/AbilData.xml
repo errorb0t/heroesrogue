@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Catalog>
-  <CAbilEffectInstant id="Hearthstone">
-    <CastOutroTime value="0.0625" />
-  </CAbilEffectInstant>
+    <CAbilEffectTarget id="CaptureMacGuffin">
+        <Activity value="DOCSTR_MMDoubloons_HandinDoubloons"/>
+    </CAbilEffectTarget>
 </Catalog>

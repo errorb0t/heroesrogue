@@ -41,4 +41,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Icon value="Assets\Textures\storm_ui_icon_kerrigan_primalgrasp.dds"/>
 </CButton>
 
+<CButton id="AffixWeakPoint" parent="StormButtonParent">
+    <Icon value="Assets\Textures\affix_icon_weak_point.dds"/>
+</CButton>
+
 </Catalog>

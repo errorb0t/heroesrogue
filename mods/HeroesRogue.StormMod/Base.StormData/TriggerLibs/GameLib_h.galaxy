@@ -1911,11 +1911,6 @@ trigger libGame_gt_DVaMechDies;
 bool libGame_paused = false;
 int libGame_winningTeam;
 
-fixed libGame_teamOrderXPMod = 0;
-fixed libGame_teamChaosXPMod = 0;
-
-fixed libGame_teamOrderXPModTrickle = 0;
-fixed libGame_teamChaosXPModTrickle = 0;
 
 void libGame_AddAbilityEffectMapping (string abil, string effect);
 string libGame_GetAblilityEffectMapping (string effect);
@@ -1928,16 +1923,23 @@ struct EffectAbilityMap {
 };
 EffectAbilityMap[libGame_abilityEffectMapMax + 1] libGame_abilityEffectMap;
 
-bool[11] libGame_diabloUsedSouls;
+bool[libCore_gv_bALMaxPlayers + 1] libGame_diabloUsedSouls;
 
-bool libGame_teamOrderSharedXPDisabled = false;
-bool libGame_teamOrderXPGlobesDisabled = false;
+int[libCore_gv_bALMaxTeams + 1] libGame_extraMinionsRanged;
+int[libCore_gv_bALMaxTeams + 1] libGame_extraMinionsMelee;
+int[libCore_gv_bALMaxTeams + 1] libGame_extraMinionsWizard;
+bool[libCore_gv_bALMaxTeams + 1] libGame_xpGlobesDisabled;
+bool[libCore_gv_bALMaxTeams + 1] libGame_sharedXPDisabled;
+bool[libCore_gv_bALMaxTeams + 1] libGame_keepFallbackTowers;
+bool[libCore_gv_bALMaxTeams + 1] libGame_alwaysSpawnCatapults;
+bool[libCore_gv_bALMaxTeams + 1] libGame_dropOppositeGlobe;
 
-int libGame_teamChaosExtraRangedMinions;
-int libGame_teamChaosExtraMageMinions;
-int libGame_teamChaosExtraMeleeMinions;
-bool libGame_teamChaosAlwaysSpawnCatapults;
-bool libGame_teamChaosDropsChaosGlobe;
+trigger[libCore_gv_bALMaxTeams + 1] libGame_MinionSpawnCycle;
+int[libCore_gv_bALMaxTeams + 1] libGame_minionWaveSpawnCounter;
+
+fixed[libCore_gv_bALMaxTeams + 1] libGame_xpModifier;
+fixed[libCore_gv_bALMaxTeams + 1] libGame_xpModifierMinion;
+fixed[libCore_gv_bALMaxTeams + 1] libGame_xpModifierTrickle;
 
 // Library Initialization
 void libGame_InitVariables ();

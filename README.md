@@ -20,7 +20,7 @@ Singleplayer rogue-like mod for Heroes of the Storm.
 
 # **Info**
 
-Welcome to Heroes Rogue! This is a singleplayer rogue-like mod for Heroes of the Storm. Throughout the game, you will have to choose Boons providing various permanent buffs and Curses which make the game more difficult. Your boons and curses are automatically saved after destroying the enemy Core, carrying them over into the next game. The game can be quit and played at another time, and will resume where you left of. Try to get as far as possible! If your Core gets destroyed, the run ends and all boons and curses are reset.
+Welcome to Heroes Rogue! This is a singleplayer rogue-like mod for Heroes of the Storm. Throughout the game, you will have to choose Boons providing various permanent buffs and Curses which make the game more difficult. Your boons and curses are automatically saved after destroying the enemy Core, carrying them over into the next game. The game can be quit and played at another time, and will resume where you left off. You win by getting to round **20**! If your Core gets destroyed, the run ends and all boons and curses are reset.
 
 The following Heroes have special interactions with boons and curses:<br>
 - **Lost Vikings, Rexxar, Samuro, and Nova:** Boons and curses apply to all controlled units/clones.<br>
@@ -45,6 +45,7 @@ The following Heroes have special interactions with boons and curses:<br>
 
 **Bans:** Obtain 3 bans at the start of a run and 1 additional ban at the start of every subsequent game which can be used to ban boons and curses, preventing them from showing up for the rest of the run. Infinite boons/curses, starter boons, mythic curses, and milestone boons cannot be banned.
 
+[List of all boons and curses.](https://errorb0t.github.io/heroesrogue/index.html) Credit to errorb0t.
 
 #### Disclaimer:
 This is a fan-made project and is not affiliated with or endorsed by Blizzard Entertainment. The mod runs locally and does not interact with Blizzard's servers. All original game assets, characters, and intellectual property belong to Blizzard Entertainment.

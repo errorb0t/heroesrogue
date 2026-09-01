@@ -11,7 +11,7 @@ void libAffx_TyrandeNightElfBondSpawnMalfurion () {
     if (libAffx_NightElfBondMalfurion == null || !UnitIsAlive(libAffx_NightElfBondMalfurion)) {
         libNtve_gf_CreateUnitsAtPoint2(1, "HeroMalfurion", c_unitCreateIgnorePlacement, libAffx_teamOrder, PointWithOffsetPolar(UnitGetPosition(libGame_gv_players[libAffx_player].lv_heroUnit), 5, RandomFixed(0, 360)), null);
         libAffx_NightElfBondMalfurion = UnitLastCreated();
-        libAffx_NightElfBondTyrande = libAffx_GetHeroUnit(libAffx_player);
+        libAffx_NightElfBondTyrande = libAffx_GetPlayerHeroUnit(libAffx_player);
         libNtve_gf_SendActorMessageToUnit(libAffx_NightElfBondMalfurion, "Signal Respawn");
         UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "ApplyNightElfBondMalfurion", libAffx_NightElfBondMalfurion);
         sharedHealth = (UnitGetPropertyFixed(libAffx_NightElfBondTyrande, c_unitPropLife, true) + UnitGetPropertyFixed(libAffx_NightElfBondMalfurion, c_unitPropLife, true) / 2);
@@ -161,7 +161,7 @@ bool libAffx_TyrandeFlybyAttackScaling (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_LevelUpScaling("Effect,SentinelShotDamagePvE,Amount", player);
+    libAffx_SetDefaultLevelScaling("Effect,SentinelShotDamagePvE,Amount", player);
 
     return true;
 }
@@ -170,7 +170,7 @@ bool libAffx_TyrandeFlybyAttackAffixAdded (bool testConds, bool runActions) {
         return true;
     }
     if (PlayerHasTalent(libAffx_player, "TyrandeRanger")) {
-        libAffx_CatalogReferenceModify2("Effect,SentinelShotMissileSearchPvE,AreaArray[0].RectangleWidth", libAffx_player, "1.25", c_upgradeOperationAdd);
+        libAffx_CatalogReferenceModify("Effect,SentinelShotMissileSearchPvE,AreaArray[0].RectangleWidth", libAffx_player, "1.25", c_upgradeOperationAdd);
     }
     return true;
 }
@@ -198,7 +198,7 @@ bool libAffx_TyrandeFlybyAttackTalentGained (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify2("Effect,SentinelShotMissileSearchPvE,AreaArray[0].RectangleWidth", libAffx_player, "1.25", c_upgradeOperationAdd);
+    libAffx_CatalogReferenceModify("Effect,SentinelShotMissileSearchPvE,AreaArray[0].RectangleWidth", libAffx_player, "1.25", c_upgradeOperationAdd);
 
     return true;
 }

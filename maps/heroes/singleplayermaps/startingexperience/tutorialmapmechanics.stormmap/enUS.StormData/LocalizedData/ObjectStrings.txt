@@ -1,5 +1,5 @@
-﻿Light/Name/CustomLight=CustomLight
+﻿Actor/Name/Amb_Group_GardenOfTerror_Day2Night=Amb_Group_GardenOfTerror_Day2Night
 Light/Name/EditorTestLight=Default
-Light/Name/StormShrines=Storm Shrines
-VoiceOver/EditorPrefix/Angel=Announcer
-VoiceOver/EditorPrefix/Demon=Announcer
+Sound/Name/Amb_3D_GardenOfTerror_Rooster=Amb_3D_GardenOfTerror_Rooster
+Sound/Name/Amb_3D_GardenOfTerror_Transition_Wolf=Amb_3D_GardenOfTerror_Transition_Wolf
+Sound/Name/Event_GardenOfTerror_DayToNight_TransitiondCopy=Event_GardenOfTerror_DayToNight_Transition

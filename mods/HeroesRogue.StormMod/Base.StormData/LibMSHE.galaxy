@@ -1571,6 +1571,8 @@ bool libMSHE_gt_MMISCursedEventScoreTracker_Func (bool testConds, bool runAction
 
         if (lv_winningTeam == libGame_gv_teamOrderIndex_C) {
             TriggerSendEvent("AffixObjectiveWon");
+        } else {
+            TriggerSendEvent("AffixObjectiveLost");
         }
 
         RemoveUnitOfInterest(libMSHE_gv_mMISShrines[libMSHE_gv_mMISCurrentShrine], "FightAtShrine", libNtve_ge_GoalTeam_Both);

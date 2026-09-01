@@ -460,6 +460,8 @@ bool libMHtM_gf_MMUnderworldCleared () {
     if (((libMHtM_gv_mMUnderworldSkullCollected[1] >= libMHtM_gv_mMUnderworldTotalSkulls_C) || (libMHtM_gv_mMUnderworldSkullCollected[2] >= libMHtM_gv_mMUnderworldTotalSkulls_C))) {
         if (libMHtM_gv_mMUnderworldSkullCollected[1] > libMHtM_gv_mMUnderworldSkullCollected[2]) {
             TriggerSendEvent("AffixObjectiveWon");
+        } else if (libMHtM_gv_mMUnderworldSkullCollected[2] > libMHtM_gv_mMUnderworldSkullCollected[1]) {
+            TriggerSendEvent("AffixObjectiveLost");
         }
         return true;
     }
