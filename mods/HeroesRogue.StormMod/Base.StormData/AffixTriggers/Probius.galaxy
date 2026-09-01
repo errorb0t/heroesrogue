@@ -20,26 +20,26 @@ bool libAffx_ProbiusWarpTechnologyScaling (bool testConds, bool runActions) {
         return true;
     }
 
-    libAffx_LevelUpScaling("Effect,PsiBlades,Amount", player);
-    libAffx_LevelUpScaling("Effect,ParticleDisruptorsU,Amount", player);
-    libAffx_LevelUpScaling("Effect,PhaseDisruptors,Amount", player);
-    libAffx_LevelUpScaling("Behavior,ImmortalHardenedShield,DamageResponse.ClampMaximum", player);
-    libAffx_LevelUpScaling("Behavior,ImmortalHardenedShield,DamageResponse.Minimum", player);
-    libAffx_LevelUpScaling("Unit,ProbiusZealot,LifeStart", player);
-    libAffx_LevelUpScaling("Unit,ProbiusZealot,LifeMax", player);
-    libAffx_LevelUpScaling("Unit,ProbiusZealot,ShieldsStart", player);
-    libAffx_LevelUpScaling("Unit,ProbiusZealot,ShieldsMax", player);
-    libAffx_LevelUpScaling("Unit,ProbiusZealot,ShieldRegenRate", player);
-    libAffx_LevelUpScaling("Unit,ProbiusStalker,LifeStart", player);
-    libAffx_LevelUpScaling("Unit,ProbiusStalker,LifeMax", player);
-    libAffx_LevelUpScaling("Unit,ProbiusStalker,ShieldsStart", player);
-    libAffx_LevelUpScaling("Unit,ProbiusStalker,ShieldsMax", player);
-    libAffx_LevelUpScaling("Unit,ProbiusStalker,ShieldRegenRate", player);
-    libAffx_LevelUpScaling("Unit,ProbiusImmortal,LifeStart", player);
-    libAffx_LevelUpScaling("Unit,ProbiusImmortal,LifeMax", player);
-    libAffx_LevelUpScaling("Unit,ProbiusImmortal,ShieldsStart", player);
-    libAffx_LevelUpScaling("Unit,ProbiusImmortal,ShieldsMax", player);
-    libAffx_LevelUpScaling("Unit,ProbiusImmortal,ShieldRegenRate", player);
+    libAffx_SetDefaultLevelScaling("Effect,PsiBlades,Amount", player);
+    libAffx_SetDefaultLevelScaling("Effect,ParticleDisruptorsU,Amount", player);
+    libAffx_SetDefaultLevelScaling("Effect,PhaseDisruptors,Amount", player);
+    libAffx_SetDefaultLevelScaling("Behavior,ImmortalHardenedShield,DamageResponse.ClampMaximum", player);
+    libAffx_SetDefaultLevelScaling("Behavior,ImmortalHardenedShield,DamageResponse.Minimum", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusZealot,LifeStart", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusZealot,LifeMax", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusZealot,ShieldsStart", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusZealot,ShieldsMax", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusZealot,ShieldRegenRate", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusStalker,LifeStart", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusStalker,LifeMax", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusStalker,ShieldsStart", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusStalker,ShieldsMax", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusStalker,ShieldRegenRate", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusImmortal,LifeStart", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusImmortal,LifeMax", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusImmortal,ShieldsStart", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusImmortal,ShieldsMax", player);
+    libAffx_SetDefaultLevelScaling("Unit,ProbiusImmortal,ShieldRegenRate", player);
 
     return true;
 }

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Catalog>
-    <CTerrain id="StormKingsCrestGardens">
-        <FOWColor value="255,12,7,24"/>
-        <BlendTextures index="2" value="storm_docks_5"/>
-        <BlendTextures index="3" value="StormCastleWorld3"/>
-        <Lighting value="StormGardenofTerrorDay"/>
+    <CTerrain id="StormEgyptWorld">
+        <DoubleLambert value="0"/>
+        <FOWPlaneEnabled value="0"/>
+        <FogDensity value="0.020000"/>
+        <FogStartingHeight value="-24.000000"/>
     </CTerrain>
-    <CTerrain id="StormKingsCrestWinterRavenCourt">
-        <FOWColor value="255,10,0,26"/>
-        <FogColor value="255,40,88,136"/>
+    <CTerrain id="StormKingsCrestGardens">
+        <DoubleLambert value="0"/>
     </CTerrain>
 </Catalog>

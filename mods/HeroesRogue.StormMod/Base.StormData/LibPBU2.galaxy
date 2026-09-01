@@ -549,11 +549,11 @@ void libPBU2_gf_CurateHSUIInitialize () {
     libNtve_gf_SetDialogItemText(libPBU2_difficultyDialogMythic, StringExternal("Button/Name/Mythic"), PlayerGroupAll());
     DialogControlSetPosition(libPBU2_difficultyDialogMythic, PlayerGroupAll(), c_anchorCenter, 660, -370);
     DialogControlSetSize(libPBU2_difficultyDialogMythic, PlayerGroupAll(), 190, 90);
-    TextExpressionSetToken("Param/Expression/Mythic", "A", StringExternal("Affix/Tooltip/MythicCurseSabotage"));
-    TextExpressionSetToken("Param/Expression/Mythic", "B", StringExternal("Affix/Tooltip/MythicCurseLevelDisadvantage"));
-    TextExpressionSetToken("Param/Expression/Mythic", "C", StringExternal("Affix/Tooltip/MythicCurseBleeding"));
-    TextExpressionSetToken("Param/Expression/Mythic", "D", StringExternal("Affix/Tooltip/MythicCurseCursed"));
-    TextExpressionSetToken("Param/Expression/Mythic", "E", StringExternal("Affix/Tooltip/MythicCurseEternal"));
+    TextExpressionSetToken("Param/Expression/Mythic", "A", StringExternal("Affix/Tooltip/Sappers"));
+    TextExpressionSetToken("Param/Expression/Mythic", "B", StringExternal("Affix/Tooltip/ArmoredUp"));
+    TextExpressionSetToken("Param/Expression/Mythic", "C", StringExternal("Affix/Tooltip/WeakPoint"));
+    TextExpressionSetToken("Param/Expression/Mythic", "D", StringExternal("Affix/Tooltip/Invasion"));
+    TextExpressionSetToken("Param/Expression/Mythic", "E", StringExternal("Affix/Tooltip/Eternal"));
     libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogMythic, StringExternal("Button/Tooltip/Mythic") + TextExpressionAssemble("Param/Expression/Mythic"), PlayerGroupAll());
 
     DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), false);
@@ -561,8 +561,14 @@ void libPBU2_gf_CurateHSUIInitialize () {
     DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
     libPBU2_dialogHowToPlay = DialogControlLastCreated();
     libNtve_gf_SetDialogItemText(libPBU2_dialogHowToPlay, StringExternal("Button/Name/HowToPlay"), PlayerGroupAll());
-    DialogControlSetPosition(libPBU2_dialogHowToPlay, PlayerGroupAll(), c_anchorCenter, -500, -370);
-    DialogControlSetSize(libPBU2_dialogHowToPlay, PlayerGroupAll(), 250, 90);
+    DialogControlSetPosition(libPBU2_dialogHowToPlay, PlayerGroupAll(), c_anchorCenter, -625, -370);
+    DialogControlSetSize(libPBU2_dialogHowToPlay, PlayerGroupAll(), 250, 100);
+
+    DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
+    libPBU2_dialogAchievements = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemText(libPBU2_dialogAchievements, StringExternal("Button/Name/OptionsAchievements"), PlayerGroupAll());
+    DialogControlSetPosition(libPBU2_dialogAchievements, PlayerGroupAll(), c_anchorCenter, -375, -370);
+    DialogControlSetSize(libPBU2_dialogAchievements, PlayerGroupAll(), 250, 100);
     
     DialogCreate(500, 400, c_anchorCenter, 0, 0, true);
     libPBU2_informationDialog = DialogLastCreated();
@@ -1434,6 +1440,7 @@ void libPBU2_gf_CurateHSUIShowFinalCountDownHeroCutscene () {
     DialogControlSetVisible(libPBU2_difficultyDialogHeroic, PlayerGroupAll(), false);
     DialogControlSetVisible(libPBU2_difficultyDialogMythic, PlayerGroupAll(), false);
     DialogControlSetVisible(libPBU2_dialogHowToPlay, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_dialogAchievements, PlayerGroupAll(), false);
     DialogControlSetVisible(libPBU2_informationDialog, PlayerGroupAll(), false);
     DialogControlSetVisible(libPBU2_informationDialogBG, PlayerGroupAll(), false);
     DialogControlSetVisible(libPBU2_informationDialogText, PlayerGroupAll(), false);

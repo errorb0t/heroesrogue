@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Catalog>
-    <CScoreResultRoot id="MinesRoot">
-        <HeaderTable value="MinesHeroes"/>
+    <CScoreResultRoot id="BlackHeartsRoot">
+        <HeaderTable value="BlackHeartsHeroes"/>
     </CScoreResultRoot>
-    <CScoreResultScore id="MinesHeroes">
-        <ValueTable value="MinesSkullsCollected"/>
+    <CScoreResultScore id="BlackHeartsHeroes">
+        <ValueTable value="BlackheartDoubloonsCollected"/>
+        <ValueTable value="BlackheartDoubloonsTurnedIn"/>
     </CScoreResultScore>
 </Catalog>

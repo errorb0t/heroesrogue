@@ -7,8 +7,8 @@ bool libAffx_SgtHammerMachineGunnerOncePerGame (bool testConds, bool runActions)
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify("Weapon,HeroSgtHammer,Period", libAffx_player, "0.125");
-    libAffx_CatalogReferenceModify2("Effect,SgtHammerTankAttackDamage,Amount", libAffx_player, "0.25", c_upgradeOperationMultiply);
+    libAffx_CatalogReferenceSet("Weapon,HeroSgtHammer,Period", libAffx_player, "0.125");
+    libAffx_CatalogReferenceModify("Effect,SgtHammerTankAttackDamage,Amount", libAffx_player, "0.25", c_upgradeOperationMultiply);
 
     return true;
 }
@@ -21,15 +21,15 @@ bool libAffx_SgtHammerArtilleryOncePerGame (bool testConds, bool runActions) {
     }
     libAffx_AffixSetHero(libAffx_GetAffixId("NexusRange"), "SgtHammer", false);
 
-    libAffx_CatalogReferenceModify("Effect,SiegeWeaponSplashSearch,AreaArray[0].Radius", libAffx_player, "3");
-    libAffx_CatalogReferenceModify("Effect,SiegeWeaponSplashAllySearch,AreaArray[0].Radius", libAffx_player, "3");
-    libAffx_CatalogReferenceModify("Behavior,SgtHammerSiegeDamageSplashDamage,DamageResponse.ModifyFraction", libAffx_player, "0.75");
-    libAffx_CatalogReferenceModify("Weapon,SgtHammerSiegeModeWeapon,Range", libAffx_player, "500");
-    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeRangeTank,Range", libAffx_player, FixedToString(500, 2));
-    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeRange,Range", libAffx_player, FixedToString(500, 2));
-    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange1,Range", libAffx_player, FixedToString(500, 2));
-    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange2,Range", libAffx_player, FixedToString(500, 2));
-    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange3,Range", libAffx_player, FixedToString(500, 2));
+    libAffx_CatalogReferenceSet("Effect,SiegeWeaponSplashSearch,AreaArray[0].Radius", libAffx_player, "3");
+    libAffx_CatalogReferenceSet("Effect,SiegeWeaponSplashAllySearch,AreaArray[0].Radius", libAffx_player, "3");
+    libAffx_CatalogReferenceSet("Behavior,SgtHammerSiegeDamageSplashDamage,DamageResponse.ModifyFraction", libAffx_player, "0.75");
+    libAffx_CatalogReferenceSet("Weapon,SgtHammerSiegeModeWeapon,Range", libAffx_player, "500");
+    libAffx_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeRangeTank,Range", libAffx_player, FixedToString(500, 2));
+    libAffx_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeRange,Range", libAffx_player, FixedToString(500, 2));
+    libAffx_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange1,Range", libAffx_player, FixedToString(500, 2));
+    libAffx_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange2,Range", libAffx_player, FixedToString(500, 2));
+    libAffx_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange3,Range", libAffx_player, FixedToString(500, 2));
 
     return true;
 }
@@ -40,12 +40,12 @@ bool libAffx_SgtHammerBigGunsOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
-    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Vital[Energy]", libAffx_player, "0");
-    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.TimeUse", libAffx_player, "10");
-    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountMax", libAffx_player, "3");
-    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountStart", libAffx_player, "3");
-    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountUse", libAffx_player, "1");
+    libAffx_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
+    libAffx_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Vital[Energy]", libAffx_player, "0");
+    libAffx_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Charge.TimeUse", libAffx_player, "10");
+    libAffx_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountMax", libAffx_player, "3");
+    libAffx_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountStart", libAffx_player, "3");
+    libAffx_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountUse", libAffx_player, "1");
 
     return true;
 }
@@ -57,8 +57,8 @@ bool libAffx_SgtHammerBlasterAffixAdded (bool testConds, bool runActions) {
         return true;
     }
     if (PlayerHasTalent(libAffx_player, "SgtHammerBarricade")) {
-        libAffx_CatalogReferenceModify("Abil,SgtHammerConcussiveBlast,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
-        libAffx_CatalogReferenceModify("Abil,SgtHammerConcussiveBlast,Cost[0].Charge.TimeUse", libAffx_player, "8");
+        libAffx_CatalogReferenceSet("Abil,SgtHammerConcussiveBlast,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
+        libAffx_CatalogReferenceSet("Abil,SgtHammerConcussiveBlast,Cost[0].Charge.TimeUse", libAffx_player, "8");
     }
 
     return true;
@@ -73,8 +73,8 @@ bool libAffx_SgtHammerBlasterGainTalent (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify("Abil,SgtHammerConcussiveBlast,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
-    libAffx_CatalogReferenceModify("Abil,SgtHammerConcussiveBlast,Cost[0].Charge.TimeUse", libAffx_player, "8");
+    libAffx_CatalogReferenceSet("Abil,SgtHammerConcussiveBlast,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
+    libAffx_CatalogReferenceSet("Abil,SgtHammerConcussiveBlast,Cost[0].Charge.TimeUse", libAffx_player, "8");
 
     return true;
 }

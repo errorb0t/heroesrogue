@@ -304,6 +304,38 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Value value="0" />
     <Behavior value="HealingFountainRestoreL2" />
   </CValidatorUnitCompareBehaviorCount>
+  
+  <CValidatorUnitCompareBehaviorCount id="TargetHasAffixRevealingTouchBehavior">
+    <Compare value="GE" />
+    <Value value="1" />
+    <Behavior value="AffixRevealingTouchBehavior" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  
+  <CValidatorLocationEnumArea id="AffixSapperIsNearStructure">
+    <AreaArray Compare="GT" Validator="IsStructureTarget">
+      <Radius value="9.25" />
+    </AreaArray>
+    <LaunchLocation Value="SourceUnit" />
+    <SearchFilters value="Structure;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <SearchFlags index="CenterAtLaunch" value="1" />
+    <SearchFlags index="ExtendByUnitRadius" value="1" />
+  </CValidatorLocationEnumArea>
+
+  <CValidatorCombine id="AffixHealingSpellValidatorCombine">
+    <Type value="And" />
+    <CombineArray value="TargetIsNotABossUnitOrMonsterMinorCombine" />
+    <CombineArray value="CasterNotDeadAndTargetNotDead" />
+    <CombineArray value="TargetNotStasis" />
+    <CombineArray value="NotSummonedUnit" />
+    <CombineArray value="TargetMinion" />
+    <CombineArray value="TargetNotMerc" />
+  </CValidatorCombine>
+  
+  <CValidatorEffect default="1">
+    <WhichEffect value="##id##" />
+    <ResultNoEffect value="Error" />
+  </CValidatorEffect>
 
 
 </Catalog>

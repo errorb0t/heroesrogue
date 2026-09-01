@@ -23,6 +23,16 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Chance value="0" />
     <Behavior value="MuradinDwarfTossVeryHeavyImpactStun" />
   </CEffectApplyBehavior>
+  <CEffectDamage id="StormBoltDamage">
+    <MultiplicativeModifierArray index="MuradinPowerBolt" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="ThunderclapDamage">
+    <MultiplicativeModifierArray index="MuradinClapClap" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="MuradinDwarfTossDamage">
+    <MultiplicativeModifierArray index="Jumper" Accumulator="MuradinDwarfTossAccumulator" />
+    <MultiplicativeModifierArray index="MuradinDwarfImpact" Modifier="0" />
+  </CEffectDamage>
 
   <CEffectModifyTokenCount id="MuradinDwarfTossAddToken" parent="BaseEffectModifyTokenCount">
     <Chance value="0" />
@@ -40,10 +50,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <WhichUnit Value="Caster" />
     <BehaviorLink value="MuradinDwarfTossUnstoppable" />
   </CEffectRemoveBehavior>
-  <CEffectDamage id="MuradinDwarfTossDamage" parent="StormSpell">
-    <Amount value="59" />
-    <MultiplicativeModifierArray index="LunarBlaze" Accumulator="MuradinDwarfTossAccumulator" />
-  </CEffectDamage>
   
   <CEffectCreateHealer id="MuradinSecondWindImprovedCreateHealerPermanent" parent="StormSelfOnlyHealingSpell">
     <ValidatorArray value="TargetLifeNotFull" />
@@ -136,7 +142,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Ratio value="0.03" />
     <VitalType value="Life" />
     <UnitSource Value="Caster" />
-    <ModificationType value="PerUnit" />
+    <ModificationType value="PerUnitMaxVital" />
     <MaxAccumulation value="99999"/>
   </CAccumulatorVitals>
 

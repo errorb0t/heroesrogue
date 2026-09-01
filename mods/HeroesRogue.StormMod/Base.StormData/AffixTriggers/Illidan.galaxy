@@ -31,8 +31,8 @@ bool libAffx_IllidanEvasiveUnitCreated (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_AddBehavior(libAffx_player, "IllidanEvasion", 1, true);
-    libAffx_AddBehavior(libAffx_player, "IllidanEvasionSpellArmor", 1, true);
+    libAffx_AddPlayerBehavior(libAffx_player, "IllidanEvasion", 1, true);
+    libAffx_AddPlayerBehavior(libAffx_player, "IllidanEvasionSpellArmor", 1, true);
     return true;
 }
 // ---------------------------------------------------------------
