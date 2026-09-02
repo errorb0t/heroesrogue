@@ -1154,6 +1154,9 @@ Affix/Tooltip/Cleaver/DVa=D.Va's Mech Basic Attacks splash for <c val="#TooltipN
 Affix/Tooltip/Cleaver/LostVikings=Olaf's Basic Attacks splash for <c val="#TooltipNumbers">100%</c> damage in an area around the target.
 Affix/Tooltip/Cleaver/Rexxar=Misha's Basic Attacks splash for <c val="#TooltipNumbers">100%</c> damage in an area around the target.
 Affix/Tooltip/Append/Cleaver=
+Affix/Name/FriendlyReinforcements=Friendly Reinforcements
+Affix/Tooltip/FriendlyReinforcements=Allied Minion waves spawn with <c val="#TooltipNumbers">1</c> <c val="747A84">(+1 per stack)</c> additional Minion.<n/><n/><c val="#TooltipNumbers">43%</c> chance to spawn as a ranged Minion, <c val="#TooltipNumbers">43%</c> chance to spawn as a melee Minion, and a <c val="#TooltipNumbers">14%</c> chance to spawn as a leader Minion.<n/><n/>Additional Minions do not provide XP.
+Affix/Tooltip/Append/FriendlyReinforcements=
 
 Affix/Name/MoreOptions=More Options
 Affix/Tooltip/MoreOptions=Grants a <c val="#TooltipNumbers">4th</c> option when selecting a boon or a curse.

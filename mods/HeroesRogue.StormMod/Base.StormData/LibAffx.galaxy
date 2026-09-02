@@ -3684,7 +3684,11 @@ int libAffx_RollAffix(int rarity, bool curse, int level, bool lockRarity) {
             slotAffixCount += 1;
             eligibleAffixes[slotAffixCount] = i;
             if (curse) {
-                eligibleWeights[slotAffixCount] = FixedToInt(libAffx_affixes[i].weight / (1 + (libAffx_affixes[i].rarity - 1) * (libAffx_affixes[i].rarity - 1) * 0.25));
+                if (libAffx_affixes[i].rarity == libAffx_rarityChallenge) {
+                    eligibleWeights[slotAffixCount] = FixedToInt(libAffx_affixes[i].weight / (1 + (libAffx_rarityLegendary - 1) * (libAffx_rarityLegendary - 1) * 0.25));
+                } else {
+                    eligibleWeights[slotAffixCount] = FixedToInt(libAffx_affixes[i].weight / (1 + (libAffx_affixes[i].rarity - 1) * (libAffx_affixes[i].rarity - 1) * 0.25));
+                }
             } else {
                 eligibleWeights[slotAffixCount] = libAffx_affixes[i].weight;
             }
@@ -4451,6 +4455,7 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
         libAffx_DisplayChatMessage(StringToText("totalTime: ") + FixedToText(TimerGetElapsed(libGame_gv_totalTime), 2));
         libAffx_DisplayChatMessage(StringToText("matchGameplayTimer: ") + FixedToText(TimerGetElapsed(libGame_gv_matchGameplayTimer), 2));
         libAffx_DisplayChatMessage(StringToText("gobalTimer: ") + FixedToText(TimerGetElapsed(libGame_gv_gobalTimer), 2));
+    } else if (chatMessage == "test") {
     }
     return true;
 }
@@ -4490,6 +4495,7 @@ void libAffx_TestCommandTrigger_Init () {
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "achievement", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "resetachievements", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "displaytime", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "test", false);
 }
 
 bool libAffx_DifficultyUnitCreated_Func (bool testConds, bool runActions) {

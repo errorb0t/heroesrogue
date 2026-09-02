@@ -8861,6 +8861,11 @@ bool auto_libGame_gf_MinionSpawnWave_TriggerFunc (bool testConds, bool runAction
     int lv_team;
     int lv_minionType;
     int lv_bruiserLevel;
+    int extraMinionsMeleeRandom;
+    int extraMinionsRangedRandom;
+    int extraMinionsWizardRandom;
+    int randomMinion;
+    int random;
 
     // Automatic Variable Declarations
     int autoB77C7225_ae;
@@ -8894,6 +8899,17 @@ bool auto_libGame_gf_MinionSpawnWave_TriggerFunc (bool testConds, bool runAction
     lv_bruiserLevel = libGame_gv_laneData[lp_lane].lv_bruiserMinionLevel[lv_team];
     autoB77C7225_ae = lv_groupCount;
     lv_itGroup = 1;
+    randomMinion = libGame_extraMinionsRandom[lv_team];
+    for (; randomMinion > 0; randomMinion -= 1) {
+        random = RandomInt(1, 7);
+        if (random <= 3) {
+            extraMinionsMeleeRandom += 1;
+        } else if (random == 4) {
+            extraMinionsWizardRandom += 1;
+        } else {
+            extraMinionsRangedRandom += 1;
+        }
+    }
     for ( ; ( (autoB77C7225_ai >= 0 && lv_itGroup <= autoB77C7225_ae) || (autoB77C7225_ai < 0 && lv_itGroup >= autoB77C7225_ae) ) ; lv_itGroup += autoB77C7225_ai ) {
         if ((libGame_gv_laneData[lp_lane].lv_minionSpawningEnabled == true)) {
             lv_minionType = libCore_gv_dataMinionWaveCompositions[(lp_composition)].lv_groupMinionType[lv_itGroup];
@@ -8902,17 +8918,20 @@ bool auto_libGame_gf_MinionSpawnWave_TriggerFunc (bool testConds, bool runAction
             autoEFB6C6D3_ae = libCore_gv_dataMinionWaveCompositions[(lp_composition)].lv_groupMinionCount[lv_itGroup];
             if (lv_minionType == libCore_ge_MinionTypes_Footmen) {
                 autoEFB6C6D3_ae += libGame_extraMinionsMelee[lv_team];
+                autoEFB6C6D3_ae += extraMinionsMeleeRandom;
             } else if (lv_minionType == libCore_ge_MinionTypes_Wizard) {
                 autoEFB6C6D3_ae += libGame_extraMinionsWizard[lv_team];
+                autoEFB6C6D3_ae += extraMinionsWizardRandom;
             } else if (lv_minionType == libCore_ge_MinionTypes_Ranged) {
                 autoEFB6C6D3_ae += libGame_extraMinionsRanged[lv_team];
+                autoEFB6C6D3_ae += extraMinionsRangedRandom;
             }
             lv_itMinion = 1;
             for ( ; ( (autoEFB6C6D3_ai >= 0 && lv_itMinion <= autoEFB6C6D3_ae) || (autoEFB6C6D3_ai < 0 && lv_itMinion >= autoEFB6C6D3_ae) ) ; lv_itMinion += autoEFB6C6D3_ai ) {
                 if (libGame_paused) {
                     libGame_Wait(0.0625, c_timeGame);
                 }
-                if (lv_itMinion > 3) {
+                if ((lv_itMinion > 3) || (lv_minionType == libCore_ge_MinionTypes_Wizard && lv_itMinion > 1)) {
                     libGame_gf_MinionSpawnMinion(lp_lane, lp_owner, lv_minionType, lv_spawnPoint, true);
                 } else {
                     libGame_gf_MinionSpawnMinion(lp_lane, lp_owner, lv_minionType, lv_spawnPoint, false);
