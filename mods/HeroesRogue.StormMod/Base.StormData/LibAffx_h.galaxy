@@ -2,7 +2,7 @@
 // Heroes Rogue
 // ============================================================
 
-const string libAffx_version = "0.16.0";
+const string libAffx_version = "0.16.1";
 
 const int libAffx_player = 1; // Player ID
 const int libAffx_enemy = 6; // First enemy player ID
@@ -237,7 +237,7 @@ const int libAffx_ownedAffixesIconOverlayWidth = 123;
 const int libAffx_ownedAffixesIconOverlayHeight = 123;
 const int libAffx_ownedAffixesIconOverlayOffsetX = 0;
 const int libAffx_ownedAffixesIconOverlayOffsetY = 0;
-const int libAffx_ownedAffixesNameWidth = 139;
+const int libAffx_ownedAffixesNameWidth = 143;
 const int libAffx_ownedAffixesNameHeight = 45;
 const int libAffx_ownedAffixesNameOffsetX = 0;
 const int libAffx_ownedAffixesNameOffsetY = 75;
@@ -245,7 +245,7 @@ const int libAffx_ownedAffixesCooldownWidth = 100;
 const int libAffx_ownedAffixesCooldownHeight = 100;
 const int libAffx_ownedAffixesCooldownOffsetX = 0;
 const int libAffx_ownedAffixesCooldownOffsetY = 0;
-const int libAffx_ownedAffixesAffixWidth = 134;
+const int libAffx_ownedAffixesAffixWidth = 136;
 const int libAffx_ownedAffixesAffixHeight = 150;
 const int libAffx_optionsCogButtonWidth = 94;
 const int libAffx_optionsCogButtonHeight = 94;

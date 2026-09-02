@@ -1928,6 +1928,7 @@ bool[libCore_gv_bALMaxPlayers + 1] libGame_diabloUsedSouls;
 int[libCore_gv_bALMaxTeams + 1] libGame_extraMinionsRanged;
 int[libCore_gv_bALMaxTeams + 1] libGame_extraMinionsMelee;
 int[libCore_gv_bALMaxTeams + 1] libGame_extraMinionsWizard;
+int[libCore_gv_bALMaxTeams + 1] libGame_extraMinionsRandom;
 bool[libCore_gv_bALMaxTeams + 1] libGame_xpGlobesDisabled;
 bool[libCore_gv_bALMaxTeams + 1] libGame_sharedXPDisabled;
 bool[libCore_gv_bALMaxTeams + 1] libGame_keepFallbackTowers;

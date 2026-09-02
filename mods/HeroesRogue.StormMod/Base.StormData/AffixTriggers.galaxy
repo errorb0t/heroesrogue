@@ -56,7 +56,7 @@ fixed libAffx_LastMomentsCooldown = 300;
 fixed libAffx_VeryBadBargainCooldown = 60;
 fixed libAffx_VeryBadBargainModifier = 0.02;
 fixed libAffx_MacGuffinModifier = 0.25;
-fixed[libCore_gv_bALMaxPlayers + 1][libAffx_WeakPointDuration + 1] libAffx_WeakPointDamageStored;
+fixed[libCore_gv_bALMaxPlayers + 1][4][libAffx_WeakPointDuration + 1] libAffx_WeakPointDamageStored;
 fixed libAffx_InvasionStatsModifier = 0.25;
 fixed libAffx_InvasionSpawnRateDisplay = 0.25;
 fixed libAffx_InvasionExpDisplay = 0.2;
@@ -4123,12 +4123,23 @@ bool libAffx_ArmoredUpUnitChangeOwner (bool testConds, bool runActions) {
 // Weak Point
 // ============================================================
 
+int libAffx_GetWeakPointHeroIndex(unit hero) {
+    if (UnitGetType(hero) == "HeroErik" || UnitGetType(hero) == "HeroChenEarth") {
+        return 3;
+    } else if (UnitGetType(hero) == "HeroBaleog" || UnitGetType(hero) == "RexxarMisha" || UnitGetType(hero) == "HeroChenFire" || UnitGetType(hero) == "HeroDVaMech") {
+        return 2;
+    } else {
+        return 1;
+    }
+}
+
 bool libAffx_WeakPointUnitDamaged (bool testConds, bool runActions) {
     unit eventUnit = EventUnit();
     unit damagingUnit = EventUnitDamageSourceUnit();
     fixed damageValue = EventUnitDamageAmount();
     int player = UnitGetOwner(eventUnit);
     int i;
+    int index = libAffx_GetWeakPointHeroIndex(eventUnit);
     if (testConds) {
         if (!UnitHasBehavior2(eventUnit, "AffixWeakPointController")) {
             return false;
@@ -4139,17 +4150,20 @@ bool libAffx_WeakPointUnitDamaged (bool testConds, bool runActions) {
         if (damageValue <= 0) {
             return false;
         }
+        if (UnitTestState(eventUnit, c_unitStateHallucination)) {
+            return false;
+        }
     }
     for (i = 1; i <= libAffx_WeakPointDuration; i += 1) {
-        libAffx_WeakPointDamageStored[player][i] = MinF(libAffx_WeakPointDamageStored[player][i] + damageValue / 4, 500000);
+        libAffx_WeakPointDamageStored[player][index][i] = MinF(libAffx_WeakPointDamageStored[player][index][i] + damageValue / 4, 500000);
     }
 
     return true;
 }
-bool libAffx_HasAnyWeakPointDamage(int player) {
+bool libAffx_HasAnyWeakPointDamage(int player, int heroIndex) {
     int i;
     for (i = 1; i <= libAffx_WeakPointDuration; i += 1) {
-        if (libAffx_WeakPointDamageStored[player][i] > 0) {
+        if (libAffx_WeakPointDamageStored[player][heroIndex][i] > 0) {
             return true;
         }
     }
@@ -4160,16 +4174,17 @@ bool libAffx_WeakPointUnitBehaviorChange (bool testConds, bool runActions) {
     unit heroUnit = EventUnit();
     int player = UnitGetOwner(heroUnit);
     int index = 1;
+    int heroIndex = libAffx_GetWeakPointHeroIndex(heroUnit);
     if (!runActions) {
         return true;
     }
     while (UnitHasBehavior2(heroUnit, "AffixWeakPointController")) {
-        while (UnitHasBehaviorWithCategoryFlag(heroUnit, c_behaviorCategoryTimeStop) || libAffx_gamePaused || !libAffx_HasAnyWeakPointDamage(player)) {
+        while (UnitHasBehaviorWithCategoryFlag(heroUnit, c_behaviorCategoryTimeStop) || libAffx_gamePaused || !libAffx_HasAnyWeakPointDamage(player, heroIndex)) {
             Wait(0.0625, c_timeGame);
         }
         libAffx_Wait(1, c_timeGame);
-        UnitDamage(heroUnit, "AffixWeakPointDamage", heroUnit, libAffx_WeakPointDamageStored[player][index]);
-        libAffx_WeakPointDamageStored[player][index] = 0;
+        UnitDamage(heroUnit, "AffixWeakPointDamage", heroUnit, libAffx_WeakPointDamageStored[player][heroIndex][index]);
+        libAffx_WeakPointDamageStored[player][heroIndex][index] = 0;
         index += 1;
         if (index > libAffx_WeakPointDuration) {
             index = 1;
@@ -4544,6 +4559,18 @@ bool libAffx_CleaverEffectUsed (bool testConds, bool runActions) {
 
     UnitDamage(caster, "AffixCleaverAoEDamage", target, libCore_gf_GetWeaponDamageForUnit(caster));
     
+    return true;
+}
+
+// ---------------------------------------------------------------
+// Friendly Reinforcements
+// ---------------------------------------------------------------
+bool libAffx_FriendlyReinforcementsAffixAdded (bool testConds, bool runActions) {
+    int stacks = libAffx_EventAffixCountAdded();
+    if (!runActions) {
+        return true;
+    }
+    libGame_extraMinionsRandom[libAffx_teamOrderIndex] += stacks;
     return true;
 }
 
