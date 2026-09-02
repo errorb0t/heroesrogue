@@ -1528,6 +1528,9 @@
             </String>
         </Instances>
         <Instances Id="RegenerativeCore">
+            <Int Int="0">
+                <Field Id="Enabled" />
+            </Int>
             <String String="Assets/Textures/storm_ui_icon_blaze_vanadium_plating.dds">
                 <Field Id="Icon" />
             </String>
@@ -5763,6 +5766,12 @@
             <Int Int="1">
                 <Field Id="SkipCurses" />
             </Int>
+            <String String="DVa">
+                <Field Id="HeroesExcluded" />
+            </String>
+            <String String="1 PurificationProtocol">
+                <Field Id="AffixBehavior" />
+            </String>
             <String String="OncePerGame libAffx_PurificationProtocolOncePerGame">
                 <Field Id="Trigger" />
             </String>
@@ -6535,7 +6544,7 @@
             </String>
         </Instances>
         <Instances Id="Slivan">
-            <Int Int="100">
+            <Int Int="500">
                 <Field Id="Weight" />
             </Int>
             <String String="Assets/Textures/affix_icon_slivan.dds">
@@ -7629,6 +7638,20 @@
                 <Field Id="Behavior" />
             </String>
             <String String="PlayerEffectUsed libAffx_CleaverEffectUsed AffixCleaverAoEImpactSet">
+                <Field Id="Trigger" />
+            </String>
+        </Instances>
+        <Instances Id="FriendlyReinforcements">
+            <Int Int="4">
+                <Field Id="Max" />
+            </Int>
+            <String String="Assets/Textures/affix_icon_promote_c.dds">
+                <Field Id="Icon" />
+            </String>
+            <String String="Epic">
+                <Field Id="Rarity" />
+            </String>
+            <String String="AffixAdded libAffx_FriendlyReinforcementsAffixAdded">
                 <Field Id="Trigger" />
             </String>
         </Instances>

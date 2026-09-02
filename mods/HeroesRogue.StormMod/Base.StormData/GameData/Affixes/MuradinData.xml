@@ -66,6 +66,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <EffectArray value="MuradinUnstoppableAvatarDamage" />
   </CEffectSet>
   <CEffectDamage id="MuradinUnstoppableAvatarDamage" parent="StormSpellPercentDamage">
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
     <Chance value="0" />
     <FlatModifierArray index="MuradinUnstoppableAvatarDamage" Accumulator="MuradinCurrentHealthAccumulator" />
   </CEffectDamage>
