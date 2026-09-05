@@ -2,7 +2,7 @@
 // Heroes Rogue
 // ============================================================
 
-const string libAffx_version = "0.16.1";
+const string libAffx_version = "0.16.2";
 
 const int libAffx_player = 1; // Player ID
 const int libAffx_enemy = 6; // First enemy player ID
@@ -297,6 +297,14 @@ const int libAffx_gameoverStatsMiddleOffsetX = 0;
 const int libAffx_gameoverStatsMiddleOffsetY = 170;
 const int libAffx_gameoverStatsRightOffsetX = 600;
 const int libAffx_gameoverStatsRightOffsetY = 170;
+const int libAffx_gameoverExitFrameWidth = 700;
+const int libAffx_gameoverExitFrameHeight = 300;
+const int libAffx_gameoverExitButtonWidth = 250;
+const int libAffx_gameoverExitButtonHeight = 95;
+const int libAffx_gameoverExitButtonYesOffsetX = -140;
+const int libAffx_gameoverExitButtonYesOffsetY = 70;
+const int libAffx_gameoverExitButtonNoOffsetX = 140;
+const int libAffx_gameoverExitButtonNoOffsetY = 70;
 const int libAffx_achievementsLabelWidth = 500;
 const int libAffx_achievementsLabelHeight = 50;
 const int libAffx_achievementsLabelOffsetX = 0;
@@ -601,7 +609,7 @@ fixed libAffx_uncommonToRare      =   0.125;
 fixed libAffx_uncommonToEpic      =   0.075;
 fixed libAffx_uncommonToLegendary =   0.01;
 
-fixed libAffx_rareToEpic          =   0.15;
+fixed libAffx_rareToEpic          =   0.20;
 fixed libAffx_rareToLegendary     =   0.015;
 
 fixed libAffx_epicToLegendary     =   0.02;
@@ -731,6 +739,7 @@ int libAffx_dialogControls;
 int libAffx_dialogInfo;
 
 libAffx_DialogGameover libAffx_dialogGameover;
+libAffx_DialogOptions libAffx_dialogGameoverExit;
 libAffx_DialogAchievements libAffx_dialogAchievements;
 libAffx_DialogOptions libAffx_dialogAchievementsReset;
 
@@ -840,6 +849,7 @@ bool libAffx_IsAffixSelectionDialogVisible();
 bool libAffx_IsOwnedAffixesDialogVisible();
 bool libAffx_IsOptionsDialogVisible();
 bool libAffx_IsGameoverDialogVisible();
+bool libAffx_IsGameoverExitDialogVisible();
 bool libAffx_IsAchievementsDialogVisible();
 bool libAffx_IntToBoolean(int value);
 unit libAffx_GetPlayerDVaMech(int player);
@@ -869,6 +879,7 @@ void libAffx_ShowAchievementsDialog(bool show);
 void libAffx_CreateGameoverDialog();
 void libAffx_UpdateGameoverDialog();
 void libAffx_ShowGameoverDialog(bool show);
+void libAffx_ShowGameoverExitDialog(bool show);
 void libAffx_CreateOptionsDialog();
 void libAffx_UpdateOptionsDialog();
 void libAffx_ShowOptionsDialog(bool show);
