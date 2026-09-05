@@ -21,7 +21,7 @@ Param/Expression/AffixCurseSkipsMultiple=<n/><n/><c val="FFDE36">Skips the next 
 Param/Expression/AffixCurseSkipsEachStack=<n/><n/><c val="FFDE36">Each stack skips the next Curse.</c>
 Param/Expression/AffixCurseSkipsMultipleEachStack=<n/><n/><c val="FFDE36">Each stack skips the next ~A~ Curses.</c>
 Param/Expression/Mythic=<n/><n/><c val="A84987">Round 1</c>: ~A~<n/><n/><c val="A84987">Round 5</c>: ~B~<n/><n/><c val="A84987">Round 9</c>: ~C~<n/><n/><c val="A84987">Round 13</c>: ~D~<n/><n/><c val="A84987">Round 17</c> and beyond: ~E~
-Param/Expression/AffixGameoverStats1=Total boons: <c val="#TooltipNumbers">~A~</c><n/>    - <c val="ffffff">Commons:</c> <c val="#TooltipNumbers">~C~</c><n/>    - <c val="1eff00">Uncommons:</c> <c val="#TooltipNumbers">~D~</c><n/>    - <c val="0070dd">Rares:</c> <c val="#TooltipNumbers">~E~</c><n/>    - <c val="a335ee">Epics:</c> <c val="#TooltipNumbers">~F~</c><n/>    - <c val="ff8000">Legendaries:</c> <c val="#TooltipNumbers">~G~</c><n/>    - <c val="e6cc80">Starters:</c> <c val="#TooltipNumbers">~H~</c><n/>    - <c val="01ffff">Milestones:</c> <c val="#TooltipNumbers">~I~</c><n/>Total curses: <c val="#TooltipNumbers">~B~</c><n/>    - <c val="c52020">Curses:</c> <c val="#TooltipNumbers">~J~</c><n/>    - <c val="9B2400">Challenges:</c> <c val="#TooltipNumbers">~K~</c><n/>    - <c val="A84987">Mythics:</c> <c val="#TooltipNumbers">~L~</c>
+Param/Expression/AffixGameoverStats1=<c val="#TooltipNumbers">~M~</c><n/>Total boons: <c val="#TooltipNumbers">~A~</c><n/>    - <c val="ffffff">Commons:</c> <c val="#TooltipNumbers">~C~</c><n/>    - <c val="1eff00">Uncommons:</c> <c val="#TooltipNumbers">~D~</c><n/>    - <c val="0070dd">Rares:</c> <c val="#TooltipNumbers">~E~</c><n/>    - <c val="a335ee">Epics:</c> <c val="#TooltipNumbers">~F~</c><n/>    - <c val="ff8000">Legendaries:</c> <c val="#TooltipNumbers">~G~</c><n/>    - <c val="e6cc80">Starters:</c> <c val="#TooltipNumbers">~H~</c><n/>    - <c val="01ffff">Milestones:</c> <c val="#TooltipNumbers">~I~</c><n/>Total curses: <c val="#TooltipNumbers">~B~</c><n/>    - <c val="c52020">Curses:</c> <c val="#TooltipNumbers">~J~</c><n/>    - <c val="9B2400">Challenges:</c> <c val="#TooltipNumbers">~K~</c><n/>    - <c val="A84987">Mythics:</c> <c val="#TooltipNumbers">~L~</c>
 Param/Expression/AffixGameoverStats2=Boon rerolls used: <c val="#TooltipNumbers">~A~</c><n/>Curse rerolls used: <c val="#TooltipNumbers">~B~</c><n/>Bans used: <c val="#TooltipNumbers">~C~</c><n/>Minions killed: <c val="#TooltipNumbers">~F~</c><n/>Mercenaries captured: <c val="#TooltipNumbers">~G~</c><n/>Regeneration globes: <c val="#TooltipNumbers">~H~</c><n/>Objectives won: <c val="#TooltipNumbers">~I~</c><n/>Objectives lost: <c val="#TooltipNumbers">~J~</c><n/>Curses skipped: <c val="#TooltipNumbers">~D~</c><n/>Curses swapped to boons: <c val="#TooltipNumbers">~E~</c><n/>Most common ally: <c val="#TooltipNumbers">~K~ (~M~)</c><n/>Most common enemy: <c val="#TooltipNumbers">~L~ (~N~)</c>
 Param/Expression/AffixGameoverStats3=Game time: <c val="#TooltipNumbers">~L~</c><n/>Total damage dealt: <c val="#TooltipNumbers">~A~</c><n/>Spell damage dealt: <c val="#TooltipNumbers">~B~</c><n/>Physical damage dealt: <c val="#TooltipNumbers">~C~</c><n/>Healing: <c val="#TooltipNumbers">~D~</c><n/>Damage taken: <c val="#TooltipNumbers">~E~</c><n/>Experience: <c val="#TooltipNumbers">~F~</c><n/>Takedowns: <c val="#TooltipNumbers">~G~</c><n/>Kills: <c val="#TooltipNumbers">~H~</c><n/>Assists: <c val="#TooltipNumbers">~I~</c><n/>Deaths: <c val="#TooltipNumbers">~J~</c><n/>KDA Ratio: <c val="#TooltipNumbers">~K~</c>
 Param/Expression/AchievementEarned=Earned the achievement: <c val="FFDE36">~A~~B~</c>
@@ -241,6 +241,7 @@ LoadingScreen/Help10=Boons and curses up to level 10 are obtained next game when
 LoadingScreen/Help11=Challenge curses are difficult to deal with but offer great rewards.
 LoadingScreen/Help12=Enemy stats scale over time on Heroic difficulty or higher.
 LoadingScreen/Help12=You win by getting to Round 20 and destroying the enemy Core! You can stop or continue into an endless run afterwards.
+LoadingScreen/Help13=Curses will no longer swap to boons after Round 20 when completing objectives on Mythic difficulty.
 
 UI/MapLoadingScreen/LibAffx/Description1=Gain powerful, permanent Boons throughout your run to increase your and your team's strength!
 UI/MapLoadingScreen/LibAffx/Description2=The game becomes more difficult over time as you obtain dangerous Curses.
@@ -289,6 +290,7 @@ Label/Name/Victory=<c val="1eff00">Victory!</c>
 Label/Name/GameOver=<c val="c52020">Game over!</c>
 Label/Name/Achievements=Achievements
 Label/Name/ResetAchievements=Reset all Achievements?<n/><n/><c val="c52020">This cannot be undone!</c>
+Label/Name/GameoverExit=Are you sure you wish to exit?<n/><n/><c val="c52020">All progress will be lost.</c>
 
 Message/AchievementsReset=<c val="FFDE36">All achievements have been reset!</c>
 Message/CurseToBoon=<c val="FFDE36">The next Curse you obtain will become a Boon!</c>
@@ -345,8 +347,8 @@ Button/Name/Reroll=Reroll
 Button/Name/OptionsAchievements=Achievements
 Button/Name/OptionsRestart=Restart the Run
 Button/Name/OptionsReturn=Return to Game
-Button/Name/OptionsRestartYes=Yes
-Button/Name/OptionsRestartNo=No
+Button/Name/Yes=Yes
+Button/Name/No=No
 Button/Name/PreviousPage=Previous
 Button/Name/NextPage=Next
 Button/Name/Normal=Normal
@@ -354,7 +356,7 @@ Button/Name/Heroic=Heroic
 Button/Name/Mythic=Mythic
 Button/Tooltip/Normal=No changes.
 Button/Tooltip/Heroic=Enemy Heroes gain increased stats over time:<n/>• <c val="#TooltipNumbers">+4%</c> damage, maximum Health, maximum Mana, Health regeneration, and Mana regeneration per round, stacking multiplicatively.
-Button/Tooltip/Mythic=ALL enemies gain significantly increased stats over time:<n/>• <c val="#TooltipNumbers">+4%</c> (<c val="#TooltipNumbers">+1%</c> per round) damage, maximum Health, maximum Mana, Health regeneration, and Mana regeneration, multiplied by the number of rounds.<n/>• <c val="#TooltipNumbers">+1%</c> enemy Experience gain per round.<n/><n/>Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards.
+Button/Tooltip/Mythic=ALL enemies gain significantly increased stats over time:<n/>• <c val="#TooltipNumbers">+4%</c> (<c val="#TooltipNumbers">+1%</c> per round) damage, maximum Health, maximum Mana, Health regeneration, and Mana regeneration, multiplied by the number of rounds.<n/>• <c val="#TooltipNumbers">+1%</c> enemy Experience gain per round.<n/><n/>Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards.<n/><n/>After <c val="#TooltipNumbers">Round 20</c>, curses will no longer swap to boons.
 Button/Name/DoNothing=Do Nothing
 Button/SimpleDisplayText/DoNothing=Does nothing.
 Button/Tooltip/DoNothing=Does nothing.
@@ -370,7 +372,7 @@ Affix/Name/DifficultyHeroic=Heroic
 Affix/Tooltip/DifficultyHeroic=Enemy Heroes gain increased stats over time:<n/>• <c val="#TooltipNumbers">+4%</c> damage, maximum Health, maximum Mana, Health regeneration, and Mana regeneration per round, stacking multiplicatively.
 Affix/Tooltip/Append/DifficultyHeroic=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 Affix/Name/DifficultyMythic=Mythic
-Affix/Tooltip/DifficultyMythic=Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards.<n/><n/>ALL enemies gain significantly increased stats over time:<n/>• <c val="#TooltipNumbers">+4%</c> (<c val="#TooltipNumbers">+1%</c> per round) damage, maximum Health, maximum Mana, Health regeneration, and Mana regeneration, multiplied by the number of rounds.<n/>• <c val="#TooltipNumbers">+1%</c> enemy Experience gain per round.
+Affix/Tooltip/DifficultyMythic=Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards.<n/><n/>ALL enemies gain significantly increased stats over time:<n/>• <c val="#TooltipNumbers">+4%</c> (<c val="#TooltipNumbers">+1%</c> per round) damage, maximum Health, maximum Mana, Health regeneration, and Mana regeneration, multiplied by the number of rounds.<n/>• <c val="#TooltipNumbers">+1%</c> enemy Experience gain per round.<n/><n/>After <c val="#TooltipNumbers">Round 20</c>, curses will no longer swap to boons.
 Affix/Tooltip/Append/DifficultyMythic=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c><n/>XP boost: <c val="#TooltipNumbers"><d ref="($GalaxyVar:libAffx_mythicDifficultyXPModifier$)*100" precision="0"/>%</c>
 Affix/Name/AffixNone=???
 Affix/Tooltip/AffixNone=???
@@ -396,9 +398,12 @@ Affix/Tooltip/Append/NazeeboGrowingColony=
 Affix/Name/NazeeboPowerfulSpiders=Powerful Spiders
 Affix/Tooltip/NazeeboPowerfulSpiders=Increases Corpse Spiders's damage by <c val="#TooltipNumbers">20%</c> <c val="747A84">(+20% per stack)</c>.
 Affix/Tooltip/Append/NazeeboPowerfulSpiders=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,WitchDoctorCorpseSpidersWeaponDamage,MultiplicativeModifierArray[NazeeboPowerfulSpiders].Modifier*100" player="1" precision="0"/>%</c>
-Affix/Name/NazeeboMasterWebweaver=Master Webweaver
-Affix/Tooltip/NazeeboMasterWebweaver=Zombies and Toads summon a Corpse Spider on death.
-Affix/Tooltip/Append/NazeeboMasterWebweaver=
+Affix/Name/NazeeboDiseasedZombies=Diseased Zombies
+Affix/Tooltip/NazeeboDiseasedZombies=Zombies have a <c val="#TooltipNumbers">50%</c> chance to summon a Corpse Spider on death.
+Affix/Tooltip/Append/NazeeboDiseasedZombies=
+Affix/Name/NazeeboDiseasedToads=Diseased Toads
+Affix/Tooltip/NazeeboDiseasedToads=Toads have a <c val="#TooltipNumbers">50%</c> chance to summon a Corpse Spider on death.
+Affix/Tooltip/Append/NazeeboDiseasedToads=
 Affix/Name/NazeeboPowerRitual=Power Ritual
 Affix/Tooltip/NazeeboPowerRitual=Basic Attacks deal bonus damage equal to your Voodoo Ritual stacks and splash for <c val="#TooltipNumbers"><d ref="Accumulator,NazeeboPowerRitualSplashAccumulator,Scale*100"precision="1"/>%</c> damage.
 Affix/Tooltip/Append/NazeeboPowerRitual=
@@ -436,7 +441,7 @@ Affix/Name/NazeeboTouchofPower=Touch of Power
 Affix/Tooltip/NazeeboTouchofPower=Every <c val="#TooltipNumbers">3rd</c> Basic Attack against the same enemy Hero grants <c val="#TooltipNumbers">2</c> stacks of Voodoo Ritual.
 Affix/Tooltip/Append/NazeeboTouchofPower=
 Affix/Name/NazeeboToadMaster=Toad Master
-Affix/Tooltip/NazeeboToadMaster=Gain <c val="#TooltipNumbers">Pandemic</c>, <c val="#TooltipNumbers">Toads of Hugeness</c>, and <c val="#TooltipNumbers">Guardian Toads</c>.<n/><n/><c val="#TooltipNumbers">Pandemic's</c> first Quest reward provides <c val="#TooltipNumbers">2</c> additional toads.<n/>Increases <c val="#TooltipNumbers">Toad of Hugeness's</c> maximum damage by <c val="#TooltipNumbers">100%</c>.<n/>Increases <c val="#TooltipNumbers">Guardian Toads's</c> Armor by <c val="#TooltipNumbers">10</c>.
+Affix/Tooltip/NazeeboToadMaster=Gain <c val="#TooltipNumbers">Pandemic</c>, <c val="#TooltipNumbers">Toads of Hugeness</c>, and <c val="#TooltipNumbers">Guardian Toads</c>.<n/><n/><c val="#TooltipNumbers">Pandemic's</c> second Quest reward provides <c val="#TooltipNumbers">2</c> additional toads.<n/>Increases <c val="#TooltipNumbers">Toad of Hugeness's</c> maximum damage by <c val="#TooltipNumbers">100%</c>.<n/>Increases <c val="#TooltipNumbers">Guardian Toads's</c> Armor by <c val="#TooltipNumbers">10</c>.
 Affix/Tooltip/Append/NazeeboToadMaster=
 Affix/Name/ReinforcedWalls=Reinforced Walls
 Affix/Tooltip/ReinforcedWalls=Increases maximum Health of allied Structures by <c val="#TooltipNumbers">20%</c> <c val="747A84">(+20% per stack)</c>.

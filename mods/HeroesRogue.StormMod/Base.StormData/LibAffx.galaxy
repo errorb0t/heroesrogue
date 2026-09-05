@@ -1096,6 +1096,12 @@ bool libAffx_IsGameoverDialogVisible() {
     }
     return false;
 }
+bool libAffx_IsGameoverExitDialogVisible() {
+    if (DialogIsVisible(libAffx_dialogGameoverExit.dialog, libAffx_player)) {
+        return true;
+    }
+    return false;
+}
 bool libAffx_IsAchievementsDialogVisible() {
     if (DialogIsVisible(libAffx_dialogAchievements.dialog, libAffx_player)) {
         return true;
@@ -1311,11 +1317,11 @@ void libAffx_CreateAchievementsDialog() {
         c_anchorCenter, libAffx_achievementsResetLabelOffsetX, libAffx_achievementsResetLabelOffsetY, ColorWithAlpha(0, 0, 0, 0), false);
     libAffx_dialogAchievementsReset.option[1].button = libAffx_CreateDialogControlButton(libAffx_dialogAchievementsReset.dialog);
     libAffx_SetDialogControlSize(libAffx_dialogAchievementsReset.option[1].button, libAffx_optionsRestartButtonWidth, libAffx_optionsRestartButtonHeight);
-    libAffx_SetDialogControlText(libAffx_dialogAchievementsReset.option[1].button, StringExternal("Button/Name/OptionsRestartYes"));
+    libAffx_SetDialogControlText(libAffx_dialogAchievementsReset.option[1].button, StringExternal("Button/Name/Yes"));
     libAffx_SetDialogControlPosition(libAffx_dialogAchievementsReset.option[1].button, c_anchorCenter, libAffx_optionsRestartButtonYesOffsetX, libAffx_optionsRestartButtonYesOffsetY);
     libAffx_dialogAchievementsReset.option[2].button = libAffx_CreateDialogControlButton(libAffx_dialogAchievementsReset.dialog);
     libAffx_SetDialogControlSize(libAffx_dialogAchievementsReset.option[2].button, libAffx_optionsRestartButtonWidth, libAffx_optionsRestartButtonHeight);
-    libAffx_SetDialogControlText(libAffx_dialogAchievementsReset.option[2].button, StringExternal("Button/Name/OptionsRestartNo"));
+    libAffx_SetDialogControlText(libAffx_dialogAchievementsReset.option[2].button, StringExternal("Button/Name/No"));
     libAffx_SetDialogControlPosition(libAffx_dialogAchievementsReset.option[2].button, c_anchorCenter, libAffx_optionsRestartButtonNoOffsetX, libAffx_optionsRestartButtonNoOffsetY);
 
 }
@@ -1399,6 +1405,22 @@ void libAffx_CreateGameoverDialog() {
         libAffx_gameoverStatsWidth, libAffx_gameoverStatsHeight, c_anchorCenter, libAffx_gameoverStatsMiddleOffsetX, libAffx_gameoverStatsMiddleOffsetY, ColorWithAlpha(0, 0, 0, 0), false);
     libAffx_dialogGameover.rightStats = libAffx_CreateDialogControlLabel(libAffx_dialogGameover.dialog, StringExternal("Param/Expression/AffixGameoverStats3"), "Affix_GameoverStats",
         libAffx_gameoverStatsWidth, libAffx_gameoverStatsHeight, c_anchorCenter, libAffx_gameoverStatsRightOffsetX, libAffx_gameoverStatsRightOffsetY, ColorWithAlpha(0, 0, 0, 0), false);
+    
+    libAffx_dialogGameoverExit.dialog = DialogCreate(500, 500, c_anchorCenter, 0, 0, true);
+    DialogSetFullscreen(libAffx_dialogGameoverExit.dialog, true);
+    DialogSetImageVisible(libAffx_dialogGameoverExit.dialog, false);
+    libAffx_dialogGameoverExit.frame = DialogControlCreateFromTemplate(libAffx_dialogGameoverExit.dialog, c_triggerControlTypeImage, "StandardTemplates/StandardContextMenuFrame");
+    libAffx_SetDialogControlSize(libAffx_dialogGameoverExit.frame, libAffx_gameoverExitFrameWidth, libAffx_gameoverExitFrameHeight);
+    libAffx_SetDialogControlPosition(libAffx_dialogGameoverExit.frame, c_anchorCenter, 0, 0);
+    libAffx_dialogGameoverExit.label = libAffx_CreateDialogControlLabel(libAffx_dialogGameoverExit.dialog, StringExternal("Label/Name/GameoverExit"), "Affix_Dialog", libAffx_optionsRestartLabelWidth, libAffx_optionsRestartLabelHeight, c_anchorCenter, libAffx_optionsRestartLabelOffsetX, libAffx_optionsRestartLabelOffsetY, ColorWithAlpha(0, 0, 0, 0), false);
+    libAffx_dialogGameoverExit.option[1].button = libAffx_CreateDialogControlButton(libAffx_dialogGameoverExit.dialog);
+    libAffx_SetDialogControlSize(libAffx_dialogGameoverExit.option[1].button, libAffx_gameoverExitButtonWidth, libAffx_gameoverExitButtonHeight);
+    libAffx_SetDialogControlText(libAffx_dialogGameoverExit.option[1].button, StringExternal("Button/Name/Yes"));
+    libAffx_SetDialogControlPosition(libAffx_dialogGameoverExit.option[1].button, c_anchorCenter, libAffx_gameoverExitButtonYesOffsetX, libAffx_gameoverExitButtonYesOffsetY);
+    libAffx_dialogGameoverExit.option[2].button = libAffx_CreateDialogControlButton(libAffx_dialogGameoverExit.dialog);
+    libAffx_SetDialogControlSize(libAffx_dialogGameoverExit.option[2].button, libAffx_gameoverExitButtonWidth, libAffx_gameoverExitButtonHeight);
+    libAffx_SetDialogControlText(libAffx_dialogGameoverExit.option[2].button, StringExternal("Button/Name/No"));
+    libAffx_SetDialogControlPosition(libAffx_dialogGameoverExit.option[2].button, c_anchorCenter, libAffx_gameoverExitButtonNoOffsetX, libAffx_gameoverExitButtonNoOffsetY);
 }
 void libAffx_UpdateGameoverDialog() {
     int takedowns = libAffx_BankGetStats("Takedowns") + FixedToInt(libGame_gv_scoreValues[libAffx_player].lv_takedowns);
@@ -1466,6 +1488,7 @@ void libAffx_UpdateGameoverDialog() {
     if (deaths > 0) {
         kda = FixedToInt(takedowns / deaths);
     }
+    TextExpressionSetToken("Param/Expression/AffixGameoverStats1", "M", StringToText(StringCase(libAffx_GetCatalogDefaultValue("Hero," + libCore_gf_GetHeroFromIndex(libAffx_playersHeroIndex[libAffx_player]) + ",HyperlinkId"), true)));
     TextExpressionSetToken("Param/Expression/AffixGameoverStats1", "A", IntToText(boons));
     TextExpressionSetToken("Param/Expression/AffixGameoverStats1", "C", IntToText(boonsRarity[libAffx_rarityCommon]));
     TextExpressionSetToken("Param/Expression/AffixGameoverStats1", "D", IntToText(boonsRarity[libAffx_rarityUncommon]));
@@ -1515,6 +1538,9 @@ void libAffx_ShowGameoverDialog(bool show) {
     libAffx_ShowBackdrop(show);
     libAffx_Pause(show);
 }
+void libAffx_ShowGameoverExitDialog(bool show) {
+    libAffx_SetDialogVisible(libAffx_dialogGameoverExit.dialog, show);
+}
 
 void libAffx_CreateOptionsDialog() {
     int i;
@@ -1543,11 +1569,11 @@ void libAffx_CreateOptionsDialog() {
     libAffx_dialogOptionsRestart.label = libAffx_CreateDialogControlLabel(libAffx_dialogOptionsRestart.dialog, StringExternal("Label/Name/OptionsRestart"), "Affix_Dialog", libAffx_optionsRestartLabelWidth, libAffx_optionsRestartLabelHeight, c_anchorCenter, libAffx_optionsRestartLabelOffsetX, libAffx_optionsRestartLabelOffsetY, ColorWithAlpha(0, 0, 0, 0), false);
     libAffx_dialogOptionsRestart.option[1].button = libAffx_CreateDialogControlButton(libAffx_dialogOptionsRestart.dialog);
     libAffx_SetDialogControlSize(libAffx_dialogOptionsRestart.option[1].button, libAffx_optionsRestartButtonWidth, libAffx_optionsRestartButtonHeight);
-    libAffx_SetDialogControlText(libAffx_dialogOptionsRestart.option[1].button, StringExternal("Button/Name/OptionsRestartYes"));
+    libAffx_SetDialogControlText(libAffx_dialogOptionsRestart.option[1].button, StringExternal("Button/Name/Yes"));
     libAffx_SetDialogControlPosition(libAffx_dialogOptionsRestart.option[1].button, c_anchorCenter, libAffx_optionsRestartButtonYesOffsetX, libAffx_optionsRestartButtonYesOffsetY);
     libAffx_dialogOptionsRestart.option[2].button = libAffx_CreateDialogControlButton(libAffx_dialogOptionsRestart.dialog);
     libAffx_SetDialogControlSize(libAffx_dialogOptionsRestart.option[2].button, libAffx_optionsRestartButtonWidth, libAffx_optionsRestartButtonHeight);
-    libAffx_SetDialogControlText(libAffx_dialogOptionsRestart.option[2].button, StringExternal("Button/Name/OptionsRestartNo"));
+    libAffx_SetDialogControlText(libAffx_dialogOptionsRestart.option[2].button, StringExternal("Button/Name/No"));
     libAffx_SetDialogControlPosition(libAffx_dialogOptionsRestart.option[2].button, c_anchorCenter, libAffx_optionsRestartButtonNoOffsetX, libAffx_optionsRestartButtonNoOffsetY);
 }
 void libAffx_UpdateOptionsDialog() {
@@ -1957,7 +1983,9 @@ bool libAffx_AchievementsClicked_Func (bool testConds, bool runActions) {
 bool libAffx_GameoverButtonsClicked_Func (bool testConds, bool runActions) {
     int eventDialog = EventDialogControl();
     if (testConds) {
-        if (eventDialog != libAffx_dialogGameover.continueButton && eventDialog != libAffx_dialogGameover.restartButton && eventDialog != libAffx_dialogGameover.exitButton) {
+        if (eventDialog != libAffx_dialogGameover.continueButton && eventDialog != libAffx_dialogGameover.restartButton &&
+            eventDialog != libAffx_dialogGameover.exitButton && eventDialog != libAffx_dialogGameoverExit.option[1].button &&
+            eventDialog != libAffx_dialogGameoverExit.option[2].button) {
             return false;
         }
         if (libAffx_IsOptionsDialogVisible() || libAffx_IsOwnedAffixesDialogVisible() || libAffx_IsAchievementsDialogVisible()) {
@@ -1967,12 +1995,18 @@ bool libAffx_GameoverButtonsClicked_Func (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    if (eventDialog == libAffx_dialogGameover.continueButton) {
+    if (eventDialog == libAffx_dialogGameover.continueButton && !libAffx_IsGameoverExitDialogVisible()) {
         libAffx_ShowGameoverDialog(false);
-    } else if (eventDialog == libAffx_dialogGameover.restartButton) {
+    } else if (eventDialog == libAffx_dialogGameover.restartButton && !libAffx_IsGameoverExitDialogVisible()) {
         libAffx_ShowOptionsRestartDialog(true);
     } else if (eventDialog == libAffx_dialogGameover.exitButton) {
+        libAffx_ShowGameoverExitDialog(true);
+    } else if (eventDialog == libAffx_dialogGameoverExit.option[1].button) {
+        libAffx_ResetBank();
+        libAffx_ResetBankStats();
         KickFromGame(PlayerGroupAll());
+    } else if (eventDialog == libAffx_dialogGameoverExit.option[2].button) {
+        libAffx_ShowGameoverExitDialog(false);
     }
     return true;
 }
@@ -2120,6 +2154,7 @@ bool libAffx_OptionsRestartClickedTrigger_Func (bool testConds, bool runActions)
         libAffx_ShowOptionsRestartDialog(true);
     } else if (eventDialog == libAffx_dialogOptionsRestart.option[1].button) {
         libAffx_ResetBank();
+        libAffx_ResetBankStats();
         GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialveteran.stormmap");
         KickFromGame(PlayerGroupAll());
     } else if (eventDialog == libAffx_dialogOptionsRestart.option[2].button) {
@@ -2143,6 +2178,10 @@ bool libAffx_OptionsClickedTrigger_Func (bool testConds, bool runActions) {
         return true;
     }
     if (eventDialog == libAffx_dialogControlOptionsButton) {
+        if (!libAffx_IsOptionsDialogVisible()) {
+            libAffx_ShowOptionsRestartDialog(false);
+            libAffx_ShowGameoverExitDialog(false);
+        }
         libAffx_ShowAchievementsDialog(false);
         libAffx_ShowOptionsDialog(!libAffx_IsOptionsDialogVisible());
     } else if (eventDialog == libAffx_dialogControlOptionsSpeedUpGates && !libAffx_IsAchievementsDialogVisible()) {
@@ -2166,7 +2205,7 @@ bool libAffx_ShowAffixesClickedTrigger_Func (bool testConds, bool runActions) {
         if (EventDialogControl() != libAffx_dialogControlOwnedAffixesButton) {
             return false;
         }
-        if (libAffx_IsOptionsDialogVisible() || !libAffx_bankLoaded) {
+        if (libAffx_IsOptionsDialogVisible() || libAffx_IsGameoverExitDialogVisible() || !libAffx_bankLoaded) {
             return false;
         }
     }
@@ -4201,6 +4240,7 @@ bool libAffx_ResetCommandTrigger_Func (bool testConds, bool runActions) {
 
     libAffx_DisplayChatMessage(StringExternal("Message/ResetCommand"));
     libAffx_ResetBank();
+    libAffx_ResetBankStats();
     GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialveteran.stormmap");
     KickFromGame(PlayerGroupAll());
 
@@ -4701,6 +4741,9 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
     libAffx_SetDialogControlText(libAffx_dialogControlRunLabel, StringToText(IntToString(libAffx_currentRun) + libAffx_GetDifficultyLabel(libAffx_difficulty)));
     if (libAffx_currentRun > libAffx_winningRound) {
         libAffx_SetDialogControlColor(libAffx_dialogControlRunLabel, Color(100, 84, 20));
+        if (libAffx_difficulty == libAffx_difficultyMythic) {
+            libAffx_maxAffixesFromObjectives = 0;
+        }
     }
     
     if (libAffx_debug_disableHeroSelection) {
@@ -5446,6 +5489,14 @@ void libAffx_InitVariables () {
         libAffx_dialogAchievementsReset.option[i].button = c_invalidDialogControlId;
         libAffx_dialogAchievementsReset.option[i].checkbox = c_invalidDialogControlId;
         libAffx_dialogAchievementsReset.option[i].label = c_invalidDialogControlId;
+    }
+    libAffx_dialogGameoverExit.dialog = c_invalidDialogId;
+    libAffx_dialogGameoverExit.frame = c_invalidDialogControlId;
+    libAffx_dialogGameoverExit.label = c_invalidDialogControlId;
+    for (i = 1; i <= libAffx_maxOptionDialogs; i += 1) {
+        libAffx_dialogGameoverExit.option[i].button = c_invalidDialogControlId;
+        libAffx_dialogGameoverExit.option[i].checkbox = c_invalidDialogControlId;
+        libAffx_dialogGameoverExit.option[i].label = c_invalidDialogControlId;
     }
 
     if (libAffx_DEBUG) {
