@@ -8,7 +8,7 @@ bool libAffx_NazeeboZombieHandlerAllowFriendlies = false;
 fixed libAffx_NazeeboHardyBonesModifier;
 int libAffx_NazeeboManyRitualsTotal;
 int libAffx_NazeeboRitualOfBoonsIndex;
-fixed libAffx_NazeeboMasterWebweaverChance = 1.0;
+fixed libAffx_NazeeboMasterWebweaverChance = 0.5;
 // ---------------------------------------------------------------
 // Nazeebo - Add an empty talent when all talents on a tier are unavailable
 // ---------------------------------------------------------------
@@ -23,9 +23,9 @@ bool libAffx_NazeeboTalent7 (bool testConds, bool runActions) {
     return true;
 }
 // ---------------------------------------------------------------
-// Master Webweaver
+// Diseased Zombies
 // ---------------------------------------------------------------
-bool libAffx_NazeeboMasterWebweaverUnitDied (bool testConds, bool runActions) {
+bool libAffx_NazeeboDiseasedZombiesUnitDied (bool testConds, bool runActions) {
     unit deadUnit = EventUnit();
     int owner = UnitGetOwner(deadUnit);
     int random;
@@ -33,10 +33,34 @@ bool libAffx_NazeeboMasterWebweaverUnitDied (bool testConds, bool runActions) {
         if (owner != libAffx_player) {
             return false;
         }
-        if (UnitGetType(deadUnit) != "WitchDoctorZombieWallUnit" && UnitGetType(deadUnit) != "WitchDoctorZombieWallDeadRushTalentUnit"&& UnitGetType(deadUnit) != "WitchDoctorPlagueofToadsUnit") {
+        if (UnitGetType(deadUnit) != "WitchDoctorZombieWallUnit" && UnitGetType(deadUnit) != "WitchDoctorZombieWallDeadRushTalentUnit") {
             return false;
         }
         if (PlayerHasTalent(owner, "WitchDoctorDeadRush") && UnitGetType(deadUnit) == "WitchDoctorZombieWallUnit") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    } 
+    random = RandomInt(1, 100);
+    if (random <= libAffx_NazeeboMasterWebweaverChance * 100) {
+        UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "NazeeboCorpseSpidersSpawnImpactSet", deadUnit);
+    }
+    return true;
+}
+// ---------------------------------------------------------------
+// Diseased Toads
+// ---------------------------------------------------------------
+bool libAffx_NazeeboDiseasedToadsUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int owner = UnitGetOwner(deadUnit);
+    int random;
+    if (testConds) {
+        if (owner != libAffx_player) {
+            return false;
+        }
+        if (UnitGetType(deadUnit) != "WitchDoctorPlagueofToadsUnit") {
             return false;
         }
     }
