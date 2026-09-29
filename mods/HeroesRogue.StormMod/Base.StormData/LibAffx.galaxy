@@ -1471,14 +1471,14 @@ void libAffx_UpdateGameoverDialog() {
         curses += libAffx_affixes[affix].count;
         cursesRarity[libAffx_affixes[affix].rarity] += libAffx_affixes[affix].count;
     }
-    for (i = 1; i <= 90; i += 1) {
+    for (i = 1; i <= libAffx_maxHeroes; i += 1) {
         heroCounter[libAffx_teamOrderIndex][i] = libAffx_BankGetStats("HeroCounterOrder_" + libCore_gf_GetHeroFromIndex(i)) + libAffx_heroCounter[libAffx_teamOrderIndex][i];
         if (heroCounter[libAffx_teamOrderIndex][i] > mostHeroCounter[libAffx_teamOrderIndex]) {
             mostHeroCounter[libAffx_teamOrderIndex] = heroCounter[libAffx_teamOrderIndex][i];
             mostHeroIndex[libAffx_teamOrderIndex] = i;
         }
     }
-    for (i = 1; i <= 90; i += 1) {
+    for (i = 1; i <= libAffx_maxHeroes; i += 1) {
         heroCounter[libAffx_teamChaosIndex][i] = libAffx_BankGetStats("HeroCounterChaos_" + libCore_gf_GetHeroFromIndex(i)) + libAffx_heroCounter[libAffx_teamChaosIndex][i];
         if (heroCounter[libAffx_teamChaosIndex][i] > mostHeroCounter[libAffx_teamChaosIndex]) {
             mostHeroCounter[libAffx_teamChaosIndex] = heroCounter[libAffx_teamChaosIndex][i];
@@ -3331,10 +3331,10 @@ void libAffx_SaveBank() {
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSectionStats, "CursesSkipped", BankValueGetAsInt(BankLastCreated(), libAffx_BankSectionStats, "CursesSkipped") + libAffx_cursesSkipped);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSectionStats, "CursesSwapped", BankValueGetAsInt(BankLastCreated(), libAffx_BankSectionStats, "CursesSwapped") + libAffx_cursesSwapped);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSectionStats, "GameTime", BankValueGetAsInt(BankLastCreated(), libAffx_BankSectionStats, "GameTime") + FixedToInt(TimerGetElapsed(libGame_gv_gameTimer)));
-    for (i = 1; i <= 90; i += 1) {
+    for (i = 1; i <= libAffx_maxHeroes; i += 1) {
         BankValueSetFromInt(BankLastCreated(), libAffx_BankSectionStats, "HeroCounterOrder_" + libCore_gf_GetHeroFromIndex(i), BankValueGetAsInt(BankLastCreated(), libAffx_BankSectionStats, "HeroCounterOrder_" + libCore_gf_GetHeroFromIndex(i)) + libAffx_heroCounter[libAffx_teamOrderIndex][i]);
     }
-    for (i = 1; i <= 90; i += 1) {
+    for (i = 1; i <= libAffx_maxHeroes; i += 1) {
         BankValueSetFromInt(BankLastCreated(), libAffx_BankSectionStats, "HeroCounterChaos_" + libCore_gf_GetHeroFromIndex(i), BankValueGetAsInt(BankLastCreated(), libAffx_BankSectionStats, "HeroCounterChaos_" + libCore_gf_GetHeroFromIndex(i)) + libAffx_heroCounter[libAffx_teamChaosIndex][i]);
     }
     BankValueSetFromString(BankLastCreated(), libAffx_BankSection, "Map", libAffx_nextMap);
@@ -4947,8 +4947,9 @@ bool libAffx_CurateHeroesTrigger_Func (bool testConds, bool runActions) {
     libPBU2_gv_curateHeroSelections[lv_row][9] = "Tracer";
     libPBU2_gv_curateHeroSelections[lv_row][10] = "Tychus";
     libPBU2_gv_curateHeroSelections[lv_row][11] = "DemonHunter";
-    libPBU2_gv_curateHeroSelections[lv_row][12] = "Zagara";
-    libPBU2_gv_curateHeroSelections[lv_row][13] = "Zuljin";
+    libPBU2_gv_curateHeroSelections[lv_row][12] = "Xalatath";
+    libPBU2_gv_curateHeroSelections[lv_row][13] = "Zagara";
+    libPBU2_gv_curateHeroSelections[lv_row][14] = "Zuljin";
 
     libPBU2_gf_DisplayCurateHSUI();
 
@@ -5127,7 +5128,7 @@ int libAffix_RegisterAchievement(string name, int achievementType) {
 void libAffx_InitAchievements() {
     int i;
     int achievement;
-    for (i = 1; i <= 90; i += 1) {
+    for (i = 1; i <= libAffx_maxHeroes; i += 1) {
         libAffix_RegisterAchievement(libAffx_GetCatalogDefaultValue("Hero," + libCore_gf_GetHeroFromIndex(i) + ",HyperlinkId"), libAffx_achievementTypeWinOnHero);
         libAffx_achievements[libAffx_LastRegisteredAchievement()].hero = i;
     }
@@ -5249,6 +5250,7 @@ void libAffx_AffixSetHeroAllRanged(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Mephisto")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Tychus")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Probius")] = allowed;
+    libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Xalatath")] = allowed;
 }
 void libAffx_AffixSetHeroAllMelee(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Firebat")] = allowed;
@@ -5366,6 +5368,7 @@ void libAffx_AffixSetHeroUsesMana(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Dehaka")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Muradin")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Uther")] = allowed;
+    libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Xalatath")] = allowed;
 }
 void libAffx_AffixSetHeroAll(int affix, bool allowed) {
     int i;
