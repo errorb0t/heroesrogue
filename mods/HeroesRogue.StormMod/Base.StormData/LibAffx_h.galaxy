@@ -2,7 +2,7 @@
 // Heroes Rogue
 // ============================================================
 
-const string libAffx_version = "0.16.3";
+const string libAffx_version = "0.16.4";
 
 const int libAffx_player = 1; // Player ID
 const int libAffx_enemy = 6; // First enemy player ID
@@ -12,7 +12,7 @@ const int libAffx_teamChaos = libCore_gv_cOMPUTER_TeamChaos;
 const int libAffx_teamOrderIndex = libGame_gv_teamOrderIndex_C;
 const int libAffx_teamChaosIndex = libGame_gv_teamChaosIndex_C;
 
-const int libAffx_maxHeroes = 90;
+const int libAffx_maxHeroes = 91;
 const int libAffx_maxMaps = 10;
 const int libAffx_maxTalents = 20;
 const int libAffx_maxCatalogModifications = 20;
@@ -28,7 +28,8 @@ const int libAffx_maxEligibleAffixes = libAffx_maxAffixes; // Maximum affixes th
 const int libAffx_maxAffixSelection = 5;
 const int libAffx_maxAffixTypes = 2;
 const int libAffx_maxOptionDialogs = 20;
-const int libAffx_maxAchievements = 98;
+const int libAffx_maxAchievements = libAffx_maxHeroes + 8;
+const int libAffx_maxSaveValues = 10;
 
 const int libAffx_winningRound = 20;
 

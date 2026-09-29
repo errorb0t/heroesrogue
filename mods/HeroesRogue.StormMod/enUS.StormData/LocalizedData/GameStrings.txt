@@ -210,6 +210,8 @@ Achievement/Name/Zeratul=Zeratul
 Achievement/Tooltip/Zeratul=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Zeratul</c>.
 Achievement/Name/Zuljin=Zul'jin
 Achievement/Tooltip/Zuljin=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Zul'jin</c>.
+Achievement/Name/Xalatath=Xal'atath
+Achievement/Tooltip/Xalatath=Win Round <c val="#TooltipNumbers">20</c> on <c val="#TooltipNumbers">Xal'atath</c>.
 Achievement/Name/Deathless=Deathless
 Achievement/Tooltip/Deathless=Win Round <c val="#TooltipNumbers">20</c> without dying at any point during the run.
 Achievement/Name/Objective=Focus Obj!
