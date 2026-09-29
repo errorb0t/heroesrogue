@@ -2,7 +2,7 @@
 // Heroes Rogue
 // ============================================================
 
-const string libAffx_version = "0.16.4";
+const string libAffx_version = "0.16.5";
 
 const int libAffx_player = 1; // Player ID
 const int libAffx_enemy = 6; // First enemy player ID
@@ -709,7 +709,7 @@ int libAffx_skipCurseCounter;
 int libAffx_cursesSkipped;
 int libAffx_cursesSwapped;
 
-int[libCore_gv_bALMaxTeams + 1][91] libAffx_heroCounter;
+int[libCore_gv_bALMaxTeams + 1][libAffx_maxHeroes + 1] libAffx_heroCounter;
 
 int libAffx_goldenHeroesIndex;
 string[libAffx_maxHeroes + 1] libAffx_goldenHeroes;

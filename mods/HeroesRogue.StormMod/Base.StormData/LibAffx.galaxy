@@ -1443,7 +1443,7 @@ void libAffx_UpdateGameoverDialog() {
     int cursesSkipped = libAffx_BankGetStats("CursesSkipped") + libAffx_cursesSkipped;
     int cursesSwapped = libAffx_BankGetStats("CursesSwapped") + libAffx_cursesSwapped;
     int gameTime = libAffx_BankGetStats("GameTime") + FixedToInt(TimerGetElapsed(libGame_gv_gameTimer));
-    int[libCore_gv_bALMaxTeams + 1][91] heroCounter;
+    int[libCore_gv_bALMaxTeams + 1][libAffx_maxHeroes + 1] heroCounter;
     int[libCore_gv_bALMaxTeams + 1] mostHeroCounter;
     int[libCore_gv_bALMaxTeams + 1] mostHeroIndex;
     int kda;
