@@ -17,6 +17,13 @@ def normalize_dynamic_ref(ref: str) -> str:
 
 
 @dataclass(frozen=True)
+class DynamicBaseValue:
+    value: float
+    note: str
+    source: str
+
+
+@dataclass(frozen=True)
 class DynamicValueVariant:
     value: float
     heroes: tuple[str, ...]
@@ -233,12 +240,20 @@ class DynamicValueResolver:
         r"(?:libAffx_playerHeroIndex|libAffx_playersHeroIndex\s*\[\s*libAffx_player\s*\])"
     )
 
-    def __init__(self, manual_overrides: Mapping[str, float] | None = None) -> None:
+    def __init__(
+        self,
+        manual_overrides: Mapping[str, float] | None = None,
+        base_values: Mapping[str, DynamicBaseValue] | None = None,
+    ) -> None:
         self.catalog_entries = self._load_catalog_entries()
         self.galaxy_vars, self.galaxy_var_variants = self._load_galaxy_vars()
         self.manual_overrides = {
             normalize_dynamic_ref(ref): value
             for ref, value in (manual_overrides or {}).items()
+        }
+        self.base_values = {
+            normalize_dynamic_ref(ref): value
+            for ref, value in (base_values or {}).items()
         }
         self.hero_name_overrides: dict[str, str] = {}
 
@@ -246,6 +261,23 @@ class DynamicValueResolver:
         manual_override = self.manual_overrides.get(normalize_dynamic_ref(ref))
         if manual_override is not None:
             return manual_override
+        value = self._resolve_from_data(ref)
+        if value is not None:
+            return value
+        base_value = self.base_values.get(normalize_dynamic_ref(ref))
+        return base_value.value if base_value is not None else None
+
+    def resolve_base_value_note(self, ref: str) -> str | None:
+        normalized_ref = normalize_dynamic_ref(ref)
+        if (
+            normalized_ref in self.manual_overrides
+            or self._resolve_from_data(ref) is not None
+        ):
+            return None
+        base_value = self.base_values.get(normalized_ref)
+        return base_value.note if base_value is not None else None
+
+    def _resolve_from_data(self, ref: str) -> float | None:
         try:
             return DynamicValueParser(ref, resolver=self).parse()
         except DynamicValueError:
@@ -317,7 +349,78 @@ class DynamicValueResolver:
                 continue
 
         variant_groups.update(self._extract_galaxy_var_variant_groups(text, values))
+        variant_groups.update(self._extract_player_array_tooltips(text, values))
         return values, variant_groups
+
+    def _extract_player_array_tooltips(
+        self, text: str, values: dict[str, float]
+    ) -> dict[str, DynamicValueVariantGroup]:
+        """Resolve tooltip aliases of arrays assigned constants for each hero."""
+        groups: dict[str, DynamicValueVariantGroup] = {}
+        function_pattern = re.compile(
+            r"(?:bool|void)\s+libAffx_\w+\s*\([^)]*\)\s*\{(?P<body>.*?)^\}",
+            flags=re.MULTILINE | re.DOTALL,
+        )
+        branch_pattern = r"(?:else\s+)?if\s*\(([^()]+)\)\s*\{([^{}]*)\}"
+        simple_branch = r"\([^()]+\)\s*\{[^{}]*\}"
+        chain_pattern = re.compile(
+            rf"^[ \t]*if\s*{simple_branch}"
+            rf"(?:\s*else\s+if\s*{simple_branch})*"
+            r"\s*else\s*\{(?P<default>[^{}]*)\}",
+            flags=re.MULTILINE,
+        )
+        for function in function_pattern.finditer(text):
+            body = function.group("body")
+            hero_lookup = re.search(
+                r"\b(\w+)\s*=\s*libCore_gf_GetHeroFromIndex\(\s*"
+                r"libAffx_playersHeroIndex\[\s*(\w+)\s*\]\s*\)\s*;",
+                body,
+            )
+            if hero_lookup is None:
+                continue
+            hero_variable, player_index = hero_lookup.groups()
+            aliases = re.findall(
+                r"\b(\w+)\s*=\s*(\w+)\[\s*libAffx_player\s*\]\s*;", body
+            )
+            for chain in chain_pattern.finditer(body):
+                branches = []
+                for condition, branch in re.findall(branch_pattern, chain.group()):
+                    comparisons = [
+                        re.fullmatch(
+                            rf'\s*{re.escape(hero_variable)}\s*==\s*"([^"]+)"\s*',
+                            comparison,
+                        )
+                        for comparison in condition.split("||")
+                    ]
+                    if not comparisons or any(item is None for item in comparisons):
+                        break
+                    heroes = tuple(sorted({item.group(1) for item in comparisons}))
+                    assignments = self._extract_branch_assignments(
+                        branch, array_index=player_index, identifiers=values
+                    )
+                    branches.append((heroes, assignments))
+                else:
+                    defaults = self._extract_branch_assignments(
+                        chain.group("default"),
+                        array_index=player_index,
+                        identifiers=values,
+                    )
+                    for alias, array_name in aliases:
+                        if array_name not in defaults or any(
+                            array_name not in assignments for _, assignments in branches
+                        ):
+                            continue
+                        default_value = defaults[array_name]
+                        values[alias] = default_value
+                        groups[alias] = DynamicValueVariantGroup(
+                            default_value=default_value,
+                            variants=tuple(
+                                DynamicValueVariant(assignments[array_name], heroes)
+                                for heroes, assignments in branches
+                                if assignments[array_name] != default_value
+                            ),
+                        )
+        return groups
 
     def _extract_galaxy_var_variant_groups(
         self, text: str, values: Mapping[str, float]
@@ -445,16 +548,29 @@ class DynamicValueResolver:
 
         return ()
 
-    def _extract_branch_assignments(self, body: str) -> dict[str, float]:
+    def _extract_branch_assignments(
+        self,
+        body: str,
+        *,
+        array_index: str | None = None,
+        identifiers: Mapping[str, float] | None = None,
+    ) -> dict[str, float]:
         assignments: dict[str, float] = {}
-        assignment_pattern = re.compile(r"([A-Za-z_][A-Za-z0-9_]*)\s*=\s*([^;]+);")
+        index_pattern = (
+            rf"\s*\[\s*{re.escape(array_index)}\s*\]"
+            if array_index is not None
+            else ""
+        )
+        assignment_pattern = re.compile(
+            rf"\b([A-Za-z_][A-Za-z0-9_]*){index_pattern}\s*=\s*([^;]+);"
+        )
 
         for match in assignment_pattern.finditer(body):
             name, expression = match.groups()
             try:
                 assignments[name] = DynamicValueParser(
                     expression.strip(),
-                    identifiers=assignments,
+                    identifiers={**(identifiers or {}), **assignments},
                 ).parse()
             except DynamicValueError:
                 continue

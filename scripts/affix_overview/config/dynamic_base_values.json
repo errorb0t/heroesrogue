@@ -1,0 +1,22 @@
+{
+  "Effect,HolyLightCreateHealer,RechargeVitalRate": {
+    "value": 362,
+    "note": "Base value before level scaling and other bonuses.",
+    "source": "https://github.com/HeroesToolChest/heroes-data/blob/master/heroesdata/2.55.16.97039/gamestrings/gamestrings_97039_enus.json — UtherHolyLight tooltip; the base-game healing effect is not included in the mod."
+  },
+  "Effect,UtherHolyLightDamage,Amount": {
+    "value": 362,
+    "note": "Base value before level scaling and other bonuses.",
+    "source": "mods/HeroesRogue.StormMod/Base.StormData/GameData/HeroData/UtherData.xml uses $UtherHolyLightHealing. Base value: https://github.com/HeroesToolChest/heroes-data/blob/master/heroesdata/2.55.16.97039/gamestrings/gamestrings_97039_enus.json — UtherHolyLight tooltip."
+  },
+  "Effect,UtherFlashofLightDamage,Amount": {
+    "value": 230,
+    "note": "Base value before level scaling and other bonuses.",
+    "source": "mods/HeroesRogue.StormMod/Base.StormData/GameData/HeroData/UtherData.xml uses $UtherEternalVanguardFlashOfLightHealing. Base value: https://github.com/HeroesToolChest/heroes-data/blob/master/heroesdata/2.55.16.97039/gamestrings/gamestrings_97039_enus.json — UtherFlashofLight tooltip."
+  },
+  "$BehaviorTokenCount:WitchDoctorVoodooRitual$*(Accumulator,NazeeboPowerRitualLightningRitualAccumulator,Scale)*100": {
+    "value": 0,
+    "note": "Base value at 0 Voodoo Ritual stacks; the total increases by 0.3% Attack Speed per stack.",
+    "source": "mods/HeroesRogue.StormMod/Base.StormData/GameData/HeroData/NazeeboData.xml — NazeeboPowerRitualLightningRitualAccumulator has Scale 0.003; the base value assumes no runtime stacks."
+  }
+}

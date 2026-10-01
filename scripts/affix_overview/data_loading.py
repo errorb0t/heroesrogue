@@ -15,7 +15,7 @@ from .constants import (
     RARITY_ALIASES,
     RARITY_ORDER,
 )
-from .dynamic_values import DynamicValueResolver
+from .dynamic_values import DynamicBaseValue, DynamicValueResolver
 from .icon_names import icon_file_name
 from .markup import convert_storm_markup
 from .models import AchievementRecord, AffixCondition, AffixRecord, DifficultyRecord
@@ -72,6 +72,28 @@ def load_dynamic_value_overrides(
             ) from exc
 
     return overrides
+
+
+def load_dynamic_base_values(path: Path) -> dict[str, DynamicBaseValue]:
+    raw_data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw_data, dict):
+        raise RuntimeError(f"Expected a JSON object in {path}")
+    base_values = {}
+    for ref, entry in raw_data.items():
+        if (
+            not isinstance(entry, dict)
+            or not isinstance(entry.get("value"), (int, float))
+            or isinstance(entry["value"], bool)
+            or not isinstance(entry.get("note"), str)
+            or not entry["note"].strip()
+            or not isinstance(entry.get("source"), str)
+            or not entry["source"].strip()
+        ):
+            raise RuntimeError(f"Invalid dynamic base value in {path}: {ref!r}={entry!r}")
+        base_values[ref] = DynamicBaseValue(
+            value=float(entry["value"]), note=entry["note"], source=entry["source"]
+        )
+    return base_values
 
 
 def load_name_overrides(path: Path, *, label: str) -> dict[str, str]:

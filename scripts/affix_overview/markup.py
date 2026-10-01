@@ -60,8 +60,7 @@ def convert_storm_markup(
     plain_parts: list[str] = []
     html_parts: list[str] = []
     footnotes: list[TooltipFootnote] = []
-    seen_footnotes: set[tuple[str, str]] = set()
-    ref_markers: dict[str, str] = {}
+    footnote_markers: dict[str, str] = {}
     cursor = 0
 
     def append_text(chunk: str) -> None:
@@ -115,18 +114,18 @@ def convert_storm_markup(
             else:
                 formatted_value = format_dynamic_value(resolved_value, precision)
                 variant_footnote = format_dynamic_variant_footnote(ref, resolver)
+                base_value_note = resolver.resolve_base_value_note(ref)
+                if base_value_note is not None:
+                    variant_footnote = TooltipFootnote(marker="*", text=base_value_note)
                 markers: list[str] = []
                 if variant_footnote is not None:
-                    marker = ref_markers.get(ref)
+                    marker = footnote_markers.get(variant_footnote.text)
                     if marker is None:
                         marker = next_footnote_marker(len(footnotes))
-                        ref_markers[ref] = marker
-                        footnote_key = (marker, variant_footnote.text)
-                        if footnote_key not in seen_footnotes:
-                            seen_footnotes.add(footnote_key)
-                            footnotes.append(
-                                TooltipFootnote(marker=marker, text=variant_footnote.text)
-                            )
+                        footnote_markers[variant_footnote.text] = marker
+                        footnotes.append(
+                            TooltipFootnote(marker=marker, text=variant_footnote.text)
+                        )
                     markers.append(marker)
                 marker_suffix = "".join(markers)
                 plain_parts.append(f"{formatted_value}{marker_suffix}")

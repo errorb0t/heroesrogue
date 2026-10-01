@@ -6,6 +6,7 @@ from pathlib import Path
 from .constants import (
     ACHIEVEMENT_TEXTURES_DIR,
     AFFIX_OVERVIEW_CONFIG_PATH,
+    DYNAMIC_BASE_VALUES_PATH,
     DYNAMIC_OVERRIDES_PATH,
     HERO_NAME_OVERRIDES_PATH,
     LIB_AFFX_HEADER_PATH,
@@ -18,6 +19,7 @@ from .data_loading import (
     load_achievements,
     load_affixes,
     load_difficulties,
+    load_dynamic_base_values,
     load_dynamic_value_overrides,
     load_hidden_affix_ids,
     load_hero_name_overrides,
@@ -98,7 +100,8 @@ def main() -> None:
     hero_name_overrides = load_hero_name_overrides(args.hero_name_overrides.resolve())
     map_name_overrides = load_map_name_overrides(args.map_name_overrides.resolve())
     hidden_affix_ids = load_hidden_affix_ids(args.overview_config.resolve())
-    resolver = DynamicValueResolver(dynamic_overrides)
+    base_values = load_dynamic_base_values(DYNAMIC_BASE_VALUES_PATH)
+    resolver = DynamicValueResolver(dynamic_overrides, base_values)
     resolver.set_hero_name_overrides(hero_name_overrides)
     affixes = load_affixes(
         strings,
