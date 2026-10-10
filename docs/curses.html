@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Heroes Rogue Wiki - v0.17.1 - Curses</title>
+  <title>Heroes Rogue Wiki - v0.17.2 - Curses</title>
   <style>
 
     :root {
@@ -359,7 +359,7 @@
   <body>
   <div class="shell">
     <div class="top-bar">
-      <h1 class="site-header">Heroes Rogue Compendium (v0.17.1)</h1>
+      <h1 class="site-header">Heroes Rogue Compendium (v0.17.2)</h1>
       <a class="github-link" href="https://github.com/sobbyellow/heroesrogue" target="_blank" rel="noreferrer">Play Heroes Rogue</a>
     </div>
     <nav class="top-nav" aria-label="Sections">
@@ -492,8 +492,9 @@
               </footer>
             </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="difficultyheroic heroic enemy heroes:
 +4% damage, maximum health, maximum mana, health regeneration, and mana regeneration per round.
++1% experience gain per round.
 
-these stats scale multiplicatively. common common curse">
+damage, health, and regen stats scale multiplicatively. common common curse">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_difficulty2.png" alt="Heroic icon" loading="lazy">
                 <div class="meta-row">
@@ -501,13 +502,13 @@ these stats scale multiplicatively. common common curse">
                 </div>
               </div>
               <h2 class="card-title">Heroic</h2>
-              <div class="tooltip-copy">Enemy Heroes:<br><span>+4%</span> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration per round.<br><br>These stats scale multiplicatively.</div>
+              <div class="tooltip-copy">Enemy Heroes:<br><span>+4%</span> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration per round.<br><span>+1%</span> Experience Gain per round.<br><br>Damage, Health, and Regen stats scale multiplicatively.</div>
               <footer class="card-footer">
                 <div class="footer-summary">Stacks infinitely.</div>
               </footer>
             </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="difficultymythic mythic all enemies:
 +4% (+1% per round) damage, maximum health, maximum mana, health regeneration, and mana regeneration, multiplied by the number of rounds.
-+1% experience gain per round.
++2% experience gain per round.
 
 after round 14, curses will no longer swap to boons.
 
@@ -519,7 +520,7 @@ obtain a powerful mythic curse at the start of the game and every 4 games afterw
                 </div>
               </div>
               <h2 class="card-title">Mythic</h2>
-              <div class="tooltip-copy">All enemies:<br><span>+4%</span> <span style="color: #747A84">(+1% per round)</span> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration, multiplied by the number of rounds.<br><span>+1%</span> Experience Gain per round.<br><br>After <span style="color: #ffd96a">Round 14</span>, curses will no longer swap to boons.<br><br>Obtain a powerful <span style="color: #A84987">Mythic Curse</span> at the start of the game and every <span style="color: #ffd96a">4</span> games afterwards.</div>
+              <div class="tooltip-copy">All enemies:<br><span>+4%</span> <span style="color: #747A84">(+1% per round)</span> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration, multiplied by the number of rounds.<br><span>+2%</span> Experience Gain per round.<br><br>After <span style="color: #ffd96a">Round 14</span>, curses will no longer swap to boons.<br><br>Obtain a powerful <span style="color: #A84987">Mythic Curse</span> at the start of the game and every <span style="color: #ffd96a">4</span> games afterwards.</div>
               <footer class="card-footer">
                 <div class="footer-summary">Stacks infinitely.</div>
               </footer>
@@ -535,7 +536,7 @@ obtain a powerful mythic curse at the start of the game and every 4 games afterw
               <footer class="card-footer">
                 <div class="footer-summary">Doesn't stack.</div>
               </footer>
-            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="passiveadvantage passive advantage +25% passive experience gain for all enemies. common common curse">
+            </article><article class="affix-card" data-rarity="Common" data-hero-limited="false" data-search="passiveadvantage passive advantage +25% passive experience gain for all enemy heroes. common common curse">
               <div class="card-top">
                 <img class="affix-icon" src="icons/affix_icon_passive_advantage.png" alt="Passive Advantage icon" loading="lazy">
                 <div class="meta-row">
@@ -543,7 +544,7 @@ obtain a powerful mythic curse at the start of the game and every 4 games afterw
                 </div>
               </div>
               <h2 class="card-title">Passive Advantage</h2>
-              <div class="tooltip-copy"><span>+25%</span> Passive Experience Gain for all enemies.</div>
+              <div class="tooltip-copy"><span>+25%</span> Passive Experience Gain for all enemy Heroes.</div>
               <footer class="card-footer">
                 <div class="footer-summary">Doesn't stack.</div>
               </footer>
@@ -764,6 +765,18 @@ you no longer naturally regenerate health. uncommon uncommon excludes heroes gal
               <div class="tooltip-copy"><span>+10</span> <span style="color: #747A84">(+10 per stack)</span> Maximum Armor Reduction from enemy Structures attacks.</div>
               <footer class="card-footer">
                 <div class="footer-summary">Stacks up to <span class="footer-highlight">3</span>.</div>
+              </footer>
+            </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="true" data-search="slowwalk slow walk you can no longer mount. uncommon uncommon heroes mount mount curse">
+              <div class="card-top">
+                <img class="affix-icon" src="icons/affix_icon_epicmount_a.png" alt="Slow Walk icon" loading="lazy">
+                <div class="meta-row">
+                  <span class="meta-chip rarity-chip" style="--rarity-color: #3de26d">Uncommon</span>
+                </div>
+              </div>
+              <h2 class="card-title">Slow Walk</h2>
+              <div class="tooltip-copy">You can no longer Mount.</div>
+              <footer class="card-footer">
+                <div class="footer-summary">Doesn't stack. Appears for <span class="footer-highlight">mount</span>.</div>
               </footer>
             </article><article class="affix-card" data-rarity="Uncommon" data-hero-limited="false" data-search="toxicfield toxic field spawns 2 (+2 per stack) toxic nests per second at random locations on the map. toxic nests last for 90 seconds.
 
@@ -1225,6 +1238,18 @@ this affects various things such as dodging skillshots, decision making, ability
               <footer class="card-footer">
                 <div class="footer-summary">Stacks up to <span class="footer-highlight">4</span>.</div>
               </footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="reckless reckless hides the status bar above your hero. epic epic curse">
+              <div class="card-top">
+                <img class="affix-icon" src="icons/affix_icon_reckless.png" alt="Reckless icon" loading="lazy">
+                <div class="meta-row">
+                  <span class="meta-chip rarity-chip" style="--rarity-color: #d26dff">Epic</span>
+                </div>
+              </div>
+              <h2 class="card-title">Reckless</h2>
+              <div class="tooltip-copy">Hides the status bar above your Hero.</div>
+              <footer class="card-footer">
+                <div class="footer-summary">Doesn't stack.</div>
+              </footer>
             </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="reinforcements reinforcements +1 melee and ranged minions per enemy wave.
 
 extra minions do not provide xp. epic epic curse">
@@ -1264,6 +1289,18 @@ additional stacks grants access to all talents in the next talent tier, excludin
               <div class="tooltip-copy">Enemy Heroes gain access to all of their level <span style="color: #ffd96a">1</span> talents.<br><br>Additional stacks grants access to all talents in the next talent tier, excluding Heroics.</div>
               <footer class="card-footer">
                 <div class="footer-summary">Stacks up to <span class="footer-highlight">6</span>.</div>
+              </footer>
+            </article><article class="affix-card" data-rarity="Epic" data-hero-limited="false" data-search="truestealth true stealth enemy heroes do not show up on the minimap. epic epic excludes affixes no minimap dlc no minimap dlc curse">
+              <div class="card-top">
+                <img class="affix-icon" src="icons/storm_ui_icon_nova_personalcloaking_var1.png" alt="True Stealth icon" loading="lazy">
+                <div class="meta-row">
+                  <span class="meta-chip rarity-chip" style="--rarity-color: #d26dff">Epic</span>
+                </div>
+              </div>
+              <h2 class="card-title">True Stealth</h2>
+              <div class="tooltip-copy">Enemy Heroes do not show up on the Minimap.</div>
+              <footer class="card-footer">
+                <div class="footer-summary">Doesn't stack. Cannot appear with <span class="footer-highlight">No Minimap DLC</span>.</div>
               </footer>
             </article><article class="affix-card" data-rarity="Epic" data-hero-limited="true" data-search="lostvikingstrulylost truly lost you no longer have shared vision with your team. epic epic the lost vikings hero the lost vikings only lostvikings the lost vikings curse">
               <div class="card-top">
@@ -1332,7 +1369,7 @@ gain experience when an enemy minion dies within 12 range of you and allied hero
               </footer>
             </article><article class="affix-card" data-rarity="Legendary" data-hero-limited="false" data-search="leagueofheroes league of heroes experience is no longer shared between your team.
 
-+10% passive experience gain for all allies. legendary legendary curse">
++10% passive experience gain for all allied heroes. legendary legendary curse">
               <div class="card-top">
                 <img class="affix-icon" src="icons/storm_ui_icon_azmodan_sinsgrasp.png" alt="League of Heroes icon" loading="lazy">
                 <div class="meta-row">
@@ -1340,7 +1377,7 @@ gain experience when an enemy minion dies within 12 range of you and allied hero
                 </div>
               </div>
               <h2 class="card-title">League of Heroes</h2>
-              <div class="tooltip-copy">Experience is no longer shared between your Team.<br><br><span>+10%</span> Passive Experience Gain for all allies.</div>
+              <div class="tooltip-copy">Experience is no longer shared between your Team.<br><br><span>+10%</span> Passive Experience Gain for all allied Heroes.</div>
               <footer class="card-footer">
                 <div class="footer-summary">Doesn't stack.</div>
               </footer>
